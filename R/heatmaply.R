@@ -62,6 +62,9 @@ heatmaply.heatmapr <- function(x, ...) {
   px <- ggplot(rows, labels  = FALSE) + theme_bw()
   py <- ggplot(cols, labels  = FALSE) + coord_flip()+ theme_bw()
 
+  px <- ggplotly(px, tooltip = "")
+  py <- ggplotly(py, tooltip = "")
+
 
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
   p <- ggplot(mdf, aes(x = variable, y = row_name)) + geom_tile(aes(fill = value)) +
@@ -133,7 +136,10 @@ if(FALSE) {
     scale_fill_viridis() + theme_bw()
   # p <- plot_ly(z = xx, type = "heatmap")
   # ggplotly(p) # works great
+  # ggplotly(p, tooltip = "none")
+  # ggplotly(px, tooltip = "")
 
+  #
 
 
   # # hide axis ticks and grid lines
