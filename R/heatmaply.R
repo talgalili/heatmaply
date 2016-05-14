@@ -46,6 +46,15 @@ heatmaply.heatmapr <- function(x, ...) {
   # TODO: we assume the creation of dendrograms. Other defaults should be made when the user
   #     chooses to not work with dendrograms.
 
+  # x <- heatmapr(mtcars)
+
+  theme_clear_grid <- theme(axis.line = element_line(colour = "black"),
+                            panel.grid.major = element_blank(),
+                            panel.grid.minor = element_blank(),
+                            panel.border = element_blank(),
+                            panel.background = element_blank())
+
+
   cols <- x$rows
   rows <- x$cols
 
@@ -59,8 +68,8 @@ heatmaply.heatmapr <- function(x, ...) {
 
   # dendrograms
   # this is using dendextend
-  px <- ggplot(rows, labels  = FALSE) + theme_bw()
-  py <- ggplot(cols, labels  = FALSE) + coord_flip()+ theme_bw()
+  px <- ggplot(rows, labels  = FALSE) + theme_bw() + theme_clear_grid
+  py <- ggplot(cols, labels  = FALSE) + coord_flip()+ theme_bw() + theme_clear_grid
 
   px <- ggplotly(px, tooltip = "")
   py <- ggplotly(py, tooltip = "")
@@ -68,7 +77,7 @@ heatmaply.heatmapr <- function(x, ...) {
 
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
   p <- ggplot(mdf, aes(x = variable, y = row_name)) + geom_tile(aes(fill = value)) +
-    scale_fill_viridis() + theme_bw()
+    scale_fill_viridis() + theme_bw()+ theme_clear_grid
   # p <- plot_ly(z = xx, type = "heatmap")
   # ggplotly(p) # works great
 
@@ -95,7 +104,11 @@ heatmaply.heatmapr <- function(x, ...) {
 
 }
 
+# theme_set(theme_cowplot())
+# library(cowplot)
+# require2(cowplot)
 
+#
 
 
 
