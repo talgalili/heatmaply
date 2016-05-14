@@ -14,6 +14,7 @@
 #' @param x can either be a heatmapr object, or a numeric matrix
 #'   Defaults to \code{TRUE} unless \code{x} contains any \code{NA}s.
 #'
+#' @export
 #' @examples
 #' \dontrun{
 #'
@@ -27,13 +28,14 @@ heatmaply <- function(x,...) {
   UseMethod("heatmaply")
 }
 
+#' @export
 heatmaply.default <- function(x, ...) {
   hm <- heatmapr(x, ...)
   heatmaply(hm) # TODO: think more on what should be passed in "..."
 }
 
 
-
+#' @export
 heatmaply.heatmapr <- function(x, ...) {
   # x is a heatmapr object.
 
@@ -97,6 +99,8 @@ heatmaply.heatmapr <- function(x, ...) {
 
 if(FALSE) {
   # devtools::install_github("ropensci/plotly", ref = "fix/subplot")
+  # devtools::install_github('talgalili/heatmaply')
+
 
   library(ggplot2)
   library(dendextend)
