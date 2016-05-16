@@ -22,7 +22,7 @@ Description: Create interactive heat maps that are usable from the R console,
 Depends:
     R (>= 3.0.0),
     ggplot2,
-    plotly (>= 3.5.7),
+    plotly (>= 3.6.0),
     magrittr (>= 1.0.1),
     dendextend,
     reshape2,
