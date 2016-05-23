@@ -1,0 +1,121 @@
+* 2016-05-24(Tal Galili) fix various import issues that caused warnings with devtools::checks() |862ff8c| 
+|  DESCRIPTION | 2 +-
+|  NEWS        | 7 +++++++
+|  2 files changed, 8 insertions(+), 1 deletion(-)
+
+* 2016-05-24(Tal Galili) Import packages so to fix various CRAN warnings and errors. |9d87c65| 
+|  DESCRIPTION  |  9 +++++----
+|  NAMESPACE    |  6 ++++++
+|  R/heatmapr.R |  8 ++------
+|  R/zzz.R      | 25 +++++++++++++++++++++++++
+|  4 files changed, 38 insertions(+), 10 deletions(-)
+
+* 2016-05-23(Tal Galili) from aes to aes_string |9c87c2f| 
+|  R/heatmaply.R | 4 ++--
+|  1 file changed, 2 insertions(+), 2 deletions(-)
+
+* 2016-05-23(Tal Galili) remove CONDUCT.md |ac71a3e| 
+|  .Rbuildignore | 3 ++-
+|  1 file changed, 2 insertions(+), 1 deletion(-)
+
+* 2016-05-23(Tal Galili) Code for calling devtools |6886408| 
+|  R/zzz.R | 289 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+|  1 file changed, 289 insertions(+)
+
+* 2016-05-23(Tal Galili) move magrittr and reshape2 from Depends to Imports (to remove CRAN NOTE on too many packages in Depends) |34005df| 
+|  DESCRIPTION | 4 ++--
+|  1 file changed, 2 insertions(+), 2 deletions(-)
+
+* 2016-05-23(Tal Galili) Remove .travis.yml from build |1029ed9| 
+|  .Rbuildignore | 1 +
+|  1 file changed, 1 insertion(+)
+
+* 2016-05-23(Tal Galili) colour to color |6462b3e| 
+|  R/heatmaply.R    | 22 +++++++++++-----------
+|  man/heatmaply.Rd | 14 +++++++-------
+|  2 files changed, 18 insertions(+), 18 deletions(-)
+
+* 2016-05-23(Tal Galili) Moved to 0.2.0 - new options for controlling colors and tiny bug fixes. |121ddc4| 
+|  DESCRIPTION |  4 ++--
+|  NEWS        | 24 ++++++++++++++++++++++++
+|  2 files changed, 26 insertions(+), 2 deletions(-)
+
+* 2016-05-23(Tal Galili) Invitation for feature requests in README |7c36615| 
+|  README.md | 5 +++++
+|  1 file changed, 5 insertions(+)
+
+* 2016-05-23(Tal Galili) Better control over colors via scale_fill_gradient_fun fix #1 issue. |0b73791| 
+|  R/heatmaply.R    | 42 ++++++++++++++++++++++++++++++++++++++----
+|  man/heatmaply.Rd | 28 ++++++++++++++++++++++++++--
+|  man/heatmapr.Rd  |  4 ++--
+|  3 files changed, 66 insertions(+), 8 deletions(-)
+
+* 2016-05-23(Tal Galili) now using "scale" will work as expected. |70d81d0| 
+|  R/heatmapr.R | 4 ++--
+|  1 file changed, 2 insertions(+), 2 deletions(-)
+
+* 2016-05-23(Tal Galili) we use paste but we mean as.character |4543e64| 
+|  R/heatmapr.R | 4 ++--
+|  1 file changed, 2 insertions(+), 2 deletions(-)
+
+* 2016-05-23(Tal Galili) remove axis text from dendrograms. |90de4ee| 
+|  R/heatmaply.R | 16 ++++++++++++----
+|  1 file changed, 12 insertions(+), 4 deletions(-)
+
+* 2016-05-23(Tal Galili) Code to install plotly. |0d180dc| 
+|  README.md | 1 +
+|  1 file changed, 1 insertion(+)
+
+* 2016-05-23(Tal Galili) Added row_dend_left parameter (it still doesn't fully work - but for now I'll keep it OFF). |c31a4f4| 
+|  R/heatmaply.R | 32 ++++++++++++++++++++++++--------
+|  1 file changed, 24 insertions(+), 8 deletions(-)
+
+* 2016-05-23(Tal Galili) informative errors for mis-specified limits |87c815b| 
+|  R/heatmaply.R | 8 ++++++++
+|  1 file changed, 8 insertions(+)
+
+* 2016-05-23(Tal Galili) use nrow and ncol |84791ae| 
+|  R/heatmapr.R | 5 +++--
+|  1 file changed, 3 insertions(+), 2 deletions(-)
+
+* 2016-05-23(Tal Galili) Added the options: "colours" and "limits" to control the colors in the heatmap. (this may change soon to be compatible with heatmap.2 and also scale_colour_gradientn) |20638a5| 
+|  R/heatmaply.R    | 37 +++++++++++++++++++++++++++++++------
+|  man/heatmaply.Rd | 13 ++++++++++++-
+|  2 files changed, 43 insertions(+), 7 deletions(-)
+
+* 2016-05-23(Tal Galili) not on CRAN yet |6e83304| 
+|  README.md | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2016-05-16(Tal Galili) The package depends on plotly 3.6.0 and above. |8ef793b| 
+|  DESCRIPTION | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2016-05-14(Tal Galili) clear the gridlines from the dendrograms. |6c7d6ce| 
+|  R/heatmaply.R | 19 ++++++++++++++++---
+|  1 file changed, 16 insertions(+), 3 deletions(-)
+
+* 2016-05-14(Tal Galili) For now, empty tooltip for the dendrograms. |3c14b9a| 
+|  R/heatmaply.R | 6 ++++++
+|  1 file changed, 6 insertions(+)
+
+* 2016-05-14(Tal Galili) Fix basic NAMESPACE issue after moving to roxygen2 |3614dc9| 
+|  NAMESPACE     | 3 +++
+|  R/heatmaply.R | 6 +++++-
+|  2 files changed, 8 insertions(+), 1 deletion(-)
+
+* 2016-05-14(Tal Galili) First (very rough) version. It has a minimal working example, as well as MANY things to fix/tweak/adjust. |9e5fac8  
+   .Rbuildignore    |   2 +
+   .gitignore       |   3 +
+   .travis.yml      |   9 ++
+   CONDUCT.md       |  25 ++++
+   DESCRIPTION      |  36 ++++++
+   NAMESPACE        |  11 ++
+   NEWS             |   4 +
+   R/heatmaply.R    | 155 +++++++++++++++++++++++
+   R/heatmapr.R     | 356 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+   README.md        |  91 ++++++++++++++
+   heatmaply.Rproj  |  21 ++++
+   man/heatmaply.Rd |  28 +++++
+   man/heatmapr.Rd  | 117 ++++++++++++++++++
+   13 files changed, 858 insertions(+)
