@@ -23,11 +23,11 @@ Depends:
     R (>= 3.0.0),
     ggplot2,
     plotly (>= 3.6.0),
-    magrittr (>= 1.0.1),
     dendextend,
-    reshape2,
     viridis
 Imports:
+    magrittr (>= 1.0.1),
+    reshape2,
     utils,
     stats,
 License: GPL-2 | GPL-3
