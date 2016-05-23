@@ -1,13 +1,12 @@
 heatmaply 0.2.1 (2016-05-23)
-----------------------------------------
+==============================
 
 ### BUG FIXES
-* fix various import issues that caused warnings with devtools::checks()
+* fix various import issues that caused warnings with devtools::
 
 
 heatmaply 0.2.0 (2016-05-23)
-----------------------------------------
-
+==============================
 ### NEW FEATURES
 * More control over colors in heatmaply via the new parameters: colours, limits, na.value, and scale_colour_gradient_fun.
 * first attempts at row_dend_left (although this is not yet working.)
@@ -18,7 +17,7 @@ heatmaply 0.2.0 (2016-05-23)
 
 
 heatmaply 0.1.0 (2016-05-14)
-----------------------------------------
+==============================
 
 * First (very rough) version. It has a minimal working example, as well as MANY things to fix/tweak/adjust.
 
@@ -26,7 +25,7 @@ heatmaply 0.1.0 (2016-05-14)
 
 
 TODO:
-----------------------------------------
+==============================
 * fix side labels
 * add bars for extra categories
 * remove hover information from dendrograms
