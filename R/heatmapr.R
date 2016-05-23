@@ -152,8 +152,8 @@ heatmapr <- function(x,
 
   ## Labels for Row/Column
   ##======================
-  rownames(x) <- labRow %||% paste(1:nrow(x))
-  colnames(x) <- labCol %||% paste(1:ncol(x))
+  rownames(x) <- labRow %||% as.character(1:nrow(x))
+  colnames(x) <- labCol %||% as.character(1:ncol(x))
 
   if(!missing(cexRow)) {
     if(is.numeric(cexRow)) {
