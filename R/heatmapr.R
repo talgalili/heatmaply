@@ -143,8 +143,8 @@ heatmapr <- function(x,
   }
   if(!is.matrix(x)) stop("x must be a matrix")
 
-  nr <- dim(x)[1]
-  nc <- dim(x)[2]
+  nr <- nrow(x)
+  nc <- ncol(x)
   ### TODO: debating if to include this or not:
   #   if(nr <= 1 || nc <= 1)
   #     stop("`x' must have at least 2 rows and 2 columns")
@@ -203,6 +203,7 @@ heatmapr <- function(x,
   }
 
   if (identical(Colv, "Rowv")) {
+    # i.e.: if symm=TRUE
     Colv <- Rowv
   }
   if (isTRUE(Colv)) {
