@@ -2,13 +2,22 @@
 % Please edit documentation in R/heatmaply.R
 \name{heatmaply}
 \alias{heatmaply}
+\alias{heatmaply.default}
+\alias{heatmaply.heatmapr}
 \title{Creates a plotly heatmap}
 \usage{
-heatmaply(x, ...)
+heatmaply(x, colours = viridis(n = 256, alpha = 1, begin = 0, end = 1, option
+  = "viridis"), limits = NULL, ...)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
 Defaults to \code{TRUE} unless \code{x} contains any \code{NA}s.}
+
+\item{colours}{a vector of colors to use for heatmap color.
+The default uses \code{\link[viridis]{viridis}(n=256, alpha = 1, begin = 0, end = 1, option = "viridis")}
+It is passed to \link[ggplot2]{scale_fill_gradientn}.}
+
+\item{limits}{a two dimensional vector specifying the data range for the scale.}
 }
 \description{
 An object of class heatmapr includes all the needed information
@@ -22,6 +31,8 @@ heatmap elements from the graphical rendaring of the object, which could be done
 # x <- heatmapr(mtcars)
 library(heatmaply)
 heatmaply(iris[,-5], k_row = 3, k_col = 2)
+heatmaply(cor(iris[,-5]))
+heatmaply(cor(iris[,-5]), limits = c(-1,1))
 heatmaply(mtcars, k_row = 3, k_col = 2)
 }
 }

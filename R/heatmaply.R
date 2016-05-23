@@ -6,14 +6,22 @@
 # to check: https://plot.ly/r/heatmaps/
 
 
-#' Creates a plotly heatmap
+#' @title  Creates a plotly heatmap
 #'
+#' @description
 #' An object of class heatmapr includes all the needed information
 #' for producing a heatmap. The goal is to seperate the pre-processing of the
 #' heatmap elements from the graphical rendaring of the object, which could be done
 #' @param x can either be a heatmapr object, or a numeric matrix
 #'   Defaults to \code{TRUE} unless \code{x} contains any \code{NA}s.
+#' @param colours a vector of colors to use for heatmap color.
+#' The default uses \code{\link[viridis]{viridis}(n=256, alpha = 1, begin = 0, end = 1, option = "viridis")}
+#' It is passed to \link[ggplot2]{scale_fill_gradientn}.
+#' @param limits a two dimensional vector specifying the data range for the scale.
 #'
+#' @aliases
+#' heatmaply.default
+#' heatmaply.heatmapr
 #' @export
 #' @examples
 #' \dontrun{
@@ -22,21 +30,35 @@
 #' # x <- heatmapr(mtcars)
 #' library(heatmaply)
 #' heatmaply(iris[,-5], k_row = 3, k_col = 2)
+#' heatmaply(cor(iris[,-5]))
+#' heatmaply(cor(iris[,-5]), limits = c(-1,1))
 #' heatmaply(mtcars, k_row = 3, k_col = 2)
 #' }
-heatmaply <- function(x,...) {
+heatmaply <- function(x,
+                      colours = viridis(n=256, alpha = 1, begin = 0,
+                                           end = 1, option = "viridis"),
+                      limits = NULL,
+                      ...) {
   UseMethod("heatmaply")
 }
 
 #' @export
-heatmaply.default <- function(x, ...) {
+heatmaply.default <- function(x,
+                              colours = viridis(n=256, alpha = 1, begin = 0,
+                                                   end = 1, option = "viridis"),
+                              limits = NULL,
+                              ...) {
   hm <- heatmapr(x, ...)
-  heatmaply(hm) # TODO: think more on what should be passed in "..."
+  heatmaply.heatmapr(hm, colours = colours, limits = limits) # TODO: think more on what should be passed in "..."
 }
 
 
 #' @export
-heatmaply.heatmapr <- function(x, ...) {
+heatmaply.heatmapr <- function(x,
+                               colours = viridis(n=256, alpha = 1, begin = 0,
+                                                    end = 1, option = "viridis"),
+                               limits = NULL,
+                               ...) {
   # x is a heatmapr object.
 
   # heatmapr <- list(rows = rowDend, cols = colDend, matrix = mtx, image = imgUri,
@@ -77,9 +99,12 @@ heatmaply.heatmapr <- function(x, ...) {
 
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
   p <- ggplot(mdf, aes(x = variable, y = row_name)) + geom_tile(aes(fill = value)) +
-    scale_fill_viridis() + theme_bw()+ theme_clear_grid
+    # scale_fill_viridis() +
+    scale_fill_gradientn(colours = colours, limits = limits) +
+    theme_bw()+ theme_clear_grid
   # p <- plot_ly(z = xx, type = "heatmap")
   # ggplotly(p) # works great
+
 
 
 
