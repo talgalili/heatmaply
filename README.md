@@ -41,6 +41,7 @@ install.packages.2('devtools')
 # make sure you have Rtools installed first! if not, then run:
 #install.packages('installr'); install.Rtools()
 
+devtools::install_github("ropensci/plotly") # you will need the latest version of plotly
 devtools::install_github('talgalili/heatmaply')
 ```
 
