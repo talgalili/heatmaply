@@ -59,6 +59,14 @@ heatmaply.heatmapr <- function(x,
                                                     end = 1, option = "viridis"),
                                limits = NULL,
                                ...) {
+
+
+  # informative errors for mis-specified limits
+  if(!is.null(limits)) {
+    if(!is.numeric(limits)) stop("limits must be numeric")
+    if(length(limits) != 2L) stop("limits must be of length 2 (i.e.: two dimensional)")
+  }
+
   # x is a heatmapr object.
 
   # heatmapr <- list(rows = rowDend, cols = colDend, matrix = mtx, image = imgUri,
