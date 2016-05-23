@@ -84,11 +84,19 @@ heatmaply.heatmapr <- function(x,
 
   # x <- heatmapr(mtcars)
 
-  theme_clear_grid <- theme(axis.line = element_line(colour = "black"),
+  theme_clear_grid_heatmap <- theme(axis.line = element_line(colour = "black"),
                             panel.grid.major = element_blank(),
                             panel.grid.minor = element_blank(),
                             panel.border = element_blank(),
                             panel.background = element_blank())
+
+  # source: http://stackoverflow.com/questions/6528180/ggplot2-plot-without-axes-legends-etc
+  theme_clear_grid_dends <- theme(axis.line=element_blank(),axis.text.x=element_blank(),
+        axis.text.y=element_blank(),axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),legend.position="none",
+        panel.background=element_blank(),panel.border=element_blank(),panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),plot.background=element_blank())
 
 
   rows <- x$rows
@@ -104,8 +112,8 @@ heatmaply.heatmapr <- function(x,
 
   # dendrograms
   # this is using dendextend
-  px <- ggplot(rows, labels  = FALSE) + coord_flip()+ theme_bw() + theme_clear_grid
-  py <- ggplot(cols, labels  = FALSE) + theme_bw() + theme_clear_grid
+  px <- ggplot(rows, labels  = FALSE) + coord_flip()+ theme_bw() + theme_clear_grid_dends
+  py <- ggplot(cols, labels  = FALSE) + theme_bw() + theme_clear_grid_dends
 
   if(row_dend_left) px <- px + scale_y_reverse()
 
@@ -117,7 +125,7 @@ heatmaply.heatmapr <- function(x,
   p <- ggplot(mdf, aes(x = variable, y = row_name)) + geom_tile(aes(fill = value)) +
     # scale_fill_viridis() +
     scale_fill_gradientn(colours = colours, limits = limits) +
-    theme_bw()+ theme_clear_grid
+    theme_bw()+ theme_clear_grid_heatmap
   # p <- plot_ly(z = xx, type = "heatmap")
   # ggplotly(p) # works great
 
