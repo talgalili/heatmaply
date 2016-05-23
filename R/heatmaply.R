@@ -1,9 +1,9 @@
-
 # devtools::install_github("ropensci/plotly", ref = "fix/subplot")
 
 # reference: https://plot.ly/ggplot2/ggdendro-dendrograms/
 # to answer later: http://stackoverflow.com/questions/34733829/questions-about-a-tutorial-regarding-interactive-heatmaps-with-plotly
 # to check: https://plot.ly/r/heatmaps/
+
 
 
 #' @title  Creates a plotly heatmap
@@ -156,7 +156,7 @@ heatmaply.heatmapr <- function(x,
 
 
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
-  p <- ggplot(mdf, aes(x = variable, y = row_name)) + geom_tile(aes(fill = value)) +
+  p <- ggplot(mdf, aes_string(x = "variable", y = "row_name")) + geom_tile(aes_string(fill = "value")) +
     # scale_fill_viridis() +
     scale_fill_gradient_fun +
     theme_bw()+ theme_clear_grid_heatmap
