@@ -1,3 +1,10 @@
+heatmaply 0.2.1 (2016-05-23)
+----------------------------------------
+
+### BUG FIXES
+* fix various import issues that caused warnings with devtools::checks()
+
+
 heatmaply 0.2.0 (2016-05-23)
 ----------------------------------------
 
