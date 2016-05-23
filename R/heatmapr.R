@@ -1,9 +1,5 @@
 # prepare the heatmapr object.
 
-
-#' @importFrom stats as.dendrogram dendrapply dist hclust is.leaf order.dendrogram reorder sd
-NULL
-
 `%||%` <- function(a, b) {
   if (!is.null(a))
     a
@@ -317,14 +313,14 @@ heatmapr <- function(x,
 
 
   if (is.factor(x)) {
-    colors <- scales::col_factor(colors, x, na.color = "transparent")
+    colors <- col_factor(colors, x, na.color = "transparent")
   } else {
     rng <- range(x, na.rm = TRUE)
     if (scale %in% c("row", "column")) {
       rng <- c(max(abs(rng)), -max(abs(rng)))
     }
 
-    colors <- scales::col_numeric(colors, rng, na.color = "transparent")
+    colors <- col_numeric(colors, rng, na.color = "transparent")
   }
 
   # imgUri <- base64enc::encodeAsPNG(t(x), colors)

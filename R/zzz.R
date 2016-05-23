@@ -16,6 +16,31 @@
 #  http://www.r-project.org/Licenses/
 #
 
+
+
+#' @import dendextend
+#' @import ggplot2
+#' @import plotly
+
+#' @importFrom scales col_factor col_numeric
+NULL
+
+#' @importFrom viridis viridis
+NULL
+
+#' @importFrom stats as.dendrogram dendrapply dist hclust is.leaf order.dendrogram reorder sd
+NULL
+
+
+
+
+
+
+
+
+
+
+
 #
 #
 #
