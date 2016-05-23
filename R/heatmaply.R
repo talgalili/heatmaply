@@ -17,7 +17,11 @@
 #' @param colours a vector of colors to use for heatmap color.
 #' The default uses \code{\link[viridis]{viridis}(n=256, alpha = 1, begin = 0, end = 1, option = "viridis")}
 #' It is passed to \link[ggplot2]{scale_fill_gradientn}.
-#' @param limits a two dimensional vector specifying the data range for the scale.
+#' @param limits a two dimensional numeric vector specifying the data range for the scale.
+#'
+#' @param row_dend_left logical (default is FALSE). Should the row dendrogram be
+#' plotted on the left side of the heatmap. If false then it will be plotted on the right
+#' side.
 #'
 #' @aliases
 #' heatmaply.default
@@ -47,9 +51,10 @@ heatmaply.default <- function(x,
                               colours = viridis(n=256, alpha = 1, begin = 0,
                                                    end = 1, option = "viridis"),
                               limits = NULL,
+                              row_dend_left = FALSE,
                               ...) {
   hm <- heatmapr(x, ...)
-  heatmaply.heatmapr(hm, colours = colours, limits = limits) # TODO: think more on what should be passed in "..."
+  heatmaply.heatmapr(hm, colours = colours, limits = limits, row_dend_left = row_dend_left) # TODO: think more on what should be passed in "..."
 }
 
 
@@ -58,6 +63,7 @@ heatmaply.heatmapr <- function(x,
                                colours = viridis(n=256, alpha = 1, begin = 0,
                                                     end = 1, option = "viridis"),
                                limits = NULL,
+                               row_dend_left = FALSE,
                                ...) {
 
 
@@ -85,8 +91,8 @@ heatmaply.heatmapr <- function(x,
                             panel.background = element_blank())
 
 
-  cols <- x$rows
-  rows <- x$cols
+  rows <- x$rows
+  cols <- x$cols
 
   # heatmap
   xx <- x$matrix$data
@@ -98,8 +104,10 @@ heatmaply.heatmapr <- function(x,
 
   # dendrograms
   # this is using dendextend
-  px <- ggplot(rows, labels  = FALSE) + theme_bw() + theme_clear_grid
-  py <- ggplot(cols, labels  = FALSE) + coord_flip()+ theme_bw() + theme_clear_grid
+  px <- ggplot(rows, labels  = FALSE) + coord_flip()+ theme_bw() + theme_clear_grid
+  py <- ggplot(cols, labels  = FALSE) + theme_bw() + theme_clear_grid
+
+  if(row_dend_left) px <- px + scale_y_reverse()
 
   px <- ggplotly(px, tooltip = "")
   py <- ggplotly(py, tooltip = "")
@@ -113,6 +121,7 @@ heatmaply.heatmapr <- function(x,
   # p <- plot_ly(z = xx, type = "heatmap")
   # ggplotly(p) # works great
 
+  # if(row_dend_left) p <- p + scale_y_reverse()
 
 
 
@@ -130,8 +139,15 @@ heatmaply.heatmapr <- function(x,
   #          xaxis = eaxis,
   #          yaxis = eaxis)
 
-  s <- subplot(px, plotly_empty(), p, py, nrows = 2, widths = c(.8,.2), heights = c(.2,.8), margin = 0,
-               shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE)
+  if(row_dend_left) {
+    s <- subplot(plotly_empty(), py, px, p, nrows = 2, widths = c(.2,.8), heights = c(.2,.8), margin = 0,
+                 shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE)
+  } else {
+    # row dend on the right side
+    s <- subplot(py, plotly_empty(), p, px, nrows = 2, widths = c(.8,.2), heights = c(.2,.8), margin = 0,
+                 shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE)
+  }
+
   l <- layout(s, showlegend = FALSE)
   print(l)
 
