@@ -14,15 +14,24 @@
 #' heatmap elements from the graphical rendaring of the object, which could be done
 #' @param x can either be a heatmapr object, or a numeric matrix
 #'   Defaults to \code{TRUE} unless \code{x} contains any \code{NA}s.
+#'
 #' @param colours a vector of colors to use for heatmap color.
 #' The default uses \code{\link[viridis]{viridis}(n=256, alpha = 1, begin = 0, end = 1, option = "viridis")}
 #' It is passed to \link[ggplot2]{scale_fill_gradientn}.
 #' @param limits a two dimensional numeric vector specifying the data range for the scale.
+#' @param na.value Colour to use for missing values (default is "grey50").
+#' @param scale_fill_gradient_fun A function that creates a smooth gradient for the heatmap.
+#' The default uses \link[ggplot2]{scale_fill_gradientn} with the values of colours, limits, and
+#' na.value that are supplied by the user. The user can input a customized function, such as
+#' \link{scale_colour_gradient}() in order to get other results (although the virids default
+#' is quite recommended)
 #'
 #' @param row_dend_left logical (default is FALSE). Should the row dendrogram be
 #' plotted on the left side of the heatmap. If false then it will be plotted on the right
 #' side.
 #'
+#' @param ... other parameters passed to \link{heatmapr} (currently, various parameters may be ignored.
+#' Please submit an issue on github if you have a feature that you wish to have added)
 #' @aliases
 #' heatmaply.default
 #' heatmaply.heatmapr
@@ -37,32 +46,57 @@
 #' heatmaply(cor(iris[,-5]))
 #' heatmaply(cor(iris[,-5]), limits = c(-1,1))
 #' heatmaply(mtcars, k_row = 3, k_col = 2)
+#'
+#' x <- mtcars
+#' # different colors
+#' heatmaply(x, colours = heat.colors(200))
+#' # using special scale_fill_gradient_fun colors
+#' heatmaply(x, scale_fill_gradient_fun = scale_colour_gradient())
+#'
 #' }
 heatmaply <- function(x,
+                      # elements for scale_fill_gradientn
                       colours = viridis(n=256, alpha = 1, begin = 0,
-                                           end = 1, option = "viridis"),
+                                        end = 1, option = "viridis"),
                       limits = NULL,
+                      na.value = "grey50",
+                      scale_fill_gradient_fun =
+                        scale_fill_gradientn(colours = colours,
+                                               na.value = na.value, limits = limits),
+                      row_dend_left = FALSE,
                       ...) {
   UseMethod("heatmaply")
 }
 
 #' @export
 heatmaply.default <- function(x,
+                              # elements for scale_fill_gradientn
                               colours = viridis(n=256, alpha = 1, begin = 0,
-                                                   end = 1, option = "viridis"),
+                                                end = 1, option = "viridis"),
                               limits = NULL,
+                              na.value = "grey50",
+                              scale_fill_gradient_fun =
+                                scale_fill_gradientn(colours = colours,
+                                                       na.value = na.value, limits = limits),
                               row_dend_left = FALSE,
                               ...) {
   hm <- heatmapr(x, ...)
-  heatmaply.heatmapr(hm, colours = colours, limits = limits, row_dend_left = row_dend_left) # TODO: think more on what should be passed in "..."
+  heatmaply.heatmapr(hm, # colours = colours, limits = limits,
+                     scale_fill_gradient_fun = scale_fill_gradient_fun,
+                     row_dend_left = row_dend_left) # TODO: think more on what should be passed in "..."
 }
 
 
 #' @export
 heatmaply.heatmapr <- function(x,
+                               # elements for scale_fill_gradientn
                                colours = viridis(n=256, alpha = 1, begin = 0,
                                                     end = 1, option = "viridis"),
                                limits = NULL,
+                               na.value = "grey50",
+                               scale_fill_gradient_fun =
+                                 scale_fill_gradientn(colours = colours,
+                                                        na.value = na.value, limits = limits),
                                row_dend_left = FALSE,
                                ...) {
 
@@ -124,7 +158,7 @@ heatmaply.heatmapr <- function(x,
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
   p <- ggplot(mdf, aes(x = variable, y = row_name)) + geom_tile(aes(fill = value)) +
     # scale_fill_viridis() +
-    scale_fill_gradientn(colours = colours, limits = limits) +
+    scale_fill_gradient_fun +
     theme_bw()+ theme_clear_grid_heatmap
   # p <- plot_ly(z = xx, type = "heatmap")
   # ggplotly(p) # works great

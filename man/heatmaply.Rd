@@ -7,7 +7,9 @@
 \title{Creates a plotly heatmap}
 \usage{
 heatmaply(x, colours = viridis(n = 256, alpha = 1, begin = 0, end = 1, option
-  = "viridis"), limits = NULL, ...)
+  = "viridis"), limits = NULL, na.value = "grey50",
+  scale_fill_gradient_fun = scale_fill_gradientn(colours = colours, na.value =
+  na.value, limits = limits), row_dend_left = FALSE, ...)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -17,7 +19,22 @@ Defaults to \code{TRUE} unless \code{x} contains any \code{NA}s.}
 The default uses \code{\link[viridis]{viridis}(n=256, alpha = 1, begin = 0, end = 1, option = "viridis")}
 It is passed to \link[ggplot2]{scale_fill_gradientn}.}
 
-\item{limits}{a two dimensional vector specifying the data range for the scale.}
+\item{limits}{a two dimensional numeric vector specifying the data range for the scale.}
+
+\item{na.value}{Colour to use for missing values (default is "grey50").}
+
+\item{scale_fill_gradient_fun}{A function that creates a smooth gradient for the heatmap.
+The default uses \link[ggplot2]{scale_fill_gradientn} with the values of colours, limits, and
+na.value that are supplied by the user. The user can input a customized function, such as
+\link{scale_colour_gradient}() in order to get other results (although the virids default
+is quite recommended)}
+
+\item{row_dend_left}{logical (default is FALSE). Should the row dendrogram be
+plotted on the left side of the heatmap. If false then it will be plotted on the right
+side.}
+
+\item{...}{other parameters passed to \link{heatmapr} (currently, various parameters may be ignored.
+Please submit an issue on github if you have a feature that you wish to have added)}
 }
 \description{
 An object of class heatmapr includes all the needed information
@@ -34,6 +51,13 @@ heatmaply(iris[,-5], k_row = 3, k_col = 2)
 heatmaply(cor(iris[,-5]))
 heatmaply(cor(iris[,-5]), limits = c(-1,1))
 heatmaply(mtcars, k_row = 3, k_col = 2)
+
+x <- mtcars
+# different colors
+heatmaply(x, colours = heat.colors(200))
+# using special scale_fill_gradient_fun colors
+heatmaply(x, scale_fill_gradient_fun = scale_colour_gradient())
+
 }
 }
 

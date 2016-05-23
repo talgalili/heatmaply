@@ -12,7 +12,7 @@ heatmapr(x, Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE,
   "column", "none"), reorderfun = function(d, w) reorder(d, w), k_row, k_col,
   symm = FALSE, revC, scale = c("none", "row", "column"), na.rm = TRUE,
   labRow = rownames(x), labCol = colnames(x), cexRow, cexCol, digits = 3L,
-  cellnote, cellnote_scale = FALSE, theme = NULL, colors = "RdYlBu",
+  cellnote, cellnote_scale = TRUE, theme = NULL, colors = "RdYlBu",
   width = NULL, height = NULL, xaxis_height = 80, yaxis_width = 120,
   xaxis_font_size = NULL, yaxis_font_size = NULL, brush_color = "#0000FF",
   show_grid = TRUE, anim_duration = 500, ...)
@@ -62,7 +62,7 @@ and will give it a value cexCol*14}
 \item{cellnote}{(optional) matrix of the same dimensions as \code{x} that has the human-readable version of each value, for displaying to the user on hover. If \code{NULL}, then \code{x} will be coerced using \code{\link{as.character}}.
 If missing, it will use \code{x}, after rounding it based on the \code{digits} parameter.}
 
-\item{cellnote_scale}{logical (default is FALSE). IF cellnote is missing and x is used,
+\item{cellnote_scale}{logical (default is TRUE). IF cellnote is missing and x is used,
 should cellnote be scaled if x is also scaled?}
 
 \item{theme}{A custom CSS theme to use. Currently the only valid values are
