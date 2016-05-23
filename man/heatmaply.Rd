@@ -6,25 +6,25 @@
 \alias{heatmaply.heatmapr}
 \title{Creates a plotly heatmap}
 \usage{
-heatmaply(x, colours = viridis(n = 256, alpha = 1, begin = 0, end = 1, option
-  = "viridis"), limits = NULL, na.value = "grey50",
-  scale_fill_gradient_fun = scale_fill_gradientn(colours = colours, na.value =
+heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
+  "viridis"), limits = NULL, na.value = "grey50",
+  scale_fill_gradient_fun = scale_fill_gradientn(colors = colors, na.value =
   na.value, limits = limits), row_dend_left = FALSE, ...)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
 Defaults to \code{TRUE} unless \code{x} contains any \code{NA}s.}
 
-\item{colours}{a vector of colors to use for heatmap color.
+\item{colors}{a vector of colors to use for heatmap color.
 The default uses \code{\link[viridis]{viridis}(n=256, alpha = 1, begin = 0, end = 1, option = "viridis")}
 It is passed to \link[ggplot2]{scale_fill_gradientn}.}
 
 \item{limits}{a two dimensional numeric vector specifying the data range for the scale.}
 
-\item{na.value}{Colour to use for missing values (default is "grey50").}
+\item{na.value}{color to use for missing values (default is "grey50").}
 
 \item{scale_fill_gradient_fun}{A function that creates a smooth gradient for the heatmap.
-The default uses \link[ggplot2]{scale_fill_gradientn} with the values of colours, limits, and
+The default uses \link[ggplot2]{scale_fill_gradientn} with the values of colors, limits, and
 na.value that are supplied by the user. The user can input a customized function, such as
 \link{scale_colour_gradient}() in order to get other results (although the virids default
 is quite recommended)}
@@ -54,7 +54,7 @@ heatmaply(mtcars, k_row = 3, k_col = 2)
 
 x <- mtcars
 # different colors
-heatmaply(x, colours = heat.colors(200))
+heatmaply(x, colors = heat.colors(200))
 # using special scale_fill_gradient_fun colors
 heatmaply(x, scale_fill_gradient_fun = scale_colour_gradient())
 

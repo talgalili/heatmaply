@@ -15,13 +15,13 @@
 #' @param x can either be a heatmapr object, or a numeric matrix
 #'   Defaults to \code{TRUE} unless \code{x} contains any \code{NA}s.
 #'
-#' @param colours a vector of colors to use for heatmap color.
+#' @param colors a vector of colors to use for heatmap color.
 #' The default uses \code{\link[viridis]{viridis}(n=256, alpha = 1, begin = 0, end = 1, option = "viridis")}
 #' It is passed to \link[ggplot2]{scale_fill_gradientn}.
 #' @param limits a two dimensional numeric vector specifying the data range for the scale.
-#' @param na.value Colour to use for missing values (default is "grey50").
+#' @param na.value color to use for missing values (default is "grey50").
 #' @param scale_fill_gradient_fun A function that creates a smooth gradient for the heatmap.
-#' The default uses \link[ggplot2]{scale_fill_gradientn} with the values of colours, limits, and
+#' The default uses \link[ggplot2]{scale_fill_gradientn} with the values of colors, limits, and
 #' na.value that are supplied by the user. The user can input a customized function, such as
 #' \link{scale_colour_gradient}() in order to get other results (although the virids default
 #' is quite recommended)
@@ -49,19 +49,19 @@
 #'
 #' x <- mtcars
 #' # different colors
-#' heatmaply(x, colours = heat.colors(200))
+#' heatmaply(x, colors = heat.colors(200))
 #' # using special scale_fill_gradient_fun colors
 #' heatmaply(x, scale_fill_gradient_fun = scale_colour_gradient())
 #'
 #' }
 heatmaply <- function(x,
                       # elements for scale_fill_gradientn
-                      colours = viridis(n=256, alpha = 1, begin = 0,
+                      colors = viridis(n=256, alpha = 1, begin = 0,
                                         end = 1, option = "viridis"),
                       limits = NULL,
                       na.value = "grey50",
                       scale_fill_gradient_fun =
-                        scale_fill_gradientn(colours = colours,
+                        scale_fill_gradientn(colors = colors,
                                                na.value = na.value, limits = limits),
                       row_dend_left = FALSE,
                       ...) {
@@ -71,17 +71,17 @@ heatmaply <- function(x,
 #' @export
 heatmaply.default <- function(x,
                               # elements for scale_fill_gradientn
-                              colours = viridis(n=256, alpha = 1, begin = 0,
+                              colors = viridis(n=256, alpha = 1, begin = 0,
                                                 end = 1, option = "viridis"),
                               limits = NULL,
                               na.value = "grey50",
                               scale_fill_gradient_fun =
-                                scale_fill_gradientn(colours = colours,
+                                scale_fill_gradientn(colors = colors,
                                                        na.value = na.value, limits = limits),
                               row_dend_left = FALSE,
                               ...) {
   hm <- heatmapr(x, ...)
-  heatmaply.heatmapr(hm, # colours = colours, limits = limits,
+  heatmaply.heatmapr(hm, # colors = colors, limits = limits,
                      scale_fill_gradient_fun = scale_fill_gradient_fun,
                      row_dend_left = row_dend_left) # TODO: think more on what should be passed in "..."
 }
@@ -90,12 +90,12 @@ heatmaply.default <- function(x,
 #' @export
 heatmaply.heatmapr <- function(x,
                                # elements for scale_fill_gradientn
-                               colours = viridis(n=256, alpha = 1, begin = 0,
+                               colors = viridis(n=256, alpha = 1, begin = 0,
                                                     end = 1, option = "viridis"),
                                limits = NULL,
                                na.value = "grey50",
                                scale_fill_gradient_fun =
-                                 scale_fill_gradientn(colours = colours,
+                                 scale_fill_gradientn(colors = colors,
                                                         na.value = na.value, limits = limits),
                                row_dend_left = FALSE,
                                ...) {
