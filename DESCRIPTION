@@ -14,10 +14,10 @@ Description: Create interactive heat maps that are usable from the R console,
     accompanied by dendrograms. Heatmaps are used in many fields for visualizing
     observations, correlations, missing values patterns, and more. Interactive
     heatmaps allow the inspection of specific value by hovering the mouse over a
-    cell, as well as zooming into a region of the heatmap by draging a rectangle
+    cell, as well as zooming into a region of the heatmap by dragging a rectangle
     around the relevant area. This work is based on the ggplot2 and plotly.js
-    engine. It produces similar heatmaps as d3heatmap, with the advatange of speed
-    (plotly.js is able to handle larger size matrix), and the ability to zoom from
+    engine. It produces similar heatmaps as d3heatmap, with the advantage of speed
+    ('plotly.js' is able to handle larger size matrix), and the ability to zoom from
     the dendrogram.
 Depends:
     R (>= 3.0.0),
