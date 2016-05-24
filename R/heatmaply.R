@@ -26,6 +26,9 @@
 #' \link{scale_colour_gradient}() in order to get other results (although the virids default
 #' is quite recommended)
 #'
+#'
+#' @param text_angle_column numeric (Default is 45), the angle of the text of the column.
+#'
 #' @param row_dend_left logical (default is FALSE). Should the row dendrogram be
 #' plotted on the left side of the heatmap. If false then it will be plotted on the right
 #' side.
@@ -63,6 +66,7 @@ heatmaply <- function(x,
                       scale_fill_gradient_fun =
                         scale_fill_gradientn(colors = colors,
                                                na.value = na.value, limits = limits),
+                      text_angle_column = 45,
                       row_dend_left = FALSE,
                       ...) {
   UseMethod("heatmaply")
@@ -78,11 +82,13 @@ heatmaply.default <- function(x,
                               scale_fill_gradient_fun =
                                 scale_fill_gradientn(colors = colors,
                                                        na.value = na.value, limits = limits),
+                              text_angle_column = 45,
                               row_dend_left = FALSE,
                               ...) {
   hm <- heatmapr(x, ...)
   heatmaply.heatmapr(hm, # colors = colors, limits = limits,
                      scale_fill_gradient_fun = scale_fill_gradient_fun,
+                     text_angle_column = text_angle_column,
                      row_dend_left = row_dend_left) # TODO: think more on what should be passed in "..."
 }
 
@@ -97,6 +103,9 @@ heatmaply.heatmapr <- function(x,
                                scale_fill_gradient_fun =
                                  scale_fill_gradientn(colors = colors,
                                                         na.value = na.value, limits = limits),
+
+                               text_angle_column = 45,
+
                                row_dend_left = FALSE,
                                ...) {
 
@@ -159,7 +168,8 @@ heatmaply.heatmapr <- function(x,
   p <- ggplot(mdf, aes_string(x = "variable", y = "row_name")) + geom_tile(aes_string(fill = "value")) +
     # scale_fill_viridis() +
     scale_fill_gradient_fun +
-    theme_bw()+ theme_clear_grid_heatmap
+    theme_bw()+ theme_clear_grid_heatmap +
+    theme(axis.text.x = element_text(angle = text_angle_column, hjust = 1))
   # p <- plot_ly(z = xx, type = "heatmap")
   # ggplotly(p) # works great
 
@@ -237,7 +247,8 @@ if(FALSE) {
 
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
   p <- ggplot(mdf, aes(x = variable, y = car)) + geom_tile(aes(fill = value)) +
-    scale_fill_viridis() + theme_bw()
+    scale_fill_viridis() + theme_bw() +
+    theme(axis.text.x = element_text(angle = text_angle_column, hjust = 1))
   # p <- plot_ly(z = xx, type = "heatmap")
   # ggplotly(p) # works great
   # ggplotly(p, tooltip = "none")

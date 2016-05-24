@@ -9,7 +9,8 @@
 heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
   "viridis"), limits = NULL, na.value = "grey50",
   scale_fill_gradient_fun = scale_fill_gradientn(colors = colors, na.value =
-  na.value, limits = limits), row_dend_left = FALSE, ...)
+  na.value, limits = limits), text_angle_column = 45, row_dend_left = FALSE,
+  ...)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -28,6 +29,8 @@ The default uses \link[ggplot2]{scale_fill_gradientn} with the values of colors,
 na.value that are supplied by the user. The user can input a customized function, such as
 \link{scale_colour_gradient}() in order to get other results (although the virids default
 is quite recommended)}
+
+\item{text_angle_column}{numeric (Default is 45), the angle of the text of the column.}
 
 \item{row_dend_left}{logical (default is FALSE). Should the row dendrogram be
 plotted on the left side of the heatmap. If false then it will be plotted on the right
