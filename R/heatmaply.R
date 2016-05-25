@@ -68,13 +68,16 @@ heatmaply <- function(x,
                                         end = 1, option = "viridis"),
                       limits = NULL,
                       na.value = "grey50",
-                      scale_fill_gradient_fun =
-                        scale_fill_gradientn(colors = colors,
-                                               na.value = na.value, limits = limits),
                       text_angle_column = 45,
                       margin = 0,
                       row_dend_left = FALSE,
-                      ...) {
+
+                      ...,
+                      scale_fill_gradient_fun =
+                        scale_fill_gradientn(colors = colors,
+                                             na.value = na.value, limits = limits)
+
+                      ) {
   UseMethod("heatmaply")
 }
 
@@ -85,13 +88,16 @@ heatmaply.default <- function(x,
                                                 end = 1, option = "viridis"),
                               limits = NULL,
                               na.value = "grey50",
-                              scale_fill_gradient_fun =
-                                scale_fill_gradientn(colors = colors,
-                                                       na.value = na.value, limits = limits),
+
                               text_angle_column = 45,
                               margin = 0,
                               row_dend_left = FALSE,
-                              ...) {
+                              ...,
+                              scale_fill_gradient_fun =
+                                scale_fill_gradientn(colors = colors,
+                                                     na.value = na.value, limits = limits)
+
+                              ) {
   hm <- heatmapr(x, ...)
   heatmaply.heatmapr(hm, # colors = colors, limits = limits,
                      scale_fill_gradient_fun = scale_fill_gradient_fun,
@@ -176,15 +182,17 @@ heatmaply.heatmapr <- function(x,
                                                     end = 1, option = "viridis"),
                                limits = NULL,
                                na.value = "grey50",
-                               scale_fill_gradient_fun =
-                                 scale_fill_gradientn(colors = colors,
-                                                        na.value = na.value, limits = limits),
 
                                text_angle_column = 45,
                                margin = 0,
 
                                row_dend_left = FALSE,
-                               ...) {
+                               ...,
+                               scale_fill_gradient_fun =
+                                 scale_fill_gradientn(colors = colors,
+                                                      na.value = na.value, limits = limits)
+
+                               ) {
 
 
   # informative errors for mis-specified limits

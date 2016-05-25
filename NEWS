@@ -7,6 +7,11 @@ heatmaply 0.3.0 (2016-05-25)
   * remove space between the heatmap and dendrograms (via: coord_cartesian(expand = FALSE)  and coord_flip(expand = FALSE))
   * added the margin parameter (to control the distance between the heatmap and the dendrograms.)
 
+### BUG FIXES
+* fix #2 : Error: Don't know how to add scale_fill_gradient_fun to a plot
+  by moving "scale_fill_gradient_fun" after "..." (I may change this parameter's name later)
+
+
 ### VIGNETTE
 * heatmaply now has a basic vignette.
 

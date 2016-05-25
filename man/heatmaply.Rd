@@ -7,10 +7,10 @@
 \title{Creates a plotly heatmap}
 \usage{
 heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
-  "viridis"), limits = NULL, na.value = "grey50",
+  "viridis"), limits = NULL, na.value = "grey50", text_angle_column = 45,
+  margin = 0, row_dend_left = FALSE, ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = colors, na.value =
-  na.value, limits = limits), text_angle_column = 45, margin = 0,
-  row_dend_left = FALSE, ...)
+  na.value, limits = limits))
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -23,12 +23,6 @@ It is passed to \link[ggplot2]{scale_fill_gradientn}.}
 \item{limits}{a two dimensional numeric vector specifying the data range for the scale.}
 
 \item{na.value}{color to use for missing values (default is "grey50").}
-
-\item{scale_fill_gradient_fun}{A function that creates a smooth gradient for the heatmap.
-The default uses \link[ggplot2]{scale_fill_gradientn} with the values of colors, limits, and
-na.value that are supplied by the user. The user can input a customized function, such as
-\link{scale_colour_gradient}() in order to get other results (although the virids default
-is quite recommended)}
 
 \item{text_angle_column}{numeric (Default is 45), the angle of the text of the column.}
 
@@ -44,6 +38,12 @@ side.}
 
 \item{...}{other parameters passed to \link{heatmapr} (currently, various parameters may be ignored.
 Please submit an issue on github if you have a feature that you wish to have added)}
+
+\item{scale_fill_gradient_fun}{A function that creates a smooth gradient for the heatmap.
+The default uses \link[ggplot2]{scale_fill_gradientn} with the values of colors, limits, and
+na.value that are supplied by the user. The user can input a customized function, such as
+\link{scale_colour_gradient}() in order to get other results (although the virids default
+is quite recommended)}
 }
 \description{
 An object of class heatmapr includes all the needed information
