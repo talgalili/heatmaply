@@ -1,6 +1,9 @@
 heatmaply 0.3.0 (2016-05-25)
 ==============================
 
+### ANNOUNCMENTS
+* heatmaply 0.3.0 - first CRAN release!
+
 ### NEW FEATURES
 * heatmaply
   * Now works with Rowv=F and Colv=F (by introducing a new un-exported function: heatmap_subplot_from_ggplotly)
@@ -48,12 +51,7 @@ TODO:
 * add bars for extra categories
 * remove hover information from dendrograms
 * remove unneeded code from d3heatmap
-* fix docs!
 * add many options for controlling the heatmap "as it should be"
-* check if I can control the ylim of the dendrograms and if that would resolve the extra space I see by default.
-
 * implement all relevant options streight to heatmaply.
-
-* release to CRAN
 
 * write a post!

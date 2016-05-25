@@ -34,10 +34,10 @@ This work is based on the ggplot2 and plotly.js engine. It produces similar heat
 To install the stable version on CRAN:
 
 ```r
-# install.packages('heatmaply') # not on CRAN (yet)!
+install.packages('heatmaply')
 ```
 
-To install the GitHub version:
+To install the latest ("cutting-edge") GitHub version run:
 
 ```R
 # You'll need devtools
@@ -46,7 +46,7 @@ install.packages.2('devtools')
 # make sure you have Rtools installed first! if not, then run:
 #install.packages('installr'); install.Rtools()
 
-devtools::install_github("ropensci/plotly") # you will need the latest version of plotly
+devtools::install_github("ropensci/plotly") # you will probably benefit from the latest version of plotly
 devtools::install_github('talgalili/heatmaply')
 ```
 
