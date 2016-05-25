@@ -28,6 +28,11 @@
 #'
 #'
 #' @param text_angle_column numeric (Default is 45), the angle of the text of the column.
+#' @param margin passed to \link[plotly]{subplot}. Default is 0. Either a single value or
+#'  four values (all between 0 and 1). If four values are provided,
+#'  the first is used as the left margin, the second is used as the right margin,
+#'  the third is used as the top margin, and the fourth is used as the bottom margin.
+#'  If a single value is provided, it will be used as all four margins.
 #'
 #' @param row_dend_left logical (default is FALSE). Should the row dendrogram be
 #' plotted on the left side of the heatmap. If false then it will be plotted on the right
@@ -67,6 +72,7 @@ heatmaply <- function(x,
                         scale_fill_gradientn(colors = colors,
                                                na.value = na.value, limits = limits),
                       text_angle_column = 45,
+                      margin = 0,
                       row_dend_left = FALSE,
                       ...) {
   UseMethod("heatmaply")
@@ -83,12 +89,14 @@ heatmaply.default <- function(x,
                                 scale_fill_gradientn(colors = colors,
                                                        na.value = na.value, limits = limits),
                               text_angle_column = 45,
+                              margin = 0,
                               row_dend_left = FALSE,
                               ...) {
   hm <- heatmapr(x, ...)
   heatmaply.heatmapr(hm, # colors = colors, limits = limits,
                      scale_fill_gradient_fun = scale_fill_gradient_fun,
                      text_angle_column = text_angle_column,
+                     margin = margin,
                      row_dend_left = row_dend_left) # TODO: think more on what should be passed in "..."
 }
 
@@ -97,8 +105,8 @@ heatmaply.default <- function(x,
 
 
 
-heatmap_subplot_from_ggplotly <- function(p, px, py, top_corner, row_dend_left,
-                                          widths = c(.8,.2), heights = c(.2,.8), margin = 0, ...) {
+heatmap_subplot_from_ggplotly <- function(p, px, py, top_corner, row_dend_left, margin = 0,
+                                          widths = c(.8,.2), heights = c(.2,.8), ...) {
 
   # make different plots based on which dendrogram we have
 
@@ -173,6 +181,7 @@ heatmaply.heatmapr <- function(x,
                                                         na.value = na.value, limits = limits),
 
                                text_angle_column = 45,
+                               margin = 0,
 
                                row_dend_left = FALSE,
                                ...) {
@@ -285,7 +294,7 @@ heatmaply.heatmapr <- function(x,
   # top_corner <- ggplotly(qplot(as.numeric(xx), geom="histogram"))
 
 
-  heatmap_subplot <- heatmap_subplot_from_ggplotly(p, px, py, top_corner, row_dend_left)
+  heatmap_subplot <- heatmap_subplot_from_ggplotly(p, px, py, top_corner, row_dend_left, margin)
 
 
 

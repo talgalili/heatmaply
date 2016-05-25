@@ -9,8 +9,8 @@
 heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
   "viridis"), limits = NULL, na.value = "grey50",
   scale_fill_gradient_fun = scale_fill_gradientn(colors = colors, na.value =
-  na.value, limits = limits), text_angle_column = 45, row_dend_left = FALSE,
-  ...)
+  na.value, limits = limits), text_angle_column = 45, margin = 0,
+  row_dend_left = FALSE, ...)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -31,6 +31,12 @@ na.value that are supplied by the user. The user can input a customized function
 is quite recommended)}
 
 \item{text_angle_column}{numeric (Default is 45), the angle of the text of the column.}
+
+\item{margin}{passed to \link[plotly]{subplot}. Default is 0. Either a single value or
+four values (all between 0 and 1). If four values are provided,
+the first is used as the left margin, the second is used as the right margin,
+the third is used as the top margin, and the fourth is used as the bottom margin.
+If a single value is provided, it will be used as all four margins.}
 
 \item{row_dend_left}{logical (default is FALSE). Should the row dendrogram be
 plotted on the left side of the heatmap. If false then it will be plotted on the right

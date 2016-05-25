@@ -2,7 +2,11 @@ heatmaply 0.3.0 (2016-05-25)
 ==============================
 
 ### NEW FEATURES
-* heatmaply Now works with Rowv=F and Colv=F (by introducing a new un-exported function: heatmap_subplot_from_ggplotly)
+* heatmaply
+  * Now works with Rowv=F and Colv=F (by introducing a new un-exported function: heatmap_subplot_from_ggplotly)
+  * remove space between the heatmap and dendrograms (via: coord_cartesian(expand = FALSE)  and coord_flip(expand = FALSE))
+  * added the margin parameter (to control the distance between the heatmap and the dendrograms.)
+
 
 
 heatmaply 0.2.1 (2016-05-23)
