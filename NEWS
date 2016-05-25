@@ -7,6 +7,8 @@ heatmaply 0.3.0 (2016-05-25)
   * remove space between the heatmap and dendrograms (via: coord_cartesian(expand = FALSE)  and coord_flip(expand = FALSE))
   * added the margin parameter (to control the distance between the heatmap and the dendrograms.)
 
+### VIGNETTE
+* heatmaply now has a basic vignette.
 
 
 heatmaply 0.2.1 (2016-05-23)
@@ -37,21 +39,12 @@ heatmaply 0.1.0 (2016-05-14)
 
 TODO:
 ==============================
-* fix side labels
 * add bars for extra categories
 * remove hover information from dendrograms
 * remove unneeded code from d3heatmap
 * fix docs!
 * add many options for controlling the heatmap "as it should be"
 * check if I can control the ylim of the dendrograms and if that would resolve the extra space I see by default.
-* add to the docs:
-
-library(heatmaply)
-library(magrittr)
-library(plotly)
-heatmaply(mtcars, k_row = 3, k_col = 2) %>% layout(margin = list(l = 130, b = 40))
-
-* create a vignette with examples
 
 * implement all relevant options streight to heatmaply.
 

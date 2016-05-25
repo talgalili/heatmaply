@@ -31,7 +31,11 @@ Imports:
     scales,
     utils,
     stats
+VignetteBuilder: knitr
 License: GPL-2 | GPL-3
+URL: http://cran.r-project.org/package=heatmaply,
+    https://github.com/talgalili/heatmaply/,
+    http://www.r-statistics.com/tag/heatmaply/
 BugReports: https://github.com/talgalili/heatmaply/issues
 LazyData: TRUE
 RoxygenNote: 5.0.1
