@@ -251,12 +251,13 @@ heatmaply.heatmapr <- function(x,
   xx <- x$matrix$data
   df <- as.data.frame(xx)
   colnames(df) <- x$matrix$cols
-  df$row_name <- x$matrix$rows
-  df$row_name <- with(df, factor(row_name, levels=row_name, ordered=TRUE))
-  mdf <- reshape2::melt(df, id.vars="row_name")
+  df$row <- x$matrix$rows
+  df$row <- with(df, factor(row, levels=row, ordered=TRUE))
+  mdf <- reshape2::melt(df, id.vars="row")
+  colnames(mdf)[2] <- "column" # rename "variable"
 
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
-  p <- ggplot(mdf, aes_string(x = "variable", y = "row_name")) + geom_tile(aes_string(fill = "value")) +
+  p <- ggplot(mdf, aes_string(x = "column", y = "row")) + geom_tile(aes_string(fill = "value")) +
     # scale_fill_viridis() +
     coord_cartesian(expand = FALSE) +
     scale_fill_gradient_fun +
