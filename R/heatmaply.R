@@ -93,6 +93,74 @@ heatmaply.default <- function(x,
 }
 
 
+
+
+
+
+heatmap_subplot_from_ggplotly <- function(p, px, py, top_corner, row_dend_left,
+                                          widths = c(.8,.2), heights = c(.2,.8), margin = 0, ...) {
+
+  # make different plots based on which dendrogram we have
+
+
+
+  if(!is.null(px) & !is.null(py)) {
+    # ------------- most of the time we use this: -------------
+    # we have both dendrograms
+    if(row_dend_left) {
+      s <- subplot(top_corner, py, px, p, nrows = 2,
+                   widths = rev(widths), heights = heights, margin = margin,
+                   shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE)
+    } else {
+      # row dend on the right side
+      s <- subplot(py, top_corner, p, px, nrows = 2,
+                   widths = widths, heights = heights, margin = margin,
+                   shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE)
+    }
+
+  } else {
+    # we are missing SOME dendrogram (or both)
+
+    if(is.null(px) & is.null(py)) {
+      s <- subplot(p)
+    }
+
+    if(!is.null(py)) {
+      # then px is NULL
+      s <- subplot(py, p, nrows = 2,
+                   heights = heights, margin = margin,
+                   shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE)
+    }
+
+    if(!is.null(px)) {
+      # then py is NULL
+      if(row_dend_left) {
+        s <- subplot(px, p, nrows = 1,
+                     widths = rev(widths), margin = margin,
+                     shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE)
+      } else {
+        # row dend on the right side
+        s <- subplot(p, px, nrows = 1,
+                     widths = widths, margin = margin,
+                     shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE)
+      }
+    }
+
+
+
+
+  }
+
+
+  return(s)
+
+
+}
+
+
+
+
+
 #' @export
 heatmaply.heatmapr <- function(x,
                                # elements for scale_fill_gradientn
@@ -155,13 +223,21 @@ heatmaply.heatmapr <- function(x,
 
   # dendrograms
   # this is using dendextend
-  px <- ggplot(rows, labels  = FALSE) + coord_flip()+ theme_bw() + theme_clear_grid_dends
-  py <- ggplot(cols, labels  = FALSE) + theme_bw() + theme_clear_grid_dends
+  if(is.null(cols)) {
+    py <- NULL
+  } else {
+    py <- ggplot(cols, labels  = FALSE) + theme_bw() + theme_clear_grid_dends
+    py <- ggplotly(py, tooltip = "")
+  }
 
-  if(row_dend_left) px <- px + scale_y_reverse()
 
-  px <- ggplotly(px, tooltip = "")
-  py <- ggplotly(py, tooltip = "")
+  if(is.null(rows)) {
+    px <- NULL
+  } else {
+    px <- ggplot(rows, labels  = FALSE) + coord_flip()+ theme_bw() + theme_clear_grid_dends
+    if(row_dend_left) px <- px + scale_y_reverse()
+    px <- ggplotly(px, tooltip = "")
+  }
 
 
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
@@ -170,8 +246,15 @@ heatmaply.heatmapr <- function(x,
     scale_fill_gradient_fun +
     theme_bw()+ theme_clear_grid_heatmap +
     theme(axis.text.x = element_text(angle = text_angle_column, hjust = 1))
+
+  p <- ggplotly(p)
+
   # p <- plot_ly(z = xx, type = "heatmap")
   # ggplotly(p) # works great
+
+  # source for: theme(axis.text.x = element_text(angle = text_angle_column, hjust = 1))
+  # http://stackoverflow.com/questions/1330989/rotating-and-spacing-axis-labels-in-ggplot2
+
 
   # if(row_dend_left) p <- p + scale_y_reverse()
 
@@ -191,16 +274,15 @@ heatmaply.heatmapr <- function(x,
   #          xaxis = eaxis,
   #          yaxis = eaxis)
 
-  if(row_dend_left) {
-    s <- subplot(plotly_empty(), py, px, p, nrows = 2, widths = c(.2,.8), heights = c(.2,.8), margin = 0,
-                 shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE)
-  } else {
-    # row dend on the right side
-    s <- subplot(py, plotly_empty(), p, px, nrows = 2, widths = c(.8,.2), heights = c(.2,.8), margin = 0,
-                 shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE)
-  }
+  top_corner <- plotly_empty()
+  # top_corner <- ggplotly(qplot(as.numeric(xx), geom="histogram"))
 
-  l <- layout(s, showlegend = FALSE)
+
+  heatmap_subplot <- heatmap_subplot_from_ggplotly(p, px, py, top_corner, row_dend_left)
+
+
+
+  l <- layout(heatmap_subplot, showlegend = FALSE)
   print(l)
 
 }

@@ -1,3 +1,10 @@
+heatmaply 0.3.0 (2016-05-25)
+==============================
+
+### NEW FEATURES
+* heatmaply Now works with Rowv=F and Colv=F (by introducing a new un-exported function: heatmap_subplot_from_ggplotly)
+
+
 heatmaply 0.2.1 (2016-05-23)
 ==============================
 
