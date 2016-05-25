@@ -77,71 +77,33 @@ NULL
 #
 # # menus are added and removed as needed: !!
 #
-#
-# .onAttach <- function(lib, pkg,...){
-#    ####
-#    ### I decided to not use the following code since it will
-#    ###   always give a "masked" warning when loading
-#    ###   heatmaply. But it IS an issue...
-#    ####
-#    # if ape is installed on this computer, it will be loaded FIRST!
-#    # This way I make sure to not have "rotate" masked by {ape}
-#    #     (they would still work though)
-#
-#    # this would solve it, but it is not a "nice" way to do it...
-# #    if("ape" %in% .packages(all.available = TRUE)) {
-# #       library("ape", pos = which(search() %in% "package:heatmaply")+1,
-# #               warn.conflicts = FALSE,
-# #               quietly = TRUE)
-# #    }
-#
-#    # The above line causes problems such as: 'library' or 'require' call not declared from: 'ape'
-#
-#       #       search()
-#       #       unloadNamespace(ape")
-#       #       unloadNamespace("heatmaply")
-#       #       require("heatmaply", warn.conflicts = TRUE)
-#       #       require("heatmaply", warn.conflicts = FALSE)
-#    # but it makes sure that "heatmaply" does not "Depends" on ape"...
-#
-#    # move some functions to the "options" so that they would later be overridden.
-# #    create_heatmaply_options()
-#
-#    # details in heatmaply_options.R
-#    # assign_heatmaply_options()
-#
-#    packageStartupMessage(heatmaplyWelcomeMessage())
-#
-# #    assign_heatmaplyRcpp_to_heatmaply()
+
+.onAttach <- function(lib, pkg,...){
+   packageStartupMessage(heatmaplyWelcomeMessage())
+}
+
 #
 #
-# }
-#
-#
-#
-#
-# heatmaplyWelcomeMessage <- function(){
-#    # library(utils)
-#
-#    paste("\n",
-#          "Welcome to heatmaply version ", utils::packageDescription("heatmaply")$Version, "\n",
-#          "\n",
-#          "Type ?heatmaply to access the overall documentation and\n",
-#          "browseVignettes(package = 'heatmaply') for the package vignette.\n",
-#          "You can execute a demo of the package via: demo(heatmaply)\n",
-#          "\n",
-#          "More information is available on the heatmaply project web-site:\n",
-#          "https://github.com/talgalili/heatmaply/\n",
-#          "\n",
-#          "Contact: <tal.galili@gmail.com>\n",
-#          "Suggestions and bug-reports can be submitted at: https://github.com/talgalili/heatmaply/issues\n",
-#          "\n",
-#          "\t\t\tTo suppress this message use:\n",
-#          "\t\t\tsuppressPackageStartupMessages(library(heatmaply))\n",
-#          sep="")
-# }
-#
-#
+
+heatmaplyWelcomeMessage <- function(){
+   # library(utils)
+
+   paste0("\n",
+         "---------------------\n",
+         "Welcome to heatmaply version ", utils::packageDescription("heatmaply")$Version, "\n",
+         # "\n",
+         "Type ?heatmaply for the main documentation.\n",
+         "The github page is: https://github.com/talgalili/heatmaply/\n",
+         "\n",
+         "Suggestions and bug-reports can be submitted at: https://github.com/talgalili/heatmaply/issues\n",
+         "Or contact: <tal.galili@gmail.com>\n",
+         "\n",
+         "\tTo suppress this message use:  ", "suppressPackageStartupMessages(library(heatmaply))\n",
+         "---------------------\n"
+   )
+}
+
+
 
 
 
