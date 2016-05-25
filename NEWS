@@ -32,3 +32,18 @@ TODO:
 * remove unneeded code from d3heatmap
 * fix docs!
 * add many options for controlling the heatmap "as it should be"
+* check if I can control the ylim of the dendrograms and if that would resolve the extra space I see by default.
+* add to the docs:
+
+library(heatmaply)
+library(magrittr)
+library(plotly)
+heatmaply(mtcars, k_row = 3, k_col = 2) %>% layout(margin = list(l = 130, b = 40))
+
+* create a vignette with examples
+
+* implement all relevant options streight to heatmaply.
+
+* release to CRAN
+
+* write a post!
