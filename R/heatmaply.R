@@ -219,20 +219,10 @@ heatmaply.heatmapr <- function(x,
         panel.grid.minor=element_blank(),plot.background=element_blank())
 
 
+  # dendrograms:
+
   rows <- x$rows
   cols <- x$cols
-
-  # heatmap
-  xx <- x$matrix$data
-  df <- as.data.frame(xx)
-  colnames(df) <- x$matrix$cols
-  df$row_name <- x$matrix$rows
-  df$row_name <- with(df, factor(row_name, levels=row_name, ordered=TRUE))
-  mdf <- reshape2::melt(df, id.vars="row_name")
-
-
-
-  # dendrograms
   # this is using dendextend
   if(is.null(cols)) {
     py <- NULL
@@ -255,6 +245,16 @@ heatmaply.heatmapr <- function(x,
   }
 
 
+
+
+  # heatmap
+  xx <- x$matrix$data
+  df <- as.data.frame(xx)
+  colnames(df) <- x$matrix$cols
+  df$row_name <- x$matrix$rows
+  df$row_name <- with(df, factor(row_name, levels=row_name, ordered=TRUE))
+  mdf <- reshape2::melt(df, id.vars="row_name")
+
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
   p <- ggplot(mdf, aes_string(x = "variable", y = "row_name")) + geom_tile(aes_string(fill = "value")) +
     # scale_fill_viridis() +
@@ -264,6 +264,11 @@ heatmaply.heatmapr <- function(x,
     theme(axis.text.x = element_text(angle = text_angle_column, hjust = 1))
 
   p <- ggplotly(p)
+
+  # TODO: this doesn't work because of the allignment. But using this might
+  # speedup the code to deal with MUCH larger matrices.
+  # p <- plot_ly(z = xx, type = "heatmap")
+
 
   # p <- plot_ly(z = xx, type = "heatmap")
   # ggplotly(p) # works great
