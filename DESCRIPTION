@@ -33,7 +33,8 @@ Imports:
     stats
 Suggests:
     knitr,
-    rmarkdown
+    rmarkdown,
+    gplots
 VignetteBuilder: knitr
 License: GPL-2 | GPL-3
 URL: http://cran.r-project.org/package=heatmaply,

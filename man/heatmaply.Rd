@@ -7,10 +7,10 @@
 \title{Creates a plotly heatmap}
 \usage{
 heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
-  "viridis"), limits = NULL, na.value = "grey50", text_angle_column = 45,
-  margin = 0, row_dend_left = FALSE, ...,
+  "viridis"), limits = NULL, na.value = "grey50", row_text_angle = 0,
+  column_text_angle = 45, margin = 0, row_dend_left = FALSE, ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = colors, na.value =
-  na.value, limits = limits))
+  na.value, limits = limits), srtRow, srtCol)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -24,7 +24,9 @@ It is passed to \link[ggplot2]{scale_fill_gradientn}.}
 
 \item{na.value}{color to use for missing values (default is "grey50").}
 
-\item{text_angle_column}{numeric (Default is 45), the angle of the text of the column.}
+\item{row_text_angle}{numeric (Default is 0), the angle of the text of the rows. (this is called srtRow in \link[gplots]{heatmap.2})}
+
+\item{column_text_angle}{numeric (Default is 45), the angle of the text of the columns. (this is called srtCol in \link[gplots]{heatmap.2})}
 
 \item{margin}{passed to \link[plotly]{subplot}. Default is 0. Either a single value or
 four values (all between 0 and 1). If four values are provided,
@@ -36,14 +38,19 @@ If a single value is provided, it will be used as all four margins.}
 plotted on the left side of the heatmap. If false then it will be plotted on the right
 side.}
 
-\item{...}{other parameters passed to \link{heatmapr} (currently, various parameters may be ignored.
-Please submit an issue on github if you have a feature that you wish to have added)}
+\item{...}{other parameters passed to \link{heatmapr} (currently, various parameters may be ignored.}
 
 \item{scale_fill_gradient_fun}{A function that creates a smooth gradient for the heatmap.
 The default uses \link[ggplot2]{scale_fill_gradientn} with the values of colors, limits, and
 na.value that are supplied by the user. The user can input a customized function, such as
 \link{scale_colour_gradient}() in order to get other results (although the virids default
 is quite recommended)}
+
+\item{srtRow}{if supplied, this overrides row_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})}
+
+\item{srtCol}{if supplied, this overrides column_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})
+
+Please submit an issue on github if you have a feature that you wish to have added)}
 }
 \description{
 An object of class heatmapr includes all the needed information
@@ -63,6 +70,12 @@ heatmaply(mtcars, k_row = 3, k_col = 2)
 
 # make sure there is enough room for the labels:
 heatmaply(mtcars) \%>\% layout(margin = list(l = 130, b = 40))
+
+# control text angle
+heatmaply(mtcars, column_text_angle = 90) \%>\% layout(margin = list(l = 130, b = 40))
+# the same as using srtCol:
+# heatmaply(mtcars, srtCol = 90) \%>\% layout(margin = list(l = 130, b = 40))
+
 
 
 x <- mtcars

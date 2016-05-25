@@ -27,7 +27,9 @@
 #' is quite recommended)
 #'
 #'
-#' @param text_angle_column numeric (Default is 45), the angle of the text of the column.
+#' @param row_text_angle numeric (Default is 0), the angle of the text of the rows. (this is called srtRow in \link[gplots]{heatmap.2})
+#' @param column_text_angle numeric (Default is 45), the angle of the text of the columns. (this is called srtCol in \link[gplots]{heatmap.2})
+#'
 #' @param margin passed to \link[plotly]{subplot}. Default is 0. Either a single value or
 #'  four values (all between 0 and 1). If four values are provided,
 #'  the first is used as the left margin, the second is used as the right margin,
@@ -39,6 +41,10 @@
 #' side.
 #'
 #' @param ... other parameters passed to \link{heatmapr} (currently, various parameters may be ignored.
+#'
+#' @param srtRow if supplied, this overrides row_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})
+#' @param srtCol if supplied, this overrides column_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})
+#'
 #' Please submit an issue on github if you have a feature that you wish to have added)
 #' @aliases
 #' heatmaply.default
@@ -58,6 +64,12 @@
 #' # make sure there is enough room for the labels:
 #' heatmaply(mtcars) %>% layout(margin = list(l = 130, b = 40))
 #'
+#' # control text angle
+#' heatmaply(mtcars, column_text_angle = 90) %>% layout(margin = list(l = 130, b = 40))
+#' # the same as using srtCol:
+#' # heatmaply(mtcars, srtCol = 90) %>% layout(margin = list(l = 130, b = 40))
+#'
+#'
 #'
 #' x <- mtcars
 #' # different colors
@@ -72,14 +84,16 @@ heatmaply <- function(x,
                                         end = 1, option = "viridis"),
                       limits = NULL,
                       na.value = "grey50",
-                      text_angle_column = 45,
+                      row_text_angle = 0,
+                      column_text_angle = 45,
                       margin = 0,
                       row_dend_left = FALSE,
 
                       ...,
                       scale_fill_gradient_fun =
                         scale_fill_gradientn(colors = colors,
-                                             na.value = na.value, limits = limits)
+                                             na.value = na.value, limits = limits),
+                      srtRow, srtCol
 
                       ) {
   UseMethod("heatmaply")
@@ -93,19 +107,27 @@ heatmaply.default <- function(x,
                               limits = NULL,
                               na.value = "grey50",
 
-                              text_angle_column = 45,
+                              row_text_angle = 0,
+                              column_text_angle = 45,
                               margin = 0,
                               row_dend_left = FALSE,
                               ...,
                               scale_fill_gradient_fun =
                                 scale_fill_gradientn(colors = colors,
-                                                     na.value = na.value, limits = limits)
+                                                     na.value = na.value, limits = limits),
+                              srtRow, srtCol
 
                               ) {
+
+  if(!missing(srtRow)) row_text_angle <- srtRow
+  if(!missing(srtCol)) column_text_angle <- srtCol
+
+
   hm <- heatmapr(x, ...)
   heatmaply.heatmapr(hm, # colors = colors, limits = limits,
                      scale_fill_gradient_fun = scale_fill_gradient_fun,
-                     text_angle_column = text_angle_column,
+                     row_text_angle = row_text_angle,
+                     column_text_angle = column_text_angle,
                      margin = margin,
                      row_dend_left = row_dend_left) # TODO: think more on what should be passed in "..."
 }
@@ -187,14 +209,16 @@ heatmaply.heatmapr <- function(x,
                                limits = NULL,
                                na.value = "grey50",
 
-                               text_angle_column = 45,
+                               row_text_angle = 0,
+                               column_text_angle = 45,
                                margin = 0,
 
                                row_dend_left = FALSE,
                                ...,
                                scale_fill_gradient_fun =
                                  scale_fill_gradientn(colors = colors,
-                                                      na.value = na.value, limits = limits)
+                                                      na.value = na.value, limits = limits),
+                               srtRow, srtCol
 
                                ) {
 
@@ -204,6 +228,10 @@ heatmaply.heatmapr <- function(x,
     if(!is.numeric(limits)) stop("limits must be numeric")
     if(length(limits) != 2L) stop("limits must be of length 2 (i.e.: two dimensional)")
   }
+
+  if(!missing(srtRow)) row_text_angle <- srtRow
+  if(!missing(srtCol)) column_text_angle <- srtCol
+
 
   # x is a heatmapr object.
 
@@ -274,7 +302,9 @@ heatmaply.heatmapr <- function(x,
     coord_cartesian(expand = FALSE) +
     scale_fill_gradient_fun +
     theme_bw()+ theme_clear_grid_heatmap +
-    theme(axis.text.x = element_text(angle = text_angle_column, hjust = 1))
+    theme(axis.text.x = element_text(angle = column_text_angle, hjust = 1),
+          axis.text.y = element_text(angle = row_text_angle, hjust = 1)
+          )
 
   p <- ggplotly(p)
 
@@ -286,7 +316,7 @@ heatmaply.heatmapr <- function(x,
   # p <- plot_ly(z = xx, type = "heatmap")
   # ggplotly(p) # works great
 
-  # source for: theme(axis.text.x = element_text(angle = text_angle_column, hjust = 1))
+  # source for: theme(axis.text.x = element_text(angle = column_text_angle, hjust = 1))
   # http://stackoverflow.com/questions/1330989/rotating-and-spacing-axis-labels-in-ggplot2
 
 
@@ -365,7 +395,7 @@ if(FALSE) {
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
   p <- ggplot(mdf, aes(x = variable, y = car)) + geom_tile(aes(fill = value)) +
     scale_fill_viridis() + theme_bw() +
-    theme(axis.text.x = element_text(angle = text_angle_column, hjust = 1))
+    theme(axis.text.x = element_text(angle = column_text_angle, hjust = 1))
   # p <- plot_ly(z = xx, type = "heatmap")
   # ggplotly(p) # works great
   # ggplotly(p, tooltip = "none")
