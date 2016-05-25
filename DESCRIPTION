@@ -1,11 +1,11 @@
 Package: heatmaply
 Type: Package
 Title: Interactive Heat Maps Using 'plotly'
-Version: 0.3.0
+Version: 0.3.1
 Date: 2016-05-25
 Authors@R: c(person("Tal", "Galili", role = c("aut", "cre", "cph"), email =
     "tal.galili@gmail.com", comment = "http://www.r-statistics.com"))
-Description: Create interactive heat maps that are usable from the R console,
+Description: Create interactive heatmaps that are usable from the R console,
     in the 'RStudio' viewer pane, in 'R Markdown' documents, and in 'Shiny' apps.
     Hover the mouse pointer over a cell to show details or drag a rectangle to
     zoom. A heatmap is a popular graphical method for visualizing high-dimensional
@@ -15,10 +15,10 @@ Description: Create interactive heat maps that are usable from the R console,
     observations, correlations, missing values patterns, and more. Interactive
     heatmaps allow the inspection of specific value by hovering the mouse over a
     cell, as well as zooming into a region of the heatmap by dragging a rectangle
-    around the relevant area. This work is based on the ggplot2 and plotly.js
-    engine. It produces similar heatmaps as d3heatmap, with the advantage of speed
+    around the relevant area. This work is based on the 'ggplot2' and 'plotly.js'
+    engine. It produces similar heatmaps as 'd3heatmap', with the advantage of speed
     ('plotly.js' is able to handle larger size matrix), and the ability to zoom from
-    the dendrogram.
+    the dendrogram panes.
 Depends:
     R (>= 3.0.0),
     plotly (>= 3.6.0),
@@ -37,7 +37,7 @@ Suggests:
     gplots
 VignetteBuilder: knitr
 License: GPL-2 | GPL-3
-URL: http://cran.r-project.org/package=heatmaply,
+URL: https://cran.r-project.org/package=heatmaply,
     https://github.com/talgalili/heatmaply/,
     http://www.r-statistics.com/tag/heatmaply/
 BugReports: https://github.com/talgalili/heatmaply/issues
