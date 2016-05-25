@@ -221,12 +221,16 @@ heatmaply.heatmapr <- function(x,
   df$row_name <- with(df, factor(row_name, levels=row_name, ordered=TRUE))
   mdf <- reshape2::melt(df, id.vars="row_name")
 
+
+
   # dendrograms
   # this is using dendextend
   if(is.null(cols)) {
     py <- NULL
   } else {
-    py <- ggplot(cols, labels  = FALSE) + theme_bw() + theme_clear_grid_dends
+    py <- ggplot(cols, labels  = FALSE) + theme_bw() +
+      coord_cartesian(expand = FALSE) +
+      theme_clear_grid_dends
     py <- ggplotly(py, tooltip = "")
   }
 
@@ -234,7 +238,9 @@ heatmaply.heatmapr <- function(x,
   if(is.null(rows)) {
     px <- NULL
   } else {
-    px <- ggplot(rows, labels  = FALSE) + coord_flip()+ theme_bw() + theme_clear_grid_dends
+    px <- ggplot(rows, labels  = FALSE) +
+      # coord_cartesian(expand = FALSE) +
+      coord_flip(expand = FALSE) + theme_bw() + theme_clear_grid_dends
     if(row_dend_left) px <- px + scale_y_reverse()
     px <- ggplotly(px, tooltip = "")
   }
@@ -243,6 +249,7 @@ heatmaply.heatmapr <- function(x,
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
   p <- ggplot(mdf, aes_string(x = "variable", y = "row_name")) + geom_tile(aes_string(fill = "value")) +
     # scale_fill_viridis() +
+    coord_cartesian(expand = FALSE) +
     scale_fill_gradient_fun +
     theme_bw()+ theme_clear_grid_heatmap +
     theme(axis.text.x = element_text(angle = text_angle_column, hjust = 1))
