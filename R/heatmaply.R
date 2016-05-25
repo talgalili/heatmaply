@@ -298,14 +298,15 @@ heatmaply.heatmapr <- function(x,
   top_corner <- plotly_empty()
   # top_corner <- ggplotly(qplot(as.numeric(xx), geom="histogram"))
 
-
+  # create the subplot
   heatmap_subplot <- heatmap_subplot_from_ggplotly(p, px, py, top_corner, row_dend_left, margin)
 
 
 
   l <- layout(heatmap_subplot, showlegend = FALSE)
-  print(l)
 
+  # print(l)
+  l
 }
 
 # theme_set(theme_cowplot())
