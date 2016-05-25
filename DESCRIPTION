@@ -21,11 +21,11 @@ Description: Create interactive heat maps that are usable from the R console,
     the dendrogram.
 Depends:
     R (>= 3.0.0),
+    plotly (>= 3.6.0),
     viridis
 Imports:
     ggplot2,
     dendextend,
-    plotly (>= 3.6.0),
     magrittr (>= 1.0.1),
     reshape2,
     scales,
