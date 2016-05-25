@@ -55,6 +55,10 @@
 #' heatmaply(cor(iris[,-5]), limits = c(-1,1))
 #' heatmaply(mtcars, k_row = 3, k_col = 2)
 #'
+#' # make sure there is enough room for the labels:
+#' heatmaply(mtcars) %>% layout(margin = list(l = 130, b = 40))
+#'
+#'
 #' x <- mtcars
 #' # different colors
 #' heatmaply(x, colors = heat.colors(200))
