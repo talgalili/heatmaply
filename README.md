@@ -34,7 +34,7 @@ This work is based on the ggplot2 and plotly.js engine. It produces similar heat
 To install the stable version on CRAN:
 
 ```r
-install.packages('heatmaply')
+# install.packages('heatmaply') # not on CRAN yet, please install using devtools. See the next code chunk for the code
 ```
 
 To install the latest ("cutting-edge") GitHub version run:
