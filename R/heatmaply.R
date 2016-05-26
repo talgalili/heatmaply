@@ -154,6 +154,44 @@ heatmaply.default <- function(x,
 
 
 
+# xx is a data matrix
+ggplot_heatmap <- function(xx,
+                           row_text_angle = 0,
+                           column_text_angle = 45,
+                           scale_fill_gradient_fun =
+                             scale_fill_gradientn(colors = viridis(n=256, alpha = 1, begin = 0,
+                                                                   end = 1, option = "viridis"),
+                                                  na.value = "grey50", limits = NULL),
+                           ...) {
+
+  theme_clear_grid_heatmap <- theme(axis.line = element_line(colour = "black"),
+                                    panel.grid.major = element_blank(),
+                                    panel.grid.minor = element_blank(),
+                                    panel.border = element_blank(),
+                                    panel.background = element_blank())
+
+
+  # heatmap
+  # xx <- x$matrix$data
+  df <- as.data.frame(xx)
+  # colnames(df) <- x$matrix$cols
+  df$row <- rownames(xx)
+  df$row <- with(df, factor(row, levels=row, ordered=TRUE))
+  mdf <- reshape2::melt(df, id.vars="row")
+  colnames(mdf)[2] <- "column" # rename "variable"
+
+  # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
+  p <- ggplot(mdf, aes_string(x = "column", y = "row")) + geom_tile(aes_string(fill = "value")) +
+    # scale_fill_viridis() +
+    coord_cartesian(expand = FALSE) +
+    scale_fill_gradient_fun +
+    theme_bw()+ theme_clear_grid_heatmap +
+    theme(axis.text.x = element_text(angle = column_text_angle, hjust = 1),
+          axis.text.y = element_text(angle = row_text_angle, hjust = 1)
+    )
+
+  p
+}
 
 
 
@@ -264,11 +302,6 @@ heatmaply.heatmapr <- function(x,
 
   # x <- heatmapr(mtcars)
 
-  theme_clear_grid_heatmap <- theme(axis.line = element_line(colour = "black"),
-                            panel.grid.major = element_blank(),
-                            panel.grid.minor = element_blank(),
-                            panel.border = element_blank(),
-                            panel.background = element_blank())
 
   # source: http://stackoverflow.com/questions/6528180/ggplot2-plot-without-axes-legends-etc
   theme_clear_grid_dends <- theme(axis.line=element_blank(),axis.text.x=element_blank(),
@@ -305,27 +338,11 @@ heatmaply.heatmapr <- function(x,
   }
 
 
-
-
-  # heatmap
-  xx <- x$matrix$data
-  df <- as.data.frame(xx)
-  colnames(df) <- x$matrix$cols
-  df$row <- x$matrix$rows
-  df$row <- with(df, factor(row, levels=row, ordered=TRUE))
-  mdf <- reshape2::melt(df, id.vars="row")
-  colnames(mdf)[2] <- "column" # rename "variable"
-
-  # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
-  p <- ggplot(mdf, aes_string(x = "column", y = "row")) + geom_tile(aes_string(fill = "value")) +
-    # scale_fill_viridis() +
-    coord_cartesian(expand = FALSE) +
-    scale_fill_gradient_fun +
-    theme_bw()+ theme_clear_grid_heatmap +
-    theme(axis.text.x = element_text(angle = column_text_angle, hjust = 1),
-          axis.text.y = element_text(angle = row_text_angle, hjust = 1)
-          )
-
+  # create the heatmap
+  p <- ggplot_heatmap(x$matrix$data,
+                      row_text_angle,
+                      column_text_angle,
+                      scale_fill_gradient_fun)
   p <- ggplotly(p)
 
   # TODO: this doesn't work because of the allignment. But using this might
