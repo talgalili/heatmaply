@@ -113,6 +113,26 @@ heatmaply(mtcars,
 ```
 
 
+Reviewing missing values:
+
+```{r}
+
+class_to <- function(x, new_class) {
+  class(x) <- new_class
+  x
+}
+na_mat <- function(x) {
+  x %>% is.na %>% class_to("numeric") 
+}
+
+airquality %>% na_mat %>% 
+  heatmaply(color = c("white","black"), grid_color = "grey",
+            k_col =3, k_row = 3) %>% 
+  layout(margin = list(l = 40, b = 40))
+
+
+```
+
 
 
 Credit

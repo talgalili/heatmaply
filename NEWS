@@ -1,3 +1,10 @@
+heatmaply 0.4.0 (2016-05-26)
+==============================
+
+### NEW FEATURES
+* heatmaply
+  * grid_color - control the color of the heatmap grid. This is currently not working until this feature will be added by plotly.
+
 heatmaply 0.3.2 (2016-05-26)
 ==============================
 
@@ -65,5 +72,7 @@ TODO:
 * remove unneeded code from d3heatmap
 * add many options for controlling the heatmap "as it should be"
 * implement all relevant options streight to heatmaply.
+* ggheatmap?
+* Expose widths and heights from heatmap_subplot_from_ggplotly to heatmaply
 
 * write a post!

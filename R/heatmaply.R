@@ -20,12 +20,6 @@
 #' It is passed to \link[ggplot2]{scale_fill_gradientn}.
 #' @param limits a two dimensional numeric vector specifying the data range for the scale.
 #' @param na.value color to use for missing values (default is "grey50").
-#' @param scale_fill_gradient_fun A function that creates a smooth gradient for the heatmap.
-#' The default uses \link[ggplot2]{scale_fill_gradientn} with the values of colors, limits, and
-#' na.value that are supplied by the user. The user can input a customized function, such as
-#' \link{scale_colour_gradient}() in order to get other results (although the virids default
-#' is quite recommended)
-#'
 #'
 #' @param row_text_angle numeric (Default is 0), the angle of the text of the rows. (this is called srtRow in \link[gplots]{heatmap.2})
 #' @param column_text_angle numeric (Default is 45), the angle of the text of the columns. (this is called srtCol in \link[gplots]{heatmap.2})
@@ -41,6 +35,15 @@
 #' side.
 #'
 #' @param ... other parameters passed to \link{heatmapr} (currently, various parameters may be ignored.
+#'
+#' @param scale_fill_gradient_fun A function that creates a smooth gradient for the heatmap.
+#' The default uses \link[ggplot2]{scale_fill_gradientn} with the values of colors, limits, and
+#' na.value that are supplied by the user. The user can input a customized function, such as
+#' \link{scale_colour_gradient}() in order to get other results (although the virids default
+#' is quite recommended)
+#'
+#' @param grid_color control the color of the heatmap grid. Default is NA. Value passed to \link[ggplot2]{geom_tile}.
+#' This parameter is currently not working until this is added in plotly.
 #'
 #' @param srtRow if supplied, this overrides row_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})
 #' @param srtCol if supplied, this overrides column_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})
@@ -113,6 +116,7 @@ heatmaply <- function(x,
                       scale_fill_gradient_fun =
                         scale_fill_gradientn(colors = colors,
                                              na.value = na.value, limits = limits),
+                      grid_color = NA,
                       srtRow, srtCol
 
                       ) {
@@ -135,6 +139,7 @@ heatmaply.default <- function(x,
                               scale_fill_gradient_fun =
                                 scale_fill_gradientn(colors = colors,
                                                      na.value = na.value, limits = limits),
+                              grid_color = NA,
                               srtRow, srtCol
 
                               ) {
@@ -146,6 +151,7 @@ heatmaply.default <- function(x,
   hm <- heatmapr(x, ...)
   heatmaply.heatmapr(hm, # colors = colors, limits = limits,
                      scale_fill_gradient_fun = scale_fill_gradient_fun,
+                     grid_color = grid_color,
                      row_text_angle = row_text_angle,
                      column_text_angle = column_text_angle,
                      margin = margin,
@@ -162,6 +168,7 @@ ggplot_heatmap <- function(xx,
                              scale_fill_gradientn(colors = viridis(n=256, alpha = 1, begin = 0,
                                                                    end = 1, option = "viridis"),
                                                   na.value = "grey50", limits = NULL),
+                           grid_color = NA,
                            ...) {
 
   theme_clear_grid_heatmap <- theme(axis.line = element_line(colour = "black"),
@@ -175,25 +182,43 @@ ggplot_heatmap <- function(xx,
   # xx <- x$matrix$data
   df <- as.data.frame(xx)
   # colnames(df) <- x$matrix$cols
-  df$row <- rownames(xx)
+  df$row <- if(!is.null(rownames(xx)))
+              {rownames(xx)} else
+              {1:nrow(xx)}
+
+
   df$row <- with(df, factor(row, levels=row, ordered=TRUE))
   mdf <- reshape2::melt(df, id.vars="row")
   colnames(mdf)[2] <- "column" # rename "variable"
 
+  # TODO:
+  # http://stackoverflow.com/questions/15921799/draw-lines-around-specific-areas-in-geom-tile
+
+
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
-  p <- ggplot(mdf, aes_string(x = "column", y = "row")) + geom_tile(aes_string(fill = "value")) +
+  p <- ggplot(mdf, aes_string(x = "column", y = "row")) +
+    geom_tile(aes_string(fill = "value"), color = grid_color) +
+    # scale_linetype_identity() +
     # scale_fill_viridis() +
     coord_cartesian(expand = FALSE) +
     scale_fill_gradient_fun +
     theme_bw()+ theme_clear_grid_heatmap +
     theme(axis.text.x = element_text(angle = column_text_angle, hjust = 1),
           axis.text.y = element_text(angle = row_text_angle, hjust = 1)
-    )
+          )
 
   p
 }
-
-
+#
+# p <- ggplot_heatmap(na_mat(airquality),
+#                     scale_fill_gradient_fun = scale_fill_gradientn(colors= c("white","black")) ,
+#                     grid_color = "grey")
+# p
+# ggplotly(p)
+# p <- ggplot_heatmap(mtcars,
+#                     grid_color = white")
+# p
+#
 
 heatmap_subplot_from_ggplotly <- function(p, px, py, top_corner, row_dend_left, margin = 0,
                                           widths = c(.8,.2), heights = c(.2,.8), ...) {
@@ -276,6 +301,7 @@ heatmaply.heatmapr <- function(x,
                                scale_fill_gradient_fun =
                                  scale_fill_gradientn(colors = colors,
                                                       na.value = na.value, limits = limits),
+                               grid_color = NA,
                                srtRow, srtCol
 
                                ) {
@@ -342,7 +368,8 @@ heatmaply.heatmapr <- function(x,
   p <- ggplot_heatmap(x$matrix$data,
                       row_text_angle,
                       column_text_angle,
-                      scale_fill_gradient_fun)
+                      scale_fill_gradient_fun,
+                      grid_color)
   p <- ggplotly(p)
 
   # TODO: this doesn't work because of the allignment. But using this might

@@ -10,7 +10,7 @@ heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
   "viridis"), limits = NULL, na.value = "grey50", row_text_angle = 0,
   column_text_angle = 45, margin = 0, row_dend_left = FALSE, ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = colors, na.value =
-  na.value, limits = limits), srtRow, srtCol)
+  na.value, limits = limits), grid_color = NA, srtRow, srtCol)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -45,6 +45,9 @@ The default uses \link[ggplot2]{scale_fill_gradientn} with the values of colors,
 na.value that are supplied by the user. The user can input a customized function, such as
 \link{scale_colour_gradient}() in order to get other results (although the virids default
 is quite recommended)}
+
+\item{grid_color}{control the color of the heatmap grid. Default is NA. Value passed to \link[ggplot2]{geom_tile}.
+This parameter is currently not working until this is added in plotly.}
 
 \item{srtRow}{if supplied, this overrides row_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})}
 
