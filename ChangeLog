@@ -1,3 +1,132 @@
+* 2016-05-26(Tal Galili) heatmaply 0.3.2 is now on CRAN! |67de297| 
+|  README.md               | 12 ++++++------
+|  vignettes/heatmaply.Rmd |  4 ++--
+|  2 files changed, 8 insertions(+), 8 deletions(-)
+
+* 2016-05-26(Tal Galili) Add examples for using htmlwidgets::saveWidget and plotly::subplot. (from issue #8 ) |cc2a9f9| 
+|  DESCRIPTION      |  3 ++-
+|  R/heatmaply.R    | 20 ++++++++++++++++++++
+|  man/heatmaply.Rd | 20 ++++++++++++++++++++
+|  3 files changed, 42 insertions(+), 1 deletion(-)
+
+* 2016-05-26(Tal Galili) http -> https |883d56f| 
+|  DESCRIPTION | 2 +-
+|  NEWS        | 5 +++++
+|  README.md   | 3 +--
+|  3 files changed, 7 insertions(+), 3 deletions(-)
+
+* 2016-05-26(Tal Galili) not on CRAN yet. |9f4b774| 
+|  README.md | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2016-05-26(Tal Galili) heatmaply 0.3.1 - fix minor typos in DESCIPTION. |716066a| 
+|  DESCRIPTION | 12 ++++++------
+|  NEWS        |  5 +++++
+|  2 files changed, 11 insertions(+), 6 deletions(-)
+
+* 2016-05-25(Tal Galili) heatmaply 0.3.0 - first CRAN release! |5a0b344| 
+|  NEWS                    |  8 +++-----
+|  README.md               |  6 +++---
+|  vignettes/heatmaply.Rmd | 17 ++++-------------
+|  3 files changed, 10 insertions(+), 21 deletions(-)
+
+* 2016-05-25(Tal Galili) Added a new Startup Message |464c02c| 
+|  R/zzz.R | 88 ++++++++++++++++++---------------------------------------------
+|  1 file changed, 25 insertions(+), 63 deletions(-)
+
+* 2016-05-25(Tal Galili) Added row_text_angle and column_text_angle (with srtRow and srtCol for backward compatibility with gplots::heatmap.2). Fix #3 |bb106a4| 
+|  DESCRIPTION      |  3 ++-
+|  NEWS             |  5 +++--
+|  R/heatmaply.R    | 52 +++++++++++++++++++++++++++++++++++++++++-----------
+|  man/heatmaply.Rd | 25 +++++++++++++++++++------
+|  4 files changed, 65 insertions(+), 20 deletions(-)
+
+* 2016-05-25(Tal Galili) Add example for using layout+margin to see matrix labels. |e8cc550| 
+|  R/heatmaply.R    | 4 ++++
+|  man/heatmaply.Rd | 4 ++++
+|  2 files changed, 8 insertions(+)
+
+* 2016-05-25(Tal Galili) Moved "scale_fill_gradient_fun" after "..." so to fix #2 : Error: Don't know how to add scale_fill_gradient_fun to a plot |7e020ac| 
+|  NEWS             |  5 +++++
+|  R/heatmaply.R    | 32 ++++++++++++++++++++------------
+|  man/heatmaply.Rd | 18 +++++++++---------
+|  3 files changed, 34 insertions(+), 21 deletions(-)
+
+* 2016-05-25(Tal Galili) rename the hover to row and column |9be7d2b| 
+|  R/heatmaply.R | 9 +++++----
+|  1 file changed, 5 insertions(+), 4 deletions(-)
+
+* 2016-05-25(Tal Galili) Added rmarkdown to suggests |598bb5d| 
+|  DESCRIPTION | 3 ++-
+|  1 file changed, 2 insertions(+), 1 deletion(-)
+
+* 2016-05-25(Tal Galili) Added knitr to suggests |6feb90b| 
+|  DESCRIPTION | 2 ++
+|  1 file changed, 2 insertions(+)
+
+* 2016-05-25(Tal Galili) Add a vignette |e15b20c| 
+|  DESCRIPTION             |   4 ++
+|  NEWS                    |  11 +---
+|  vignettes/heatmaply.Rmd | 158 ++++++++++++++++++++++++++++++++++++++++++++++
+|  3 files changed, 164 insertions(+), 9 deletions(-)
+
+* 2016-05-25(Tal Galili) no need to print in the output if plotly is in Depends |18b3897| 
+|  R/heatmaply.R | 5 +++--
+|  1 file changed, 3 insertions(+), 2 deletions(-)
+
+* 2016-05-25(Tal Galili) move plotly to Depends (to reduce knitr problems) |91e6bec| 
+|  DESCRIPTION | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2016-05-25(Tal Galili) TODO: maybe use plot_ly(z = xx, type = "heatmap") in the future. |7cd0d60| 
+|  R/heatmaply.R | 29 +++++++++++++++++------------
+|  1 file changed, 17 insertions(+), 12 deletions(-)
+
+* 2016-05-25(Tal Galili) heatmaply: added the margin parameter (to control the distance between the heatmap and the dendrograms.) |93d9431| 
+|  NEWS             |  6 +++++-
+|  R/heatmaply.R    | 15 ++++++++++++---
+|  man/heatmaply.Rd | 10 ++++++++--
+|  3 files changed, 25 insertions(+), 6 deletions(-)
+
+* 2016-05-25(Tal Galili) remove space between the heatmap and dendrograms (via: coord_cartesian(expand = FALSE)  and coord_flip(expand = FALSE)) |04d6a9f| 
+|  R/heatmaply.R | 11 +++++++++--
+|  1 file changed, 9 insertions(+), 2 deletions(-)
+
+* 2016-05-25(Tal Galili) heatmaply Now works with Rowv=F and Colv=F (by introducing a new un-exported function: heatmap_subplot_from_ggplotly) |2e6517b| 
+|  DESCRIPTION   |   4 +--
+|  NEWS          |   7 ++++
+|  R/heatmaply.R | 110 ++++++++++++++++++++++++++++++++++++++++++++++++--------
+|  3 files changed, 105 insertions(+), 16 deletions(-)
+
+* 2016-05-25(Tal Galili) scale got confused with scale_fill_gradient_fun |227749a| 
+|  NEWS | 15 +++++++++++++++
+|  1 file changed, 15 insertions(+)
+
+* 2016-05-24(Tal Galili) Added the "text_angle_column" parameter to rotate column text (it is now 45 degrees by default). |c8c77cc| 
+|  R/heatmaply.R    | 15 +++++++++++++--
+|  man/heatmaply.Rd |  5 ++++-
+|  2 files changed, 17 insertions(+), 3 deletions(-)
+
+* 2016-05-24(Tal Galili) fix typos |f1f3dd8| 
+|  DESCRIPTION | 6 +++---
+|  1 file changed, 3 insertions(+), 3 deletions(-)
+
+* 2016-05-24(Tal Galili) Use @importFrom plotly |3550233| 
+|  NAMESPACE | 6 +++++-
+|  NEWS      | 2 +-
+|  R/zzz.R   | 6 +++++-
+|  3 files changed, 11 insertions(+), 3 deletions(-)
+
+* 2016-05-24(Tal Galili) larger titles |30d6725| 
+|  NEWS    | 11 +++++------
+|  NEWS.md | 11 +++++------
+|  2 files changed, 10 insertions(+), 12 deletions(-)
+
+* 2016-05-24(Tal Galili) Add NEWS.md + ChangeLog |89e2725| 
+|  ChangeLog | 121 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+|  NEWS.md   |  35 ++++++++++++++++++
+|  2 files changed, 156 insertions(+)
+
 * 2016-05-24(Tal Galili) fix various import issues that caused warnings with devtools::checks() |862ff8c| 
 |  DESCRIPTION | 2 +-
 |  NEWS        | 7 +++++++

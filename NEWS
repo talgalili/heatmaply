@@ -1,5 +1,9 @@
 heatmaply 0.3.2 (2016-05-26)
 ==============================
+
+### ANNOUNCMENTS
+* heatmaply 0.3.2 - first CRAN release!
+
 ### BUG FIXES
 * http -> https
 
@@ -11,8 +15,6 @@ heatmaply 0.3.1 (2016-05-26)
 heatmaply 0.3.0 (2016-05-25)
 ==============================
 
-### ANNOUNCMENTS
-* heatmaply 0.3.0 - first CRAN release!
 
 ### NEW FEATURES
 * heatmaply
