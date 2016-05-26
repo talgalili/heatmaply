@@ -33,7 +33,7 @@ This work is based on the ggplot2 and plotly.js engine. It produces similar heat
 To install the stable version on CRAN:
 
 ```r
-# install.packages('heatmaply') # not on CRAN yet, please install using devtools. See the next code chunk for the code
+install.packages('heatmaply')
 ```
 
 To install the latest ("cutting-edge") GitHub version run:
@@ -57,15 +57,15 @@ library("heatmaply")
 
 ## Usage
 
+Quick example:
+
 ```r
-
-# mtcars
-# x <- heatmapr(mtcars)
 library(heatmaply)
-heatmaply(iris[,-5], k_row = 3, k_col = 2)
 heatmaply(mtcars, k_row = 3, k_col = 2)
-
 ```
+
+**For more (interactive) examples see the [online vignette on CRAN](https://cran.r-project.org/web/packages/heatmaply/vignettes/heatmaply.html)**
+
 
 
 ## Credit

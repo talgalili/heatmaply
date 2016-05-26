@@ -47,8 +47,8 @@ Installation
 
 To install the stable version on CRAN:
 
-```r
-# install.packages('heatmaply')
+```{r, eval = FALSE}
+install.packages('heatmaply')
 ```
 
 To install the GitHub version:
