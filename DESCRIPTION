@@ -34,7 +34,8 @@ Imports:
 Suggests:
     knitr,
     rmarkdown,
-    gplots
+    gplots,
+    htmlwidgets
 VignetteBuilder: knitr
 License: GPL-2 | GPL-3
 URL: https://cran.r-project.org/package=heatmaply,

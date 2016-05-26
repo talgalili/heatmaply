@@ -84,6 +84,26 @@ heatmaply(x, colors = heat.colors(200))
 # using special scale_fill_gradient_fun colors
 heatmaply(x, scale_fill_gradient_fun = scale_colour_gradient())
 
+
+# We can join two heatmaps together:
+library(heatmaply)
+hm1 <- heatmaply(mtcars) \%>\% layout(margin = list(l = 130, b = 40))
+hm2 <- heatmaply(mtcars, scale = "col") \%>\% layout(margin = list(l = 130, b = 40))
+subplot(hm1, hm2, margin = .2)
+
+# If we want to share the Y axis, then it is risky to keep any of the dendrograms:
+library(heatmaply)
+hm1 <- heatmaply(mtcars, Colv = FALSE, Rowv = FALSE) \%>\% layout(margin = list(l = 130, b = 40))
+hm2 <- heatmaply(mtcars, scale = "col" , Colv = FALSE, Rowv = FALSE) \%>\% layout(margin = list(l = 130, b = 40))
+subplot(hm1, hm2, margin = .02, shareY = TRUE)
+
+# We can save heatmaply as a widget by using:
+library(heatmaply)
+library(htmlwidgets)
+heatmaply(iris[,-5]) \%>\% print \%>\% saveWidget(file="test.html",selfcontained = FALSE)
+
+
+
 }
 }
 
