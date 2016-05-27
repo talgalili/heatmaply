@@ -97,16 +97,22 @@ heatmaply(cor(mtcars),
   layout(margin = list(l = 40, b = 40))
 ```
 
-We can use different colors. For example, we may want to combine the color pallates in order to get divergent colors for the correlations (these will sadly be much less friendly for color blind people):
+We can use different colors than the default `viridis`. For example, we may want to use other color pallates in order to get divergent colors for the correlations (these will sadly be less friendly for color blind people):
 
 ```{r}
 # divergent_viridis_magma <- c(rev(viridis(100, begin = 0.3)), magma(100, begin = 0.3))
-rwb <- colorRampPalette(colors = c("darkred", "white", "darkgreen"))
+# rwb <- colorRampPalette(colors = c("darkred", "white", "darkgreen"))
+library(RColorBrewer)
+# display.brewer.pal(11, "BrBG")
+BrBG <- colorRampPalette(brewer.pal(11, "BrBG"))
+Spectral <- colorRampPalette(brewer.pal(11, "Spectral"))
+
 heatmaply(cor(mtcars), 
           k_col = 2, k_row = 2,
-          colors = rwb(256),
+          colors = BrBG(256),
           limits = c(-1,1)) %>% 
   layout(margin = list(l = 40, b = 40))
+
 ```
 
 Another example for using colors:
