@@ -97,8 +97,20 @@ heatmaply(cor(mtcars),
   layout(margin = list(l = 40, b = 40))
 ```
 
+We can use different colors. For example, we may want to combine the color pallates in order to get divergent colors for the correlations (these will sadly be much less friendly for color blind people):
 
-We can use different colors:
+```{r}
+# divergent_viridis_magma <- c(rev(viridis(100, begin = 0.3)), magma(100, begin = 0.3))
+rwb <- colorRampPalette(colors = c("darkred", "white", "darkgreen"))
+heatmaply(cor(mtcars), 
+          k_col = 2, k_row = 2,
+          colors = rwb(256),
+          limits = c(-1,1)) %>% 
+  layout(margin = list(l = 40, b = 40))
+```
+
+Another example for using colors:
+
 
 ```{r}
 heatmaply(mtcars, colors = heat.colors(100))
@@ -117,6 +129,7 @@ Reviewing missing values:
 
 ```{r}
 
+library(heatmaply)
 class_to <- function(x, new_class) {
   class(x) <- new_class
   x
