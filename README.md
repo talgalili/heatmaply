@@ -21,7 +21,7 @@ This package is still under active development. If you have features you would l
 
 ## Screenshot demo
 
-![](http://i.imgur.com/9wjlfcC.gif)
+![](http://i.imgur.com/9wjlfcC.gif =300x)
 
 
 
