@@ -1,3 +1,4 @@
+
 [![Build Status](https://travis-ci.org/talgalili/heatmaply.png?branch=master)](https://travis-ci.org/talgalili/heatmaply)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/heatmaply)](https://cran.r-project.org/package=heatmaply)
 ![](http://cranlogs.r-pkg.org/badges/heatmaply?color=yellow)
@@ -17,6 +18,11 @@
 ## Please submit features requests
 
 This package is still under active development. If you have features you would like to have added, please submit your suggestions (and bug-reports) at: <https://github.com/talgalili/heatmaply/issues>
+
+## Screenshot demo
+
+![](http://i.imgur.com/9wjlfcC.gif)
+
 
 
 ## Introduction
