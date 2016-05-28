@@ -4,6 +4,7 @@ heatmaply 0.4.0 (2016-05-26)
 ### NEW FEATURES
 * heatmaply
   * grid_color - control the color of the heatmap grid. This is currently not working until this feature will be added by plotly.
+  * hover over dendrogram now returns the height.
 
 heatmaply 0.3.2 (2016-05-26)
 ==============================

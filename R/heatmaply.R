@@ -349,7 +349,7 @@ heatmaply.heatmapr <- function(x,
     py <- ggplot(cols, labels  = FALSE) + theme_bw() +
       coord_cartesian(expand = FALSE) +
       theme_clear_grid_dends
-    py <- ggplotly(py, tooltip = "")
+    py <- ggplotly(py, tooltip = "y")
   }
 
 
@@ -360,7 +360,7 @@ heatmaply.heatmapr <- function(x,
       # coord_cartesian(expand = FALSE) +
       coord_flip(expand = FALSE) + theme_bw() + theme_clear_grid_dends
     if(row_dend_left) px <- px + scale_y_reverse()
-    px <- ggplotly(px, tooltip = "")
+    px <- ggplotly(px, tooltip = "y")
   }
 
 
