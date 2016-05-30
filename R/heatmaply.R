@@ -18,6 +18,8 @@
 #' @param colors a vector of colors to use for heatmap color.
 #' The default uses \code{\link[viridis]{viridis}(n=256, alpha = 1, begin = 0, end = 1, option = "viridis")}
 #' It is passed to \link[ggplot2]{scale_fill_gradientn}.
+#' If colors is a color function (with the first argument being `n` = the number of colors),
+#' it will be used to create 256 colors from that function.
 #' @param limits a two dimensional numeric vector specifying the data range for the scale.
 #' @param na.value color to use for missing values (default is "grey50").
 #'
@@ -111,10 +113,9 @@ heatmaply <- function(x,
                       column_text_angle = 45,
                       margin = 0,
                       row_dend_left = FALSE,
-
                       ...,
-                      scale_fill_gradient_fun =
-                        scale_fill_gradientn(colors = colors,
+                      scale_fill_gradient_fun = scale_fill_gradientn(
+                          colors = if(is.function(colors)) colors(256) else colors,
                                              na.value = na.value, limits = limits),
                       grid_color = NA,
                       srtRow, srtCol
@@ -136,9 +137,9 @@ heatmaply.default <- function(x,
                               margin = 0,
                               row_dend_left = FALSE,
                               ...,
-                              scale_fill_gradient_fun =
-                                scale_fill_gradientn(colors = colors,
-                                                     na.value = na.value, limits = limits),
+                              scale_fill_gradient_fun = scale_fill_gradientn(
+                                colors = if(is.function(colors)) colors(256) else colors,
+                                na.value = na.value, limits = limits),
                               grid_color = NA,
                               srtRow, srtCol
 
@@ -206,7 +207,7 @@ ggplot_heatmap <- function(xx,
     theme(axis.text.x = element_text(angle = column_text_angle, hjust = 1),
           axis.text.y = element_text(angle = row_text_angle, hjust = 1)
           )
-
+  # p <- p + scale_x_discrete(limits = unique(mdf))
   p
 }
 #
@@ -298,9 +299,9 @@ heatmaply.heatmapr <- function(x,
 
                                row_dend_left = FALSE,
                                ...,
-                               scale_fill_gradient_fun =
-                                 scale_fill_gradientn(colors = colors,
-                                                      na.value = na.value, limits = limits),
+                               scale_fill_gradient_fun = scale_fill_gradientn(
+                                 colors = if(is.function(colors)) colors(256) else colors,
+                                 na.value = na.value, limits = limits),
                                grid_color = NA,
                                srtRow, srtCol
 
@@ -365,7 +366,9 @@ heatmaply.heatmapr <- function(x,
 
 
   # create the heatmap
-  p <- ggplot_heatmap(x$matrix$data,
+
+  data_mat <- x$matrix$data
+  p <- ggplot_heatmap(data_mat,
                       row_text_angle,
                       column_text_angle,
                       scale_fill_gradient_fun,
