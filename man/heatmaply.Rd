@@ -9,8 +9,9 @@
 heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
   "viridis"), limits = NULL, na.value = "grey50", row_text_angle = 0,
   column_text_angle = 45, margin = 0, row_dend_left = FALSE, ...,
-  scale_fill_gradient_fun = scale_fill_gradientn(colors = colors, na.value =
-  na.value, limits = limits), grid_color = NA, srtRow, srtCol)
+  scale_fill_gradient_fun = scale_fill_gradientn(colors = if
+  (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
+  limits), grid_color = NA, srtRow, srtCol)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -18,7 +19,9 @@ Defaults to \code{TRUE} unless \code{x} contains any \code{NA}s.}
 
 \item{colors}{a vector of colors to use for heatmap color.
 The default uses \code{\link[viridis]{viridis}(n=256, alpha = 1, begin = 0, end = 1, option = "viridis")}
-It is passed to \link[ggplot2]{scale_fill_gradientn}.}
+It is passed to \link[ggplot2]{scale_fill_gradientn}.
+If colors is a color function (with the first argument being `n` = the number of colors),
+it will be used to create 256 colors from that function.}
 
 \item{limits}{a two dimensional numeric vector specifying the data range for the scale.}
 
@@ -96,14 +99,17 @@ subplot(hm1, hm2, margin = .2)
 
 # If we want to share the Y axis, then it is risky to keep any of the dendrograms:
 library(heatmaply)
-hm1 <- heatmaply(mtcars, Colv = FALSE, Rowv = FALSE) \%>\% layout(margin = list(l = 130, b = 40))
-hm2 <- heatmaply(mtcars, scale = "col" , Colv = FALSE, Rowv = FALSE) \%>\% layout(margin = list(l = 130, b = 40))
+hm1 <- heatmaply(mtcars, Colv = FALSE, Rowv = FALSE) \%>\%
+   layout(margin = list(l = 130, b = 40))
+hm2 <- heatmaply(mtcars, scale = "col" , Colv = FALSE, Rowv = FALSE) \%>\%
+   layout(margin = list(l = 130, b = 40))
 subplot(hm1, hm2, margin = .02, shareY = TRUE)
 
 # We can save heatmaply as a widget by using:
 library(heatmaply)
 library(htmlwidgets)
-heatmaply(iris[,-5]) \%>\% print \%>\% saveWidget(file="test.html",selfcontained = FALSE)
+heatmaply(iris[,-5]) \%>\% print \%>\%
+   saveWidget(file="test.html",selfcontained = FALSE)
 
 
 
