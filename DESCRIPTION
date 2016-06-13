@@ -29,6 +29,7 @@ Imports:
     magrittr (>= 1.0.1),
     reshape2,
     scales,
+    seriation,
     utils,
     stats
 Suggests:

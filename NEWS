@@ -1,4 +1,4 @@
-heatmaply 0.4.0 (2016-05-26)
+heatmaply 0.4.0 (2016-06-13)
 ==============================
 
 ### NEW FEATURES
@@ -6,6 +6,9 @@ heatmaply 0.4.0 (2016-05-26)
   * grid_color - control the color of the heatmap grid. This is currently not working until this feature will be added by plotly.
   * hover over dendrogram now returns the height.
   * colors can now also accept a function (and will use it to produce 256 colors)
+* heatmapr
+  * seriate - character indicating the method of matrix sorting (default: "OLO"). This uses the seriation package.
+
 
 heatmaply 0.3.2 (2016-05-26)
 ==============================
@@ -70,11 +73,58 @@ heatmaply 0.1.0 (2016-05-14)
 TODO:
 ==============================
 * add bars for extra categories
-* remove hover information from dendrograms
 * remove unneeded code from d3heatmap
 * add many options for controlling the heatmap "as it should be"
 * implement all relevant options streight to heatmaply.
 * ggheatmap?
 * Expose widths and heights from heatmap_subplot_from_ggplotly to heatmaply
 
-* write a post!
+* create colors from RcolorBrewer
+* write example for using seriation+dendextend for heatmaps.
+
+* add seriation to imports
+* Show the following example for using seriation:
+
+
+
+require(seriation)
+require(dendextend)
+# "GW", "OLO"
+d <- dist(USArrests[1:15,])
+dend <- as.dendrogram(hclust(d, method = "ave"))
+par(mfrow = c(1,2))
+plot(dend, main = "default")
+# seriate(cophenetic(dend), method = "OLO", control = list(hclust = as.hclust(dend)))
+# the downside in using cophenetic is that seriate has to go through running hclust all over again
+# but we'll just have to accept it...
+o <- seriate(d, method = "GW", control = list(hclust = as.hclust(dend)) )
+get_order(o)
+labels(cophenetic(dend))[get_order(o)]
+d2 <- rotate(dend, order = rev(labels(d)[get_order(o)]))
+plot(d2, main = "GW")
+
+o <- seriate(d, method = "OLO", control = list(hclust = as.hclust(dend)) )
+d3 <- rotate(dend, order = rev(labels(d)[get_order(o)]))
+
+require(heatmaply)
+heatmaply(USArrests[1:15,], Rowv = d2)
+heatmaply(USArrests[1:15,], Rowv = d3)
+heatmaply(USArrests[1:15,], Rowv = dend)
+
+hmap(USArrests[1:15,])
+
+
+
+identical(seriate(d, method = "OLO"),
+		seriate(d, method = "OLO", control = list(hclust = as.hclust(dend)) ))
+get_order(seriate(d, method = "OLO"))
+get_order(seriate(d, method = "OLO", control = list(hclust = hclust(d, method = "sing")) )) # this works :)
+
+
+
+
+
+
+
+
+

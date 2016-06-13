@@ -72,6 +72,13 @@
 #' @param labRow character vectors with row labels to use (from top to bottom); default to rownames(x).
 #' @param labCol character vectors with column labels to use (from left to right); default to colnames(x).
 #'
+#' @param seriate character indicating the method of matrix sorting (default: "OLO").
+#' Implemented options include:
+#' "OLO" (Optimal leaf ordering, optimzes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
+#' "mean" (sorts the matrix based on the reorderfun using marginal means of the matrix. This is the default used by \link[gplots]{heatmap.2}),
+#' "none" (the default order produced by the dendrogram),
+#' "GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length that is restricted by the dendrogram structure)
+#'
 #' @param ... currently ignored
 #'
 #' @export
@@ -129,6 +136,8 @@ heatmapr <- function(x,
                       show_grid = TRUE,
                       anim_duration = 500,
 
+                     seriate = c("OLO", "mean", "none", "GW"),
+
                       ...
 ) {
 
@@ -138,6 +147,9 @@ heatmapr <- function(x,
     x <- as.matrix(x)
   }
   if(!is.matrix(x)) stop("x must be a matrix")
+
+
+  seriate <- match.arg(seriate)
 
   nr <- nrow(x)
   nc <- ncol(x)
@@ -180,14 +192,46 @@ heatmapr <- function(x,
   }
 
 
+  # switch("c",
+  #        "a" = 4,
+  #        "b" = 5,
+  #        "c" = {
+  #          5+3
+  #          2+1
+  #        })
+
   if (isTRUE(Rowv)) {
-    Rowv <- rowMeans(x, na.rm = na.rm)
+    Rowv <- switch(seriate,
+                     "mean" = rowMeans(x, na.rm = na.rm),
+                     "none" = 1:nrow(x),
+                     "OLO" = {
+                                dist_x <- distfun(x) # dist is on the rows by default
+                                hc_x <- hclustfun(dist_x)
+                                o <- seriate(dist_x, method = "OLO", control = list(hclust = hc_x) )
+                                dend_x <- as.dendrogram(hc_x)
+                                dend_x2 <- dendextend::rotate(dend_x, order = rev(labels(dist_x)[get_order(o)]))
+                                dend_x2
+                             },
+                      "GW" = {
+                        dist_x <- distfun(x) # dist is on the rows by default
+                        hc_x <- hclustfun(dist_x)
+                        o <- seriate(dist_x, method = "GW", control = list(hclust = hc_x) )
+                        dend_x <- as.dendrogram(hc_x)
+                        dend_x2 <- dendextend::rotate(dend_x, order = rev(labels(dist_x)[get_order(o)]))
+                        dend_x2
+                      }
+
+                   )
+
+
+
   }
   if (is.numeric(Rowv)) {
     Rowv <- reorderfun(as.dendrogram(hclustfun(distfun(x))), Rowv)
+    Rowv <- rev(Rowv)
   }
   if (is.dendrogram(Rowv)) {
-    Rowv <- rev(Rowv)
+    # Rowv <- rev(Rowv)
     rowInd <- order.dendrogram(Rowv)
     if(nr != length(rowInd))
       stop("Row dendrogram is the wrong size")
@@ -203,12 +247,33 @@ heatmapr <- function(x,
     Colv <- Rowv
   }
   if (isTRUE(Colv)) {
-    Colv <- colMeans(x, na.rm = na.rm)
+    Colv <-  switch(seriate,
+                    "mean" = colMeans(x, na.rm = na.rm),
+                    "none" = 1:ncol(x),
+                    "OLO" = {
+                      dist_x <- distfun(t(x)) # dist is on the rows by default
+                      hc_x <- hclustfun(dist_x)
+                      o <- seriate(dist_x, method = "OLO", control = list(hclust = hc_x) )
+                      dend_x <- as.dendrogram(hc_x)
+                      dend_x2 <- dendextend::rotate(dend_x, order = rev(labels(dist_x)[get_order(o)]))
+                      dend_x2
+                    },
+                    "GW" = {
+                      dist_x <- distfun(t(x)) # dist is on the rows by default
+                      hc_x <- hclustfun(dist_x)
+                      o <- seriate(dist_x, method = "GW", control = list(hclust = hc_x) )
+                      dend_x <- as.dendrogram(hc_x)
+                      dend_x2 <- dendextend::rotate(dend_x, order = rev(labels(dist_x)[get_order(o)]))
+                      dend_x2
+                    }
+
+    )
   }
   if (is.numeric(Colv)) {
-    Colv <- reorderfun(as.dendrogram(hclustfun(distfun(t(x)))), Colv)
+    Colv <- reorderfun(as.dendrogram(hclustfun(distfun(t(x)))), rev(Colv))
   }
   if (is.dendrogram(Colv)) {
+    Colv <- rev(Colv)
     colInd <- order.dendrogram(Colv)
     if (nc != length(colInd))
       stop("Col dendrogram is the wrong size")

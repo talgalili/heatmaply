@@ -15,7 +15,8 @@ heatmapr(x, Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE,
   cellnote, cellnote_scale = TRUE, theme = NULL, colors = "RdYlBu",
   width = NULL, height = NULL, xaxis_height = 80, yaxis_width = 120,
   xaxis_font_size = NULL, yaxis_font_size = NULL, brush_color = "#0000FF",
-  show_grid = TRUE, anim_duration = 500, ...)
+  show_grid = TRUE, anim_duration = 500, seriate = c("OLO", "mean",
+  "none", "GW"), ...)
 }
 \arguments{
 \item{x}{A numeric matrix
@@ -96,6 +97,13 @@ non-integer).}
 
 \item{anim_duration}{Number of milliseconds to animate zooming in and out.
 For large \code{x} it may help performance to set this value to \code{0}.}
+
+\item{seriate}{character indicating the method of matrix sorting (default: "OLO").
+Implemented options include:
+"OLO" (Optimal leaf ordering, optimzes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
+"mean" (sorts the matrix based on the reorderfun using marginal means of the matrix. This is the default used by \link[gplots]{heatmap.2}),
+"none" (the default order produced by the dendrogram),
+"GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length that is restricted by the dendrogram structure)}
 
 \item{...}{currently ignored}
 }

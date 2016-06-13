@@ -35,6 +35,8 @@ NULL
 #' @importFrom stats as.dendrogram dendrapply dist hclust is.leaf order.dendrogram reorder sd
 NULL
 
+#' @importFrom seriation seriate get_order
+NULL
 
 
 
