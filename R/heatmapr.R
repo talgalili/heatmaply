@@ -207,17 +207,15 @@ heatmapr <- function(x,
                      "OLO" = {
                                 dist_x <- distfun(x) # dist is on the rows by default
                                 hc_x <- hclustfun(dist_x)
-                                o <- seriate(dist_x, method = "OLO", control = list(hclust = hc_x) )
                                 dend_x <- as.dendrogram(hc_x)
-                                dend_x2 <- dendextend::rotate(dend_x, order = rev(labels(dist_x)[get_order(o)]))
+                                dend_x2 <- dendextend::seriate_dendrogram(dend_x, dist_x, method = "OLO")
                                 dend_x2
                              },
                       "GW" = {
                         dist_x <- distfun(x) # dist is on the rows by default
                         hc_x <- hclustfun(dist_x)
-                        o <- seriate(dist_x, method = "GW", control = list(hclust = hc_x) )
                         dend_x <- as.dendrogram(hc_x)
-                        dend_x2 <- dendextend::rotate(dend_x, order = rev(labels(dist_x)[get_order(o)]))
+                        dend_x2 <- dendextend::seriate_dendrogram(dend_x, dist_x, method = "GW")
                         dend_x2
                       }
 
