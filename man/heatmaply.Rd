@@ -12,7 +12,7 @@ heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
   scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, titleX = FALSE,
-  titleY = FALSE)
+  titleY = FALSE, hide_colorbar = FALSE)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -59,7 +59,9 @@ This parameter is currently not working until this is added in plotly.}
 
 \item{titleX}{logical (FALSE). should x-axis titles be retained? (passed to \link[plotly]{subplot}).}
 
-\item{titleY}{logical (FALSE). should y-axis titles be retained? (passed to \link[plotly]{subplot}).
+\item{titleY}{logical (FALSE). should y-axis titles be retained? (passed to \link[plotly]{subplot}).}
+
+\item{hide_colorbar}{logical (FALSE). If TRUE, then the color bar is hidden.
 
 Please submit an issue on github if you have a feature that you wish to have added)}
 }

@@ -53,6 +53,8 @@
 #' @param titleX logical (FALSE). should x-axis titles be retained? (passed to \link[plotly]{subplot}).
 #' @param titleY logical (FALSE). should y-axis titles be retained? (passed to \link[plotly]{subplot}).
 #'
+#' @param hide_colorbar logical (FALSE). If TRUE, then the color bar is hidden.
+#'
 #' Please submit an issue on github if you have a feature that you wish to have added)
 #' @aliases
 #' heatmaply.default
@@ -125,7 +127,8 @@ heatmaply <- function(x,
                                              na.value = na.value, limits = limits),
                       grid_color = NA,
                       srtRow, srtCol,
-                      titleX = FALSE, titleY = FALSE
+                      titleX = FALSE, titleY = FALSE,
+                      hide_colorbar = FALSE
 
                       ) {
   UseMethod("heatmaply")
@@ -149,7 +152,8 @@ heatmaply.default <- function(x,
                                 na.value = na.value, limits = limits),
                               grid_color = NA,
                               srtRow, srtCol,
-                              titleX = FALSE, titleY = FALSE
+                              titleX = FALSE, titleY = FALSE,
+                              hide_colorbar = FALSE
 
                               ) {
 
@@ -165,7 +169,8 @@ heatmaply.default <- function(x,
                      column_text_angle = column_text_angle,
                      margin = margin,
                      row_dend_left = row_dend_left,
-                     titleX = titleX, titleY = titleY
+                     titleX = titleX, titleY = titleY,
+                     hide_colorbar = hide_colorbar
                      ) # TODO: think more on what should be passed in "..."
 }
 
@@ -328,7 +333,8 @@ heatmaply.heatmapr <- function(x,
                                  na.value = na.value, limits = limits),
                                grid_color = NA,
                                srtRow, srtCol,
-                               titleX = FALSE, titleY = FALSE
+                               titleX = FALSE, titleY = FALSE,
+                               hide_colorbar = FALSE
 
                                ) {
 
@@ -400,6 +406,13 @@ heatmaply.heatmapr <- function(x,
                       grid_color)
   p <- ggplotly(p)
 
+  if(hide_colorbar) {
+    p <- hide_colorbar(p)
+    # px <- hide_colorbar(px)
+    # py <- hide_colorbar(py)
+
+    }
+
   # TODO: this doesn't work because of the allignment. But using this might
   # speedup the code to deal with MUCH larger matrices.
   # p <- plot_ly(z = xx, type = "heatmap")
@@ -440,6 +453,8 @@ heatmaply.heatmapr <- function(x,
 
 
   l <- layout(heatmap_subplot, showlegend = FALSE)
+
+
 
   # print(l)
   l

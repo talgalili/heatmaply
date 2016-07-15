@@ -1,4 +1,4 @@
-heatmaply 0.4.0 (2016-06-13)
+heatmaply 0.4.0 (2016-07-15)
 ==============================
 
 ### NEW FEATURES
@@ -9,7 +9,7 @@ heatmaply 0.4.0 (2016-06-13)
 * heatmapr
   * seriate - character indicating the method of matrix sorting (default: "OLO"). This uses the seriation package.
   * srtRow, srtCol - add legacy support for these parameters (they are passed to row_text_angle and column_text_angle)
-
+  * hide_colorbar - controls if the color bar should be hidden.
 
 
 
