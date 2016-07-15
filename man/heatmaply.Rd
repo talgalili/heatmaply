@@ -11,8 +11,8 @@ heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
   column_text_angle = 45, margin = 0, row_dend_left = FALSE, ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
-  limits), grid_color = NA, srtRow, srtCol, titleX = FALSE,
-  titleY = FALSE, hide_colorbar = FALSE)
+  limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
+  titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -57,9 +57,13 @@ This parameter is currently not working until this is added in plotly.}
 
 \item{srtCol}{if supplied, this overrides column_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})}
 
-\item{titleX}{logical (FALSE). should x-axis titles be retained? (passed to \link[plotly]{subplot}).}
+\item{xlab}{A character title for the x axis.}
 
-\item{titleY}{logical (FALSE). should y-axis titles be retained? (passed to \link[plotly]{subplot}).}
+\item{ylab}{A character title for the y axis.}
+
+\item{titleX}{logical (TRUE). should x-axis titles be retained? (passed to \link[plotly]{subplot}).}
+
+\item{titleY}{logical (TRUE). should y-axis titles be retained? (passed to \link[plotly]{subplot}).}
 
 \item{hide_colorbar}{logical (FALSE). If TRUE, then the color bar is hidden.
 

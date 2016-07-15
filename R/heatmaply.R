@@ -50,8 +50,11 @@
 #' @param srtRow if supplied, this overrides row_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})
 #' @param srtCol if supplied, this overrides column_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})
 #'
-#' @param titleX logical (FALSE). should x-axis titles be retained? (passed to \link[plotly]{subplot}).
-#' @param titleY logical (FALSE). should y-axis titles be retained? (passed to \link[plotly]{subplot}).
+#' @param xlab A character title for the x axis.
+#' @param ylab A character title for the y axis.
+#'
+#' @param titleX logical (TRUE). should x-axis titles be retained? (passed to \link[plotly]{subplot}).
+#' @param titleY logical (TRUE). should y-axis titles be retained? (passed to \link[plotly]{subplot}).
 #'
 #' @param hide_colorbar logical (FALSE). If TRUE, then the color bar is hidden.
 #'
@@ -127,7 +130,8 @@ heatmaply <- function(x,
                                              na.value = na.value, limits = limits),
                       grid_color = NA,
                       srtRow, srtCol,
-                      titleX = FALSE, titleY = FALSE,
+                      xlab = "", ylab = "",
+                      titleX = TRUE, titleY = TRUE,
                       hide_colorbar = FALSE
 
                       ) {
@@ -152,7 +156,8 @@ heatmaply.default <- function(x,
                                 na.value = na.value, limits = limits),
                               grid_color = NA,
                               srtRow, srtCol,
-                              titleX = FALSE, titleY = FALSE,
+                              xlab = "", ylab = "",
+                              titleX = TRUE, titleY = TRUE,
                               hide_colorbar = FALSE
 
                               ) {
@@ -169,6 +174,7 @@ heatmaply.default <- function(x,
                      column_text_angle = column_text_angle,
                      margin = margin,
                      row_dend_left = row_dend_left,
+                     xlab=xlab, ylab=ylab,
                      titleX = titleX, titleY = titleY,
                      hide_colorbar = hide_colorbar
                      ) # TODO: think more on what should be passed in "..."
@@ -250,7 +256,7 @@ ggplot_heatmap <- function(xx,
 #
 
 heatmap_subplot_from_ggplotly <- function(p, px, py, top_corner, row_dend_left, margin = 0,
-                                          titleX = FALSE, titleY = FALSE,
+                                          titleX = TRUE, titleY = TRUE,
                                           widths = c(.8,.2), heights = c(.2,.8), ...) {
 
   # make different plots based on which dendrogram we have
@@ -333,7 +339,8 @@ heatmaply.heatmapr <- function(x,
                                  na.value = na.value, limits = limits),
                                grid_color = NA,
                                srtRow, srtCol,
-                               titleX = FALSE, titleY = FALSE,
+                               xlab = "", ylab = "",
+                               titleX = TRUE, titleY = TRUE,
                                hide_colorbar = FALSE
 
                                ) {
@@ -405,6 +412,18 @@ heatmaply.heatmapr <- function(x,
                       scale_fill_gradient_fun,
                       grid_color)
   p <- ggplotly(p)
+
+  # https://plot.ly/r/reference/#Layout_and_layout_style_objects
+  p <- layout(p,              # all of layout's properties: /r/reference/#layout
+              # title = "unemployment", # layout's title: /r/reference/#layout-title
+              xaxis = list(           # layout's xaxis is a named list. List of valid keys: /r/reference/#layout-xaxis
+                title = xlab     # xaxis's title: /r/reference/#layout-xaxis-title
+                # showgrid = T        # xaxis's showgrid: /r/reference/#layout-xaxis-showgrid
+              ),
+              yaxis = list(           # layout's yaxis is a named list. List of valid keys: /r/reference/#layout-yaxis
+                title = ylab      # yaxis's title: /r/reference/#layout-yaxis-title
+              ))
+
 
   if(hide_colorbar) {
     p <- hide_colorbar(p)
