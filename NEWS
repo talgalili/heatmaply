@@ -8,6 +8,9 @@ heatmaply 0.4.0 (2016-06-13)
   * colors can now also accept a function (and will use it to produce 256 colors)
 * heatmapr
   * seriate - character indicating the method of matrix sorting (default: "OLO"). This uses the seriation package.
+  * srtRow, srtCol - add legacy support for these parameters (they are passed to row_text_angle and column_text_angle)
+
+
 
 
 heatmaply 0.3.2 (2016-05-26)

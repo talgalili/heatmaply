@@ -50,6 +50,9 @@
 #' @param srtRow if supplied, this overrides row_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})
 #' @param srtCol if supplied, this overrides column_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})
 #'
+#' @param titleX logical (FALSE). should x-axis titles be retained? (passed to \link[plotly]{subplot}).
+#' @param titleY logical (FALSE). should y-axis titles be retained? (passed to \link[plotly]{subplot}).
+#'
 #' Please submit an issue on github if you have a feature that you wish to have added)
 #' @aliases
 #' heatmaply.default
@@ -121,7 +124,8 @@ heatmaply <- function(x,
                           colors = if(is.function(colors)) colors(256) else colors,
                                              na.value = na.value, limits = limits),
                       grid_color = NA,
-                      srtRow, srtCol
+                      srtRow, srtCol,
+                      titleX = FALSE, titleY = FALSE
 
                       ) {
   UseMethod("heatmaply")
@@ -144,7 +148,8 @@ heatmaply.default <- function(x,
                                 colors = if(is.function(colors)) colors(256) else colors,
                                 na.value = na.value, limits = limits),
                               grid_color = NA,
-                              srtRow, srtCol
+                              srtRow, srtCol,
+                              titleX = FALSE, titleY = FALSE
 
                               ) {
 
@@ -159,7 +164,9 @@ heatmaply.default <- function(x,
                      row_text_angle = row_text_angle,
                      column_text_angle = column_text_angle,
                      margin = margin,
-                     row_dend_left = row_dend_left) # TODO: think more on what should be passed in "..."
+                     row_dend_left = row_dend_left,
+                     titleX = titleX, titleY = titleY
+                     ) # TODO: think more on what should be passed in "..."
 }
 
 
@@ -173,6 +180,7 @@ ggplot_heatmap <- function(xx,
                                                                    end = 1, option = "viridis"),
                                                   na.value = "grey50", limits = NULL),
                            grid_color = NA,
+                           grid_size = 0.1,
                            ...) {
 
   theme_clear_grid_heatmap <- theme(axis.line = element_line(colour = "black"),
@@ -201,7 +209,7 @@ ggplot_heatmap <- function(xx,
 
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
   p <- ggplot(mdf, aes_string(x = "column", y = "row")) +
-    geom_tile(aes_string(fill = "value"), color = grid_color) +
+    geom_tile(aes_string(fill = "value"), color = grid_color, size = grid_size) +
     # scale_linetype_identity() +
     # scale_fill_viridis() +
     coord_cartesian(expand = FALSE) +
@@ -214,10 +222,22 @@ ggplot_heatmap <- function(xx,
   p
 }
 #
-# p <- ggplot_heatmap(na_mat(airquality),
+# library(ggplot2)
+# library(plotly)
+# # library(heatmaply)
+# ggplot_heatmap <- heatmaply:::ggplot_heatmap
+# class_to <- function(x, new_class) {
+#   class(x) <- new_class
+#   x
+# }
+# na_mat <- function(x) {
+#   x %>% is.na %>% class_to("numeric")
+# }
+#
+# p <- heatmaply:::ggplot_heatmap(na_mat(airquality),
 #                     scale_fill_gradient_fun = scale_fill_gradientn(colors= c("white","black")) ,
-#                     grid_color = "grey")
-# p
+#                     grid_color = "grey", grid_size = 1)
+# plot(p)
 # ggplotly(p)
 # p <- ggplot_heatmap(mtcars,
 #                     grid_color = white")
@@ -306,7 +326,8 @@ heatmaply.heatmapr <- function(x,
                                  colors = if(is.function(colors)) colors(256) else colors,
                                  na.value = na.value, limits = limits),
                                grid_color = NA,
-                               srtRow, srtCol
+                               srtRow, srtCol,
+                               titleX = FALSE, titleY = FALSE
 
                                ) {
 
@@ -489,7 +510,7 @@ if(FALSE) {
   #          yaxis = eaxis)
 
   s <- subplot(px, plotly_empty(), p, py, nrows = 2, widths = c(.8,.2), heights = c(.2,.8), margin = 0,
-               shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE)
+               shareX = TRUE, shareY = TRUE, titleX = titleX, titleY = titleY)
 
   layout(s, showlegend = FALSE)
 
