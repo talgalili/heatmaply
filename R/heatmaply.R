@@ -245,6 +245,7 @@ ggplot_heatmap <- function(xx,
 #
 
 heatmap_subplot_from_ggplotly <- function(p, px, py, top_corner, row_dend_left, margin = 0,
+                                          titleX = FALSE, titleY = FALSE,
                                           widths = c(.8,.2), heights = c(.2,.8), ...) {
 
   # make different plots based on which dendrogram we have
@@ -257,12 +258,12 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, top_corner, row_dend_left, 
     if(row_dend_left) {
       s <- subplot(top_corner, py, px, p, nrows = 2,
                    widths = rev(widths), heights = heights, margin = margin,
-                   shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE)
+                   shareX = TRUE, shareY = TRUE, titleX = titleX, titleY = titleY)
     } else {
       # row dend on the right side
       s <- subplot(py, top_corner, p, px, nrows = 2,
                    widths = widths, heights = heights, margin = margin,
-                   shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE)
+                   shareX = TRUE, shareY = TRUE, titleX = titleX, titleY = titleY)
     }
 
   } else {
@@ -276,7 +277,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, top_corner, row_dend_left, 
       # then px is NULL
       s <- subplot(py, p, nrows = 2,
                    heights = heights, margin = margin,
-                   shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE)
+                   shareX = TRUE, shareY = TRUE, titleX = titleX, titleY = titleY)
     }
 
     if(!is.null(px)) {
@@ -284,12 +285,12 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, top_corner, row_dend_left, 
       if(row_dend_left) {
         s <- subplot(px, p, nrows = 1,
                      widths = rev(widths), margin = margin,
-                     shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE)
+                     shareX = TRUE, shareY = TRUE, titleX = titleX, titleY = titleY)
       } else {
         # row dend on the right side
         s <- subplot(p, px, nrows = 1,
                      widths = widths, margin = margin,
-                     shareX = TRUE, shareY = TRUE, titleX = FALSE, titleY = FALSE)
+                     shareX = TRUE, shareY = TRUE, titleX = titleX, titleY = titleY)
       }
     }
 
@@ -433,7 +434,8 @@ heatmaply.heatmapr <- function(x,
   # top_corner <- ggplotly(qplot(as.numeric(xx), geom="histogram"))
 
   # create the subplot
-  heatmap_subplot <- heatmap_subplot_from_ggplotly(p, px, py, top_corner, row_dend_left, margin)
+  heatmap_subplot <- heatmap_subplot_from_ggplotly(p, px, py, top_corner, row_dend_left, margin,
+                                                   titleX = titleX, titleY = titleY)
 
 
 
