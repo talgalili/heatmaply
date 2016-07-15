@@ -105,7 +105,7 @@
 #' # We can save heatmaply as a widget by using:
 #' library(heatmaply)
 #' library(htmlwidgets)
-#' heatmaply(iris[,-5]) %>% print %>%
+#' heatmaply(iris[,-5]) %>%
 #'    saveWidget(file="test.html",selfcontained = FALSE)
 #'
 #'
