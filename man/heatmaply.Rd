@@ -12,7 +12,7 @@ heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
   scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
-  titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE,
+  titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE, key.title = NULL,
   return_ppxpy = FALSE)
 }
 \arguments{
@@ -67,6 +67,8 @@ This parameter is currently not working until this is added in plotly.}
 \item{titleY}{logical (TRUE). should y-axis titles be retained? (passed to \link[plotly]{subplot}).}
 
 \item{hide_colorbar}{logical (FALSE). If TRUE, then the color bar is hidden.}
+
+\item{key.title}{(character) main title of the color key. If set to NULL (default) no title will be plotted.}
 
 \item{return_ppxpy}{logical (FALSE). If TRUE, then no plotting is done and the p, px and py objects are
 returned (before turning into plotly objects). This is a temporary option which might be removed in the

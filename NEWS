@@ -4,6 +4,8 @@ heatmaply 0.5.0 (2016-08-04)
 ### NEW FEATURES
 * is.heatmapr
 * ggheatmap - first try. (not working well enough yet. The proportions of the elements are not good)
+* heatmaply
+  * key.title - a parameter to control the main title of the color key. (feature request by John Rizk)
 
 
 

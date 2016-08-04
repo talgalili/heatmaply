@@ -58,6 +58,8 @@
 #'
 #' @param hide_colorbar logical (FALSE). If TRUE, then the color bar is hidden.
 #'
+#' @param key.title (character) main title of the color key. If set to NULL (default) no title will be plotted.
+#'
 #' @param return_ppxpy logical (FALSE). If TRUE, then no plotting is done and the p, px and py objects are
 #' returned (before turning into plotly objects). This is a temporary option which might be removed in the
 #' future just to make it easy to create a ggplot heatmaps.
@@ -137,6 +139,7 @@ heatmaply <- function(x,
                       xlab = "", ylab = "",
                       titleX = TRUE, titleY = TRUE,
                       hide_colorbar = FALSE,
+                      key.title = NULL,
                       return_ppxpy = FALSE
 
                       ) {
@@ -164,6 +167,7 @@ heatmaply.default <- function(x,
                               xlab = "", ylab = "",
                               titleX = TRUE, titleY = TRUE,
                               hide_colorbar = FALSE,
+                              key.title = NULL,
                               return_ppxpy = FALSE
 
                               ) {
@@ -182,7 +186,9 @@ heatmaply.default <- function(x,
                      row_dend_left = row_dend_left,
                      xlab=xlab, ylab=ylab,
                      titleX = titleX, titleY = titleY,
-                     hide_colorbar = hide_colorbar
+                     hide_colorbar = hide_colorbar,
+                     key.title = key.title,
+                     return_ppxpy = return_ppxpy
                      ) # TODO: think more on what should be passed in "..."
 }
 
@@ -198,6 +204,7 @@ ggplot_heatmap <- function(xx,
                                                   na.value = "grey50", limits = NULL),
                            grid_color = NA,
                            grid_size = 0.1,
+                           key.title = NULL,
                            ...) {
 
   theme_clear_grid_heatmap <- theme(axis.line = element_line(colour = "black"),
@@ -236,6 +243,9 @@ ggplot_heatmap <- function(xx,
           axis.text.y = element_text(angle = row_text_angle, hjust = 1)
           )
   # p <- p + scale_x_discrete(limits = unique(mdf))
+
+  p <- p + labs(fill=key.title)
+
   p
 }
 #
@@ -348,6 +358,7 @@ heatmaply.heatmapr <- function(x,
                                xlab = "", ylab = "",
                                titleX = TRUE, titleY = TRUE,
                                hide_colorbar = FALSE,
+                               key.title = NULL,
                                return_ppxpy = FALSE
 
                                ) {
@@ -415,7 +426,8 @@ heatmaply.heatmapr <- function(x,
                       row_text_angle,
                       column_text_angle,
                       scale_fill_gradient_fun,
-                      grid_color)
+                      grid_color,
+                      key.title = key.title)
 
 
   if(return_ppxpy) {
