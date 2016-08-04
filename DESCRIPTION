@@ -1,10 +1,10 @@
 Package: heatmaply
 Type: Package
 Title: Interactive Heat Maps Using 'plotly'
-Version: 0.4.0
-Date: 2016-07-15
+Version: 0.5.0
+Date: 2016-08-04
 Authors@R: c(person("Tal", "Galili", role = c("aut", "cre", "cph"), email =
-    "tal.galili@gmail.com", comment = "http://www.r-statistics.com"))
+    "tal.galili@gmail.com", comment = "https://www.r-statistics.com"))
 Description: Create interactive heatmaps that are usable from the R console,
     in the 'RStudio' viewer pane, in 'R Markdown' documents, and in 'Shiny' apps.
     Hover the mouse pointer over a cell to show details or drag a rectangle to
@@ -31,7 +31,8 @@ Imports:
     scales,
     seriation,
     utils,
-    stats
+    stats,
+    GGally
 Suggests:
     knitr,
     rmarkdown,

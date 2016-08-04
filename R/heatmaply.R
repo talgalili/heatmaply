@@ -58,6 +58,10 @@
 #'
 #' @param hide_colorbar logical (FALSE). If TRUE, then the color bar is hidden.
 #'
+#' @param return_ppxpy logical (FALSE). If TRUE, then no plotting is done and the p, px and py objects are
+#' returned (before turning into plotly objects). This is a temporary option which might be removed in the
+#' future just to make it easy to create a ggplot heatmaps.
+#'
 #' Please submit an issue on github if you have a feature that you wish to have added)
 #' @aliases
 #' heatmaply.default
@@ -132,7 +136,8 @@ heatmaply <- function(x,
                       srtRow, srtCol,
                       xlab = "", ylab = "",
                       titleX = TRUE, titleY = TRUE,
-                      hide_colorbar = FALSE
+                      hide_colorbar = FALSE,
+                      return_ppxpy = FALSE
 
                       ) {
   UseMethod("heatmaply")
@@ -158,7 +163,8 @@ heatmaply.default <- function(x,
                               srtRow, srtCol,
                               xlab = "", ylab = "",
                               titleX = TRUE, titleY = TRUE,
-                              hide_colorbar = FALSE
+                              hide_colorbar = FALSE,
+                              return_ppxpy = FALSE
 
                               ) {
 
@@ -341,7 +347,8 @@ heatmaply.heatmapr <- function(x,
                                srtRow, srtCol,
                                xlab = "", ylab = "",
                                titleX = TRUE, titleY = TRUE,
-                               hide_colorbar = FALSE
+                               hide_colorbar = FALSE,
+                               return_ppxpy = FALSE
 
                                ) {
 
@@ -388,7 +395,6 @@ heatmaply.heatmapr <- function(x,
     py <- ggplot(cols, labels  = FALSE) + theme_bw() +
       coord_cartesian(expand = FALSE) +
       theme_clear_grid_dends
-    py <- ggplotly(py, tooltip = "y")
   }
 
 
@@ -399,7 +405,6 @@ heatmaply.heatmapr <- function(x,
       # coord_cartesian(expand = FALSE) +
       coord_flip(expand = FALSE) + theme_bw() + theme_clear_grid_dends
     if(row_dend_left) px <- px + scale_y_reverse()
-    px <- ggplotly(px, tooltip = "y")
   }
 
 
@@ -411,7 +416,22 @@ heatmaply.heatmapr <- function(x,
                       column_text_angle,
                       scale_fill_gradient_fun,
                       grid_color)
+
+
+  if(return_ppxpy) {
+    return(list(p=p, px=px, py=py))
+  }
+
+
+
+  ## plotly:
+  # turn p, px, and py to plotly objects
   p <- ggplotly(p)
+  if(!is.null(px)) px <- ggplotly(px, tooltip = "y")
+  if(!is.null(py)) py <- ggplotly(py, tooltip = "y")
+
+
+
 
   # https://plot.ly/r/reference/#Layout_and_layout_style_objects
   p <- layout(p,              # all of layout's properties: /r/reference/#layout
@@ -552,3 +572,6 @@ if(FALSE) {
 
 
 }
+
+
+
