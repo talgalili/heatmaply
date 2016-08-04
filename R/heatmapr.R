@@ -414,3 +414,16 @@ heatmapr <- function(x,
 
   heatmapr
 }
+
+
+
+
+#' @title Is the object of class heatmapr
+#' @description Is the object of class heatmapr.
+#' @export
+#' @param x an object.
+#' @return logical - is the object of class heatmapr.
+is.heatmapr <- function(x) {
+  inherits(x,"heatmapr")
+}
+
