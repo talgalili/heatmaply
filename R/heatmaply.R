@@ -244,6 +244,7 @@ ggplot_heatmap <- function(xx,
           )
   # p <- p + scale_x_discrete(limits = unique(mdf))
 
+  # http://stats.stackexchange.com/questions/5007/how-can-i-change-the-title-of-a-legend-in-ggplot2
   p <- p + labs(fill=key.title)
 
   p
