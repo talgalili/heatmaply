@@ -1,3 +1,146 @@
+* 2016-08-27(Tal Galili) updated NEWS |bbaa50e| 
+|  NEWS.md       | 79 +++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+|  R/heatmaply.R |  1 +
+|  2 files changed, 78 insertions(+), 2 deletions(-)
+
+* 2016-08-27(Tal Galili) fix http to https |b82febb| 
+|  DESCRIPTION | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2016-08-04(Tal Galili) key.title - a parameter to control the main title of the color key. |f218455| 
+|  NEWS             |  2 ++
+|  R/heatmaply.R    | 16 ++++++++++++++--
+|  man/heatmaply.Rd |  4 +++-
+|  3 files changed, 19 insertions(+), 3 deletions(-)
+
+* 2016-08-04(Tal Galili) ggheatmap - first try. (not working well enough yet. The proportions of the elements are not good) |75056b0| 
+|  DESCRIPTION      |  9 +++---
+|  NAMESPACE        |  1 +
+|  NEWS             |  1 +
+|  R/ggheatmap.R    | 85 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+|  R/heatmaply.R    | 33 +++++++++++++++++----
+|  man/ggheatmap.Rd | 30 +++++++++++++++++++
+|  man/heatmaply.Rd |  9 ++++--
+|  7 files changed, 157 insertions(+), 11 deletions(-)
+
+* 2016-08-04(Tal Galili) Added is.heatmapr |3befb25| 
+|  NAMESPACE          |  1 +
+|  NEWS               |  8 ++++++++
+|  R/heatmapr.R       | 13 +++++++++++++
+|  man/is.heatmapr.Rd | 18 ++++++++++++++++++
+|  4 files changed, 40 insertions(+)
+
+* 2016-07-15(Tal Galili) Requires plotly (>= 3.0.0) (although it needs plotly (>= 4.0.0)) - until 4.0.0 will get to CRAN. |df68118| 
+|  DESCRIPTION | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2016-07-15(Tal Galili) xlab, ylab - add titles to the x and y axis. |657bdf6| 
+|  NEWS             |  2 +-
+|  R/heatmaply.R    | 31 +++++++++++++++++++++++++------
+|  man/heatmaply.Rd | 12 ++++++++----
+|  3 files changed, 34 insertions(+), 11 deletions(-)
+
+* 2016-07-15(Tal Galili) heatmaply 4.0.0 requires plotly 4.0.0 |2ec4252| 
+|  DESCRIPTION | 6 +++---
+|  1 file changed, 3 insertions(+), 3 deletions(-)
+
+* 2016-07-15(Tal Galili) print is no longer needed for plotly 4.0.0 |5a8bb28| 
+|  R/heatmaply.R    | 2 +-
+|  man/heatmaply.Rd | 2 +-
+|  2 files changed, 2 insertions(+), 2 deletions(-)
+
+* 2016-07-15(Tal Galili) hide_colorbar - controls if the color bar should be hidden. |7a68071| 
+|  NEWS             |  4 ++--
+|  R/heatmaply.R    | 23 +++++++++++++++++++----
+|  man/heatmaply.Rd |  6 ++++--
+|  3 files changed, 25 insertions(+), 8 deletions(-)
+
+* 2016-07-15(Tal Galili) Made titleX and titleY work (now we need to gain control over the text there...) |4f88d36| 
+|  R/heatmaply.R | 14 ++++++++------
+|  1 file changed, 8 insertions(+), 6 deletions(-)
+
+* 2016-07-15(Tal Galili) srtRow, srtCol - add legacy support for these parameters (they are passed to row_text_angle and column_text_angle) (and a few more things) |c815e4b| 
+|  NEWS             |  3 +++
+|  R/heatmaply.R    | 39 ++++++++++++++++++++++++++++++---------
+|  man/heatmaply.Rd |  9 +++++++--
+|  3 files changed, 40 insertions(+), 11 deletions(-)
+
+* 2016-06-21(Tal Galili) now works with dendextend::seriate_dendrogram |c660794| 
+|  R/heatmapr.R | 6 ++----
+|  1 file changed, 2 insertions(+), 4 deletions(-)
+
+* 2016-06-13(Tal Galili) Added seriate to heatmapr - a character indicating the method of matrix sorting (default: "OLO"). This uses the seriation package. |1229bf4| 
+|  DESCRIPTION             |  1 +
+|  NAMESPACE               |  2 ++
+|  NEWS                    | 56 ++++++++++++++++++++++++++++++++++--
+|  R/heatmapr.R            | 73 ++++++++++++++++++++++++++++++++++++++++++++---
+|  R/zzz.R                 |  2 ++
+|  man/heatmapr.Rd         | 10 ++++++-
+|  vignettes/heatmaply.Rmd | 36 +++++++++++++++++++++++
+|  7 files changed, 172 insertions(+), 8 deletions(-)
+
+* 2016-05-31(Tal Galili) typo |8000882| 
+|  vignettes/heatmaply.Rmd | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2016-05-30(Tal Galili) update docs |07eac02| 
+|  R/heatmaply.R    |  9 ++++++---
+|  man/heatmaply.Rd | 18 ++++++++++++------
+|  2 files changed, 18 insertions(+), 9 deletions(-)
+
+* 2016-05-30(Tal Galili) colors can now also accept a function (and will use it to produce 256 colors) |0b454e6| 
+|  NEWS                    |  1 +
+|  R/heatmaply.R           | 25 ++++++++++++++-----------
+|  vignettes/heatmaply.Rmd |  3 ++-
+|  3 files changed, 17 insertions(+), 12 deletions(-)
+
+* 2016-05-28(Tal Galili) hover over dendrogram now returns the height. |0ae8868| 
+|  NEWS          | 1 +
+|  R/heatmaply.R | 4 ++--
+|  2 files changed, 3 insertions(+), 2 deletions(-)
+
+* 2016-05-28(Tal Galili) upload a smaller gif... |ff7004d| 
+|  README.md | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2016-05-28(Tal Galili) second attempt at resize |c6ff17a| 
+|  README.md | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2016-05-28(Tal Galili) reduce size |116e5e3| 
+|  README.md | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2016-05-28(Tal Galili) Screenshot demo |0b8da85| 
+|  README.md | 6 ++++++
+|  1 file changed, 6 insertions(+)
+
+* 2016-05-28(Tal Galili) Use RColorBrewer for colors |1bbc15d| 
+|  DESCRIPTION             |  3 ++-
+|  vignettes/heatmaply.Rmd | 12 +++++++++---
+|  2 files changed, 11 insertions(+), 4 deletions(-)
+
+* 2016-05-27(Tal Galili) Use divergent color map for correlation matrix. |74b33df| 
+|  vignettes/heatmaply.Rmd | 15 ++++++++++++++-
+|  1 file changed, 14 insertions(+), 1 deletion(-)
+
+* 2016-05-27(Tal Galili) grid_color - control the color of the heatmap grid. This is currently not working until this feature will be added by plotly. |7a3937b| 
+|  NEWS                    |  9 +++++++++
+|  R/heatmaply.R           | 51 ++++++++++++++++++++++++++++++++++++-----------
+|  man/heatmaply.Rd        |  5 ++++-
+|  vignettes/heatmaply.Rmd | 20 +++++++++++++++++++
+|  4 files changed, 72 insertions(+), 13 deletions(-)
+
+* 2016-05-26(Tal Galili) Move the creation of the ggplot heatmap outside |68b9c81| 
+|  R/heatmaply.R | 69 +++++++++++++++++++++++++++++++++++----------------------
+|  1 file changed, 43 insertions(+), 26 deletions(-)
+
+* 2016-05-26(Tal Galili) update NEWS |4f589d3| 
+|  ChangeLog | 129 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+|  NEWS      |   6 ++-
+|  NEWS.md   |  41 +++++++++++++++++--
+|  3 files changed, 171 insertions(+), 5 deletions(-)
+
 * 2016-05-26(Tal Galili) heatmaply 0.3.2 is now on CRAN! |67de297| 
 |  README.md               | 12 ++++++------
 |  vignettes/heatmaply.Rmd |  4 ++--
