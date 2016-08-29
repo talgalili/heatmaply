@@ -45,6 +45,13 @@ install.packages('heatmaply')
 To install the latest ("cutting-edge") GitHub version run:
 
 ```R
+
+# good packages to install for this to work smoothly:
+
+install.packages("Rcpp", "ggplot2","munsell","htmltools","DBI","assertthat","gridExtra",
+'devtools',"fpc","TSP","registry","gclus","gplots","RColorBrewer",
+"stringr","labeling","yaml")
+
 # You'll need devtools
 install.packages.2 <- function (pkg) if (!require(pkg)) install.packages(pkg);
 install.packages.2('devtools')
