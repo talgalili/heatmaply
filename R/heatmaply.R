@@ -26,7 +26,7 @@
 #' @param row_text_angle numeric (Default is 0), the angle of the text of the rows. (this is called srtRow in \link[gplots]{heatmap.2})
 #' @param column_text_angle numeric (Default is 45), the angle of the text of the columns. (this is called srtCol in \link[gplots]{heatmap.2})
 #'
-#' @param margin passed to \link[plotly]{subplot}. Default is 0. Either a single value or
+#' @param subplot_margin Currently not well implemented. It is passed to \link[plotly]{subplot}. Default is 0. Either a single value or
 #'  four values (all between 0 and 1). If four values are provided,
 #'  the first is used as the left margin, the second is used as the right margin,
 #'  the third is used as the top margin, and the fourth is used as the bottom margin.
@@ -35,6 +35,8 @@
 #' @param row_dend_left logical (default is FALSE). Should the row dendrogram be
 #' plotted on the left side of the heatmap. If false then it will be plotted on the right
 #' side.
+#'
+#' @param margins numeric vector of length 2 (default is c(50,50)) containing the margins (see \link[plotly]{layout}) for column and row names, respectively.
 #'
 #' @param ... other parameters passed to \link{heatmapr} (currently, various parameters may be ignored.
 #'
@@ -81,10 +83,12 @@
 #' heatmaply(mtcars, k_row = 3, k_col = 2)
 #'
 #' # make sure there is enough room for the labels:
+#' heatmaply(mtcars, margins = c(40, 130))
+#' # this is the same as using:
 #' heatmaply(mtcars) %>% layout(margin = list(l = 130, b = 40))
 #'
 #' # control text angle
-#' heatmaply(mtcars, column_text_angle = 90) %>% layout(margin = list(l = 130, b = 40))
+#' heatmaply(mtcars, column_text_angle = 90, margins = c(40, 130))
 #' # the same as using srtCol:
 #' # heatmaply(mtcars, srtCol = 90) %>% layout(margin = list(l = 130, b = 40))
 #'
@@ -99,16 +103,15 @@
 #'
 #' # We can join two heatmaps together:
 #' library(heatmaply)
-#' hm1 <- heatmaply(mtcars) %>% layout(margin = list(l = 130, b = 40))
-#' hm2 <- heatmaply(mtcars, scale = "col") %>% layout(margin = list(l = 130, b = 40))
+#' hm1 <- heatmaply(mtcars, margins = c(40, 130))
+#' hm2 <- heatmaply(mtcars, scale = "col", margins = c(40, 130))
 #' subplot(hm1, hm2, margin = .2)
 #'
 #' # If we want to share the Y axis, then it is risky to keep any of the dendrograms:
 #' library(heatmaply)
-#' hm1 <- heatmaply(mtcars, Colv = FALSE, Rowv = FALSE) %>%
-#'    layout(margin = list(l = 130, b = 40))
-#' hm2 <- heatmaply(mtcars, scale = "col" , Colv = FALSE, Rowv = FALSE) %>%
-#'    layout(margin = list(l = 130, b = 40))
+#' hm1 <- heatmaply(mtcars, Colv = FALSE, Rowv = FALSE, margins = c(40, 130))
+#' hm2 <- heatmaply(mtcars, scale = "col" , Colv = FALSE, Rowv = FALSE,
+#'              margins = c(40, 130))
 #' subplot(hm1, hm2, margin = .02, shareY = TRUE)
 #'
 #' # We can save heatmaply as a widget by using:
@@ -128,8 +131,9 @@ heatmaply <- function(x,
                       na.value = "grey50",
                       row_text_angle = 0,
                       column_text_angle = 45,
-                      margin = 0,
+                      subplot_margin = 0,
                       row_dend_left = FALSE,
+                      margins = c(50, 50),
                       ...,
                       scale_fill_gradient_fun = scale_fill_gradientn(
                           colors = if(is.function(colors)) colors(256) else colors,
@@ -156,8 +160,9 @@ heatmaply.default <- function(x,
 
                               row_text_angle = 0,
                               column_text_angle = 45,
-                              margin = 0,
+                              subplot_margin = 0,
                               row_dend_left = FALSE,
+                              margins = c(50, 50),
                               ...,
                               scale_fill_gradient_fun = scale_fill_gradientn(
                                 colors = if(is.function(colors)) colors(256) else colors,
@@ -182,14 +187,15 @@ heatmaply.default <- function(x,
                      grid_color = grid_color,
                      row_text_angle = row_text_angle,
                      column_text_angle = column_text_angle,
-                     margin = margin,
+                     subplot_margin = subplot_margin,
                      row_dend_left = row_dend_left,
                      xlab=xlab, ylab=ylab,
                      titleX = titleX, titleY = titleY,
                      hide_colorbar = hide_colorbar,
                      key.title = key.title,
-                     return_ppxpy = return_ppxpy
-                     ) # TODO: think more on what should be passed in "..."
+                     return_ppxpy = return_ppxpy,
+                     margins = margins
+                      ) # TODO: think more on what should be passed in "..."
 }
 
 
@@ -272,7 +278,7 @@ ggplot_heatmap <- function(xx,
 # p
 #
 
-heatmap_subplot_from_ggplotly <- function(p, px, py, top_corner, row_dend_left, margin = 0,
+heatmap_subplot_from_ggplotly <- function(p, px, py, top_corner, row_dend_left, subplot_margin = 0,
                                           titleX = TRUE, titleY = TRUE,
                                           widths = c(.8,.2), heights = c(.2,.8), ...) {
 
@@ -285,12 +291,12 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, top_corner, row_dend_left, 
     # we have both dendrograms
     if(row_dend_left) {
       s <- subplot(top_corner, py, px, p, nrows = 2,
-                   widths = rev(widths), heights = heights, margin = margin,
+                   widths = rev(widths), heights = heights, margin = subplot_margin,
                    shareX = TRUE, shareY = TRUE, titleX = titleX, titleY = titleY)
     } else {
       # row dend on the right side
       s <- subplot(py, top_corner, p, px, nrows = 2,
-                   widths = widths, heights = heights, margin = margin,
+                   widths = widths, heights = heights, margin = subplot_margin,
                    shareX = TRUE, shareY = TRUE, titleX = titleX, titleY = titleY)
     }
 
@@ -304,7 +310,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, top_corner, row_dend_left, 
     if(!is.null(py)) {
       # then px is NULL
       s <- subplot(py, p, nrows = 2,
-                   heights = heights, margin = margin,
+                   heights = heights, margin = subplot_margin,
                    shareX = TRUE, shareY = TRUE, titleX = titleX, titleY = titleY)
     }
 
@@ -312,12 +318,12 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, top_corner, row_dend_left, 
       # then py is NULL
       if(row_dend_left) {
         s <- subplot(px, p, nrows = 1,
-                     widths = rev(widths), margin = margin,
+                     widths = rev(widths), margin = subplot_margin,
                      shareX = TRUE, shareY = TRUE, titleX = titleX, titleY = titleY)
       } else {
         # row dend on the right side
         s <- subplot(p, px, nrows = 1,
-                     widths = widths, margin = margin,
+                     widths = widths, margin = subplot_margin,
                      shareX = TRUE, shareY = TRUE, titleX = titleX, titleY = titleY)
       }
     }
@@ -347,9 +353,11 @@ heatmaply.heatmapr <- function(x,
 
                                row_text_angle = 0,
                                column_text_angle = 45,
-                               margin = 0,
+                               subplot_margin = 0,
 
                                row_dend_left = FALSE,
+
+                               margins = c(50, 50),
                                ...,
                                scale_fill_gradient_fun = scale_fill_gradientn(
                                  colors = if(is.function(colors)) colors(256) else colors,
@@ -499,14 +507,13 @@ heatmaply.heatmapr <- function(x,
   # top_corner <- ggplotly(qplot(as.numeric(xx), geom="histogram"))
 
   # create the subplot
-  heatmap_subplot <- heatmap_subplot_from_ggplotly(p, px, py, top_corner, row_dend_left, margin,
+  heatmap_subplot <- heatmap_subplot_from_ggplotly(p, px, py, top_corner, row_dend_left, subplot_margin,
                                                    titleX = titleX, titleY = titleY)
 
 
 
-  l <- layout(heatmap_subplot, showlegend = FALSE)
-
-
+  l <- layout(heatmap_subplot, showlegend = FALSE)  %>%
+    layout(margin = list(l = margins[2], b = margins[1]))
 
   # print(l)
   l

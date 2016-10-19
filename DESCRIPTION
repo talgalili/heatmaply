@@ -1,8 +1,8 @@
 Package: heatmaply
 Type: Package
 Title: Interactive Heat Maps Using 'plotly'
-Version: 0.5.0
-Date: 2016-08-04
+Version: 0.6.0
+Date: 2016-10-19
 Authors@R: c(person("Tal", "Galili", role = c("aut", "cre", "cph"), email =
     "tal.galili@gmail.com", comment = "https://www.r-statistics.com"))
 Description: Create interactive heatmaps that are usable from the R console,
@@ -21,7 +21,7 @@ Description: Create interactive heatmaps that are usable from the R console,
     the dendrogram panes.
 Depends:
     R (>= 3.0.0),
-    plotly (>= 3.0.0),
+    plotly (>= 4.5.2),
     viridis
 Imports:
     ggplot2,

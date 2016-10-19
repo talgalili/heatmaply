@@ -1,3 +1,10 @@
+heatmaply 0.6.0 (2016-10-19)
+==============================
+
+### NEW FEATURES
+* heatmaply - added a proper `margins` parameter.
+
+
 heatmaply 0.5.0 (2016-08-04)
 ==============================
 

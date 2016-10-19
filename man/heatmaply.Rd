@@ -8,7 +8,8 @@
 \usage{
 heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
   "viridis"), limits = NULL, na.value = "grey50", row_text_angle = 0,
-  column_text_angle = 45, margin = 0, row_dend_left = FALSE, ...,
+  column_text_angle = 45, subplot_margin = 0, row_dend_left = FALSE,
+  margins = c(50, 50), ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
@@ -33,7 +34,7 @@ it will be used to create 256 colors from that function.}
 
 \item{column_text_angle}{numeric (Default is 45), the angle of the text of the columns. (this is called srtCol in \link[gplots]{heatmap.2})}
 
-\item{margin}{passed to \link[plotly]{subplot}. Default is 0. Either a single value or
+\item{subplot_margin}{Currently not well implemented. It is passed to \link[plotly]{subplot}. Default is 0. Either a single value or
 four values (all between 0 and 1). If four values are provided,
 the first is used as the left margin, the second is used as the right margin,
 the third is used as the top margin, and the fourth is used as the bottom margin.
@@ -42,6 +43,8 @@ If a single value is provided, it will be used as all four margins.}
 \item{row_dend_left}{logical (default is FALSE). Should the row dendrogram be
 plotted on the left side of the heatmap. If false then it will be plotted on the right
 side.}
+
+\item{margins}{numeric vector of length 2 (default is c(50,50)) containing the margins (see \link[plotly]{layout}) for column and row names, respectively.}
 
 \item{...}{other parameters passed to \link{heatmapr} (currently, various parameters may be ignored.}
 
@@ -93,10 +96,12 @@ heatmaply(cor(iris[,-5]), limits = c(-1,1))
 heatmaply(mtcars, k_row = 3, k_col = 2)
 
 # make sure there is enough room for the labels:
+heatmaply(mtcars, margins = c(40, 130))
+# this is the same as using:
 heatmaply(mtcars) \%>\% layout(margin = list(l = 130, b = 40))
 
 # control text angle
-heatmaply(mtcars, column_text_angle = 90) \%>\% layout(margin = list(l = 130, b = 40))
+heatmaply(mtcars, column_text_angle = 90, margins = c(40, 130))
 # the same as using srtCol:
 # heatmaply(mtcars, srtCol = 90) \%>\% layout(margin = list(l = 130, b = 40))
 
@@ -111,16 +116,15 @@ heatmaply(x, scale_fill_gradient_fun = scale_colour_gradient())
 
 # We can join two heatmaps together:
 library(heatmaply)
-hm1 <- heatmaply(mtcars) \%>\% layout(margin = list(l = 130, b = 40))
-hm2 <- heatmaply(mtcars, scale = "col") \%>\% layout(margin = list(l = 130, b = 40))
+hm1 <- heatmaply(mtcars, margins = c(40, 130))
+hm2 <- heatmaply(mtcars, scale = "col", margins = c(40, 130))
 subplot(hm1, hm2, margin = .2)
 
 # If we want to share the Y axis, then it is risky to keep any of the dendrograms:
 library(heatmaply)
-hm1 <- heatmaply(mtcars, Colv = FALSE, Rowv = FALSE) \%>\%
-   layout(margin = list(l = 130, b = 40))
-hm2 <- heatmaply(mtcars, scale = "col" , Colv = FALSE, Rowv = FALSE) \%>\%
-   layout(margin = list(l = 130, b = 40))
+hm1 <- heatmaply(mtcars, Colv = FALSE, Rowv = FALSE, margins = c(40, 130))
+hm2 <- heatmaply(mtcars, scale = "col" , Colv = FALSE, Rowv = FALSE,
+             margins = c(40, 130))
 subplot(hm1, hm2, margin = .02, shareY = TRUE)
 
 # We can save heatmaply as a widget by using:
