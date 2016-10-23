@@ -545,12 +545,12 @@ heatmaply.heatmapr <- function(x,
   if (missing(row_side_colours)) pr <- NULL
   else {
     pr <- side_colour_plot(row_side_colours, type = "row",
-      palette = row_side_palette, ...)
+      palette = row_side_palette)
   }
   if (missing(col_side_colours)) pc <- NULL
   else {
     pc <- side_colour_plot(col_side_colours, type = "column",
-      palette = col_side_palette, ...)
+      palette = col_side_palette)
   }
   ## plotly:
   # turn p, px, and py to plotly objects
@@ -670,28 +670,15 @@ if(FALSE) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-side_colour_plot <- function(df, id_var, palette = viridis,
+side_colour_plot <- function(df, palette = viridis,
   scale_title = paste(type, "side colours"), type = c("column", "row")) {
+  
   type <- match.arg(type)
-  if (missing(id_var)) {
-    ## Assume that it is molten already
-    if (!all(c("value", "variable") %in% colnames(df))) {
-      stop("`df` doesn't seem to be molten and id_var has not been supplied!")
-    }
-    id_var <- colnames(df)[1]
-  } else {
-    df <- reshape2::melt(df, id.vars = id_var)
+  
+  if (!all(c("value", "variable") %in% colnames(df))) {
+    stop("`df` doesn't seem to be molten and id_var has not been supplied!")
   }
+  id_var <- colnames(df)[1]
   if (type == "column") {
     mapping <- aes_string(x=id_var, y='variable', fill='value')
     theme <- theme(
