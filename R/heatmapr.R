@@ -135,8 +135,10 @@ heatmapr <- function(x,
                       brush_color = "#0000FF",
                       show_grid = TRUE,
                       anim_duration = 500,
-
-                     seriate = c("OLO", "mean", "none", "GW"),
+                      
+                      row_side_colors = NULL,
+                      col_side_colors = NULL,
+                      seriate = c("OLO", "mean", "none", "GW"),
 
                       ...
 ) {
@@ -302,10 +304,12 @@ heatmapr <- function(x,
 
   ## reorder x (and others)
   ##=======================
-  x <- x[rowInd, colInd]
+  x <- x[rowInd, colInd, drop = FALSE]
   if (!missing(cellnote))
-    cellnote <- cellnote[rowInd, colInd]
+    cellnote <- cellnote[rowInd, colInd, drop = FALSE]
 
+  if (!is.null(row_side_colors)) row_side_colors <- row_side_colors[rowInd, ]
+  if (!is.null(col_side_colors)) col_side_colors <- col_side_colors[, colInd] 
 
   ## Dendrograms - Update the labels and change to dendToTree
   ##=======================
@@ -408,7 +412,9 @@ heatmapr <- function(x,
   }
 
   heatmapr <- list(rows = rowDend, cols = colDend, matrix = mtx, # image = imgUri,
-                  theme = theme, options = options)
+                  theme = theme, options = options,
+                  row_side_colors = row_side_colors,
+                  col_side_colors = col_side_colors)
 
   class(heatmapr) <- "heatmapr"
 
