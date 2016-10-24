@@ -344,7 +344,6 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
   ind_remove_row <- rep(ind_null_row, length.out = length(plots))
 
   ## Remove all null plots
-  print(!(ind_remove_row | ind_remove_col))
   plots <- plots[!(ind_remove_row | ind_remove_col)]
 
 
@@ -454,7 +453,12 @@ heatmaply.heatmapr <- function(x,
   }
   if (missing(col_side_colors)) pc <- NULL
   else {
-    pc <- side_color_plot(x[["col_side_colors"]], type = "column",
+    ## Have to transpose, otherwise it is the wrong orientation
+    side_color_df <- data.frame(t(x[["col_side_colors"]]))
+
+    ## Just make sure it's character first
+    side_color_df[] <- lapply(side_color_df, as.character)
+    pc <- side_color_plot(side_color_df, type = "column",
       palette = col_side_palette)
   }
 
@@ -598,29 +602,28 @@ side_color_plot <- function(df, palette,
   if (missing(palette)) palette <- function(n) rainbow(n, s = 0.8)
 
   type <- match.arg(type)
+  if (type %in% colnames(df)) 
+    stop("Having", type, "in the colnames of the side_color df will drop data!")
   
+  df[[type]] <- if(!is.null(rownames(df))) rownames(df) else 1:nrow(df)
 
-  df[["row"]] <- if(!is.null(rownames(df)))
-              {rownames(df)} else
-              {1:nrow(df)}
-  df[["row"]] <- with(df, factor(row, levels=row, ordered=TRUE))
-  df <- reshape2::melt(df, id.vars="row")
-  print(df[["row"]])
+  df[[type]] <- factor(df[[type]], levels = df[[type]], ordered = TRUE)
+  df <- reshape2::melt(df, id.vars = type)
 
   id_var <- colnames(df)[1]
   if (type == "column") {
-    mapping <- aes_string(x=id_var, y='variable', fill='value')
+    mapping <- aes_string(x = id_var, y = 'variable', fill = 'value')
     theme <- theme(
         panel.background = element_blank(),
-        # axis.text.x = element_blank(),
+        axis.text.x = element_blank(),
         axis.text.y = element_text(angle = column_text_angle),
         axis.ticks = element_blank())
   } else {
-    mapping <- aes_string(x='variable', y=id_var, fill='value')
+    mapping <- aes_string(x = 'variable', y = id_var, fill = 'value')
     theme <- theme(
         panel.background = element_blank(),
         axis.text.x = element_text(angle = row_text_angle),
-        # axis.text.y = element_blank(),
+        axis.text.y = element_blank(),
         axis.ticks = element_blank())
   }
   g <- ggplot(df, mapping = mapping) +
@@ -629,8 +632,8 @@ side_color_plot <- function(df, palette,
     ylab("") +
     scale_fill_manual(
       name = NULL,
-      breaks=levels(factor(df[["value"]])),
-      values=palette(length(unique(df[["value"]])))) +
+      breaks = levels(factor(df[["value"]])),
+      values = palette(length(unique(df[["value"]])))) +
     theme
   return(g)
   # ggplotly(g)
