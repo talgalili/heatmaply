@@ -57,7 +57,7 @@
 #' @param titleX logical (TRUE). should x-axis titles be retained? (passed to \link[plotly]{subplot}).
 #' @param titleY logical (TRUE). should y-axis titles be retained? (passed to \link[plotly]{subplot}).
 #'
-#' 
+#'
 #' @param hide_colorbar logical (FALSE). If TRUE, then the color bar is hidden.
 #'
 #' @param key.title (character) main title of the color key. If set to NULL (default) no title will be plotted.
@@ -66,17 +66,17 @@
 #' returned (before turning into plotly objects). This is a temporary option which might be removed in the
 #' future just to make it easy to create a ggplot heatmaps.
 #'
-#' @param row_side_colors,col_side_colors data.frame of factors to produce 
-#'    row/column side colors in the style of heatmap.2/heatmap.3. 
-#'    col_side_colors should be "wide", ie be the same dimensions 
+#' @param row_side_colors,col_side_colors data.frame of factors to produce
+#'    row/column side colors in the style of heatmap.2/heatmap.3.
+#'    col_side_colors should be "wide", ie be the same dimensions
 #'    as the column side colors it will produce.
-#' 
-#' @param row_side_palette,col_side_palette Color palette functions to be 
-#'    used for row_side_colors and col_side_colors respectively. 
-#' 
-#' @param hatmap_layers ggplot object (eg, theme_bw()) to be added to 
+#'
+#' @param row_side_palette,col_side_palette Color palette functions to be
+#'    used for row_side_colors and col_side_colors respectively.
+#'
+#' @param heatmap_layers ggplot object (eg, theme_bw()) to be added to
 #'  the heatmap before conversion to a plotly object.
-#' 
+#'
 #' Please submit an issue on github if you have a feature that you wish to have added)
 #' @aliases
 #' heatmaply.default
@@ -195,9 +195,9 @@ heatmaply.default <- function(x,
                               ) {
   if(!missing(srtRow)) row_text_angle <- srtRow
   if(!missing(srtCol)) column_text_angle <- srtCol
-  hm <- heatmapr(x, 
-    row_side_colors = row_side_colors, 
-    col_side_colors = col_side_colors, 
+  hm <- heatmapr(x,
+    row_side_colors = row_side_colors,
+    col_side_colors = col_side_colors,
     ...)
   heatmaply.heatmapr(hm, # colors = colors, limits = limits,
                      scale_fill_gradient_fun = scale_fill_gradient_fun,
@@ -266,7 +266,7 @@ ggplot_heatmap <- function(xx,
     theme_bw()+ theme_clear_grid_heatmap +
     theme(axis.text.x = element_text(angle = column_text_angle, hjust = 1),
           axis.text.y = element_text(angle = row_text_angle, hjust = 1)
-          ) + 
+          ) +
     ## Passed in to allow users to alter (courtesy of GenVisR)
     layers
   # p <- p + scale_x_discrete(limits = unique(mdf))
@@ -351,7 +351,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
   ## number of rows depends on vertically aligned components
   nrows <- sum(!ind_null_col)
   ind_remove_col <- rep(ind_null_col, each = length(plots) / 3)
-  
+
   ind_null_row <- sapply(row3_list, is.null)
   ind_remove_row <- rep(ind_null_row, length.out = length(plots))
 
@@ -359,7 +359,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
   plots <- plots[!(ind_remove_row | ind_remove_col)]
 
 
-  s <- subplot(plots, 
+  s <- subplot(plots,
     nrows = nrows,
     widths = if(row_dend_left) rev(widths) else widths,
     shareX = TRUE, shareY = TRUE,
@@ -593,15 +593,15 @@ if(FALSE) {
 
 #'
 #' geom_tile for side color plots
-#' 
+#'
 #' @param df A "molten" df as produced by (eg) reshape2::melt
 #' @param palette A function which can return colors to be used in the sidebar
-#' plot 
+#' plot
 #' @param scale_title Title of the color scale. Not currently used.
 #' @param type Horizontal or vertical plot? Valid values are "column" and "row"
-#' 
+#'
 #' @return A ggplot geom_tile object
-#' 
+#'
 #' @export
 side_color_plot <- function(df, palette,
   scale_title = paste(type, "side colors"), type = c("column", "row"),
@@ -614,9 +614,9 @@ side_color_plot <- function(df, palette,
   if (missing(palette)) palette <- function(n) rainbow(n, s = 0.8)
 
   type <- match.arg(type)
-  if (type %in% colnames(df)) 
+  if (type %in% colnames(df))
     stop("Having", type, "in the colnames of the side_color df will drop data!")
-  
+
   df[[type]] <- if(!is.null(rownames(df))) rownames(df) else 1:nrow(df)
 
   df[[type]] <- factor(df[[type]], levels = df[[type]], ordered = TRUE)
@@ -640,7 +640,7 @@ side_color_plot <- function(df, palette,
   }
   g <- ggplot(df, mapping = mapping) +
     geom_raster() +
-    xlab("") + 
+    xlab("") +
     ylab("") +
     scale_fill_manual(
       name = NULL,

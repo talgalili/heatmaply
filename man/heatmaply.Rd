@@ -14,7 +14,8 @@ heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
   titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE, key.title = NULL,
-  return_ppxpy = FALSE)
+  return_ppxpy = FALSE, row_side_colors = NULL, row_side_palette,
+  col_side_colors = NULL, col_side_palette, heatmap_layers)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -51,7 +52,7 @@ side.}
 \item{scale_fill_gradient_fun}{A function that creates a smooth gradient for the heatmap.
 The default uses \link[ggplot2]{scale_fill_gradientn} with the values of colors, limits, and
 na.value that are supplied by the user. The user can input a customized function, such as
-\link{scale_colour_gradient}() in order to get other results (although the virids default
+\link{scale_color_gradient}() in order to get other results (although the virids default
 is quite recommended)}
 
 \item{grid_color}{control the color of the heatmap grid. Default is NA. Value passed to \link[ggplot2]{geom_tile}.
@@ -75,7 +76,18 @@ This parameter is currently not working until this is added in plotly.}
 
 \item{return_ppxpy}{logical (FALSE). If TRUE, then no plotting is done and the p, px and py objects are
 returned (before turning into plotly objects). This is a temporary option which might be removed in the
-future just to make it easy to create a ggplot heatmaps.
+future just to make it easy to create a ggplot heatmaps.}
+
+\item{row_side_colors, col_side_colors}{data.frame of factors to produce
+row/column side colors in the style of heatmap.2/heatmap.3.
+col_side_colors should be "wide", ie be the same dimensions
+as the column side colors it will produce.}
+
+\item{row_side_palette, col_side_palette}{Color palette functions to be
+used for row_side_colors and col_side_colors respectively.}
+
+\item{heatmap_layers}{ggplot object (eg, theme_bw()) to be added to
+ the heatmap before conversion to a plotly object.
 
 Please submit an issue on github if you have a feature that you wish to have added)}
 }
@@ -111,7 +123,7 @@ x <- mtcars
 # different colors
 heatmaply(x, colors = heat.colors(200))
 # using special scale_fill_gradient_fun colors
-heatmaply(x, scale_fill_gradient_fun = scale_colour_gradient())
+heatmaply(x, scale_fill_gradient_fun = scale_color_gradient())
 
 
 # We can join two heatmaps together:
