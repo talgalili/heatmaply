@@ -57,6 +57,7 @@
 #' @param titleX logical (TRUE). should x-axis titles be retained? (passed to \link[plotly]{subplot}).
 #' @param titleY logical (TRUE). should y-axis titles be retained? (passed to \link[plotly]{subplot}).
 #'
+#' 
 #' @param hide_colorbar logical (FALSE). If TRUE, then the color bar is hidden.
 #'
 #' @param key.title (character) main title of the color key. If set to NULL (default) no title will be plotted.
@@ -65,6 +66,17 @@
 #' returned (before turning into plotly objects). This is a temporary option which might be removed in the
 #' future just to make it easy to create a ggplot heatmaps.
 #'
+#' @param row_side_colors,col_side_colors data.frame of factors to produce 
+#'    row/column side colors in the style of heatmap.2/heatmap.3. 
+#'    col_side_colors should be "wide", ie be the same dimensions 
+#'    as the column side colors it will produce.
+#' 
+#' @param row_side_palette,col_side_palette Color palette functions to be 
+#'    used for row_side_colors and col_side_colors respectively. 
+#' 
+#' @param hatmap_layers ggplot object (eg, theme_bw()) to be added to 
+#'  the heatmap before conversion to a plotly object.
+#' 
 #' Please submit an issue on github if you have a feature that you wish to have added)
 #' @aliases
 #' heatmaply.default

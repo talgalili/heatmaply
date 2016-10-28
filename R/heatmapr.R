@@ -72,6 +72,11 @@
 #' @param labRow character vectors with row labels to use (from top to bottom); default to rownames(x).
 #' @param labCol character vectors with column labels to use (from left to right); default to colnames(x).
 #'
+#' @param row_side_colors,col_side_colors data.frame of factors to produce 
+#'    row/column side colors in the style of heatmap.2/heatmap.3. 
+#'    col_side_colors should be "wide", ie be the same dimensions 
+#'    as the column side colors it will produce.
+#' 
 #' @param seriate character indicating the method of matrix sorting (default: "OLO").
 #' Implemented options include:
 #' "OLO" (Optimal leaf ordering, optimzes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
