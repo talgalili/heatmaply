@@ -1,8 +1,9 @@
-heatmaply 0.6.0 (2016-10-19)
+heatmaply 0.6.0 (2016-10-28)
 ==============================
 
 ### NEW FEATURES
 * heatmaply - added a proper `margins` parameter.
+* ggplot_heatmap - grid_color now works (thanks to a hack of using geom_hline and geom_vline instead of heom_tile(..., color)
 
 
 heatmaply 0.5.0 (2016-08-04)

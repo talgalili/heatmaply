@@ -2,7 +2,7 @@ Package: heatmaply
 Type: Package
 Title: Interactive Heat Maps Using 'plotly'
 Version: 0.6.0
-Date: 2016-10-19
+Date: 2016-10-28
 Authors@R: c(person("Tal", "Galili", role = c("aut", "cre", "cph"), email =
     "tal.galili@gmail.com", comment = "https://www.r-statistics.com"))
 Description: Create interactive heatmaps that are usable from the R console,

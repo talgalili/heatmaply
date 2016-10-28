@@ -47,7 +47,7 @@
 #' is quite recommended)
 #'
 #' @param grid_color control the color of the heatmap grid. Default is NA. Value passed to \link[ggplot2]{geom_tile}.
-#' This parameter is currently not working until this is added in plotly.
+#' (another parameter, grid_color, will be added in the future - once it is implemented in plotly)
 #'
 #' @param srtRow if supplied, this overrides row_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})
 #' @param srtCol if supplied, this overrides column_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})
@@ -81,6 +81,7 @@
 #' heatmaply(cor(iris[,-5]))
 #' heatmaply(cor(iris[,-5]), limits = c(-1,1))
 #' heatmaply(mtcars, k_row = 3, k_col = 2)
+#' heatmaply(mtcars, k_row = 3, k_col = 2, grid_color = "white")
 #'
 #' # make sure there is enough room for the labels:
 #' heatmaply(mtcars, margins = c(40, 130))
@@ -209,7 +210,7 @@ ggplot_heatmap <- function(xx,
                                                                    end = 1, option = "viridis"),
                                                   na.value = "grey50", limits = NULL),
                            grid_color = NA,
-                           grid_size = 0.1,
+                           grid_size = 0.5,
                            key.title = NULL,
                            ...) {
 
@@ -253,6 +254,16 @@ ggplot_heatmap <- function(xx,
   # http://stats.stackexchange.com/questions/5007/how-can-i-change-the-title-of-a-legend-in-ggplot2
   p <- p + labs(fill=key.title)
 
+  # until this bug is fixed: https://github.com/ropensci/plotly/issues/699
+  # we are forced to use geom_hline and geom_vline
+  if(!is.na(grid_color)) {
+    p <- p + geom_hline(yintercept =c(0:nrow(xx))+.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
+    p <- p + geom_vline(xintercept =c(0:ncol(xx))+.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
+
+  }
+
+
+
   p
 }
 #
@@ -274,7 +285,7 @@ ggplot_heatmap <- function(xx,
 # plot(p)
 # ggplotly(p)
 # p <- ggplot_heatmap(mtcars,
-#                     grid_color = white")
+#                     grid_color = "white")
 # p
 #
 

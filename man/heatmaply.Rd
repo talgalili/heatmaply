@@ -55,7 +55,7 @@ na.value that are supplied by the user. The user can input a customized function
 is quite recommended)}
 
 \item{grid_color}{control the color of the heatmap grid. Default is NA. Value passed to \link[ggplot2]{geom_tile}.
-This parameter is currently not working until this is added in plotly.}
+(another parameter, grid_color, will be added in the future - once it is implemented in plotly)}
 
 \item{srtRow}{if supplied, this overrides row_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})}
 
@@ -94,6 +94,7 @@ heatmaply(iris[,-5], k_row = 3, k_col = 2)
 heatmaply(cor(iris[,-5]))
 heatmaply(cor(iris[,-5]), limits = c(-1,1))
 heatmaply(mtcars, k_row = 3, k_col = 2)
+heatmaply(mtcars, k_row = 3, k_col = 2, grid_color = "white")
 
 # make sure there is enough room for the labels:
 heatmaply(mtcars, margins = c(40, 130))
