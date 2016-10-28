@@ -181,10 +181,10 @@ na_mat <- function(x) {
 }
 
 
-airquality %>% na_mat %>% 
+airquality[1:30,] %>% na_mat %>% 
   heatmaply(color = c("white","black"), grid_color = "grey",
-            k_col =3, k_row = 3) %>% 
-  layout(margin = list(l = 40, b = 50))
+            k_col =3, k_row = 3,
+            margin = c(40, 50))
 
 
 ```
