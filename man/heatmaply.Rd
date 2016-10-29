@@ -15,7 +15,8 @@ heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
   titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE, key.title = NULL,
   return_ppxpy = FALSE, row_side_colors = NULL, row_side_palette,
-  col_side_colors = NULL, col_side_palette, heatmap_layers)
+  col_side_colors = NULL, col_side_palette, ColSideColors = NULL,
+  RowSideColors = NULL, heatmap_layers)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -85,6 +86,9 @@ as the column side colors it will produce.}
 
 \item{row_side_palette, col_side_palette}{Color palette functions to be
 used for row_side_colors and col_side_colors respectively.}
+
+\item{ColSideColors, RowSideColors}{passed to row_side_colors,col_side_colors in order
+to keep compatibility with \link[gplots]{heatmap.2}}
 
 \item{heatmap_layers}{ggplot object (eg, theme_bw()) to be added to
  the heatmap before conversion to a plotly object.

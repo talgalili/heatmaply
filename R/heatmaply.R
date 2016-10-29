@@ -71,6 +71,9 @@
 #'    col_side_colors should be "wide", ie be the same dimensions
 #'    as the column side colors it will produce.
 #'
+#' @param ColSideColors,RowSideColors passed to row_side_colors,col_side_colors in order
+#' to keep compatibility with \link[gplots]{heatmap.2}
+#'
 #' @param row_side_palette,col_side_palette Color palette functions to be
 #'    used for row_side_colors and col_side_colors respectively.
 #'
@@ -160,6 +163,8 @@ heatmaply <- function(x,
                       row_side_palette,
                       col_side_colors = NULL,
                       col_side_palette,
+                      ColSideColors = NULL,
+                      RowSideColors = NULL,
                       heatmap_layers
                       ) {
   UseMethod("heatmaply")
@@ -191,6 +196,8 @@ heatmaply.default <- function(x,
                               row_side_palette,
                               col_side_colors = NULL,
                               col_side_palette,
+                              ColSideColors = NULL,
+                              RowSideColors = NULL,
                               heatmap_layers = NULL
                               ) {
   if(!missing(srtRow)) row_text_angle <- srtRow
@@ -216,6 +223,8 @@ heatmaply.default <- function(x,
                      row_side_palette = row_side_palette,
                      col_side_colors = col_side_colors,
                      col_side_palette = col_side_palette,
+                     ColSideColors = ColSideColors,
+                     RowSideColors = RowSideColors,
                      heatmap_layers = heatmap_layers
                       ) # TODO: think more on what should be passed in "..."
 }
@@ -405,6 +414,8 @@ heatmaply.heatmapr <- function(x,
                                row_side_palette,
                                col_side_colors,
                                col_side_palette,
+                               ColSideColors = NULL,
+                               RowSideColors = NULL,
                                heatmap_layers
                                ) {
   # informative errors for mis-specified limits
@@ -414,6 +425,10 @@ heatmaply.heatmapr <- function(x,
   }
   if(!missing(srtRow)) row_text_angle <- srtRow
   if(!missing(srtCol)) column_text_angle <- srtCol
+
+  if(!is.null(ColSideColors))  col_side_colors <- ColSideColors
+  if(!is.null(RowSideColors))  row_side_colors <- RowSideColors
+
   # x is a heatmapr object.
   # heatmapr <- list(rows = rowDend, cols = colDend, matrix = mtx, image = imgUri,
   #                  theme = theme, options = options)
