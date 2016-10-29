@@ -1,8 +1,10 @@
-heatmaply 0.6.0 (2016-10-19)
+heatmaply 0.6.0 (2016-10-29)
 ==============================
 
 ### NEW FEATURES
 * heatmaply - added a proper `margins` parameter.
+* heatmaply - added `row_side_colors` to allow non-numeric values in the sidebar of the heatmap, similar to RowSideColors.
+* heatmaply - grid_color now works (thanks to a hack of using geom_hline and geom_vline instead of heom_tile(..., color) in ggplot_heatmap )
 
 
 heatmaply 0.5.0 (2016-08-04)

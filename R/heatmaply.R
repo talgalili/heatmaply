@@ -281,6 +281,15 @@ ggplot_heatmap <- function(xx,
   # p <- p + scale_x_discrete(limits = unique(mdf))
   # http://stats.stackexchange.com/questions/5007/how-can-i-change-the-title-of-a-legend-in-ggplot2
   p <- p + labs(fill=key.title)
+
+  # until this bug is fixed: https://github.com/ropensci/plotly/issues/699
+  # we are forced to use geom_hline and geom_vline
+  if(!is.na(grid_color)) {
+    p <- p + geom_hline(yintercept =c(0:nrow(xx))+.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
+    p <- p + geom_vline(xintercept =c(0:ncol(xx))+.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
+
+  }
+
   p
 }
 
