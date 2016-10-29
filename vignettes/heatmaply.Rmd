@@ -195,6 +195,21 @@ airquality %>% na_mat %>%
 
 
 
+The following example shows how to get the same result in heatmaply as with heatmap2.:
+
+```{r}
+x  <- as.matrix(datasets::mtcars)
+gplots::heatmap.2(x, trace = "none", col = viridis(100), key = FALSE)
+```
+
+And heatmaply (the only difference is the side of the row dendrogram. This might be possible to modify in future versions of ggplot/plotly/heatmaply):
+
+```{r}
+heatmaply::heatmaply(x, seriate = "mean")
+```
+
+
+
 Credit
 ========
 
