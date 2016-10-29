@@ -416,7 +416,7 @@ heatmaply.heatmapr <- function(x,
                                col_side_palette,
                                ColSideColors = NULL,
                                RowSideColors = NULL,
-                               heatmap_layers
+                               heatmap_layers = NULL
                                ) {
   # informative errors for mis-specified limits
   if(!is.null(limits)) {
