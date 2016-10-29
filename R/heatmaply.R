@@ -46,7 +46,8 @@
 #' is quite recommended)
 #'
 #' @param grid_color control the color of the heatmap grid. Default is NA. Value passed to \link[ggplot2]{geom_tile}.
-#' This parameter is currently not working until this is added in plotly.
+#' Do not use this parameter on larger matrix sizes, as it can dramatically prolong the build time of the heatmap.
+#' (another parameter, grid_color, will be added in the future - once it is implemented in plotly)
 #'
 #' @param srtRow if supplied, this overrides row_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})
 #' @param srtCol if supplied, this overrides column_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})
