@@ -313,8 +313,8 @@ heatmapr <- function(x,
   if (!missing(cellnote))
     cellnote <- cellnote[rowInd, colInd, drop = FALSE]
 
-  if (!is.null(row_side_colors)) row_side_colors <- row_side_colors[rowInd, ]
-  if (!is.null(col_side_colors)) col_side_colors <- col_side_colors[, colInd] 
+  if (!is.null(row_side_colors)) row_side_colors <- row_side_colors[rowInd, , drop = FALSE]
+  if (!is.null(col_side_colors)) col_side_colors <- col_side_colors[, colInd, drop = FALSE] 
 
   ## Dendrograms - Update the labels and change to dendToTree
   ##=======================
