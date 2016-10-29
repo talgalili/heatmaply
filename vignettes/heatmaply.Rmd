@@ -184,8 +184,8 @@ na_mat <- function(x) {
   x %>% is.na %>% class_to("numeric") 
 }
 
-
-airquality %>% na_mat %>% 
+# warning - using grid_color cannot handle a large matrix!
+airquality[1:10,] %>% na_mat %>% 
   heatmaply(color = c("white","black"), grid_color = "grey",
             k_col =3, k_row = 3,
             margins = c(40, 50)) 
