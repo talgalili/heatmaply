@@ -87,16 +87,16 @@ heatmaply(mtcars)
 Because the labels are somewhat long, we need to manually fix the margins (hopefully this will be fixed in future versions of plot.ly)
 
 ```{r}
-heatmaply(mtcars) %>% layout(margin = list(l = 130, b = 40))
+heatmaply(mtcars, margins = c(40, 130))
+# heatmaply(mtcars) %>% layout(margin = list(l = 130, b = 40))
 ```
 
 We can use this with correlation. Notice the use of limits to set the range of the colors, and how we color the branches:
 
 ```{r}
-heatmaply(cor(mtcars), 
+heatmaply(cor(mtcars), margins = c(40, 40),
           k_col = 2, k_row = 2,
-          limits = c(-1,1)) %>% 
-  layout(margin = list(l = 40, b = 40))
+          limits = c(-1,1))
 ```
 
 
@@ -107,22 +107,26 @@ heatmaply uses the `seriation` package to find optimal ordering of rows and colu
 
 ```{r}
 # The default of heatmaply:
-heatmaply(mtcars[1:10,], seriate = "OLO") %>% layout(margin = list(l = 130, b = 40))
+heatmaply(mtcars[1:10,], margins = c(40, 130),
+          seriate = "OLO")
 ```
 
 ```{r}
 # Similar to OLO but less optimal (since it is a heuristic)
-heatmaply(mtcars[1:10,], seriate = "GW") %>% layout(margin = list(l = 130, b = 40))
+heatmaply(mtcars[1:10,], margin = c(40, 130),
+          seriate = "GW")
 ```
 
 ```{r}
 # the default by gplots::heatmaply.2
-heatmaply(mtcars[1:10,], seriate = "mean") %>% layout(margin = list(l = 130, b = 40))
+heatmaply(mtcars[1:10,], margins = c(40, 130),
+          seriate = "mean")
 ```
 
 ```{r}
 # the default output from hclust
-heatmaply(mtcars[1:10,], seriate = "none") %>% layout(margin = list(l = 130, b = 40))
+heatmaply(mtcars[1:10,],  margins = c(40, 130),
+          seriate = "none")
 ```
 
 This works heavily relies on the seriation package (their [vignette](https://cran.r-project.org/web/packages/seriation/vignettes/seriation.pdf) is well worth the read), and also lightly on the dendextend package (see [vignette](https://cran.r-project.org/web/packages/dendextend/vignettes/introduction.html))
@@ -140,11 +144,10 @@ library(RColorBrewer)
 BrBG <- colorRampPalette(brewer.pal(11, "BrBG"))
 Spectral <- colorRampPalette(brewer.pal(11, "Spectral"))
 
-heatmaply(cor(mtcars), 
+heatmaply(cor(mtcars), margins = c(40, 40),
           k_col = 2, k_row = 2,
           colors = BrBG(256),
-          limits = c(-1,1)) %>% 
-  layout(margin = list(l = 40, b = 40))
+          limits = c(-1,1))
 
 ```
 
@@ -153,13 +156,14 @@ Another example for using colors:
 
 
 ```{r}
-heatmaply(mtcars, colors = heat.colors(100))
+heatmaply(mtcars, margins = c(40, 130),
+          colors = heat.colors(100))
 ```
 
 Or even more customized colors using `scale_fill_gradient_fun`:
 
 ```{r}
-heatmaply(mtcars, 
+heatmaply(mtcars, margins = c(40, 130),
           scale_fill_gradient_fun = ggplot2::scale_fill_gradient2(low = "blue", high = "red", midpoint = 200, limits = c(0, 500)))
 
 ```
@@ -183,8 +187,8 @@ na_mat <- function(x) {
 
 airquality %>% na_mat %>% 
   heatmaply(color = c("white","black"), grid_color = "grey",
-            k_col =3, k_row = 3) %>% 
-  layout(margin = list(l = 40, b = 50))
+            k_col =3, k_row = 3,
+            margins = c(40, 50)) 
 
 
 ```
