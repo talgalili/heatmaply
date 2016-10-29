@@ -458,12 +458,12 @@ heatmaply.heatmapr <- function(x,
   if(return_ppxpy) {
     return(list(p=p, px=px, py=py))
   }
-  if (missing(row_side_colors)) pr <- NULL
+  if (is.null(row_side_colors)) pr <- NULL
   else {
     pr <- side_color_plot(x[["row_side_colors"]], type = "row",
       palette = row_side_palette)
   }
-  if (missing(col_side_colors)) pc <- NULL
+  if (is.null(col_side_colors)) pc <- NULL
   else {
     ## Have to transpose, otherwise it is the wrong orientation
     side_color_df <- data.frame(t(x[["col_side_colors"]]))
@@ -607,6 +607,7 @@ side_color_plot <- function(df, palette,
   scale_title = paste(type, "side colors"), type = c("column", "row"),
   row_text_angle, column_text_angle) {
 
+  if (is.matrix(df)) df <- as.data.frame(df)
   stopifnot(is.data.frame(df))
 
   if (missing(column_text_angle)) column_text_angle <- 0
@@ -621,6 +622,7 @@ side_color_plot <- function(df, palette,
 
   df[[type]] <- factor(df[[type]], levels = df[[type]], ordered = TRUE)
   df <- reshape2::melt(df, id.vars = type)
+  df[["value"]] <- factor(df[["value"]])
 
   id_var <- colnames(df)[1]
   if (type == "column") {
