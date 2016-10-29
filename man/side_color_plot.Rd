@@ -16,6 +16,8 @@ plot}
 \item{scale_title}{Title of the color scale. Not currently used.}
 
 \item{type}{Horizontal or vertical plot? Valid values are "column" and "row"}
+
+\item{row_text_angle, column_text_angle}{the angle of the text of the rows/columns.}
 }
 \value{
 A ggplot geom_tile object

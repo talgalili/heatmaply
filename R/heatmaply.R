@@ -624,6 +624,7 @@ if(FALSE) {
 #' plot
 #' @param scale_title Title of the color scale. Not currently used.
 #' @param type Horizontal or vertical plot? Valid values are "column" and "row"
+#' @param row_text_angle,column_text_angle the angle of the text of the rows/columns.
 #'
 #' @return A ggplot geom_tile object
 #'
