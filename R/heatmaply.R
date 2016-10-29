@@ -612,7 +612,7 @@ side_color_plot <- function(df, palette,
 
   if (missing(column_text_angle)) column_text_angle <- 0
   if (missing(row_text_angle)) row_text_angle <- 45
-  if (missing(palette)) palette <- function(n) rainbow(n, s = 0.8)
+  if (missing(palette)) palette <- function(n) colorspace::rainbow_hcl(n) # , s = 0.8)
 
   type <- match.arg(type)
   if (type %in% colnames(df))
