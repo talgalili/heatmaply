@@ -31,6 +31,8 @@
 #'  the third is used as the top margin, and the fourth is used as the bottom margin.
 #'  If a single value is provided, it will be used as all four margins.
 #'
+#' @param dendrogram Passed to heatmapr; "row", "column", or "both". Default is "both"
+#' 
 #' @param row_dend_left logical (default is FALSE). Should the row dendrogram be
 #' plotted on the left side of the heatmap. If false then it will be plotted on the right
 #' side.
@@ -147,6 +149,7 @@ heatmaply <- function(x,
                       row_text_angle = 0,
                       column_text_angle = 45,
                       subplot_margin = 0,
+                      dendrogram = "both",
                       row_dend_left = FALSE,
                       margins = c(50, 50),
                       ...,
@@ -180,6 +183,7 @@ heatmaply.default <- function(x,
                               row_text_angle = 0,
                               column_text_angle = 45,
                               subplot_margin = 0,
+                              dendrogram = "both",
                               row_dend_left = FALSE,
                               margins = c(50, 50),
                               ...,
@@ -201,11 +205,26 @@ heatmaply.default <- function(x,
                               RowSideColors = NULL,
                               heatmap_layers = NULL
                               ) {
+  ## Suppress creation of new graphcis device, but on exit replace it.
+  old_dev <- options()[["device"]]
+  on.exit(options(device = old_dev))
+  options(device = names(capabilities()[which(capabilities())])[1])
+
+
   if(!missing(srtRow)) row_text_angle <- srtRow
   if(!missing(srtCol)) column_text_angle <- srtCol
+
+  if (!is.null(ColSideColors)) {
+    col_side_colors <- ColSideColors
+  }
+  if (!is.null(RowSideColors)) {
+    row_side_colors <- RowSideColors
+  }
+
   hm <- heatmapr(x,
     row_side_colors = row_side_colors,
     col_side_colors = col_side_colors,
+    dendrogram = dendrogram,
     ...)
   heatmaply.heatmapr(hm, # colors = colors, limits = limits,
                      scale_fill_gradient_fun = scale_fill_gradient_fun,
@@ -329,13 +348,17 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
                                           widths=NULL, heights=NULL, ...) {
   if (is.null(widths)) {
     if (!is.null(px)) {
-      if (!is.null(pr)) {
-        widths <- c(0.7, 0.1, 0.2)
-      } else {
+      if (is.null(pr)) {
         widths <- c(0.8, 0.2)
+      } else {
+        widths <- c(0.7, 0.05, 0.2)
       }
     } else {
-      widths <- 1
+      if (is.null(pr)) {
+        widths <- 1
+      } else {
+        widths <- c(0.9, 0.1)
+      }
     }
   }
 
@@ -377,14 +400,16 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
   ## Remove all null plots
   plots <- plots[!(ind_remove_row | ind_remove_col)]
 
-
-  s <- subplot(plots,
-    nrows = nrows,
-    widths = if(row_dend_left) rev(widths) else widths,
-    shareX = TRUE, shareY = TRUE,
-    titleX = titleX, titleY = titleY,
-    margin = subplot_margin,
-    heights = heights)
+  ## Interim solution before removing warnings in documented way
+  suppressMessages(suppressWarnings(
+    s <- subplot(plots,
+      nrows = nrows,
+      widths = if(row_dend_left) rev(widths) else widths,
+      shareX = TRUE, shareY = TRUE,
+      titleX = titleX, titleY = titleY,
+      margin = subplot_margin,
+      heights = heights)
+  ))
   return(s)
 }
 
@@ -432,12 +457,15 @@ heatmaply.heatmapr <- function(x,
   if(!is.null(limits)) {
     if(!is.numeric(limits)) stop("limits must be numeric")
     if(length(limits) != 2L) stop("limits must be of length 2 (i.e.: two dimensional)")
+
+    r <- range(x)
+    l <- sort(limits)
+    ## Warn for broken heatmap colors
+    if (r[1] < l[1]) warning("Lower limit is not below lowest value in x, colors will be broken!")
+    if (r[2] > l[2]) warning("Upper limit is not above highest value in x, colors will be broken!")
   }
   if(!missing(srtRow)) row_text_angle <- srtRow
   if(!missing(srtCol)) column_text_angle <- srtCol
-
-  if(!is.null(ColSideColors))  col_side_colors <- ColSideColors
-  if(!is.null(RowSideColors))  row_side_colors <- RowSideColors
 
   # x is a heatmapr object.
   # heatmapr <- list(rows = rowDend, cols = colDend, matrix = mtx, image = imgUri,
@@ -486,7 +514,7 @@ heatmaply.heatmapr <- function(x,
   if (is.null(row_side_colors)) pr <- NULL
   else {
     pr <- side_color_plot(x[["row_side_colors"]], type = "row",
-      palette = row_side_palette)
+      palette = row_side_palette, is_colors = !is.null(RowSideColors))
   }
   if (is.null(col_side_colors)) pc <- NULL
   else {
@@ -496,14 +524,18 @@ heatmaply.heatmapr <- function(x,
     ## Just make sure it's character first
     side_color_df[] <- lapply(side_color_df, as.character)
     pc <- side_color_plot(side_color_df, type = "column",
-      palette = col_side_palette)
+      palette = col_side_palette, is_colors = !is.null(ColSideColors))
   }
 
   ## plotly:
   # turn p, px, and py to plotly objects
   p <- ggplotly(p)
-  if(!is.null(px)) px <- ggplotly(px, tooltip = "y")
-  if(!is.null(py)) py <- ggplotly(py, tooltip = "y")
+  if(!is.null(px)) {
+    px <- ggplotly(px, tooltip = "y")
+  }
+  if(!is.null(py)) {
+    py <- ggplotly(py, tooltip = "y")
+  }
   # https://plot.ly/r/reference/#Layout_and_layout_style_objects
   p <- layout(p,              # all of layout's properties: /r/reference/#layout
               # title = "unemployment", # layout's title: /r/reference/#layout-title
@@ -619,26 +651,31 @@ if(FALSE) {
 #'
 #' geom_tile for side color plots
 #'
-#' @param df A "molten" df as produced by (eg) reshape2::melt
+#' @param df A "molten" data.frame as produced by (eg) reshape2::melt
 #' @param palette A function which can return colors to be used in the sidebar
 #' plot
 #' @param scale_title Title of the color scale. Not currently used.
 #' @param type Horizontal or vertical plot? Valid values are "column" and "row"
 #' @param row_text_angle,column_text_angle the angle of the text of the rows/columns.
-#'
+#' @param is_colors Use if the values in df are valid colours and should not be mapped
+#'  to a color scheme, and instead should be plotted directly.
+#' 
 #' @return A ggplot geom_tile object
 #'
 #' @export
 side_color_plot <- function(df, palette,
   scale_title = paste(type, "side colors"), type = c("column", "row"),
-  row_text_angle, column_text_angle) {
+  row_text_angle, column_text_angle, is_colors) {
 
   if (is.matrix(df)) df <- as.data.frame(df)
   stopifnot(is.data.frame(df))
 
+  ## TODO: Find out why names are dropped when dim(df)[2] == 1
+  original_dim <- dim(df)
+
   if (missing(column_text_angle)) column_text_angle <- 0
   if (missing(row_text_angle)) row_text_angle <- 45
-  if (missing(palette)) palette <- function(n) colorspace::rainbow_hcl(n) # , s = 0.8)
+  if (missing(palette)) palette <- colorspace::rainbow_hcl
 
   type <- match.arg(type)
   if (type %in% colnames(df))
@@ -653,28 +690,39 @@ side_color_plot <- function(df, palette,
   id_var <- colnames(df)[1]
   if (type == "column") {
     mapping <- aes_string(x = id_var, y = 'variable', fill = 'value')
+    if(original_dim[2] > 1) {
+      text_element <- element_text(angle = column_text_angle) 
+    } else text_element <- element_blank()
+
     theme <- theme(
         panel.background = element_blank(),
         axis.text.x = element_blank(),
-        axis.text.y = element_text(angle = column_text_angle),
+        axis.text.y = text_element,
         axis.ticks = element_blank())
   } else {
+    if(original_dim[2] > 1) {
+      text_element <- element_text(angle = row_text_angle) 
+    } else text_element <- element_blank()
+
     mapping <- aes_string(x = 'variable', y = id_var, fill = 'value')
     theme <- theme(
         panel.background = element_blank(),
-        axis.text.x = element_text(angle = row_text_angle),
+        axis.text.x = text_element,
         axis.text.y = element_blank(),
         axis.ticks = element_blank())
   }
+
+  color_vals <- if (is_colors) levels(df[["value"]])
+  else palette(length(unique(df[["value"]])))
+
   g <- ggplot(df, mapping = mapping) +
     geom_raster() +
     xlab("") +
     ylab("") +
     scale_fill_manual(
       name = NULL,
-      breaks = levels(factor(df[["value"]])),
-      values = palette(length(unique(df[["value"]])))) +
+      breaks = levels(df[["value"]]),
+      values = color_vals) +
     theme
   return(g)
-  # ggplotly(g)
 }
