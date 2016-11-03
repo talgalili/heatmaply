@@ -153,6 +153,20 @@ heatmaply(iris[,-5]) \%>\%
    saveWidget(file="test.html",selfcontained = FALSE)
 
 
+# Example for using RowSideColors
+
+x  <- as.matrix(datasets::mtcars)
+rc <- colorspace::rainbow_hcl(nrow(x))
+
+library(gplots)
+library(viridis)
+heatmap.2(x, trace = "none", col = viridis(100),
+          RowSideColors=rc)
+
+heatmaply(x, seriate = "mean",
+          RowSideColors=data.frame(rc))
+
+
 
 }
 }

@@ -32,7 +32,7 @@
 #'  If a single value is provided, it will be used as all four margins.
 #'
 #' @param dendrogram Passed to heatmapr; "row", "column", or "both". Default is "both"
-#' 
+#'
 #' @param row_dend_left logical (default is FALSE). Should the row dendrogram be
 #' plotted on the left side of the heatmap. If false then it will be plotted on the right
 #' side.
@@ -136,6 +136,20 @@
 #' library(htmlwidgets)
 #' heatmaply(iris[,-5]) %>%
 #'    saveWidget(file="test.html",selfcontained = FALSE)
+#'
+#'
+#' # Example for using RowSideColors
+#'
+#' x  <- as.matrix(datasets::mtcars)
+#' rc <- colorspace::rainbow_hcl(nrow(x))
+#'
+#' library(gplots)
+#' library(viridis)
+#' heatmap.2(x, trace = "none", col = viridis(100),
+#'           RowSideColors=rc)
+#'
+#' heatmaply(x, seriate = "mean",
+#'           RowSideColors=data.frame(rc))
 #'
 #'
 #'
@@ -661,7 +675,7 @@ if(FALSE) {
 #' @param row_text_angle,column_text_angle the angle of the text of the rows/columns.
 #' @param is_colors Use if the values in df are valid colours and should not be mapped
 #'  to a color scheme, and instead should be plotted directly.
-#' 
+#'
 #' @return A ggplot geom_tile object
 #'
 #' @export
@@ -693,7 +707,7 @@ side_color_plot <- function(df, palette,
   if (type == "column") {
     mapping <- aes_string(x = id_var, y = 'variable', fill = 'value')
     if(original_dim[2] > 1) {
-      text_element <- element_text(angle = column_text_angle) 
+      text_element <- element_text(angle = column_text_angle)
     } else text_element <- element_blank()
 
     theme <- theme(
@@ -703,7 +717,7 @@ side_color_plot <- function(df, palette,
         axis.ticks = element_blank())
   } else {
     if(original_dim[2] > 1) {
-      text_element <- element_text(angle = row_text_angle) 
+      text_element <- element_text(angle = row_text_angle)
     } else text_element <- element_blank()
 
     mapping <- aes_string(x = 'variable', y = id_var, fill = 'value')
