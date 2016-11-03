@@ -8,8 +8,8 @@
 \usage{
 heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
   "viridis"), limits = NULL, na.value = "grey50", row_text_angle = 0,
-  column_text_angle = 45, subplot_margin = 0, row_dend_left = FALSE,
-  margins = c(50, 50), ...,
+  column_text_angle = 45, subplot_margin = 0, dendrogram = "both",
+  row_dend_left = FALSE, margins = c(50, 50), ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
@@ -41,6 +41,8 @@ four values (all between 0 and 1). If four values are provided,
 the first is used as the left margin, the second is used as the right margin,
 the third is used as the top margin, and the fourth is used as the bottom margin.
 If a single value is provided, it will be used as all four margins.}
+
+\item{dendrogram}{Passed to heatmapr; "row", "column", or "both". Default is "both"}
 
 \item{row_dend_left}{logical (default is FALSE). Should the row dendrogram be
 plotted on the left side of the heatmap. If false then it will be plotted on the right

@@ -319,8 +319,23 @@ heatmapr <- function(x,
   if (!missing(cellnote))
     cellnote <- cellnote[rowInd, colInd, drop = FALSE]
 
-  if (!is.null(row_side_colors)) row_side_colors <- row_side_colors[rowInd, , drop = FALSE]
-  if (!is.null(col_side_colors)) col_side_colors <- col_side_colors[, colInd, drop = FALSE]
+  if (!is.null(row_side_colors)) {
+    if(is.vector(row_side_colors)) {
+      row_side_colors <- data.frame("row_side_colors" = row_side_colors)
+    }
+    if (dim(row_side_colors)[1] != dim(x)[1])
+      stop("row_side_colors and x have different numbers of rows")
+    row_side_colors <- row_side_colors[rowInd, , drop = FALSE]
+  }
+  if (!is.null(col_side_colors)) {
+    if(is.vector(col_side_colors)) {
+      col_side_colors <- matrix(col_side_colors, nrow = 1)
+      rownames(col_side_colors) <- "col_side_colors"
+    }
+    if (dim(col_side_colors)[2] != dim(x)[2])
+      stop("col_side_colors and x have different numbers of columns")
+    col_side_colors <- col_side_colors[, colInd, drop = FALSE]
+  }
 
   ## Dendrograms - Update the labels and change to dendToTree
   ##=======================
