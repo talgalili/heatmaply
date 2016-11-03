@@ -164,7 +164,15 @@ heatmap.2(x, trace = "none", col = viridis(100),
           RowSideColors=rc)
 
 heatmaply(x, seriate = "mean",
-          RowSideColors=data.frame(rc))
+          RowSideColors=rc)
+
+
+heatmaply(x[,-c(8,9)], seriate = "mean",
+          col_side_colors = c(rep(0,5), rep(1,4)),
+          row_side_colors = x[,8:9])
+heatmaply(x[,-c(8,9)], seriate = "mean",
+          col_side_colors = data.frame(a=c(rep(0,5), rep(1,4))),
+          row_side_colors = x[,8:9])
 
 
 
