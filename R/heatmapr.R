@@ -332,7 +332,7 @@ heatmapr <- function(x,
       col_side_colors <- matrix(col_side_colors, nrow = 1)
       rownames(col_side_colors) <- "col_side_colors"
     }
-    if (!dim(col_side_colors)[2] != dim(x)[2])
+    if (dim(col_side_colors)[2] != dim(x)[2])
       stop("col_side_colors and x have different numbers of columns")
     col_side_colors <- col_side_colors[, colInd, drop = FALSE]
   }
