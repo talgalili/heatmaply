@@ -5,12 +5,17 @@
 # reference: https://plot.ly/ggplot2/ggdendro-dendrograms/
 # to answer later: http://stackoverflow.com/questions/34733829/questions-about-a-tutorial-regarding-interactive-heatmaps-with-plotly
 # to check: https://plot.ly/r/heatmaps/
-#' @title  Creates a plotly heatmap
+
+
+#' @title  Cluster heatmap based on plotly
 #'
 #' @description
 #' An object of class heatmapr includes all the needed information
 #' for producing a heatmap. The goal is to seperate the pre-processing of the
 #' heatmap elements from the graphical rendaring of the object, which could be done
+#'
+#' (Please submit an issue on github if you have a feature that you wish to have added)
+#'
 #' @param x can either be a heatmapr object, or a numeric matrix
 #'   Defaults to \code{TRUE} unless \code{x} contains any \code{NA}s.
 #'
@@ -83,7 +88,9 @@
 #' @param heatmap_layers ggplot object (eg, theme_bw()) to be added to
 #'  the heatmap before conversion to a plotly object.
 #'
-#' Please submit an issue on github if you have a feature that you wish to have added)
+#' @param branches_lwd numeric (default is 0.6). The width of the dendrograms' branches.
+#'
+#'
 #' @aliases
 #' heatmaply.default
 #' heatmaply.heatmapr
@@ -191,7 +198,8 @@ heatmaply <- function(x,
                       col_side_palette,
                       ColSideColors = NULL,
                       RowSideColors = NULL,
-                      heatmap_layers
+                      heatmap_layers,
+                      branches_lwd = 0.6
                       ) {
   UseMethod("heatmaply")
 }
@@ -225,8 +233,9 @@ heatmaply.default <- function(x,
                               col_side_palette,
                               ColSideColors = NULL,
                               RowSideColors = NULL,
-                              heatmap_layers = NULL
-                              ) {
+                              heatmap_layers = NULL,
+                              branches_lwd = 0.6
+) {
   ## Suppress creation of new graphcis device, but on exit replace it.
   old_dev <- options()[["device"]]
   on.exit(options(device = old_dev))
@@ -268,8 +277,9 @@ heatmaply.default <- function(x,
                      col_side_palette = col_side_palette,
                      ColSideColors = ColSideColors,
                      RowSideColors = RowSideColors,
-                     heatmap_layers = heatmap_layers
-                      ) # TODO: think more on what should be passed in "..."
+                     heatmap_layers = heatmap_layers,
+                     branches_lwd = branches_lwd
+                ) # TODO: think more on what should be passed in "..."
 }
 
 
@@ -475,7 +485,8 @@ heatmaply.heatmapr <- function(x,
                                col_side_palette,
                                ColSideColors = NULL,
                                RowSideColors = NULL,
-                               heatmap_layers = NULL
+                               heatmap_layers = NULL,
+                               branches_lwd = 0.6
                                ) {
   # informative errors for mis-specified limits
   if(!is.null(limits)) {
@@ -507,6 +518,14 @@ heatmaply.heatmapr <- function(x,
   # dendrograms:
   rows <- x$rows
   cols <- x$cols
+
+  if(branches_lwd != 1) {
+    rows <- dendextend::set(rows, "branches_lwd", branches_lwd)
+    cols <- dendextend::set(cols, "branches_lwd", branches_lwd)
+  }
+
+
+
   # this is using dendextend
   if(is.null(cols)) {
     py <- NULL

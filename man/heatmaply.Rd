@@ -4,7 +4,7 @@
 \alias{heatmaply}
 \alias{heatmaply.default}
 \alias{heatmaply.heatmapr}
-\title{Creates a plotly heatmap}
+\title{Cluster heatmap based on plotly}
 \usage{
 heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
   "viridis"), limits = NULL, na.value = "grey50", row_text_angle = 0,
@@ -16,7 +16,7 @@ heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
   titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE, key.title = NULL,
   return_ppxpy = FALSE, row_side_colors = NULL, row_side_palette,
   col_side_colors = NULL, col_side_palette, ColSideColors = NULL,
-  RowSideColors = NULL, heatmap_layers)
+  RowSideColors = NULL, heatmap_layers, branches_lwd = 0.6)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -94,14 +94,16 @@ used for row_side_colors and col_side_colors respectively.}
 to keep compatibility with \link[gplots]{heatmap.2}}
 
 \item{heatmap_layers}{ggplot object (eg, theme_bw()) to be added to
- the heatmap before conversion to a plotly object.
+the heatmap before conversion to a plotly object.}
 
-Please submit an issue on github if you have a feature that you wish to have added)}
+\item{branches_lwd}{numeric (default is 0.6). The width of the dendrograms' branches.}
 }
 \description{
 An object of class heatmapr includes all the needed information
 for producing a heatmap. The goal is to seperate the pre-processing of the
 heatmap elements from the graphical rendaring of the object, which could be done
+
+(Please submit an issue on github if you have a feature that you wish to have added)
 }
 \examples{
 \dontrun{
