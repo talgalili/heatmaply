@@ -129,7 +129,7 @@ heatmaply(mtcars[1:10,],  margins = c(40, 130),
           seriate = "none")
 ```
 
-This works heavily relies on the seriation package (their [vignette](https://cran.r-project.org/web/packages/seriation/vignettes/seriation.pdf) is well worth the read), and also lightly on the dendextend package (see [vignette](https://cran.r-project.org/web/packages/dendextend/vignettes/introduction.html))
+This works heavily relies on the seriation package (their [vignette](https://CRAN.R-project.org/package=seriation/vignettes/seriation.pdf) is well worth the read), and also lightly on the dendextend package (see [vignette](https://CRAN.R-project.org/package=dendextend/vignettes/introduction.html) )
 
 Changing color palettes
 -------------------
