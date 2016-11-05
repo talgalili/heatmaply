@@ -542,6 +542,9 @@ heatmaply.heatmapr <- function(x,
   }
   if (is.null(col_side_colors)) pc <- NULL
   else {
+
+    warning("The hover text for col_side_colors is currently not implemented (due to an issue in plotly). We hope this would get resolved in future releases.")
+
     ## Have to transpose, otherwise it is the wrong orientation
     side_color_df <- data.frame(t(x[["col_side_colors"]]))
 
