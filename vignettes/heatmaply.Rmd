@@ -129,7 +129,7 @@ heatmaply(mtcars[1:10,],  margins = c(40, 130),
           seriate = "none")
 ```
 
-This works heavily relies on the seriation package (their [vignette](https://cran.r-project.org/web/packages/seriation/vignettes/seriation.pdf) is well worth the read), and also lightly on the dendextend package (see [vignette](https://cran.r-project.org/web/packages/dendextend/vignettes/introduction.html))
+This works heavily relies on the seriation package (their [vignette](https://CRAN.R-project.org/package=seriation/vignettes/seriation.pdf) is well worth the read), and also lightly on the dendextend package (see [vignette](https://CRAN.R-project.org/package=dendextend/vignettes/introduction.html) )
 
 Changing color palettes
 -------------------
@@ -195,7 +195,11 @@ airquality[1:10,] %>% na_mat %>%
 
 
 
-The following example shows how to get the same result in heatmaply as with heatmap2.:
+
+Replicating the dendrogram ordering of heatmap.2
+-----------------------------------------------
+
+The following example shows how to get the same result in heatmaply as with heatmap.2:
 
 ```{r}
 x  <- as.matrix(datasets::mtcars)
@@ -207,6 +211,43 @@ And heatmaply (the only difference is the side of the row dendrogram. This might
 ```{r}
 heatmaply::heatmaply(x, seriate = "mean")
 ```
+
+
+
+Adding additional factors using RowSideColors
+-------------------------------
+
+With heatmap.2
+
+```{r}
+# Example for using RowSideColors
+
+x  <- as.matrix(datasets::mtcars)
+rc <- colorspace::rainbow_hcl(nrow(x))
+
+library(gplots)
+library(viridis)
+heatmap.2(x, trace = "none", col = viridis(100),
+          RowSideColors=rc, key = FALSE)
+
+```
+
+With heatmaply
+
+```{r}
+heatmaply(x, seriate = "mean",
+          RowSideColors=rc)
+```
+
+A more sophisticated heatmap (the hover at the top row doesn't work due to an issue with plotly. We hope this would get resolved in the future):
+
+```{r}
+heatmaply(x[,-c(8,9)], seriate = "mean",
+          col_side_colors = c(rep(0,5), rep(1,4)),
+          row_side_colors = x[,8:9])
+
+```
+
 
 
 

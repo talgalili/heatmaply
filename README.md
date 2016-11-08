@@ -77,7 +77,7 @@ library(heatmaply)
 heatmaply(mtcars, k_row = 3, k_col = 2)
 ```
 
-**For more (interactive) examples see the [online vignette on CRAN](https://cran.r-project.org/web/packages/heatmaply/vignettes/heatmaply.html)**
+**For more (interactive) examples see the [online vignette on CRAN](https://CRAN.R-project.org/package=heatmaply/vignettes/heatmaply.html)**
 
 
 

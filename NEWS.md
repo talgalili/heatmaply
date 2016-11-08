@@ -1,3 +1,17 @@
+heatmaply 0.6.0 (2016-11-05)
+==============================
+
+### NEW FEATURES
+* heatmaply -
+      * added `row_side_colors` to allow non-numeric values in the sidebar of the
+        heatmap, similar to RowSideColors in gplots::heatmap.2 (`RowSideColors` also
+        works in heatmaply). Props goes to Alanocallaghan for his work on this.
+      * added a proper `margins` parameter.
+      * grid_color now works (thanks to a hack of using geom_hline and
+        geom_vline instead of heom_tile(..., color) in ggplot_heatmap )
+      * added branches_lwd - to control the width of the dendrograms' width.
+
+
 heatmaply 0.5.0 (2016-08-04)
 ==============================
 
