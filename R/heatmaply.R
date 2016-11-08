@@ -387,13 +387,17 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
 
   if (is.null(heights)) {
     if (!is.null(py)) {
-      if (!is.null(pc)) {
-        heights <- c(0.2, 0.1, 0.7)
-      } else {
+      if (is.null(pc)) {
         heights <- c(0.2, 0.8)
+      } else {
+        heights <- c(0.2, 0.1, 0.7)
       }
     } else {
+      if (is.null(pc)) {
         heights <- 1
+      } else {
+        heights <- c(0.1, 0.9)
+      }
     }
   }
 
