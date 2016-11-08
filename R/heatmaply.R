@@ -442,11 +442,10 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
     s <- subplot(plots,
       nrows = nrows,
       widths = if(row_dend_left) rev(widths) else widths,
-      heights = heights,
       shareX = TRUE, shareY = TRUE,
       titleX = titleX, titleY = titleY,
-      margin = subplot_margin
-      )
+      margin = subplot_margin,
+      heights = heights)
   ))
   return(s)
 }
@@ -500,7 +499,6 @@ heatmaply.heatmapr <- function(x,
 
     r <- range(x)
     l <- sort(limits)
-
     ## Warn for broken heatmap colors
     if (r[1] < l[1]) warning("Lower limit is not below lowest value in x, colors will be broken!")
     if (r[2] > l[2]) warning("Upper limit is not above highest value in x, colors will be broken!")
@@ -557,6 +555,9 @@ heatmaply.heatmapr <- function(x,
                       grid_color,
                       key.title = key.title,
                       layers = heatmap_layers)
+  if(return_ppxpy) {
+    return(list(p=p, px=px, py=py))
+  }
   if (is.null(row_side_colors)) pr <- NULL
   else {
     pr <- side_color_plot(x[["row_side_colors"]], type = "row",
@@ -574,9 +575,6 @@ heatmaply.heatmapr <- function(x,
     side_color_df[] <- lapply(side_color_df, as.character)
     pc <- side_color_plot(side_color_df, type = "column",
       palette = col_side_palette, is_colors = !is.null(ColSideColors))
-  }
-  if(return_ppxpy) {
-    return(list(p=p, px=px, py=py, pr=pr, pc=pc))
   }
 
   ## plotly:
@@ -629,17 +627,10 @@ heatmaply.heatmapr <- function(x,
   heatmap_subplot <- heatmap_subplot_from_ggplotly(p = p, px = px, py = py,
     row_dend_left = row_dend_left, subplot_margin = subplot_margin,
     titleX = titleX, titleY = titleY, pr = pr, pc = pc)
-
-  if (!is.null(col_side_colors) && margins[1] != 0) {
-    warning("Non-zero bottom margin (`margins[1]`) interferes with col_side_colors tooltips!")
-    margins[1] <- 0
-    warning("Setting margins[1] to zero")
-  }
   l <- layout(heatmap_subplot, showlegend = FALSE)  %>%
     layout(margin = list(l = margins[2], b = margins[1]))
-
   # print(l)
-  return(l)
+  l
 }
 
 
