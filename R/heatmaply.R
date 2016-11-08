@@ -520,8 +520,8 @@ heatmaply.heatmapr <- function(x,
   cols <- x$cols
 
   if(branches_lwd != 1) {
-    rows <- dendextend::set(rows, "branches_lwd", branches_lwd)
-    cols <- dendextend::set(cols, "branches_lwd", branches_lwd)
+    if(is.dendrogram(rows)) rows <- set(rows, "branches_lwd", branches_lwd)
+    if(is.dendrogram(cols)) cols <- set(cols, "branches_lwd", branches_lwd)
   }
 
 
