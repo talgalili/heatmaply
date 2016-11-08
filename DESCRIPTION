@@ -5,7 +5,7 @@ Version: 0.6.1
 Date: 2016-11-08
 Authors@R: c(person("Tal", "Galili", role = c("aut", "cre", "cph"), email =
     "tal.galili@gmail.com", comment = "https://www.r-statistics.com"),
-    person("Alan", "Ocallaghan", comment = "https://github.com/Alanocallaghan",role = "ctb"),
+    person("Alan", "O'Callaghan", comment = "https://github.com/Alanocallaghan",role = "ctb"),
     person("Yoav", "Benjamini", email = "ybenja@tau.ac.il",role = "ths"))
 Description: Create interactive 'heatmaps' that are usable from the R console,
     in the 'RStudio' viewer pane, in 'R Markdown' documents, and in 'Shiny' apps.
