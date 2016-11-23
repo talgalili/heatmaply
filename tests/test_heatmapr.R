@@ -1,0 +1,1 @@
+expect_that(heatmapr(mtcars), is_a("heatmapr"))

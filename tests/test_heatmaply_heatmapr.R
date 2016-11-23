@@ -1,0 +1,1 @@
+expect_that(heatmaply.heatmapr(mtcars), is_a("plotly")) 

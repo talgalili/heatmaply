@@ -424,16 +424,18 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
   plots <- plots[!(ind_remove_row | ind_remove_col)]
 
   ## Interim solution before removing warnings in documented way
-  suppressMessages(suppressWarnings(
-    s <- subplot(plots,
-      nrows = nrows,
-      widths = if(row_dend_left) rev(widths) else widths,
-      heights = heights,
-      shareX = TRUE, shareY = TRUE,
-      titleX = titleX, titleY = titleY,
-      margin = subplot_margin
+  suppressMessages(
+    suppressWarnings(
+      s <- subplot(plots,
+        nrows = nrows,
+        widths = if(row_dend_left) rev(widths) else widths,
+        heights = heights,
+        shareX = TRUE, shareY = TRUE,
+        titleX = titleX, titleY = titleY,
+        margin = subplot_margin
       )
-  ))
+    )
+  )
   return(s)
 }
 
@@ -613,6 +615,7 @@ heatmaply.heatmapr <- function(x,
     layout(margin = list(l = margins[2], b = margins[1]))
 
   # print(l)
+  class(l) <- c("heatmaply", class(l))
   return(l)
 }
 
