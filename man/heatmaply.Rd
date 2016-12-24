@@ -96,7 +96,8 @@ to keep compatibility with \link[gplots]{heatmap.2}}
 \item{heatmap_layers}{ggplot object (eg, theme_bw()) to be added to
 the heatmap before conversion to a plotly object.}
 
-\item{branches_lwd}{numeric (default is 0.6). The width of the dendrograms' branches.}
+\item{branches_lwd}{numeric (default is 0.6). The width of the dendrograms' branches.
+If NULL then it is ignored.}
 }
 \description{
 An object of class heatmapr includes all the needed information
