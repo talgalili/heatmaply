@@ -23,7 +23,8 @@ ept_predict <- function(x, ecdf_fun = ecdf, ...) {
     for(i in 1:ncol(x)) {
       ecdf_fun <- ecdf_list[[i]]
       if(! (is.vector(ecdf_fun) && is.na(ecdf_fun))  ) {
-        new_x[,i] <- ecdf_fun(na.omit(new_x[,i]))
+        ss_no_NA <- !is.na(new_x[,i])
+        new_x[ss_no_NA,i] <- ecdf_fun(new_x[ss_no_NA,i])
       }
     }
 
@@ -70,6 +71,12 @@ ept_predict <- function(x, ecdf_fun = ecdf, ...) {
 #' x$vs <- factor(x$vs)
 #' heatmaply(ept(x))
 #'
+#'
+#' x <- data.frame(a = 1:10, b = 11:20)
+#' x[4:6, 1:2] <- NA
+#' ept(x)
+#' ept(x[,1])
+#'
 #' }
 ept <- function(x, ...) {
   UseMethod("ept")
@@ -78,14 +85,15 @@ ept <- function(x, ...) {
 
 #' @export
 ept.default <- function(x, ...) {
-  x <- na.omit(x)
-  ecdf(x)(x)
+  ss_no_NA <- !is.na(x)
+  x[ss_no_NA] <- ecdf(x[ss_no_NA])(x[ss_no_NA])
+  x
 }
 
 
 #' @export
 ept.data.frame <- function(x, ...) {
-  x <- na.omit(x)
+  # x <- na.omit(x)
   ept_predict(x)(x)
 }
 
