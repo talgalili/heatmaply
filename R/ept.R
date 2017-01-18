@@ -2,6 +2,7 @@
 # kCDF_fun, ecdf
 ept_predict <- function(x, ecdf_fun = ecdf, ...) {
   # http://stackoverflow.com/questions/25130531/how-to-select-only-numeric-columns-from-a-data-table
+  # x must be a data.frame
   ss_numeric <- sapply(x, is.numeric)
 
 
@@ -60,6 +61,7 @@ ept_predict <- function(x, ecdf_fun = ecdf, ...) {
 #' @aliases
 #' ept.default
 #' ept.data.frame
+#' ept.matrix
 #' @examples
 #' \dontrun{
 #' x <- mtcars
@@ -81,11 +83,16 @@ ept.default <- function(x, ...) {
 }
 
 
-# like "scale". Just returns a uniformed x:
 #' @export
 ept.data.frame <- function(x, ...) {
   x <- na.omit(x)
   ept_predict(x)(x)
 }
 
+
+#' @export
+ept.matrix <- function(x, ...) {
+  x <- as.data.frame(x)
+  ept(x)
+}
 

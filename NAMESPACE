@@ -2,6 +2,7 @@
 
 S3method(ept,data.frame)
 S3method(ept,default)
+S3method(ept,matrix)
 S3method(heatmaply,default)
 S3method(heatmaply,heatmapr)
 export(ept)

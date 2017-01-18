@@ -4,6 +4,7 @@
 \alias{ept}
 \alias{ept.data.frame}
 \alias{ept.default}
+\alias{ept.matrix}
 \title{Empirical Percentile Transformation}
 \usage{
 ept(x, ...)
