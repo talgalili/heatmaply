@@ -253,6 +253,31 @@ heatmaply.default <- function(x,
     row_side_colors <- RowSideColors
   }
 
+
+  # TODO: maybe create heatmaply.data.frame heatmaply.matrix instead.
+  #       But right now I am not sure this would be needed.
+  if(is.data.frame(x)) {
+    ss_c_numeric <- sapply(x, is.numeric)
+  }
+  if(is.matrix(x)) {
+    ss_c_numeric <- apply(x, 2, is.numeric)
+  }
+
+  # We must have some numeric values to be able to make a heatmap
+  if(!any(ss_c_numeric)) stop("heatmaply only works for data.frame/matrix which includes some numeric columns.")
+
+  # If we have non-numeric columns, we should move them to row_side_colors
+  # TODO: add a parameter to control removing of non-numeric columns without moving them to row_side_colors
+  if(!all(ss_c_numeric)) {
+    row_side_colors <- if (is.null(row_side_colors)) {
+      data.frame(x[, !ss_c_numeric, drop= FALSE])
+    } else {
+      data.frame(row_side_colors, x[, !ss_c_numeric, drop= FALSE])
+    }
+    x <- x[, ss_c_numeric]
+  }
+
+
   hm <- heatmapr(x,
     row_side_colors = row_side_colors,
     col_side_colors = col_side_colors,

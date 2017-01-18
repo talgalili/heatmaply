@@ -1,3 +1,13 @@
+
+heatmaply 0.7.0 (2017-01-18)
+==============================
+
+### NEW FEATURES
+* heatmaply -
+      * Non numeric columns are now added to `row_side_colors`, making heatmaply reasonably robust to heterogeneous data.frames.
+
+
+
 heatmaply 0.6.1 (2016-11-11)
 ==============================
 
