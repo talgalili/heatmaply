@@ -8,6 +8,8 @@ heatmaply 0.7.0 (2017-01-18)
 
 ### NEW FUNCTIONS
 * percentalize - a pre-processing function for performing the Empirical Percentile Transformation on a vector or data.frame.
+* normalize - a pre-processing function for adjusing the range of the variables to be from 0 to 1.
+
 
 
 heatmaply 0.6.1 (2016-11-11)
