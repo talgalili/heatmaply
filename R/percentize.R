@@ -1,6 +1,6 @@
 
 # kCDF_fun, ecdf
-percentalize_predict <- function(x, ecdf_fun = ecdf, ...) {
+percentize_predict <- function(x, ecdf_fun = ecdf, ...) {
   # http://stackoverflow.com/questions/25130531/how-to-select-only-numeric-columns-from-a-data-table
   # x must be a data.frame
   ss_numeric <- sapply(x, is.numeric)
@@ -31,7 +31,7 @@ percentalize_predict <- function(x, ecdf_fun = ecdf, ...) {
     return(new_x)
   }
 
-  class(fun) <- c("function", "percentalize_predict")
+  class(fun) <- c("function", "percentize_predict")
 
   return(fun)
 }
@@ -45,7 +45,7 @@ percentalize_predict <- function(x, ecdf_fun = ecdf, ...) {
 #' @export
 #'
 #' @description
-#' An Empirical Percentile Transformation (percentalize) is similar to taking the rank
+#' An Empirical Percentile Transformation (percentize) is similar to taking the rank
 #' of a variable. The difference is that it is simpler to compare and interpret
 #' the transformed variables.
 #'
@@ -60,31 +60,31 @@ percentalize_predict <- function(x, ecdf_fun = ecdf, ...) {
 #' If x is a \link{data.frame} then only the numeric variables are transformed.
 #'
 #' @aliases
-#' percentalize.default
-#' percentalize.data.frame
-#' percentalize.matrix
+#' percentize.default
+#' percentize.data.frame
+#' percentize.matrix
 #' @examples
 #' \dontrun{
 #' x <- mtcars
 #' x <- data.frame(x)
 #' x$am <- factor(x$am)
 #' x$vs <- factor(x$vs)
-#' heatmaply(percentalize(x))
+#' heatmaply(percentize(x))
 #'
 #'
 #' x <- data.frame(a = 1:10, b = 11:20)
 #' x[4:6, 1:2] <- NA
-#' percentalize(x)
-#' percentalize(x[,1])
+#' percentize(x)
+#' percentize(x[,1])
 #'
 #' }
-percentalize <- function(x, ...) {
-  UseMethod("percentalize")
+percentize <- function(x, ...) {
+  UseMethod("percentize")
 }
 
 
 #' @export
-percentalize.default <- function(x, ...) {
+percentize.default <- function(x, ...) {
   ss_no_NA <- !is.na(x)
   x[ss_no_NA] <- ecdf(x[ss_no_NA])(x[ss_no_NA])
   x
@@ -92,16 +92,16 @@ percentalize.default <- function(x, ...) {
 
 
 #' @export
-percentalize.data.frame <- function(x, ...) {
+percentize.data.frame <- function(x, ...) {
   # x <- na.omit(x)
-  percentalize_predict(x)(x)
+  percentize_predict(x)(x)
 }
 
 
 #' @export
-percentalize.matrix <- function(x, ...) {
+percentize.matrix <- function(x, ...) {
   x <- as.data.frame(x)
-  percentalize(x)
+  percentize(x)
 }
 
 
@@ -116,7 +116,7 @@ percentalize.matrix <- function(x, ...) {
 #'
 #' @description
 #' An Empirical Normalization Transformation brings data to the 0 to 1 scale.
-#' This is similar to \link{percentalize} in that it allows to compare variables
+#' This is similar to \link{percentize} in that it allows to compare variables
 #' of different scales, but it also keeps the shape of the distribution.
 #'
 #' @param x a vector or a data.frame.
@@ -136,14 +136,14 @@ percentalize.matrix <- function(x, ...) {
 #' x <- data.frame(x)
 #' x$am <- factor(x$am)
 #' x$vs <- factor(x$vs)
-#' heatmaply(percentalize(x))
+#' heatmaply(percentize(x))
 #' heatmaply(normalize(x))
 #'
 #'
 #' x <- data.frame(a = 1:10, b = 11:20)
 #' x[4:6, 1:2] <- NA
-#' percentalize(x)
-#' percentalize(x[,1])
+#' percentize(x)
+#' percentize(x[,1])
 #'
 #' }
 normalize <- function(x, ...) {
