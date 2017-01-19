@@ -243,6 +243,9 @@ heatmaply.default <- function(x,
   options(device = names(capabilities()[which(capabilities())])[1])
 
 
+  if(!(is.data.frame(x) | is.matrix(x))) stop("x must be either a data.frame or a matrix.")
+
+
   if(!missing(srtRow)) row_text_angle <- srtRow
   if(!missing(srtCol)) column_text_angle <- srtCol
 
