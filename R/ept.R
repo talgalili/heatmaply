@@ -1,6 +1,6 @@
 
 # kCDF_fun, ecdf
-ept_predict <- function(x, ecdf_fun = ecdf, ...) {
+percentalize_predict <- function(x, ecdf_fun = ecdf, ...) {
   # http://stackoverflow.com/questions/25130531/how-to-select-only-numeric-columns-from-a-data-table
   # x must be a data.frame
   ss_numeric <- sapply(x, is.numeric)
@@ -31,7 +31,7 @@ ept_predict <- function(x, ecdf_fun = ecdf, ...) {
     return(new_x)
   }
 
-  class(fun) <- c("function", "ept_predict")
+  class(fun) <- c("function", "percentalize_predict")
 
   return(fun)
 }
@@ -45,7 +45,7 @@ ept_predict <- function(x, ecdf_fun = ecdf, ...) {
 #' @export
 #'
 #' @description
-#' An Empirical Percentile Transformation (ept) is similar to taking the rank
+#' An Empirical Percentile Transformation (percentalize) is similar to taking the rank
 #' of a variable. The difference is that it is simpler to compare and interpret
 #' the transformed variables.
 #'
@@ -60,31 +60,31 @@ ept_predict <- function(x, ecdf_fun = ecdf, ...) {
 #' If x is a \link{data.frame} then only the numeric variables are transformed.
 #'
 #' @aliases
-#' ept.default
-#' ept.data.frame
-#' ept.matrix
+#' percentalize.default
+#' percentalize.data.frame
+#' percentalize.matrix
 #' @examples
 #' \dontrun{
 #' x <- mtcars
 #' x <- data.frame(x)
 #' x$am <- factor(x$am)
 #' x$vs <- factor(x$vs)
-#' heatmaply(ept(x))
+#' heatmaply(percentalize(x))
 #'
 #'
 #' x <- data.frame(a = 1:10, b = 11:20)
 #' x[4:6, 1:2] <- NA
-#' ept(x)
-#' ept(x[,1])
+#' percentalize(x)
+#' percentalize(x[,1])
 #'
 #' }
-ept <- function(x, ...) {
-  UseMethod("ept")
+percentalize <- function(x, ...) {
+  UseMethod("percentalize")
 }
 
 
 #' @export
-ept.default <- function(x, ...) {
+percentalize.default <- function(x, ...) {
   ss_no_NA <- !is.na(x)
   x[ss_no_NA] <- ecdf(x[ss_no_NA])(x[ss_no_NA])
   x
@@ -92,15 +92,18 @@ ept.default <- function(x, ...) {
 
 
 #' @export
-ept.data.frame <- function(x, ...) {
+percentalize.data.frame <- function(x, ...) {
   # x <- na.omit(x)
-  ept_predict(x)(x)
+  percentalize_predict(x)(x)
 }
 
 
 #' @export
-ept.matrix <- function(x, ...) {
+percentalize.matrix <- function(x, ...) {
   x <- as.data.frame(x)
-  ept(x)
+  percentalize(x)
 }
+
+
+
 

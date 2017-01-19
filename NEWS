@@ -7,7 +7,7 @@ heatmaply 0.7.0 (2017-01-18)
       * Non numeric columns are now added to `row_side_colors`, making heatmaply reasonably robust to heterogeneous data.frames.
 
 ### NEW FUNCTIONS
-* ept - a pre-processing function for performing the Empirical Percentile Transformation on a vector or data.frame.
+* percentalize - a pre-processing function for performing the Empirical Percentile Transformation on a vector or data.frame.
 
 
 heatmaply 0.6.1 (2016-11-11)
