@@ -176,20 +176,18 @@ Reviewing missing values:
 ```{r}
 
 library(heatmaply)
-class_to <- function(x, new_class) {
-  class(x) <- new_class
-  x
-}
-na_mat <- function(x) {
-  x %>% is.na %>% class_to("numeric") 
-}
 
 # warning - using grid_color cannot handle a large matrix!
-airquality[1:10,] %>% na_mat %>% 
+airquality[1:10,] %>% is.na10 %>% 
   heatmaply(color = c("white","black"), grid_color = "grey",
             k_col =3, k_row = 3,
             margins = c(40, 50)) 
 
+# airquality %>% is.na10 %>% 
+#   heatmaply(color = c("grey80", "grey20"), # grid_color = "grey",
+#             k_col =3, k_row = 3,
+#             margins = c(40, 50)) 
+# 
 
 ```
 
