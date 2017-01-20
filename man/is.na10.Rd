@@ -17,6 +17,11 @@ while still presering the attributes resulted from running \link{is.na}.
 
 These are useful for funnelling into a heatmap (see the examples).
 }
+\description{
+is.na10 is a helper function for creating heatmaps to diagnose missing value patterns.
+It is similar to \link{is.na} but instead of returning a logical TRUE/FALSE vector (or matrix) it
+returns a numeric 1/0 output. This enables the \link{heatmaply} function to be used on the data.
+}
 \examples{
 \dontrun{
 x <- mtcars

@@ -4,6 +4,10 @@
 
 #' @title Indicates which elements are missing (either 1 and 0)
 #' @export
+#' @description
+#' is.na10 is a helper function for creating heatmaps to diagnose missing value patterns.
+#' It is similar to \link{is.na} but instead of returning a logical TRUE/FALSE vector (or matrix) it
+#' returns a numeric 1/0 output. This enables the \link{heatmaply} function to be used on the data.
 #'
 #' @param x a vector, matrix or data.frame.
 #' @param ... not used.
@@ -39,7 +43,7 @@ is.na10 <- function(x, ...) {
 
   # turn numeric (whlie keeping the attributes!)
   mat_attr <- attributes(x_na)
-  x_na <- as.numeric(x_na)
+  x_na <- as.integer(x_na)
   attributes(x_na) <- mat_attr
 
   # return
