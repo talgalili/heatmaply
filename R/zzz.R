@@ -41,8 +41,8 @@ NULL
 #' @importFrom dendextend set is.dendrogram seriate_dendrogram rotate color_branches
 NULL
 
-
-
+#' @importFrom stats ecdf na.omit
+NULL
 
 
 
