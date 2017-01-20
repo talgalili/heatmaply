@@ -9,14 +9,15 @@
 heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
   "viridis"), limits = NULL, na.value = "grey50", row_text_angle = 0,
   column_text_angle = 45, subplot_margin = 0, dendrogram = "both",
-  row_dend_left = FALSE, margins = c(50, 50), ...,
+  row_dend_left = FALSE, margins = c(50, 50, NA, 0), ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
-  titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE, key.title = NULL,
-  return_ppxpy = FALSE, row_side_colors = NULL, row_side_palette,
-  col_side_colors = NULL, col_side_palette, ColSideColors = NULL,
-  RowSideColors = NULL, heatmap_layers, branches_lwd = 0.6)
+  main = "", titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE,
+  key.title = NULL, return_ppxpy = FALSE, row_side_colors = NULL,
+  row_side_palette, col_side_colors = NULL, col_side_palette,
+  ColSideColors = NULL, RowSideColors = NULL, heatmap_layers,
+  branches_lwd = 0.6)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -48,7 +49,9 @@ If a single value is provided, it will be used as all four margins.}
 plotted on the left side of the heatmap. If false then it will be plotted on the right
 side.}
 
-\item{margins}{numeric vector of length 2 (default is c(50,50)) containing the margins (see \link[plotly]{layout}) for column and row names, respectively.}
+\item{margins}{numeric vector of length 4 (default is c(50,50,NA,0)) containing the margins (see \link[plotly]{layout}) for column, row and main title names, respectively.
+The top margin is NA by default. If main=="" then the top margin will be set to 0, otherwise it will get 30.
+For a multiline title a larger default for the 3rd element should be set.}
 
 \item{...}{other parameters passed to \link{heatmapr} (currently, various parameters may be ignored.}
 
@@ -69,6 +72,8 @@ Do not use this parameter on larger matrix sizes, as it can dramatically prolong
 \item{xlab}{A character title for the x axis.}
 
 \item{ylab}{A character title for the y axis.}
+
+\item{main}{A character title for the heatmap.}
 
 \item{titleX}{logical (TRUE). should x-axis titles be retained? (passed to \link[plotly]{subplot}).}
 

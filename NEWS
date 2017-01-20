@@ -5,6 +5,8 @@ heatmaply 0.7.0 (2017-01-20)
 ### NEW FEATURES
 * heatmaply -
       * Non numeric columns are now added to `row_side_colors`, making heatmaply reasonably robust to heterogeneous data.frames.
+      * main - a new parameter for setting the title of the plot.
+      * the margins parameter now accepts 4 elements (previously it was only 2), for bottom, left, top (relevant for the plot's title) and right margins.
 * heatmapr -
       * Allow k_row and k_col to accept NA. This will pick the number of clusters using dendextend::find_k
 

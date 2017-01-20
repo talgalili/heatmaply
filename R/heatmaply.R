@@ -42,7 +42,9 @@
 #' plotted on the left side of the heatmap. If false then it will be plotted on the right
 #' side.
 #'
-#' @param margins numeric vector of length 2 (default is c(50,50)) containing the margins (see \link[plotly]{layout}) for column and row names, respectively.
+#' @param margins numeric vector of length 4 (default is c(50,50,NA,0)) containing the margins (see \link[plotly]{layout}) for column, row and main title names, respectively.
+#' The top margin is NA by default. If main=="" then the top margin will be set to 0, otherwise it will get 30.
+#' For a multiline title a larger default for the 3rd element should be set.
 #'
 #' @param ... other parameters passed to \link{heatmapr} (currently, various parameters may be ignored.
 #'
@@ -61,6 +63,8 @@
 #'
 #' @param xlab A character title for the x axis.
 #' @param ylab A character title for the y axis.
+#'
+#' @param main A character title for the heatmap.
 #'
 #' @param titleX logical (TRUE). should x-axis titles be retained? (passed to \link[plotly]{subplot}).
 #' @param titleY logical (TRUE). should y-axis titles be retained? (passed to \link[plotly]{subplot}).
@@ -181,7 +185,7 @@ heatmaply <- function(x,
                       subplot_margin = 0,
                       dendrogram = "both",
                       row_dend_left = FALSE,
-                      margins = c(50, 50),
+                      margins = c(50, 50, NA, 0),
                       ...,
                       scale_fill_gradient_fun = scale_fill_gradientn(
                           colors = if(is.function(colors)) colors(256) else colors,
@@ -189,6 +193,7 @@ heatmaply <- function(x,
                       grid_color = NA,
                       srtRow, srtCol,
                       xlab = "", ylab = "",
+                      main = "",
                       titleX = TRUE, titleY = TRUE,
                       hide_colorbar = FALSE,
                       key.title = NULL,
@@ -216,7 +221,7 @@ heatmaply.default <- function(x,
                               subplot_margin = 0,
                               dendrogram = "both",
                               row_dend_left = FALSE,
-                              margins = c(50, 50),
+                              margins = c(50, 50, NA, 0),
                               ...,
                               scale_fill_gradient_fun = scale_fill_gradientn(
                                 colors = if(is.function(colors)) colors(256) else colors,
@@ -224,6 +229,7 @@ heatmaply.default <- function(x,
                               grid_color = NA,
                               srtRow, srtCol,
                               xlab = "", ylab = "",
+                              main = "",
                               titleX = TRUE, titleY = TRUE,
                               hide_colorbar = FALSE,
                               key.title = NULL,
@@ -294,7 +300,7 @@ heatmaply.default <- function(x,
                      subplot_margin = subplot_margin,
                      dendrogram = dendrogram,
                      row_dend_left = row_dend_left,
-                     xlab=xlab, ylab=ylab,
+                     xlab=xlab, ylab=ylab, main = main,
                      titleX = titleX, titleY = titleY,
                      hide_colorbar = hide_colorbar,
                      key.title = key.title,
@@ -500,7 +506,7 @@ heatmaply.heatmapr <- function(x,
                                subplot_margin = 0,
                                dendrogram,
                                row_dend_left = FALSE,
-                               margins = c(50, 50),
+                               margins = c(50, 50, NA, 0),
                                ...,
                                scale_fill_gradient_fun = scale_fill_gradientn(
                                  colors = if(is.function(colors)) colors(256) else colors,
@@ -508,6 +514,7 @@ heatmaply.heatmapr <- function(x,
                                grid_color = NA,
                                srtRow, srtCol,
                                xlab = "", ylab = "",
+                               main = "",
                                titleX = TRUE, titleY = TRUE,
                                hide_colorbar = FALSE,
                                key.title = NULL,
@@ -617,7 +624,7 @@ heatmaply.heatmapr <- function(x,
   }
   # https://plot.ly/r/reference/#Layout_and_layout_style_objects
   p <- layout(p,              # all of layout's properties: /r/reference/#layout
-              # title = "unemployment", # layout's title: /r/reference/#layout-title
+              title = main, # layout's title: /r/reference/#layout-title
               xaxis = list(           # layout's xaxis is a named list. List of valid keys: /r/reference/#layout-xaxis
                 title = xlab     # xaxis's title: /r/reference/#layout-xaxis-title
                 # showgrid = T        # xaxis's showgrid: /r/reference/#layout-xaxis-showgrid
@@ -653,11 +660,15 @@ heatmaply.heatmapr <- function(x,
   top_corner <- plotly_empty()
   # top_corner <- ggplotly(qplot(as.numeric(xx), geom="histogram"))
   # create the subplot
+
+  # Adjust top based on whether main is empty or not.
+  if(is.na(margins[3])) margins[3] <- ifelse(main == "", 0, 30)
+
   heatmap_subplot <- heatmap_subplot_from_ggplotly(p = p, px = px, py = py,
     row_dend_left = row_dend_left, subplot_margin = subplot_margin,
     titleX = titleX, titleY = titleY, pr = pr, pc = pc)
   l <- layout(heatmap_subplot, showlegend = FALSE)  %>%
-    layout(margin = list(l = margins[2], b = margins[1]))
+    layout(margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]))
   # print(l)
   l
 }
