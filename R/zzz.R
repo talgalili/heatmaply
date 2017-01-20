@@ -38,7 +38,7 @@ NULL
 #' @importFrom seriation seriate get_order
 NULL
 
-#' @importFrom dendextend set is.dendrogram seriate_dendrogram rotate color_branches
+#' @importFrom dendextend set is.dendrogram seriate_dendrogram rotate color_branches find_k
 NULL
 
 #' @importFrom stats ecdf na.omit

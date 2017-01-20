@@ -5,6 +5,8 @@ heatmaply 0.7.0 (2017-01-20)
 ### NEW FEATURES
 * heatmaply -
       * Non numeric columns are now added to `row_side_colors`, making heatmaply reasonably robust to heterogeneous data.frames.
+* heatmapr -
+      * Allow k_row and k_col to accept NA. This will pick the number of clusters using dendextend::find_k
 
 ### NEW FUNCTIONS
 * percentize - a pre-processing function for performing the Empirical Percentile Transformation on a vector or data.frame.

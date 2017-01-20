@@ -34,9 +34,11 @@ Defaults to \code{TRUE} unless \code{x} contains any \code{NA}s.}
 
 \item{reorderfun}{function(d, w) of dendrogram and weights for reordering the row and column dendrograms. The default uses stats{reorder.dendrogram}}
 
-\item{k_row}{an integer scalar with the desired number of groups by which to color the dendrogram's branches in the rows (uses \link[dendextend]{color_branches})}
+\item{k_row}{an integer scalar with the desired number of groups by which to color the dendrogram's branches in the rows (uses \link[dendextend]{color_branches})
+If NA then \link[dendextend]{find_k} is used to deduce the optimal number of clusters.}
 
-\item{k_col}{an integer scalar with the desired number of groups by which to color the dendrogram's branches in the columns (uses \link[dendextend]{color_branches})}
+\item{k_col}{an integer scalar with the desired number of groups by which to color the dendrogram's branches in the columns (uses \link[dendextend]{color_branches})
+If NA then \link[dendextend]{find_k} is used to deduce the optimal number of clusters.}
 
 \item{symm}{logical indicating if x should be treated symmetrically; can only be true when x is a square matrix.}
 

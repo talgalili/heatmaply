@@ -48,7 +48,9 @@
 #' @param reorderfun function(d, w) of dendrogram and weights for reordering the row and column dendrograms. The default uses stats{reorder.dendrogram}
 #'
 #' @param k_row an integer scalar with the desired number of groups by which to color the dendrogram's branches in the rows (uses \link[dendextend]{color_branches})
+#' If NA then \link[dendextend]{find_k} is used to deduce the optimal number of clusters.
 #' @param k_col an integer scalar with the desired number of groups by which to color the dendrogram's branches in the columns (uses \link[dendextend]{color_branches})
+#' If NA then \link[dendextend]{find_k} is used to deduce the optimal number of clusters.
 #'
 #' @param symm logical indicating if x should be treated symmetrically; can only be true when x is a square matrix.
 #' @param revC logical indicating if the column order should be reversed for plotting.
@@ -347,9 +349,11 @@ heatmapr <- function(x,
   if(!missing(k_row) | !missing(k_col)) dendextend::assign_dendextend_options()
 
   if(is.dendrogram(Rowv) & !missing(k_row)) {
+    if(is.na(k_row)) k_row <- find_k(Rowv)$k
     Rowv <- color_branches(Rowv, k = k_row)
   }
   if(is.dendrogram(Colv) & !missing(k_col)) {
+    if(is.na(k_col)) k_col <- find_k(Colv)$k
     Colv <- color_branches(Colv, k = k_col)
   }
 
