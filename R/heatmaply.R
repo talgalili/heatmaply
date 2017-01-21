@@ -93,7 +93,8 @@
 #'  the heatmap before conversion to a plotly object.
 #'
 #' @param branches_lwd numeric (default is 0.6). The width of the dendrograms' branches.
-#' If NULL then it is ignored.
+#' If NULL then it is ignored. If the "lwd" is already defined in Rowv/Colv then this
+#' parameter is ignored (it is checked using \link[dendextend]{has_edgePar}("lwd")).
 #'
 #'
 #' @aliases
@@ -560,8 +561,8 @@ heatmaply.heatmapr <- function(x,
   cols <- x$cols
 
   if(!is.null(branches_lwd) && branches_lwd != 1) {
-    if(is.dendrogram(rows)) rows <- set(rows, "branches_lwd", branches_lwd)
-    if(is.dendrogram(cols)) cols <- set(cols, "branches_lwd", branches_lwd)
+    if(is.dendrogram(rows) && !has_edgePar(rows, "lwd")) rows <- set(rows, "branches_lwd", branches_lwd)
+    if(is.dendrogram(cols) && !has_edgePar(cols, "lwd")) cols <- set(cols, "branches_lwd", branches_lwd)
   }
 
 

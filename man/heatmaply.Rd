@@ -102,7 +102,8 @@ to keep compatibility with \link[gplots]{heatmap.2}}
 the heatmap before conversion to a plotly object.}
 
 \item{branches_lwd}{numeric (default is 0.6). The width of the dendrograms' branches.
-If NULL then it is ignored.}
+If NULL then it is ignored. If the "lwd" is already defined in Rowv/Colv then this
+parameter is ignored (it is checked using \link[dendextend]{has_edgePar}("lwd")).}
 }
 \description{
 An object of class heatmapr includes all the needed information
