@@ -27,7 +27,7 @@ Depends:
     viridis
 Imports:
     ggplot2,
-    dendextend,
+    dendextend (>= 1.4.0),
     magrittr (>= 1.0.1),
     reshape2,
     scales,
