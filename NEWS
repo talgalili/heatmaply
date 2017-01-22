@@ -1,5 +1,9 @@
-heatmaply 0.7.1 (2017-01-22)
+heatmaply 0.8.0 (2017-01-22)
 ==============================
+
+### NEW FEATURES
+* heatmaply -
+      * file parameter - allows to save a heatmaply plot as an HTML file.
 
 ### BUG FIXES
 * heatmaply -

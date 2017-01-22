@@ -44,6 +44,9 @@ NULL
 #' @importFrom stats ecdf na.omit
 NULL
 
+#' @importFrom htmlwidgets saveWidget
+NULL
+
 
 
 

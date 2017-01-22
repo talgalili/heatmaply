@@ -97,6 +97,13 @@
 #' parameter is ignored (it is checked using \link[dendextend]{has_edgePar}("lwd")).
 #'
 #'
+#' @param file HTML file name to save the heatmaply into. Should be a character string ending with ".html".
+#' For example: heatmaply(x, file = "heatmaply_plot.html").
+#' This should not include a directory, only the name of the file.
+#' You can relocate the file once it is created, or use \link{setwd} first.
+#' This is based on \link[htmlwidgets]{saveWidget}.
+#'
+#'
 #' @aliases
 #' heatmaply.default
 #' heatmaply.heatmapr
@@ -144,11 +151,15 @@
 #'              margins = c(40, 130))
 #' subplot(hm1, hm2, margin = .02, shareY = TRUE)
 #'
-#' # We can save heatmaply as a widget by using:
+#'
+#' # We can save heatmaply as an HTML file by using:
+#' heatmaply(iris[,-5], file = "heatmaply_iris.html")
+#'
+#' # If we don't want the HTML to be selfcontained, we can use the following:
 #' library(heatmaply)
 #' library(htmlwidgets)
 #' heatmaply(iris[,-5]) %>%
-#'    saveWidget(file="test.html",selfcontained = FALSE)
+#'    saveWidget(file="heatmaply_iris.html",selfcontained = FALSE)
 #'
 #'
 #' # Example for using RowSideColors
@@ -206,7 +217,8 @@ heatmaply <- function(x,
                       ColSideColors = NULL,
                       RowSideColors = NULL,
                       heatmap_layers,
-                      branches_lwd = 0.6
+                      branches_lwd = 0.6,
+                      file
                       ) {
   UseMethod("heatmaply")
 }
@@ -242,7 +254,8 @@ heatmaply.default <- function(x,
                               ColSideColors = NULL,
                               RowSideColors = NULL,
                               heatmap_layers = NULL,
-                              branches_lwd = 0.6
+                              branches_lwd = 0.6,
+                              file
 ) {
   ## Suppress creation of new graphcis device, but on exit replace it.
   old_dev <- options()[["device"]]
@@ -296,7 +309,7 @@ heatmaply.default <- function(x,
     col_side_colors = col_side_colors,
     dendrogram = dendrogram,
     ...)
-  heatmaply.heatmapr(hm, # colors = colors, limits = limits,
+  hmly <- heatmaply.heatmapr(hm, # colors = colors, limits = limits,
                      scale_fill_gradient_fun = scale_fill_gradient_fun,
                      grid_color = grid_color,
                      row_text_angle = row_text_angle,
@@ -319,6 +332,10 @@ heatmaply.default <- function(x,
                      heatmap_layers = heatmap_layers,
                      branches_lwd = branches_lwd
                 ) # TODO: think more on what should be passed in "..."
+
+  if(!missing(file)) hmly %>% saveWidget(file = file, selfcontained = TRUE)
+
+  hmly
 }
 
 

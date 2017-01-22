@@ -17,7 +17,7 @@ heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
   key.title = NULL, return_ppxpy = FALSE, row_side_colors = NULL,
   row_side_palette, col_side_colors = NULL, col_side_palette,
   ColSideColors = NULL, RowSideColors = NULL, heatmap_layers,
-  branches_lwd = 0.6)
+  branches_lwd = 0.6, file)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -104,6 +104,12 @@ the heatmap before conversion to a plotly object.}
 \item{branches_lwd}{numeric (default is 0.6). The width of the dendrograms' branches.
 If NULL then it is ignored. If the "lwd" is already defined in Rowv/Colv then this
 parameter is ignored (it is checked using \link[dendextend]{has_edgePar}("lwd")).}
+
+\item{file}{HTML file name to save the heatmaply into. Should be a character string ending with ".html".
+For example: heatmaply(x, file = "heatmaply_plot.html").
+This should not include a directory, only the name of the file.
+You can relocate the file once it is created, or use \link{setwd} first.
+This is based on \link[htmlwidgets]{saveWidget}.}
 }
 \description{
 An object of class heatmapr includes all the needed information
@@ -155,11 +161,15 @@ hm2 <- heatmaply(mtcars, scale = "col" , Colv = FALSE, Rowv = FALSE,
              margins = c(40, 130))
 subplot(hm1, hm2, margin = .02, shareY = TRUE)
 
-# We can save heatmaply as a widget by using:
+
+# We can save heatmaply as an HTML file by using:
+heatmaply(iris[,-5], file = "heatmaply_iris.html")
+
+# If we don't want the HTML to be selfcontained, we can use the following:
 library(heatmaply)
 library(htmlwidgets)
 heatmaply(iris[,-5]) \%>\%
-   saveWidget(file="test.html",selfcontained = FALSE)
+   saveWidget(file="heatmaply_iris.html",selfcontained = FALSE)
 
 
 # Example for using RowSideColors
