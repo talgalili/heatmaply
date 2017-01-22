@@ -235,6 +235,11 @@ With heatmaply
 ```{r}
 heatmaply(x, seriate = "mean",
           RowSideColors=rc)
+
+# heatmaply(x, seriate = "mean",
+#           RowSideColors=factor(rc))
+
+
 ```
 
 A more sophisticated heatmap (the hover at the top row doesn't work due to an issue with plotly. We hope this would get resolved in the future):

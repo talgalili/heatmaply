@@ -322,7 +322,7 @@ heatmapr <- function(x,
     cellnote <- cellnote[rowInd, colInd, drop = FALSE]
 
   if (!is.null(row_side_colors)) {
-    if(is.vector(row_side_colors)) {
+    if(!(is.data.frame(row_side_colors) | is.matrix(row_side_colors))) {
       row_side_colors <- data.frame("row_side_colors" = row_side_colors)
     }
     if (dim(row_side_colors)[1] != dim(x)[1])
@@ -330,7 +330,7 @@ heatmapr <- function(x,
     row_side_colors <- row_side_colors[rowInd, , drop = FALSE]
   }
   if (!is.null(col_side_colors)) {
-    if(is.vector(col_side_colors)) {
+    if( !(is.data.frame(col_side_colors) | is.matrix(col_side_colors)) ) {
       col_side_colors <- matrix(col_side_colors, nrow = 1)
       rownames(col_side_colors) <- "col_side_colors"
     }
