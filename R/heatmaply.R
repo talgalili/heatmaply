@@ -288,6 +288,16 @@ heatmaply.default <- function(x,
   }
 
 
+  # make row_side_colors/col_side_colors work for vectors as well (by turning them to a data.frame)
+  if (!is.null(col_side_colors) & !is.data.frame(col_side_colors)) {
+    col_side_colors <- data.frame(col_side_colors)
+  }
+  if (!is.null(row_side_colors) & !is.data.frame(row_side_colors)) {
+    row_side_colors <- data.frame(row_side_colors)
+  }
+
+
+
   hm <- heatmapr(x,
     row_side_colors = row_side_colors,
     col_side_colors = col_side_colors,

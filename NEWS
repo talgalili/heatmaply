@@ -1,3 +1,11 @@
+heatmaply 0.7.1 (2017-01-22)
+==============================
+
+### BUG FIXES
+* heatmaply -
+  * make row_side_colors/col_side_colors work for vectors as well (by turning them to a data.frame). Fixes:  Error in if (dim(row_side_colors)[1] != dim(x)[1]) stop("row_side_colors and x have different numbers of rows") : argument is of length zero
+
+
 
 heatmaply 0.7.0 (2017-01-21)
 ==============================
