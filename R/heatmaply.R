@@ -356,6 +356,7 @@ ggplot_heatmap <- function(xx,
                            grid_size = 0.1,
                            key.title = NULL,
                            layers,
+                           row_dend_left = FALSE,
                            ...) {
   theme_clear_grid_heatmap <- theme(axis.line = element_line(color = "black"),
                                     panel.grid.major = element_blank(),
@@ -364,7 +365,7 @@ ggplot_heatmap <- function(xx,
                                     panel.background = element_blank())
   # heatmap
   # xx <- x$matrix$data
-  df <- as.data.frame(xx)
+  if(!is.data.frame(df)) df <- as.data.frame(xx)
   # colnames(df) <- x$matrix$cols
   df$row <- if(!is.null(rownames(xx)))
               {rownames(xx)} else
@@ -384,9 +385,11 @@ ggplot_heatmap <- function(xx,
     theme_bw()+ theme_clear_grid_heatmap +
     theme(axis.text.x = element_text(angle = column_text_angle, hjust = 1),
           axis.text.y = element_text(angle = row_text_angle, hjust = 1)
-          ) +
+          )
+
+  if(!missing(layers)) p <- p + layers
     ## Passed in to allow users to alter (courtesy of GenVisR)
-    layers
+
   # p <- p + scale_x_discrete(limits = unique(mdf))
   # http://stats.stackexchange.com/questions/5007/how-can-i-change-the-title-of-a-legend-in-ggplot2
   p <- p + labs(fill=key.title)
@@ -398,6 +401,8 @@ ggplot_heatmap <- function(xx,
     p <- p + geom_vline(xintercept =c(0:ncol(xx))+.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
 
   }
+
+  if(row_dend_left) p <- p + scale_y_discrete(position = "right") # possible as of ggplot 2.1.0 !
 
   p
 }
@@ -611,7 +616,8 @@ heatmaply.heatmapr <- function(x,
                       scale_fill_gradient_fun,
                       grid_color,
                       key.title = key.title,
-                      layers = heatmap_layers)
+                      layers = heatmap_layers,
+                      row_dend_left = row_dend_left)
   if(return_ppxpy) {
     return(list(p=p, px=px, py=py))
   }
