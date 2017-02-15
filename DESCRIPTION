@@ -1,6 +1,6 @@
 Package: heatmaply
 Type: Package
-Title: Interactive Heat Maps Using 'plotly'
+Title: Interactive Cluster Heat Maps Using 'plotly'
 Version: 0.8.0
 Date: 2017-02-15
 Authors@R: c(person("Tal", "Galili", role = c("aut", "cre", "cph"), email =
