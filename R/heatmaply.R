@@ -217,55 +217,7 @@
 #' heatmaply(x, Rowv = row_dend, Colv = col_dend)
 #'
 #' }
-heatmaply <- function(x,
-                      # elements for scale_fill_gradientn
-                      colors = viridis(n=256, alpha = 1, begin = 0,
-                                        end = 1, option = "viridis"),
-                      limits = NULL,
-                      na.value = "grey50",
-                      row_text_angle = 0,
-                      column_text_angle = 45,
-                      subplot_margin = 0,
-
-                      ## dendrogram control
-                      Rowv = TRUE,
-                      Colv = if (symm) "Rowv" else TRUE,
-                      distfun = dist,
-                      hclustfun = hclust,
-                      dendrogram = c("both", "row", "column", "none"),
-                      reorderfun = function(d, w) reorder(d, w),
-
-                      k_row,
-                      k_col,
-
-                      symm = FALSE,
-                      revC,
-
-
-                      row_dend_left = FALSE,
-                      margins = c(50, 50, NA, 0),
-                      ...,
-                      scale_fill_gradient_fun = scale_fill_gradientn(
-                          colors = if(is.function(colors)) colors(256) else colors,
-                                             na.value = na.value, limits = limits),
-                      grid_color = NA,
-                      srtRow, srtCol,
-                      xlab = "", ylab = "",
-                      main = "",
-                      titleX = TRUE, titleY = TRUE,
-                      hide_colorbar = FALSE,
-                      key.title = NULL,
-                      return_ppxpy = FALSE,
-                      row_side_colors = NULL,
-                      row_side_palette,
-                      col_side_colors = NULL,
-                      col_side_palette,
-                      ColSideColors = NULL,
-                      RowSideColors = NULL,
-                      heatmap_layers,
-                      branches_lwd = 0.6,
-                      file
-                      ) {
+heatmaply <- function(x, ...) {
   UseMethod("heatmaply")
 }
 
