@@ -147,11 +147,11 @@ x  <- as.matrix(datasets::mtcars)
 library(dendextend)
 
 row_dend  <- x %>% dist %>% hclust %>% as.dendrogram %>%
-   set("branches_k_color", k = 3) %>% set("branches_lwd", 4) %>%
+   set("branches_k_color", k = 3) %>% set("branches_lwd", c(1,3)) %>%
    ladderize
 #    rotate_DendSer(ser_weight = dist(x))
 col_dend  <- x %>% t %>% dist %>% hclust %>% as.dendrogram %>%
-   set("branches_k_color", k = 2) %>% set("branches_lwd", 4) %>%
+   set("branches_k_color", k = 2) %>% set("branches_lwd", c(1,2)) %>%
    ladderize
 #    rotate_DendSer(ser_weight = dist(t(x)))
 
