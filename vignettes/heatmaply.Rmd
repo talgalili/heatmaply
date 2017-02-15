@@ -133,6 +133,35 @@ heatmaply(mtcars[1:10,],  margins = c(40, 130),
 
 This works heavily relies on the seriation package (their [vignette](https://CRAN.R-project.org/package=seriation/vignettes/seriation.pdf) is well worth the read), and also lightly on the dendextend package (see [vignette](https://CRAN.R-project.org/package=dendextend/vignettes/introduction.html) )
 
+
+Customized dendrograms
+-----------------------------
+
+A user can supply their own dendrograms for the rows/columns of the heatmaply using the `Rowv` and the `Colv` parameters:
+
+```{r}
+
+x  <- as.matrix(datasets::mtcars)
+
+# now let's spice up the dendrograms a bit:
+library(dendextend)
+
+row_dend  <- x %>% dist %>% hclust %>% as.dendrogram %>%
+   set("branches_k_color", k = 3) %>% set("branches_lwd", 4) %>%
+   ladderize
+#    rotate_DendSer(ser_weight = dist(x))
+col_dend  <- x %>% t %>% dist %>% hclust %>% as.dendrogram %>%
+   set("branches_k_color", k = 2) %>% set("branches_lwd", 4) %>%
+   ladderize
+#    rotate_DendSer(ser_weight = dist(t(x)))
+
+heatmaply(x, Rowv = row_dend, Colv = col_dend)
+
+
+```
+
+
+
 Changing color palettes
 -------------------
 

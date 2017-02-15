@@ -248,6 +248,24 @@ heatmaply(x[,-c(8,9)], seriate = "mean",
           row_side_colors = x[,8:9])
 
 
+## Example of using Rowv And Colv for custumized dendrograms.
+
+
+x  <- as.matrix(datasets::mtcars)
+
+# now let's spice up the dendrograms a bit:
+library(dendextend)
+
+row_dend  <- x \%>\% dist \%>\% hclust \%>\% as.dendrogram \%>\%
+  set("branches_k_color", k = 3) \%>\% set("branches_lwd", 4) \%>\%
+  ladderize
+#    rotate_DendSer(ser_weight = dist(x))
+col_dend  <- x \%>\% t \%>\% dist \%>\% hclust \%>\% as.dendrogram \%>\%
+  set("branches_k_color", k = 2) \%>\% set("branches_lwd", 4) \%>\%
+  ladderize
+#    rotate_DendSer(ser_weight = dist(t(x)))
+
+heatmaply(x, Rowv = row_dend, Colv = col_dend)
 
 }
 }
