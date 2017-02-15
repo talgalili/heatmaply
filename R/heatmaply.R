@@ -8,6 +8,7 @@
 
 
 #' @title  Cluster heatmap based on plotly
+#' @name heatmaply
 #'
 #' @description
 #' An object of class heatmapr includes all the needed information
@@ -36,7 +37,22 @@
 #'  the third is used as the top margin, and the fourth is used as the bottom margin.
 #'  If a single value is provided, it will be used as all four margins.
 #'
-#' @param dendrogram Passed to heatmapr; "row", "column", or "both". Default is "both"
+#' @param Rowv determines if and how the row dendrogram should be reordered.	By default, it is TRUE, which implies dendrogram is computed and reordered based on row means. If NULL or FALSE, then no dendrogram is computed and no reordering is done. If a \link{dendrogram} (or \link{hclust}), then it is used "as-is", ie without any reordering. If a vector of integers, then dendrogram is computed and reordered based on the order of the vector.
+#' @param Colv determines if and how the column dendrogram should be reordered.	Has the options as the Rowv argument above and additionally when x is a square matrix, Colv = "Rowv" means that columns should be treated identically to the rows.
+#' @param distfun function used to compute the distance (dissimilarity) between both rows and columns. Defaults to dist.
+#' @param hclustfun function used to compute the hierarchical clustering when Rowv or Colv are not dendrograms. Defaults to hclust.
+#' @param dendrogram character string indicating whether to draw 'none', 'row', 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv (or Colv) arguments are honoured.
+#' @param reorderfun function(d, w) of dendrogram and weights for reordering the row and column dendrograms. The default uses stats{reorder.dendrogram}
+#'
+#' @param k_row an integer scalar with the desired number of groups by which to color the dendrogram's branches in the rows (uses \link[dendextend]{color_branches})
+#' If NA then \link[dendextend]{find_k} is used to deduce the optimal number of clusters.
+#' @param k_col an integer scalar with the desired number of groups by which to color the dendrogram's branches in the columns (uses \link[dendextend]{color_branches})
+#' If NA then \link[dendextend]{find_k} is used to deduce the optimal number of clusters.
+#'
+#' @param symm logical indicating if x should be treated symmetrically; can only be true when x is a square matrix.
+#' @param revC logical indicating if the column order should be reversed for plotting.
+#' Default (when missing) - is FALSE, unless symm is TRUE.
+#' This is useful for cor matrix.
 #'
 #' @param row_dend_left logical (default is FALSE). Should the row dendrogram be
 #' plotted on the left side of the heatmap. If false then it will be plotted on the right
@@ -104,9 +120,6 @@
 #' This is based on \link[htmlwidgets]{saveWidget}.
 #'
 #'
-#' @aliases
-#' heatmaply.default
-#' heatmaply.heatmapr
 #' @export
 #' @examples
 #' \dontrun{
@@ -195,7 +208,22 @@ heatmaply <- function(x,
                       row_text_angle = 0,
                       column_text_angle = 45,
                       subplot_margin = 0,
-                      dendrogram = "both",
+
+                      ## dendrogram control
+                      Rowv = TRUE,
+                      Colv = if (symm) "Rowv" else TRUE,
+                      distfun = dist,
+                      hclustfun = hclust,
+                      dendrogram = c("both", "row", "column", "none"),
+                      reorderfun = function(d, w) reorder(d, w),
+
+                      k_row,
+                      k_col,
+
+                      symm = FALSE,
+                      revC,
+
+
                       row_dend_left = FALSE,
                       margins = c(50, 50, NA, 0),
                       ...,
@@ -222,7 +250,10 @@ heatmaply <- function(x,
                       ) {
   UseMethod("heatmaply")
 }
+
+
 #' @export
+#' @rdname heatmaply
 heatmaply.default <- function(x,
                               # elements for scale_fill_gradientn
                               colors = viridis(n=256, alpha = 1, begin = 0,
@@ -232,7 +263,21 @@ heatmaply.default <- function(x,
                               row_text_angle = 0,
                               column_text_angle = 45,
                               subplot_margin = 0,
-                              dendrogram = "both",
+
+                              ## dendrogram control
+                              Rowv = TRUE,
+                              Colv = if (symm) "Rowv" else TRUE,
+                              distfun = dist,
+                              hclustfun = hclust,
+                              dendrogram = c("both", "row", "column", "none"),
+                              reorderfun = function(d, w) reorder(d, w),
+
+                              k_row,
+                              k_col,
+
+                              symm = FALSE,
+                              revC,
+
                               row_dend_left = FALSE,
                               margins = c(50, 50, NA, 0),
                               ...,
@@ -315,7 +360,21 @@ heatmaply.default <- function(x,
                      row_text_angle = row_text_angle,
                      column_text_angle = column_text_angle,
                      subplot_margin = subplot_margin,
+
+                     ## dendrogram control
+                     Rowv = Rowv,
+                     Colv = Colv,
+                     distfun = distfun,
+                     hclustfun = hclustfun,
                      dendrogram = dendrogram,
+                     reorderfun = reorderfun,
+
+                     k_row = k_row,
+                     k_col = k_col,
+
+                     symm = symm,
+                     revC = revC,
+
                      row_dend_left = row_dend_left,
                      xlab=xlab, ylab=ylab, main = main,
                      titleX = titleX, titleY = titleY,
@@ -521,6 +580,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
 
 
 #' @export
+#' @rdname heatmaply
 heatmaply.heatmapr <- function(x,
                                # elements for scale_fill_gradientn
                                colors = viridis(n=256, alpha = 1, begin = 0,
@@ -530,7 +590,7 @@ heatmaply.heatmapr <- function(x,
                                row_text_angle = 0,
                                column_text_angle = 45,
                                subplot_margin = 0,
-                               dendrogram,
+
                                row_dend_left = FALSE,
                                margins = c(50, 50, NA, 0),
                                ...,

@@ -8,8 +8,11 @@
 \usage{
 heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
   "viridis"), limits = NULL, na.value = "grey50", row_text_angle = 0,
-  column_text_angle = 45, subplot_margin = 0, dendrogram = "both",
-  row_dend_left = FALSE, margins = c(50, 50, NA, 0), ...,
+  column_text_angle = 45, subplot_margin = 0, Rowv = TRUE, Colv = if
+  (symm) "Rowv" else TRUE, distfun = dist, hclustfun = hclust,
+  dendrogram = c("both", "row", "column", "none"), reorderfun = function(d,
+  w) reorder(d, w), k_row, k_col, symm = FALSE, revC, row_dend_left = FALSE,
+  margins = c(50, 50, NA, 0), ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
@@ -18,6 +21,35 @@ heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
   row_side_palette, col_side_colors = NULL, col_side_palette,
   ColSideColors = NULL, RowSideColors = NULL, heatmap_layers,
   branches_lwd = 0.6, file)
+
+\method{heatmaply}{default}(x, colors = viridis(n = 256, alpha = 1, begin = 0,
+  end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
+  row_text_angle = 0, column_text_angle = 45, subplot_margin = 0,
+  Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE, distfun = dist,
+  hclustfun = hclust, dendrogram = c("both", "row", "column", "none"),
+  reorderfun = function(d, w) reorder(d, w), k_row, k_col, symm = FALSE,
+  revC, row_dend_left = FALSE, margins = c(50, 50, NA, 0), ...,
+  scale_fill_gradient_fun = scale_fill_gradientn(colors = if
+  (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
+  limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
+  main = "", titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE,
+  key.title = NULL, return_ppxpy = FALSE, row_side_colors = NULL,
+  row_side_palette, col_side_colors = NULL, col_side_palette,
+  ColSideColors = NULL, RowSideColors = NULL, heatmap_layers = NULL,
+  branches_lwd = 0.6, file)
+
+\method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
+  0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
+  row_text_angle = 0, column_text_angle = 45, subplot_margin = 0,
+  row_dend_left = FALSE, margins = c(50, 50, NA, 0), ...,
+  scale_fill_gradient_fun = scale_fill_gradientn(colors = if
+  (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
+  limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
+  main = "", titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE,
+  key.title = NULL, return_ppxpy = FALSE, row_side_colors = NULL,
+  row_side_palette, col_side_colors = NULL, col_side_palette,
+  ColSideColors = NULL, RowSideColors = NULL, heatmap_layers = NULL,
+  branches_lwd = 0.6)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -43,7 +75,29 @@ the first is used as the left margin, the second is used as the right margin,
 the third is used as the top margin, and the fourth is used as the bottom margin.
 If a single value is provided, it will be used as all four margins.}
 
-\item{dendrogram}{Passed to heatmapr; "row", "column", or "both". Default is "both"}
+\item{Rowv}{determines if and how the row dendrogram should be reordered.    By default, it is TRUE, which implies dendrogram is computed and reordered based on row means. If NULL or FALSE, then no dendrogram is computed and no reordering is done. If a \link{dendrogram} (or \link{hclust}), then it is used "as-is", ie without any reordering. If a vector of integers, then dendrogram is computed and reordered based on the order of the vector.}
+
+\item{Colv}{determines if and how the column dendrogram should be reordered.    Has the options as the Rowv argument above and additionally when x is a square matrix, Colv = "Rowv" means that columns should be treated identically to the rows.}
+
+\item{distfun}{function used to compute the distance (dissimilarity) between both rows and columns. Defaults to dist.}
+
+\item{hclustfun}{function used to compute the hierarchical clustering when Rowv or Colv are not dendrograms. Defaults to hclust.}
+
+\item{dendrogram}{character string indicating whether to draw 'none', 'row', 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv (or Colv) arguments are honoured.}
+
+\item{reorderfun}{function(d, w) of dendrogram and weights for reordering the row and column dendrograms. The default uses stats{reorder.dendrogram}}
+
+\item{k_row}{an integer scalar with the desired number of groups by which to color the dendrogram's branches in the rows (uses \link[dendextend]{color_branches})
+If NA then \link[dendextend]{find_k} is used to deduce the optimal number of clusters.}
+
+\item{k_col}{an integer scalar with the desired number of groups by which to color the dendrogram's branches in the columns (uses \link[dendextend]{color_branches})
+If NA then \link[dendextend]{find_k} is used to deduce the optimal number of clusters.}
+
+\item{symm}{logical indicating if x should be treated symmetrically; can only be true when x is a square matrix.}
+
+\item{revC}{logical indicating if the column order should be reversed for plotting.
+Default (when missing) - is FALSE, unless symm is TRUE.
+This is useful for cor matrix.}
 
 \item{row_dend_left}{logical (default is FALSE). Should the row dendrogram be
 plotted on the left side of the heatmap. If false then it will be plotted on the right
