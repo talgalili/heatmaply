@@ -370,7 +370,21 @@ heatmaply.default <- function(x,
   hm <- heatmapr(x,
     row_side_colors = row_side_colors,
     col_side_colors = col_side_colors,
+
+    ## dendrogram control
+    Rowv = Rowv,
+    Colv = Colv,
+    distfun = distfun,
+    hclustfun = hclustfun,
     dendrogram = dendrogram,
+    reorderfun = reorderfun,
+
+    k_row = k_row,
+    k_col = k_col,
+
+    symm = symm,
+    revC = revC,
+
     ...)
   hmly <- heatmaply.heatmapr(hm, # colors = colors, limits = limits,
                      scale_fill_gradient_fun = scale_fill_gradient_fun,
@@ -378,20 +392,6 @@ heatmaply.default <- function(x,
                      row_text_angle = row_text_angle,
                      column_text_angle = column_text_angle,
                      subplot_margin = subplot_margin,
-
-                     ## dendrogram control
-                     Rowv = Rowv,
-                     Colv = Colv,
-                     distfun = distfun,
-                     hclustfun = hclustfun,
-                     dendrogram = dendrogram,
-                     reorderfun = reorderfun,
-
-                     k_row = k_row,
-                     k_col = k_col,
-
-                     symm = symm,
-                     revC = revC,
 
                      row_dend_left = row_dend_left,
                      xlab=xlab, ylab=ylab, main = main,
