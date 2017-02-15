@@ -40,7 +40,7 @@
 #' @param anim_duration Number of milliseconds to animate zooming in and out.
 #'   For large \code{x} it may help performance to set this value to \code{0}.
 #'
-#' @param Rowv determines if and how the row dendrogram should be reordered.	By default, it is TRUE, which implies dendrogram is computed and reordered based on row means. If NULL or FALSE, then no dendrogram is computed and no reordering is done. If a dendrogram, then it is used "as-is", ie without any reordering. If a vector of integers, then dendrogram is computed and reordered based on the order of the vector.
+#' @param Rowv determines if and how the row dendrogram should be reordered.	By default, it is TRUE, which implies dendrogram is computed and reordered based on row means. If NULL or FALSE, then no dendrogram is computed and no reordering is done. If a \link{dendrogram} (or \link{hclust}), then it is used "as-is", ie without any reordering. If a vector of integers, then dendrogram is computed and reordered based on the order of the vector.
 #' @param Colv determines if and how the column dendrogram should be reordered.	Has the options as the Rowv argument above and additionally when x is a square matrix, Colv = "Rowv" means that columns should be treated identically to the rows.
 #' @param distfun function used to compute the distance (dissimilarity) between both rows and columns. Defaults to dist.
 #' @param hclustfun function used to compute the hierarchical clustering when Rowv or Colv are not dendrograms. Defaults to hclust.
@@ -237,6 +237,9 @@ heatmapr <- function(x,
     Rowv <- reorderfun(as.dendrogram(hclustfun(distfun(x))), Rowv)
     Rowv <- rev(Rowv) # I would rather the matrix will be with the first row at the top
   }
+
+  if (is.hclust(Rowv)) Rowv <- as.dendrogram(Rowv)
+
   if (is.dendrogram(Rowv)) {
     # Rowv <- rev(Rowv)
     rowInd <- order.dendrogram(Rowv)
@@ -285,6 +288,9 @@ heatmapr <- function(x,
   if (is.numeric(Colv)) {
     Colv <- reorderfun(as.dendrogram(hclustfun(distfun(t(x)))), rev(Colv))
   }
+
+  if (is.hclust(Colv)) Colv <- as.dendrogram(Colv)
+
   if (is.dendrogram(Colv)) {
     Colv <- rev(Colv)
     colInd <- order.dendrogram(Colv)

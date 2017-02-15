@@ -22,7 +22,7 @@ heatmapr(x, Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE,
 \item{x}{A numeric matrix
 Defaults to \code{TRUE} unless \code{x} contains any \code{NA}s.}
 
-\item{Rowv}{determines if and how the row dendrogram should be reordered.    By default, it is TRUE, which implies dendrogram is computed and reordered based on row means. If NULL or FALSE, then no dendrogram is computed and no reordering is done. If a dendrogram, then it is used "as-is", ie without any reordering. If a vector of integers, then dendrogram is computed and reordered based on the order of the vector.}
+\item{Rowv}{determines if and how the row dendrogram should be reordered.    By default, it is TRUE, which implies dendrogram is computed and reordered based on row means. If NULL or FALSE, then no dendrogram is computed and no reordering is done. If a \link{dendrogram} (or \link{hclust}), then it is used "as-is", ie without any reordering. If a vector of integers, then dendrogram is computed and reordered based on the order of the vector.}
 
 \item{Colv}{determines if and how the column dendrogram should be reordered.    Has the options as the Rowv argument above and additionally when x is a square matrix, Colv = "Rowv" means that columns should be treated identically to the rows.}
 
