@@ -84,10 +84,12 @@ library(heatmaply)
 heatmaply(mtcars)
 ```
 
-Because the labels are somewhat long, we need to manually fix the margins (hopefully this will be fixed in future versions of plot.ly)
+Because the labels are somewhat long, we need to manually fix the margins (hopefully this will be fixed in future versions of plot.ly). This also allows the inclusion of xlab/ylab/main texts.
 
 ```{r}
-heatmaply(mtcars, margins = c(40, 130))
+heatmaply(mtcars, xlab = "Features", ylab = "Cars", 
+		main = "An example of title and xlab/ylab",
+		margins = c(60,100,40,20) )
 # heatmaply(mtcars) %>% layout(margin = list(l = 130, b = 40))
 ```
 
@@ -130,6 +132,35 @@ heatmaply(mtcars[1:10,],  margins = c(40, 130),
 ```
 
 This works heavily relies on the seriation package (their [vignette](https://CRAN.R-project.org/package=seriation/vignettes/seriation.pdf) is well worth the read), and also lightly on the dendextend package (see [vignette](https://CRAN.R-project.org/package=dendextend/vignettes/introduction.html) )
+
+
+Customized dendrograms
+-----------------------------
+
+A user can supply their own dendrograms for the rows/columns of the heatmaply using the `Rowv` and the `Colv` parameters:
+
+```{r}
+
+x  <- as.matrix(datasets::mtcars)
+
+# now let's spice up the dendrograms a bit:
+library(dendextend)
+
+row_dend  <- x %>% dist %>% hclust %>% as.dendrogram %>%
+   set("branches_k_color", k = 3) %>% set("branches_lwd", c(1,3)) %>%
+   ladderize
+#    rotate_DendSer(ser_weight = dist(x))
+col_dend  <- x %>% t %>% dist %>% hclust %>% as.dendrogram %>%
+   set("branches_k_color", k = 2) %>% set("branches_lwd", c(1,2)) %>%
+   ladderize
+#    rotate_DendSer(ser_weight = dist(t(x)))
+
+heatmaply(x, Rowv = row_dend, Colv = col_dend)
+
+
+```
+
+
 
 Changing color palettes
 -------------------
@@ -176,20 +207,18 @@ Reviewing missing values:
 ```{r}
 
 library(heatmaply)
-class_to <- function(x, new_class) {
-  class(x) <- new_class
-  x
-}
-na_mat <- function(x) {
-  x %>% is.na %>% class_to("numeric") 
-}
 
 # warning - using grid_color cannot handle a large matrix!
-airquality[1:10,] %>% na_mat %>% 
+airquality[1:10,] %>% is.na10 %>% 
   heatmaply(color = c("white","black"), grid_color = "grey",
             k_col =3, k_row = 3,
             margins = c(40, 50)) 
 
+# airquality %>% is.na10 %>% 
+#   heatmaply(color = c("grey80", "grey20"), # grid_color = "grey",
+#             k_col =3, k_row = 3,
+#             margins = c(40, 50)) 
+# 
 
 ```
 
@@ -237,6 +266,11 @@ With heatmaply
 ```{r}
 heatmaply(x, seriate = "mean",
           RowSideColors=rc)
+
+# heatmaply(x, seriate = "mean",
+#           RowSideColors=factor(rc))
+
+
 ```
 
 A more sophisticated heatmap (the hover at the top row doesn't work due to an issue with plotly. We hope this would get resolved in the future):

@@ -22,7 +22,7 @@
 #' @import ggplot2
 
 # http://stackoverflow.com/questions/10325231/when-writing-my-own-r-package-i-cant-seem-to-get-other-packages-to-import-corr
-#' @importFrom plotly plotly ggplotly plotly_empty subplot layout
+#' @importFrom plotly plotly ggplotly plotly_empty subplot layout hide_colorbar
 NULL
 
 
@@ -38,11 +38,14 @@ NULL
 #' @importFrom seriation seriate get_order
 NULL
 
-#' @importFrom dendextend set is.dendrogram seriate_dendrogram rotate color_branches
+#' @importFrom dendextend set is.dendrogram is.hclust seriate_dendrogram rotate color_branches find_k
 NULL
 
+#' @importFrom stats ecdf na.omit
+NULL
 
-
+#' @importFrom htmlwidgets saveWidget
+NULL
 
 
 

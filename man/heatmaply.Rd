@@ -6,21 +6,42 @@
 \alias{heatmaply.heatmapr}
 \title{Cluster heatmap based on plotly}
 \usage{
-heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
-  "viridis"), limits = NULL, na.value = "grey50", row_text_angle = 0,
-  column_text_angle = 45, subplot_margin = 0, dendrogram = "both",
-  row_dend_left = FALSE, margins = c(50, 50), ...,
+heatmaply(x, ...)
+
+\method{heatmaply}{default}(x, colors = viridis(n = 256, alpha = 1, begin = 0,
+  end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
+  row_text_angle = 0, column_text_angle = 45, subplot_margin = 0,
+  Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE, distfun = dist,
+  hclustfun = hclust, dendrogram = c("both", "row", "column", "none"),
+  reorderfun = function(d, w) reorder(d, w), k_row, k_col, symm = FALSE,
+  revC, row_dend_left = FALSE, margins = c(50, 50, NA, 0), ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
-  titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE, key.title = NULL,
-  return_ppxpy = FALSE, row_side_colors = NULL, row_side_palette,
-  col_side_colors = NULL, col_side_palette, ColSideColors = NULL,
-  RowSideColors = NULL, heatmap_layers, branches_lwd = 0.6)
+  main = "", titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE,
+  key.title = NULL, return_ppxpy = FALSE, row_side_colors = NULL,
+  row_side_palette, col_side_colors = NULL, col_side_palette,
+  ColSideColors = NULL, RowSideColors = NULL, heatmap_layers = NULL,
+  branches_lwd = 0.6, file)
+
+\method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
+  0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
+  row_text_angle = 0, column_text_angle = 45, subplot_margin = 0,
+  row_dend_left = FALSE, margins = c(50, 50, NA, 0), ...,
+  scale_fill_gradient_fun = scale_fill_gradientn(colors = if
+  (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
+  limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
+  main = "", titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE,
+  key.title = NULL, return_ppxpy = FALSE, row_side_colors = NULL,
+  row_side_palette, col_side_colors = NULL, col_side_palette,
+  ColSideColors = NULL, RowSideColors = NULL, heatmap_layers = NULL,
+  branches_lwd = 0.6)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
 Defaults to \code{TRUE} unless \code{x} contains any \code{NA}s.}
+
+\item{...}{other parameters passed to \link{heatmapr} (currently, various parameters may be ignored.}
 
 \item{colors}{a vector of colors to use for heatmap color.
 The default uses \code{\link[viridis]{viridis}(n=256, alpha = 1, begin = 0, end = 1, option = "viridis")}
@@ -42,15 +63,37 @@ the first is used as the left margin, the second is used as the right margin,
 the third is used as the top margin, and the fourth is used as the bottom margin.
 If a single value is provided, it will be used as all four margins.}
 
-\item{dendrogram}{Passed to heatmapr; "row", "column", or "both". Default is "both"}
+\item{Rowv}{determines if and how the row dendrogram should be reordered.    By default, it is TRUE, which implies dendrogram is computed and reordered based on row means. If NULL or FALSE, then no dendrogram is computed and no reordering is done. If a \link{dendrogram} (or \link{hclust}), then it is used "as-is", ie without any reordering. If a vector of integers, then dendrogram is computed and reordered based on the order of the vector.}
+
+\item{Colv}{determines if and how the column dendrogram should be reordered.    Has the options as the Rowv argument above and additionally when x is a square matrix, Colv = "Rowv" means that columns should be treated identically to the rows.}
+
+\item{distfun}{function used to compute the distance (dissimilarity) between both rows and columns. Defaults to dist.}
+
+\item{hclustfun}{function used to compute the hierarchical clustering when Rowv or Colv are not dendrograms. Defaults to hclust.}
+
+\item{dendrogram}{character string indicating whether to draw 'none', 'row', 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv (or Colv) arguments are honoured.}
+
+\item{reorderfun}{function(d, w) of dendrogram and weights for reordering the row and column dendrograms. The default uses stats{reorder.dendrogram}}
+
+\item{k_row}{an integer scalar with the desired number of groups by which to color the dendrogram's branches in the rows (uses \link[dendextend]{color_branches})
+If NA then \link[dendextend]{find_k} is used to deduce the optimal number of clusters.}
+
+\item{k_col}{an integer scalar with the desired number of groups by which to color the dendrogram's branches in the columns (uses \link[dendextend]{color_branches})
+If NA then \link[dendextend]{find_k} is used to deduce the optimal number of clusters.}
+
+\item{symm}{logical indicating if x should be treated symmetrically; can only be true when x is a square matrix.}
+
+\item{revC}{logical indicating if the column order should be reversed for plotting.
+Default (when missing) - is FALSE, unless symm is TRUE.
+This is useful for cor matrix.}
 
 \item{row_dend_left}{logical (default is FALSE). Should the row dendrogram be
 plotted on the left side of the heatmap. If false then it will be plotted on the right
 side.}
 
-\item{margins}{numeric vector of length 2 (default is c(50,50)) containing the margins (see \link[plotly]{layout}) for column and row names, respectively.}
-
-\item{...}{other parameters passed to \link{heatmapr} (currently, various parameters may be ignored.}
+\item{margins}{numeric vector of length 4 (default is c(50,50,NA,0)) containing the margins (see \link[plotly]{layout}) for column, row and main title names, respectively.
+The top margin is NA by default. If main=="" then the top margin will be set to 0, otherwise it will get 30.
+For a multiline title a larger default for the 3rd element should be set.}
 
 \item{scale_fill_gradient_fun}{A function that creates a smooth gradient for the heatmap.
 The default uses \link[ggplot2]{scale_fill_gradientn} with the values of colors, limits, and
@@ -69,6 +112,8 @@ Do not use this parameter on larger matrix sizes, as it can dramatically prolong
 \item{xlab}{A character title for the x axis.}
 
 \item{ylab}{A character title for the y axis.}
+
+\item{main}{A character title for the heatmap.}
 
 \item{titleX}{logical (TRUE). should x-axis titles be retained? (passed to \link[plotly]{subplot}).}
 
@@ -96,7 +141,15 @@ to keep compatibility with \link[gplots]{heatmap.2}}
 \item{heatmap_layers}{ggplot object (eg, theme_bw()) to be added to
 the heatmap before conversion to a plotly object.}
 
-\item{branches_lwd}{numeric (default is 0.6). The width of the dendrograms' branches.}
+\item{branches_lwd}{numeric (default is 0.6). The width of the dendrograms' branches.
+If NULL then it is ignored. If the "lwd" is already defined in Rowv/Colv then this
+parameter is ignored (it is checked using \link[dendextend]{has_edgePar}("lwd")).}
+
+\item{file}{HTML file name to save the heatmaply into. Should be a character string ending with ".html".
+For example: heatmaply(x, file = "heatmaply_plot.html").
+This should not include a directory, only the name of the file.
+You can relocate the file once it is created, or use \link{setwd} first.
+This is based on \link[htmlwidgets]{saveWidget}.}
 }
 \description{
 An object of class heatmapr includes all the needed information
@@ -148,11 +201,15 @@ hm2 <- heatmaply(mtcars, scale = "col" , Colv = FALSE, Rowv = FALSE,
              margins = c(40, 130))
 subplot(hm1, hm2, margin = .02, shareY = TRUE)
 
-# We can save heatmaply as a widget by using:
+
+# We can save heatmaply as an HTML file by using:
+heatmaply(iris[,-5], file = "heatmaply_iris.html")
+
+# If we don't want the HTML to be selfcontained, we can use the following:
 library(heatmaply)
 library(htmlwidgets)
 heatmaply(iris[,-5]) \%>\%
-   saveWidget(file="test.html",selfcontained = FALSE)
+   saveWidget(file="heatmaply_iris.html",selfcontained = FALSE)
 
 
 # Example for using RowSideColors
@@ -177,6 +234,24 @@ heatmaply(x[,-c(8,9)], seriate = "mean",
           row_side_colors = x[,8:9])
 
 
+## Example of using Rowv And Colv for custumized dendrograms.
+
+
+x  <- as.matrix(datasets::mtcars)
+
+# now let's spice up the dendrograms a bit:
+library(dendextend)
+
+row_dend  <- x \%>\% dist \%>\% hclust \%>\% as.dendrogram \%>\%
+  set("branches_k_color", k = 3) \%>\% set("branches_lwd", 4) \%>\%
+  ladderize
+#    rotate_DendSer(ser_weight = dist(x))
+col_dend  <- x \%>\% t \%>\% dist \%>\% hclust \%>\% as.dendrogram \%>\%
+  set("branches_k_color", k = 2) \%>\% set("branches_lwd", 4) \%>\%
+  ladderize
+#    rotate_DendSer(ser_weight = dist(t(x)))
+
+heatmaply(x, Rowv = row_dend, Colv = col_dend)
 
 }
 }

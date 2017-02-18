@@ -40,7 +40,7 @@
 #' @param anim_duration Number of milliseconds to animate zooming in and out.
 #'   For large \code{x} it may help performance to set this value to \code{0}.
 #'
-#' @param Rowv determines if and how the row dendrogram should be reordered.	By default, it is TRUE, which implies dendrogram is computed and reordered based on row means. If NULL or FALSE, then no dendrogram is computed and no reordering is done. If a dendrogram, then it is used "as-is", ie without any reordering. If a vector of integers, then dendrogram is computed and reordered based on the order of the vector.
+#' @param Rowv determines if and how the row dendrogram should be reordered.	By default, it is TRUE, which implies dendrogram is computed and reordered based on row means. If NULL or FALSE, then no dendrogram is computed and no reordering is done. If a \link{dendrogram} (or \link{hclust}), then it is used "as-is", ie without any reordering. If a vector of integers, then dendrogram is computed and reordered based on the order of the vector.
 #' @param Colv determines if and how the column dendrogram should be reordered.	Has the options as the Rowv argument above and additionally when x is a square matrix, Colv = "Rowv" means that columns should be treated identically to the rows.
 #' @param distfun function used to compute the distance (dissimilarity) between both rows and columns. Defaults to dist.
 #' @param hclustfun function used to compute the hierarchical clustering when Rowv or Colv are not dendrograms. Defaults to hclust.
@@ -48,7 +48,9 @@
 #' @param reorderfun function(d, w) of dendrogram and weights for reordering the row and column dendrograms. The default uses stats{reorder.dendrogram}
 #'
 #' @param k_row an integer scalar with the desired number of groups by which to color the dendrogram's branches in the rows (uses \link[dendextend]{color_branches})
+#' If NA then \link[dendextend]{find_k} is used to deduce the optimal number of clusters.
 #' @param k_col an integer scalar with the desired number of groups by which to color the dendrogram's branches in the columns (uses \link[dendextend]{color_branches})
+#' If NA then \link[dendextend]{find_k} is used to deduce the optimal number of clusters.
 #'
 #' @param symm logical indicating if x should be treated symmetrically; can only be true when x is a square matrix.
 #' @param revC logical indicating if the column order should be reversed for plotting.
@@ -233,6 +235,9 @@ heatmapr <- function(x,
     Rowv <- reorderfun(as.dendrogram(hclustfun(distfun(x))), Rowv)
     Rowv <- rev(Rowv) # I would rather the matrix will be with the first row at the top
   }
+
+  if (is.hclust(Rowv)) Rowv <- as.dendrogram(Rowv)
+
   if (is.dendrogram(Rowv)) {
     # Rowv <- rev(Rowv)
     rowInd <- order.dendrogram(Rowv)
@@ -281,6 +286,9 @@ heatmapr <- function(x,
   if (is.numeric(Colv)) {
     Colv <- reorderfun(as.dendrogram(hclustfun(distfun(t(x)))), rev(Colv))
   }
+
+  if (is.hclust(Colv)) Colv <- as.dendrogram(Colv)
+
   if (is.dendrogram(Colv)) {
     Colv <- rev(Colv)
     colInd <- order.dendrogram(Colv)
@@ -319,7 +327,7 @@ heatmapr <- function(x,
 
 
   if (!is.null(row_side_colors)) {
-    if(is.vector(row_side_colors)) {
+    if(!(is.data.frame(row_side_colors) | is.matrix(row_side_colors))) {
       row_side_colors <- data.frame("row_side_colors" = row_side_colors)
     }
     if (dim(row_side_colors)[1] != dim(x)[1])
@@ -327,7 +335,7 @@ heatmapr <- function(x,
     row_side_colors <- row_side_colors[rowInd, , drop = FALSE]
   }
   if (!is.null(col_side_colors)) {
-    if(is.vector(col_side_colors)) {
+    if( !(is.data.frame(col_side_colors) | is.matrix(col_side_colors)) ) {
       col_side_colors <- matrix(col_side_colors, nrow = 1)
       rownames(col_side_colors) <- "col_side_colors"
     }
@@ -346,9 +354,11 @@ heatmapr <- function(x,
   if(!missing(k_row) | !missing(k_col)) dendextend::assign_dendextend_options()
 
   if(is.dendrogram(Rowv) & !missing(k_row)) {
+    if(is.na(k_row)) k_row <- find_k(Rowv)$k
     Rowv <- color_branches(Rowv, k = k_row)
   }
   if(is.dendrogram(Colv) & !missing(k_col)) {
+    if(is.na(k_col)) k_col <- find_k(Colv)$k
     Colv <- color_branches(Colv, k = k_col)
   }
 

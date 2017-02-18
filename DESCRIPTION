@@ -1,8 +1,8 @@
 Package: heatmaply
 Type: Package
-Title: Interactive Heat Maps Using 'plotly'
-Version: 0.6.1
-Date: 2016-11-08
+Title: Interactive Cluster Heat Maps Using 'plotly'
+Version: 0.8.0
+Date: 2017-02-15
 Authors@R: c(person("Tal", "Galili", role = c("aut", "cre", "cph"), email =
     "tal.galili@gmail.com", comment = "https://www.r-statistics.com"),
     person("Alan", "O'Callaghan", comment = "https://github.com/Alanocallaghan",role = "ctb"),
@@ -26,8 +26,8 @@ Depends:
     plotly (>= 4.5.2),
     viridis
 Imports:
-    ggplot2,
-    dendextend,
+    ggplot2 (>= 2.1.0),
+    dendextend (>= 1.4.0),
     magrittr (>= 1.0.1),
     reshape2,
     scales,
@@ -35,12 +35,12 @@ Imports:
     utils,
     stats,
     colorspace,
-    GGally
+    GGally,
+    htmlwidgets
 Suggests:
     knitr,
     rmarkdown,
     gplots,
-    htmlwidgets,
     RColorBrewer
 VignetteBuilder: knitr
 License: GPL-2 | GPL-3
