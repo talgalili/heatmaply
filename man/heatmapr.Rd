@@ -15,8 +15,8 @@ heatmapr(x, Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE,
   cellnote, cellnote_scale = TRUE, theme = NULL, colors = "RdYlBu",
   width = NULL, height = NULL, xaxis_height = 80, yaxis_width = 120,
   xaxis_font_size = NULL, yaxis_font_size = NULL, brush_color = "#0000FF",
-  show_grid = TRUE, anim_duration = 500, seriate = c("OLO", "mean",
-  "none", "GW"), ...)
+  show_grid = TRUE, anim_duration = 500, row_side_colors = NULL,
+  col_side_colors = NULL, seriate = c("OLO", "mean", "none", "GW"), ...)
 }
 \arguments{
 \item{x}{A numeric matrix
@@ -97,6 +97,11 @@ non-integer).}
 
 \item{anim_duration}{Number of milliseconds to animate zooming in and out.
 For large \code{x} it may help performance to set this value to \code{0}.}
+
+\item{row_side_colors, col_side_colors}{data.frame of factors to produce
+row/column side colors in the style of heatmap.2/heatmap.3.
+col_side_colors should be "wide", ie be the same dimensions
+as the column side colors it will produce.}
 
 \item{seriate}{character indicating the method of matrix sorting (default: "OLO").
 Implemented options include:

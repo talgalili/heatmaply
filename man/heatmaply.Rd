@@ -4,17 +4,19 @@
 \alias{heatmaply}
 \alias{heatmaply.default}
 \alias{heatmaply.heatmapr}
-\title{Creates a plotly heatmap}
+\title{Cluster heatmap based on plotly}
 \usage{
 heatmaply(x, colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option =
   "viridis"), limits = NULL, na.value = "grey50", row_text_angle = 0,
-  column_text_angle = 45, subplot_margin = 0, row_dend_left = FALSE,
-  margins = c(50, 50), ...,
+  column_text_angle = 45, subplot_margin = 0, dendrogram = "both",
+  row_dend_left = FALSE, margins = c(50, 50), ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
   titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE, key.title = NULL,
-  return_ppxpy = FALSE)
+  return_ppxpy = FALSE, row_side_colors = NULL, row_side_palette,
+  col_side_colors = NULL, col_side_palette, ColSideColors = NULL,
+  RowSideColors = NULL, heatmap_layers, branches_lwd = 0.6)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -40,6 +42,8 @@ the first is used as the left margin, the second is used as the right margin,
 the third is used as the top margin, and the fourth is used as the bottom margin.
 If a single value is provided, it will be used as all four margins.}
 
+\item{dendrogram}{Passed to heatmapr; "row", "column", or "both". Default is "both"}
+
 \item{row_dend_left}{logical (default is FALSE). Should the row dendrogram be
 plotted on the left side of the heatmap. If false then it will be plotted on the right
 side.}
@@ -51,11 +55,12 @@ side.}
 \item{scale_fill_gradient_fun}{A function that creates a smooth gradient for the heatmap.
 The default uses \link[ggplot2]{scale_fill_gradientn} with the values of colors, limits, and
 na.value that are supplied by the user. The user can input a customized function, such as
-\link{scale_colour_gradient}() in order to get other results (although the virids default
+\link{scale_color_gradient}() in order to get other results (although the virids default
 is quite recommended)}
 
 \item{grid_color}{control the color of the heatmap grid. Default is NA. Value passed to \link[ggplot2]{geom_tile}.
-This parameter is currently not working until this is added in plotly.}
+Do not use this parameter on larger matrix sizes, as it can dramatically prolong the build time of the heatmap.
+(another parameter, grid_color, will be added in the future - once it is implemented in plotly)}
 
 \item{srtRow}{if supplied, this overrides row_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})}
 
@@ -75,14 +80,30 @@ This parameter is currently not working until this is added in plotly.}
 
 \item{return_ppxpy}{logical (FALSE). If TRUE, then no plotting is done and the p, px and py objects are
 returned (before turning into plotly objects). This is a temporary option which might be removed in the
-future just to make it easy to create a ggplot heatmaps.
+future just to make it easy to create a ggplot heatmaps.}
 
-Please submit an issue on github if you have a feature that you wish to have added)}
+\item{row_side_colors, col_side_colors}{data.frame of factors to produce
+row/column side colors in the style of heatmap.2/heatmap.3.
+col_side_colors should be "wide", ie be the same dimensions
+as the column side colors it will produce.}
+
+\item{row_side_palette, col_side_palette}{Color palette functions to be
+used for row_side_colors and col_side_colors respectively.}
+
+\item{ColSideColors, RowSideColors}{passed to row_side_colors,col_side_colors in order
+to keep compatibility with \link[gplots]{heatmap.2}}
+
+\item{heatmap_layers}{ggplot object (eg, theme_bw()) to be added to
+the heatmap before conversion to a plotly object.}
+
+\item{branches_lwd}{numeric (default is 0.6). The width of the dendrograms' branches.}
 }
 \description{
 An object of class heatmapr includes all the needed information
 for producing a heatmap. The goal is to seperate the pre-processing of the
 heatmap elements from the graphical rendaring of the object, which could be done
+
+(Please submit an issue on github if you have a feature that you wish to have added)
 }
 \examples{
 \dontrun{
@@ -111,7 +132,7 @@ x <- mtcars
 # different colors
 heatmaply(x, colors = heat.colors(200))
 # using special scale_fill_gradient_fun colors
-heatmaply(x, scale_fill_gradient_fun = scale_colour_gradient())
+heatmaply(x, scale_fill_gradient_fun = scale_color_gradient())
 
 
 # We can join two heatmaps together:
@@ -132,6 +153,28 @@ library(heatmaply)
 library(htmlwidgets)
 heatmaply(iris[,-5]) \%>\%
    saveWidget(file="test.html",selfcontained = FALSE)
+
+
+# Example for using RowSideColors
+
+x  <- as.matrix(datasets::mtcars)
+rc <- colorspace::rainbow_hcl(nrow(x))
+
+library(gplots)
+library(viridis)
+heatmap.2(x, trace = "none", col = viridis(100),
+          RowSideColors=rc)
+
+heatmaply(x, seriate = "mean",
+          RowSideColors=rc)
+
+
+heatmaply(x[,-c(8,9)], seriate = "mean",
+          col_side_colors = c(rep(0,5), rep(1,4)),
+          row_side_colors = x[,8:9])
+heatmaply(x[,-c(8,9)], seriate = "mean",
+          col_side_colors = data.frame(a=c(rep(0,5), rep(1,4))),
+          row_side_colors = x[,8:9])
 
 
 

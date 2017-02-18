@@ -38,6 +38,8 @@ NULL
 #' @importFrom seriation seriate get_order
 NULL
 
+#' @importFrom dendextend set is.dendrogram seriate_dendrogram rotate color_branches
+NULL
 
 
 

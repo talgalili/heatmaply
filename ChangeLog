@@ -1,3 +1,180 @@
+* 2016-11-05(Tal Galili) Fix "CRAN URL not in canonical form" |d5e662b| 
+|  README.md               | 2 +-
+|  vignettes/heatmaply.Rmd | 2 +-
+|  2 files changed, 2 insertions(+), 2 deletions(-)
+
+* 2016-11-05(Tal Galili) Fix "Possibly mis-spelled words in DESCRIPTION:" |4b8fdce| 
+|  DESCRIPTION | 14 +++++++-------
+|  1 file changed, 7 insertions(+), 7 deletions(-)
+
+* 2016-11-05(Tal Galili) added branches_lwd - to control the width of the dendrograms' width. Fix issue #24 |de93225| 
+|  NEWS             | 11 ++++++++---
+|  R/heatmaply.R    | 35 +++++++++++++++++++++++++++--------
+|  man/heatmaply.Rd | 10 ++++++----
+|  3 files changed, 41 insertions(+), 15 deletions(-)
+
+* 2016-11-05(Tal Galili) update date |5cf114f| 
+|  DESCRIPTION | 2 +-
+|  NEWS        | 4 ++--
+|  2 files changed, 3 insertions(+), 3 deletions(-)
+
+* 2016-11-05(Tal Galili) Add examples for using row_side_colors  and col_side_colors |376cd70| 
+|  vignettes/heatmaply.Rmd | 43 ++++++++++++++++++++++++++++++++++++++++++-
+|  1 file changed, 42 insertions(+), 1 deletion(-)
+
+* 2016-11-05(Tal Galili) Add a warning when using col_side_colors |fb3568f| 
+|  R/heatmaply.R | 3 +++
+|  1 file changed, 3 insertions(+)
+
+* 2016-11-03(Tal Galili) Example for using row_side_colors |898528e| 
+|  R/heatmaply.R    | 10 +++++++++-
+|  man/heatmaply.Rd | 10 +++++++++-
+|  2 files changed, 18 insertions(+), 2 deletions(-)
+
+* 2016-11-03(Tal Galili) Added Alanocallaghan as a contributor :) |fc54e3a| 
+|  DESCRIPTION | 4 +++-
+|  1 file changed, 3 insertions(+), 1 deletion(-)
+
+* 2016-11-03(Tal Galili) `RowSideColors` also works in heatmaply |0afa871| 
+|  DESCRIPTION      |  2 +-
+|  NEWS             |  4 ++--
+|  R/heatmaply.R    | 22 ++++++++++++++++++----
+|  man/heatmaply.Rd | 14 ++++++++++++++
+|  4 files changed, 35 insertions(+), 7 deletions(-)
+
+*   2016-11-03(Tal Galili) Merge pull request #26 from Alanocallaghan/master |6746c0e
+|\  
+| * 2016-11-03(Alan O'Callaghan) Fix s3 error |3f19372| | 
+| |  R/heatmaply.R | 2 ++
+| |  1 file changed, 2 insertions(+)
+
+| * 2016-11-03(Alan O'Callaghan) Update docs |8846381| | 
+| |  DESCRIPTION            | 2 +-
+| |  man/heatmaply.Rd       | 6 ++++--
+| |  man/side_color_plot.Rd | 7 +++++--
+| |  3 files changed, 10 insertions(+), 5 deletions(-)
+
+| * 2016-11-03(Alan O'Callaghan) bugfix heatmapr |eea1570| | 
+| |  R/heatmapr.R | 2 +-
+| |  1 file changed, 1 insertion(+), 1 deletion(-)
+
+| * 2016-10-31(Alan O'Callaghan) Add Col/RowSide and suppress messages/devices |896fdd4
+|/  |   
+|    R/heatmaply.R | 104 +++++++++++++++++++++++++++++++++++++++---------------
+|    R/heatmapr.R  |  19 ++++++++--
+|    2 files changed, 93 insertions(+), 30 deletions(-)
+
+* 2016-10-29(Tal Galili) Fix Undocumented arguments in documentation object 'side_color_plot' ‘row_text_angle’ ‘column_text_angle’ |e48ffb5| 
+|  R/heatmaply.R          | 1 +
+|  man/side_color_plot.Rd | 2 ++
+|  2 files changed, 3 insertions(+)
+
+* 2016-10-29(Tal Galili) limit grod_color example for a small matrx |73d1488| 
+|  vignettes/heatmaply.Rmd | 4 ++--
+|  1 file changed, 2 insertions(+), 2 deletions(-)
+
+* 2016-10-29(Tal Galili) Update grid_color doc |cfa997a| 
+|  R/heatmaply.R    | 3 ++-
+|  man/heatmaply.Rd | 3 ++-
+|  2 files changed, 4 insertions(+), 2 deletions(-)
+
+* 2016-10-29(Tal Galili) heatmaply - grid_color now works (thanks to a hack of using geom_hline and geom_vline instead of heom_tile(..., color) in ggplot_heatmap ) |26a58c2| 
+|  DESCRIPTION   | 2 +-
+|  NEWS          | 4 +++-
+|  R/heatmaply.R | 9 +++++++++
+|  3 files changed, 13 insertions(+), 2 deletions(-)
+
+* 2016-10-29(Tal Galili) Fix - Error in heatmaply.heatmapr(hm) :   argument "row_side_colors" is missing, with no default |a240863| 
+|  R/heatmaply.R | 4 ++--
+|  1 file changed, 2 insertions(+), 2 deletions(-)
+
+* 2016-10-29(Tal Galili) Fix: Error in ggplot_heatmap(data_mat, row_text_angle, column_text_angle, scale_fill_gradient_fun,  :   object 'heatmap_layers' not found |5eeeaf3| 
+|  R/heatmaply.R | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2016-10-29(Tal Galili) making the order of the matrix rows comparable with heatmap.2 |df58752| 
+|  DESCRIPTION             |  2 +-
+|  R/heatmapr.R            | 20 +++++++++++++-------
+|  man/heatmapr.Rd         |  6 +++---
+|  vignettes/heatmaply.Rmd | 15 +++++++++++++++
+|  4 files changed, 32 insertions(+), 11 deletions(-)
+
+* 2016-10-29(Tal Galili) ColSideColors,RowSideColors passed to row_side_colors,col_side_colors in order to keep compatibility with \link[gplots]{heatmap.2} |d8a4623| 
+|  R/heatmaply.R    | 15 +++++++++++++++
+|  man/heatmaply.Rd |  6 +++++-
+|  2 files changed, 20 insertions(+), 1 deletion(-)
+
+* 2016-10-29(Tal Galili) use colorspace::rainbow_hcl instead of rainbow for row_side_colors |6483997| 
+|  DESCRIPTION   | 1 +
+|  R/heatmaply.R | 2 +-
+|  2 files changed, 2 insertions(+), 1 deletion(-)
+
+* 2016-10-29(Tal Galili) Use margins instead of layout(margin = list(l = 130, b = 40)) |239046d| 
+|  vignettes/heatmaply.Rmd | 34 +++++++++++++++++++---------------
+|  1 file changed, 19 insertions(+), 15 deletions(-)
+
+*   2016-10-29(Tal Galili) Merge pull request #25 from Alanocallaghan/master |58f9061
+|\  
+| * 2016-10-29(Alan O'Callaghan) Fix breaking bugs after merge with talgalili |b96683d
+|/  |   
+|    R/heatmaply.R | 6 ++++--
+|    R/heatmapr.R  | 4 ++--
+|    2 files changed, 6 insertions(+), 4 deletions(-)
+
+* 2016-10-28(Tal Galili) updated heatmapr.Rd about row_side_colors |8dc5407| 
+|  man/heatmapr.Rd | 9 +++++++--
+|  1 file changed, 7 insertions(+), 2 deletions(-)
+
+* 2016-10-28(Tal Galili) Added .Rd doc and NAMESPACE for side_color_plot |d6b15d1| 
+|  NAMESPACE              |  1 +
+|  man/side_color_plot.Rd | 26 ++++++++++++++++++++++++++
+|  2 files changed, 27 insertions(+)
+
+* 2016-10-28(Tal Galili) hatmap_layers to heatmap_layers + updaetd Rd |ad13091| 
+|  R/heatmaply.R    | 46 +++++++++++++++++++++++-----------------------
+|  man/heatmaply.Rd | 20 ++++++++++++++++----
+|  2 files changed, 39 insertions(+), 27 deletions(-)
+
+*   2016-10-28(Tal Galili) Merge pull request #23 from Alanocallaghan/master |7f8ccae
+|\  
+| * 2016-10-28(Alan O'Callaghan) Document added params |135cee2| | 
+| |  R/heatmaply.R | 12 ++++++++++++
+| |  R/heatmapr.R  |  5 +++++
+| |  2 files changed, 17 insertions(+)
+
+| * 2016-10-25(Alan O'Callaghan) Fix col_side_color issue and add checks |5a51e39| | 
+| |  R/heatmaply.R | 31 +++++++++++++++++--------------
+| |  1 file changed, 17 insertions(+), 14 deletions(-)
+
+| * 2016-10-25(Alan O'Callaghan) Fix ordering bug. Simplify subplot code. Still broken |6c53455| | 
+| |  R/heatmaply.R | 269 ++++++++++++++++++++----------------------------------
+| |  R/heatmapr.R  |  16 +++-
+| |  2 files changed, 111 insertions(+), 174 deletions(-)
+
+| * 2016-10-23(Alan O'Callaghan) Remove unneccessary param from side_colour_plot |26d1bc4| | 
+| |  R/heatmaply.R | 29 ++++++++---------------------
+| |  1 file changed, 8 insertions(+), 21 deletions(-)
+
+| * 2016-10-23(Alan O'Callaghan) Add row_side_colours and col_side_colours |1d882d1
+|/  |   
+|    R/heatmaply.R | 390 +++++++++++++++++++++++++++++++++++-------------------
+|    1 file changed, 256 insertions(+), 134 deletions(-)
+
+* 2016-10-19(Tal Galili) heatmaply - added a proper `margins` parameter. |577b5bf| 
+|  DESCRIPTION      |  6 +++---
+|  NEWS             |  7 +++++++
+|  R/heatmaply.R    | 55 ++++++++++++++++++++++++++++++------------------------
+|  man/heatmaply.Rd | 22 +++++++++++++---------
+|  4 files changed, 54 insertions(+), 36 deletions(-)
+
+* 2016-08-29(Tal Galili) packages that are good to have. |880a1c9| 
+|  README.md | 7 +++++++
+|  1 file changed, 7 insertions(+)
+
+* 2016-08-27(Tal Galili) update |07f5790| 
+|  ChangeLog | 143 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+|  1 file changed, 143 insertions(+)
+
 * 2016-08-27(Tal Galili) updated NEWS |bbaa50e| 
 |  NEWS.md       | 79 +++++++++++++++++++++++++++++++++++++++++++++++++++++++--
 |  R/heatmaply.R |  1 +
