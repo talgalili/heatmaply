@@ -22,7 +22,7 @@ heatmaply(x, ...)
   key.title = NULL, return_ppxpy = FALSE, row_side_colors = NULL,
   row_side_palette, col_side_colors = NULL, col_side_palette,
   ColSideColors = NULL, RowSideColors = NULL, heatmap_layers = NULL,
-  branches_lwd = 0.6, file)
+  branches_lwd = 0.6, plot_method = c("ggplot", "plotly"), file)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
@@ -34,8 +34,8 @@ heatmaply(x, ...)
   main = "", titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE,
   key.title = NULL, return_ppxpy = FALSE, row_side_colors = NULL,
   row_side_palette, col_side_colors = NULL, col_side_palette,
-  ColSideColors = NULL, RowSideColors = NULL, heatmap_layers = NULL,
-  branches_lwd = 0.6)
+  plot_method = c("ggplot", "plotly"), ColSideColors = NULL,
+  RowSideColors = NULL, heatmap_layers = NULL, branches_lwd = 0.6)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -144,6 +144,9 @@ the heatmap before conversion to a plotly object.}
 \item{branches_lwd}{numeric (default is 0.6). The width of the dendrograms' branches.
 If NULL then it is ignored. If the "lwd" is already defined in Rowv/Colv then this
 parameter is ignored (it is checked using \link[dendextend]{has_edgePar}("lwd")).}
+
+\item{plot_method}{Use "ggplot" or "plotly" to choose which library produces heatmap
+and dendrogram plots}
 
 \item{file}{HTML file name to save the heatmaply into. Should be a character string ending with ".html".
 For example: heatmaply(x, file = "heatmaply_plot.html").
