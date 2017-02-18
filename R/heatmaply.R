@@ -99,11 +99,14 @@
 #'    col_side_colors should be "wide", ie be the same dimensions
 #'    as the column side colors it will produce.
 #'
-#' @param ColSideColors,RowSideColors passed to row_side_colors,col_side_colors in order
-#' to keep compatibility with \link[gplots]{heatmap.2}
-#'
 #' @param row_side_palette,col_side_palette Color palette functions to be
 #'    used for row_side_colors and col_side_colors respectively.
+#'
+#' @param ColSideColors,RowSideColors passed to row_side_colors,col_side_colors in order
+#' to keep compatibility with \link[gplots]{heatmap.2}
+#' 
+#' @param plot_method Use "ggplot" or "plotly" to choose which library produces heatmap
+#' and dendrogram plots
 #'
 #' @param heatmap_layers ggplot object (eg, theme_bw()) to be added to
 #'  the heatmap before conversion to a plotly object.
@@ -267,9 +270,9 @@ heatmaply.default <- function(x,
                               row_side_palette,
                               col_side_colors = NULL,
                               col_side_palette,
-                              heatmap_layers = NULL,
                               ColSideColors = NULL,
                               RowSideColors = NULL,
+                              heatmap_layers = NULL,
                               branches_lwd = 0.6,
                               plot_method = c("ggplot", "plotly"),
                               file
