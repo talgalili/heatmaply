@@ -543,9 +543,10 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
 
   if (plot_method == "plotly") {
     if (row_dend_left) {
-    # sum(!ind_null_col) #y axis number
+      num_rows <- sum(!ind_null_row)
+      str <- ifelse(num_rows > 1, num_rows, "")
       l <- list(
-        anchor = paste0("x", sum(!ind_null_row)), 
+        anchor = paste0("x", str), 
         side = "right", 
         showticklabels=TRUE
       )
