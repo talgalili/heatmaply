@@ -732,8 +732,8 @@ heatmaply.heatmapr <- function(x,
   ## plotly:
   # turn p, px, and py to plotly objects if necessary
   if (!inherits(p, "plotly")) p <- ggplotly(p)
-  if(!is.null(px) && !is(px, "plotly")) px <- ggplotly(px, tooltip = "y")
-  if(!is.null(py) && !is(py, "plotly")) py <- ggplotly(py, tooltip = "y")
+  if(!is.null(px) && !inherits(px, "plotly")) px <- ggplotly(px, tooltip = "y")
+  if(!is.null(py) && !inherits(py, "plotly")) py <- ggplotly(py, tooltip = "y")
 
   # https://plot.ly/r/reference/#Layout_and_layout_style_objects
   p <- layout(p,              # all of layout's properties: /r/reference/#layout
@@ -786,9 +786,9 @@ heatmaply.heatmapr <- function(x,
   l
 }
 
-
+#' @importFrom dendextend dendro_data
 plotly_dend_row <- function(dend, flip = FALSE) {
-  dend_data <- dendextend::dendro_data(dend)
+  dend_data <- dendro_data(dend)
   segs <- dend_data$segment
   p <- plot_ly(segs) %>% 
     add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend,
@@ -814,7 +814,7 @@ plotly_dend_row <- function(dend, flip = FALSE) {
 }
 
 plotly_dend_col <- function(dend, flip = FALSE) {
-  dend_data <- dendextend::dendro_data(dend)
+  dend_data <- dendro_data(dend)
   segs <- dend_data$segment
 
   plot_ly(segs) %>% 
