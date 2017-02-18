@@ -175,12 +175,14 @@ heatmaply.default <- function(x,
                               hide_colorbar = FALSE,
                               key.title = NULL,
                               return_ppxpy = FALSE,
-                              row_side_colors = NULL,
+                              row_side_colors,
                               row_side_palette,
-                              col_side_colors = NULL,
+                              col_side_colors,
                               col_side_palette,
-                              heatmap_layers = NULL
+                              heatmap_layers = NULL,
+                              plot_method = c("ggplot", "plotly")
                               ) {
+  plot_method <- match.arg(plot_method)
   if(!missing(srtRow)) row_text_angle <- srtRow
   if(!missing(srtCol)) column_text_angle <- srtCol
   hm <- heatmapr(x, 
@@ -204,7 +206,8 @@ heatmaply.default <- function(x,
                      row_side_palette = row_side_palette,
                      col_side_colors = col_side_colors,
                      col_side_palette = col_side_palette,
-                     heatmap_layers = heatmap_layers
+                     heatmap_layers = heatmap_layers,
+                     plot_method = plot_method
                       ) # TODO: think more on what should be passed in "..."
 }
 
@@ -393,8 +396,11 @@ heatmaply.heatmapr <- function(x,
                                row_side_palette,
                                col_side_colors,
                                col_side_palette,
-                               heatmap_layers
+                               heatmap_layers,
+                               plot_method = c("ggplotly", "plotly")
                                ) {
+
+  plot_method <- match.arg(plot_method)
   # informative errors for mis-specified limits
   if(!is.null(limits)) {
     if(!is.numeric(limits)) stop("limits must be numeric")
@@ -422,37 +428,62 @@ heatmaply.heatmapr <- function(x,
   if(is.null(cols)) {
     py <- NULL
   } else {
-    py <- ggplot(cols, labels  = FALSE) + theme_bw() +
-      coord_cartesian(expand = FALSE) +
-      theme_clear_grid_dends
+    if (plot_method == "ggplot") {
+      py <- ggplot(cols, labels  = FALSE) + theme_bw() +
+        coord_cartesian(expand = FALSE) +
+        theme_clear_grid_dends
+    } else {
+      py <- plotly_dend_col(cols)
+    }
   }
   if(is.null(rows)) {
     px <- NULL
   } else {
-    px <- ggplot(rows, labels  = FALSE) +
-      # coord_cartesian(expand = FALSE) +
-      coord_flip(expand = FALSE) + theme_bw() + theme_clear_grid_dends
-    if(row_dend_left) px <- px + scale_y_reverse()
+    if (plot_method == "ggplot") {
+      px <- ggplot(rows, labels  = FALSE) +
+        # coord_cartesian(expand = FALSE) +
+        coord_flip(expand = FALSE) + theme_bw() + theme_clear_grid_dends
+      if(row_dend_left) px <- px + scale_y_reverse()
+    } else {
+      px <- plotly_dend_row(rows, flip = row_dend_left)
+    }
   }
   # create the heatmap
   data_mat <- x$matrix$data
-  p <- ggplot_heatmap(data_mat,
-                      row_text_angle,
-                      column_text_angle,
-                      scale_fill_gradient_fun,
-                      grid_color,
-                      key.title = key.title,
-                      layers = heatmap_layers)
+
+  if (plot_method == "ggplot") {
+    p <- ggplot_heatmap(data_mat,
+                        row_text_angle,
+                        column_text_angle,
+                        scale_fill_gradient_fun,
+                        grid_color,
+                        key.title = key.title,
+                        layers = heatmap_layers)
+  } else {
+    p <- plot_ly(z = data_mat, x = 1:ncol(data_mat), y = 1:nrow(data_mat), 
+      type = "heatmap") %>%
+        layout(
+          xaxis = list(
+            tickvals = 1:ncol(data_mat), ticktext = colnames(data_mat)
+          ),
+          yaxis = list(
+            tickvals = 1:nrow(data_mat), ticktext = rownames(data_mat)
+          )
+        )
+  }
+
   if(return_ppxpy) {
     return(list(p=p, px=px, py=py))
   }
-  if (missing(row_side_colors)) pr <- NULL
-  else {
+  if (missing(row_side_colors)) {
+    pr <- NULL
+  } else {
     pr <- side_color_plot(x[["row_side_colors"]], type = "row",
       palette = row_side_palette)
   }
-  if (missing(col_side_colors)) pc <- NULL
-  else {
+  if (missing(col_side_colors)) {
+    pc <- NULL
+  } else {
     ## Have to transpose, otherwise it is the wrong orientation
     side_color_df <- data.frame(t(x[["col_side_colors"]]))
 
@@ -464,9 +495,9 @@ heatmaply.heatmapr <- function(x,
 
   ## plotly:
   # turn p, px, and py to plotly objects
-  p <- ggplotly(p)
-  if(!is.null(px)) px <- ggplotly(px, tooltip = "y")
-  if(!is.null(py)) py <- ggplotly(py, tooltip = "y")
+  if (!is(p, "plotly")) p <- ggplotly(p)
+  if(!is.null(px) && !is(px, "plotly")) px <- ggplotly(px, tooltip = "y")
+  if(!is.null(py) && !is(py, "plotly")) py <- ggplotly(py, tooltip = "y")
   # https://plot.ly/r/reference/#Layout_and_layout_style_objects
   p <- layout(p,              # all of layout's properties: /r/reference/#layout
               # title = "unemployment", # layout's title: /r/reference/#layout-title
@@ -515,8 +546,36 @@ heatmaply.heatmapr <- function(x,
 }
 
 
+plotly_dend_row <- function(dend, flip = FALSE) {
+  dend_data <- dendro_data(dend)
+  segs <- dend_data$segment
 
+  p <- plot_ly(segs) %>% 
+    add_segments(x=~y, xend=~yend, y=~x, yend=~xend,
+      line=list(color='#000000')) %>%
+    layout(
+      xaxis = list(title="", linecolor = "#ffffff"),
+      yaxis = list(range = c(0, max(segs$x) + 1), linecolor = "#ffffff")
+    )
 
+  if (flip) {
+    p <- layout(p, xaxis = list(autorange = "reverse"))
+  }
+  p
+}
+
+plotly_dend_col <- function(dend, flip = FALSE) {
+  dend_data <- dendro_data(dend)
+  segs <- dend_data$segment
+
+  plot_ly(segs) %>% 
+    add_segments(x=~x, xend=~xend, y=~y, yend=~yend,
+      line=list(color='#000000')) %>%
+    layout(
+      xaxis = list(range = c(0, max(segs$x) + 1), linecolor = "#ffffff"),
+      yaxis = list(title="", linecolor = "#ffffff")
+    )
+}
 
 
 
