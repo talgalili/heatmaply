@@ -270,9 +270,8 @@ heatmaply.default <- function(x,
                               heatmap_layers = NULL,
                               ColSideColors = NULL,
                               RowSideColors = NULL,
-                              heatmap_layers = NULL,
                               branches_lwd = 0.6,
-                              plot_method = c("ggplot", "plotly")
+                              plot_method = c("ggplot", "plotly"),
                               file
 ) {
   plot_method <- match.arg(plot_method)
