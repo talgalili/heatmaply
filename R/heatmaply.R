@@ -148,7 +148,8 @@ heatmaply <- function(x,
                       row_side_palette,
                       col_side_colors = NULL,
                       col_side_palette,
-                      heatmap_layers
+                      heatmap_layers,
+                      plot_method
                       ) {
   UseMethod("heatmaply")
 }
@@ -298,7 +299,8 @@ ggplot_heatmap <- function(xx,
 heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
                                           row_dend_left, subplot_margin = 0,
                                           titleX = TRUE, titleY = TRUE,
-                                          widths=NULL, heights=NULL, ...) {
+                                          widths=NULL, heights=NULL, 
+                                          plot_method, ...) {
   if (is.null(widths)) {
     if (!is.null(px)) {
       if (!is.null(pr)) {
@@ -349,7 +351,6 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
   ## Remove all null plots
   plots <- plots[!(ind_remove_row | ind_remove_col)]
 
-
   s <- subplot(plots, 
     nrows = nrows,
     widths = if(row_dend_left) rev(widths) else widths,
@@ -357,9 +358,30 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
     titleX = titleX, titleY = titleY,
     margin = subplot_margin,
     heights = heights)
+
+  if (plot_method == "plotly") {
+    if (row_dend_left) {
+    # sum(!ind_null_col) #y axis number
+      l <- list(
+        anchor = paste0("x", sum(!ind_null_row)), 
+        side = "right", 
+        showticklabels=TRUE
+      )
+      num_cols <- sum(!ind_null_col)
+      if (num_cols == 1) {
+        lay <- function(p) layout(p, yaxis = l)
+      } else if (num_cols == 2) {
+        lay <- function(p) layout(p, yaxis2 = l)
+      } else if (num_cols == 3) {
+        lay <- function(p) layout(p, yaxis3 = l)
+      }
+
+      s <- lay(s)
+    }
+  }
+
   return(s)
 }
-
 
 
 
@@ -397,7 +419,7 @@ heatmaply.heatmapr <- function(x,
                                col_side_colors,
                                col_side_palette,
                                heatmap_layers,
-                               plot_method = c("ggplotly", "plotly")
+                               plot_method = c("ggplot", "plotly")
                                ) {
 
   plot_method <- match.arg(plot_method)
@@ -464,10 +486,12 @@ heatmaply.heatmapr <- function(x,
       type = "heatmap") %>%
         layout(
           xaxis = list(
-            tickvals = 1:ncol(data_mat), ticktext = colnames(data_mat)
+            tickvals = 1:ncol(data_mat), ticktext = colnames(data_mat),
+            showticklabels = TRUE
           ),
           yaxis = list(
-            tickvals = 1:nrow(data_mat), ticktext = rownames(data_mat)
+            tickvals = 1:nrow(data_mat), ticktext = rownames(data_mat),
+            showticklabels = TRUE
           )
         )
   }
@@ -538,7 +562,7 @@ heatmaply.heatmapr <- function(x,
   # create the subplot
   heatmap_subplot <- heatmap_subplot_from_ggplotly(p = p, px = px, py = py,
     row_dend_left = row_dend_left, subplot_margin = subplot_margin,
-    titleX = titleX, titleY = titleY, pr = pr, pc = pc)
+    titleX = titleX, titleY = titleY, pr = pr, pc = pc, plot_method = plot_method)
   l <- layout(heatmap_subplot, showlegend = FALSE)  %>%
     layout(margin = list(l = margins[2], b = margins[1]))
   # print(l)
@@ -549,17 +573,25 @@ heatmaply.heatmapr <- function(x,
 plotly_dend_row <- function(dend, flip = FALSE) {
   dend_data <- dendro_data(dend)
   segs <- dend_data$segment
-
   p <- plot_ly(segs) %>% 
-    add_segments(x=~y, xend=~yend, y=~x, yend=~xend,
-      line=list(color='#000000')) %>%
+    add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend,
+      line=list(color = '#000000')) %>%
     layout(
-      xaxis = list(title="", linecolor = "#ffffff"),
-      yaxis = list(range = c(0, max(segs$x) + 1), linecolor = "#ffffff")
+      xaxis = list(
+        title = "", 
+        linecolor = "#ffffff", 
+        showgrid = FALSE
+      ),
+      yaxis = list(
+        title = "",
+        range = c(0, max(segs$x) + 1), 
+        linecolor = "#ffffff",
+        showgrid = FALSE
+      )
     )
 
   if (flip) {
-    p <- layout(p, xaxis = list(autorange = "reverse"))
+    p <- layout(p, xaxis = list(autorange = "reversed"))
   }
   p
 }
@@ -569,11 +601,20 @@ plotly_dend_col <- function(dend, flip = FALSE) {
   segs <- dend_data$segment
 
   plot_ly(segs) %>% 
-    add_segments(x=~x, xend=~xend, y=~y, yend=~yend,
-      line=list(color='#000000')) %>%
+    add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend,
+      line = list(color='#000000')) %>%
     layout(
-      xaxis = list(range = c(0, max(segs$x) + 1), linecolor = "#ffffff"),
-      yaxis = list(title="", linecolor = "#ffffff")
+      xaxis = list(
+        title = "", 
+        range = c(0, max(segs$x) + 1), 
+        linecolor = "#ffffff",
+        showgrid = FALSE
+      ),
+      yaxis = list(
+        title = "", 
+        linecolor = "#ffffff", 
+        showgrid = FALSE
+      )
     )
 }
 
