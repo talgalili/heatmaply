@@ -711,6 +711,7 @@ heatmaply.heatmapr <- function(x,
     pr <- NULL
   } else {
     side_color_df <- x[["row_side_colors"]]
+    if (is.matrix(side_color_df)) side_color_df <- as.data.frame(side_color_df)
     assert_that(
       nrow(side_color_df) == nrow(data_mat), 
       is.data.frame(side_color_df)
@@ -725,6 +726,7 @@ heatmaply.heatmapr <- function(x,
     warning("The hover text for col_side_colors is currently not implemented (due to an issue in plotly). We hope this would get resolved in future releases.")
 
     side_color_df <- x[["col_side_colors"]]
+    if (is.matrix(side_color_df)) side_color_df <- as.data.frame(side_color_df)
     assert_that(
       nrow(side_color_df) == ncol(data_mat), 
       is.data.frame(side_color_df)
