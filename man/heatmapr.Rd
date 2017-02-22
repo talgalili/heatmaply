@@ -7,13 +7,13 @@
 The interface was designed based on \link{heatmap}, \link[gplots]{heatmap.2}, and \link[d3heatmap]{d3heatmap}.
 }
 \usage{
-heatmapr(x, Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE,
-  distfun = dist, hclustfun = hclust, dendrogram = c("both", "row",
-  "column", "none"), reorderfun = function(d, w) reorder(d, w), k_row, k_col,
-  symm = FALSE, revC, scale = c("none", "row", "column"), na.rm = TRUE,
-  labRow = rownames(x), labCol = colnames(x), cexRow, cexCol, digits = 3L,
-  cellnote, cellnote_scale = TRUE, theme = NULL, colors = "RdYlBu",
-  width = NULL, height = NULL, xaxis_height = 80, yaxis_width = 120,
+heatmapr(x, Rowv, Colv, distfun = dist, hclustfun = hclust,
+  dendrogram = c("both", "row", "column", "none"), reorderfun = function(d,
+  w) reorder(d, w), k_row, k_col, symm = FALSE, revC, scale = c("none",
+  "row", "column"), na.rm = TRUE, labRow = rownames(x),
+  labCol = colnames(x), cexRow, cexCol, digits = 3L, cellnote,
+  cellnote_scale = TRUE, theme = NULL, colors = "RdYlBu", width = NULL,
+  height = NULL, xaxis_height = 80, yaxis_width = 120,
   xaxis_font_size = NULL, yaxis_font_size = NULL, brush_color = "#0000FF",
   show_grid = TRUE, anim_duration = 500, row_side_colors, col_side_colors,
   seriate = c("OLO", "mean", "none", "GW"), ...)
