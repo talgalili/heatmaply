@@ -37,7 +37,8 @@ Imports:
     colorspace,
     GGally,
     htmlwidgets,
-    ggdendro
+    ggdendro,
+    assertthat
 Suggests:
     knitr,
     covr,
