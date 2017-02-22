@@ -5,7 +5,6 @@ percentize_predict <- function(x, ecdf_fun = ecdf, ...) {
   # x must be a data.frame
   ss_numeric <- sapply(x, is.numeric)
 
-
   # ecdf_fun <- kCDF_fun # ecdf
 
   ecdf_list <- list()

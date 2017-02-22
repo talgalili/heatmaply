@@ -221,6 +221,7 @@
 #'
 #' }
 #' @importFrom plotly plot_ly add_segments
+#' @importFrom assertthat assert_that
 
 heatmaply <- function(x, ...) {
   UseMethod("heatmaply")
@@ -240,8 +241,8 @@ heatmaply.default <- function(x,
                               subplot_margin = 0,
 
                               ## dendrogram control
-                              Rowv = TRUE,
-                              Colv = if (symm) "Rowv" else TRUE,
+                              Rowv,
+                              Colv,
                               distfun = dist,
                               hclustfun = hclust,
                               dendrogram = c("both", "row", "column", "none"),
@@ -267,12 +268,12 @@ heatmaply.default <- function(x,
                               hide_colorbar = FALSE,
                               key.title = NULL,
                               return_ppxpy = FALSE,
-                              row_side_colors = NULL,
+                              row_side_colors,
                               row_side_palette,
-                              col_side_colors = NULL,
+                              col_side_colors,
                               col_side_palette,
-                              ColSideColors = NULL,
-                              RowSideColors = NULL,
+                              ColSideColors,
+                              RowSideColors,
                               heatmap_layers = NULL,
                               branches_lwd = 0.6,
                               plot_method = c("ggplot", "plotly"),
@@ -289,10 +290,10 @@ heatmaply.default <- function(x,
   if(!missing(srtRow)) row_text_angle <- srtRow
   if(!missing(srtCol)) column_text_angle <- srtCol
 
-  if (!is.null(ColSideColors)) {
+  if (!missing(ColSideColors)) {
     col_side_colors <- ColSideColors
   }
-  if (!is.null(RowSideColors)) {
+  if (!missing(RowSideColors)) {
     row_side_colors <- RowSideColors
   }
 
@@ -312,7 +313,7 @@ heatmaply.default <- function(x,
   # If we have non-numeric columns, we should move them to row_side_colors
   # TODO: add a parameter to control removing of non-numeric columns without moving them to row_side_colors
   if(!all(ss_c_numeric)) {
-    row_side_colors <- if (is.null(row_side_colors)) {
+    row_side_colors <- if (missing(row_side_colors)) {
       data.frame(x[, !ss_c_numeric, drop= FALSE])
     } else {
       data.frame(row_side_colors, x[, !ss_c_numeric, drop= FALSE])
@@ -343,7 +344,7 @@ heatmaply.default <- function(x,
     revC = revC,
 
     ...)
-  hmly <- heatmaply.heatmapr(hm, # colors = colors, limits = limits,
+  hmly <- heatmaply.heatmapr(hm, colors = colors, limits = limits,
                      scale_fill_gradient_fun = scale_fill_gradient_fun,
                      grid_color = grid_color,
                      row_text_angle = row_text_angle,
@@ -399,12 +400,10 @@ ggplot_heatmap <- function(xx,
                                     panel.border = element_blank(),
                                     panel.background = element_blank())
   # heatmap
-  # xx <- x$matrix$data
   if(!is.data.frame(df)) df <- as.data.frame(xx)
-  # colnames(df) <- x$matrix$cols
-  df$row <- if(!is.null(rownames(xx)))
-              {rownames(xx)} else
-              {1:nrow(xx)}
+
+  if(!is.null(rownames(xx))) df$row <- rownames(xx) else df$row <- 1:nrow(xx)
+
   df$row <- with(df, factor(row, levels=row, ordered=TRUE))
   mdf <- reshape2::melt(df, id.vars="row")
   colnames(mdf)[2] <- "column" # rename "variable"
@@ -603,13 +602,13 @@ heatmaply.heatmapr <- function(x,
                                hide_colorbar = FALSE,
                                key.title = NULL,
                                return_ppxpy = FALSE,
-                               row_side_colors = NULL,
+                               row_side_colors,
                                row_side_palette,
-                               col_side_colors = NULL,
+                               col_side_colors,
                                col_side_palette,
                                plot_method = c("ggplot", "plotly"),
-                               ColSideColors = NULL,
-                               RowSideColors = NULL,
+                               ColSideColors,
+                               RowSideColors,
                                heatmap_layers = NULL,
                                branches_lwd = 0.6
                                ) {
@@ -622,9 +621,10 @@ heatmaply.heatmapr <- function(x,
 
     r <- range(x)
     l <- sort(limits)
+
     ## Warn for broken heatmap colors
-    if (r[1] < l[1]) warning("Lower limit is not below lowest value in x, colors will be broken!")
-    if (r[2] > l[2]) warning("Upper limit is not above highest value in x, colors will be broken!")
+    if (l[1] > r[1]) warning("Lower limit is not <= lowest value in x, colors will be broken!")
+    if (l[2] < r[2]) warning("Upper limit is not >= highest value in x, colors will be broken!")
   }
   if(!missing(srtRow)) row_text_angle <- srtRow
   if(!missing(srtCol)) column_text_angle <- srtCol
@@ -707,26 +707,32 @@ heatmaply.heatmapr <- function(x,
   if(return_ppxpy) {
     return(list(p=p, px=px, py=py))
   }
-  if (is.null(row_side_colors)) {
+  if (missing(row_side_colors)) {
     pr <- NULL
   } else {
-    pr <- side_color_plot(x[["row_side_colors"]], type = "row",
-      palette = row_side_palette, is_colors = !is.null(RowSideColors))
+    side_color_df <- x[["row_side_colors"]]
+    assert_that(
+      nrow(side_color_df) == nrow(data_mat), 
+      is.data.frame(side_color_df)
+    )
+    pr <- side_color_plot(side_color_df, type = "row",
+      palette = row_side_palette, is_colors = !missing(RowSideColors))
   }
 
-  if (is.null(col_side_colors)) {
+  if (missing(col_side_colors)) {
     pc <- NULL
   } else {
-
     warning("The hover text for col_side_colors is currently not implemented (due to an issue in plotly). We hope this would get resolved in future releases.")
 
-    ## Have to transpose, otherwise it is the wrong orientation
-    side_color_df <- data.frame(t(x[["col_side_colors"]]))
-
+    side_color_df <- x[["col_side_colors"]]
+    assert_that(
+      nrow(side_color_df) == ncol(data_mat), 
+      is.data.frame(side_color_df)
+    )
     ## Just make sure it's character first
     side_color_df[] <- lapply(side_color_df, as.character)
     pc <- side_color_plot(side_color_df, type = "column",
-      palette = col_side_palette, is_colors = !is.null(ColSideColors))
+      palette = col_side_palette, is_colors = !missing(ColSideColors))
   }
 
   ## plotly:
@@ -786,7 +792,7 @@ heatmaply.heatmapr <- function(x,
   l
 }
 
-#' @importFrom dendextend dendro_data
+#' @importFrom ggdendro dendro_data
 plotly_dend_row <- function(dend, flip = FALSE) {
   dend_data <- dendro_data(dend)
   segs <- dend_data$segment

@@ -36,12 +36,15 @@ Imports:
     stats,
     colorspace,
     GGally,
-    htmlwidgets
+    htmlwidgets,
+    ggdendro
 Suggests:
     knitr,
+    covr,
     rmarkdown,
     gplots,
-    RColorBrewer
+    RColorBrewer,
+    testthat
 VignetteBuilder: knitr
 License: GPL-2 | GPL-3
 URL: https://cran.r-project.org/package=heatmaply,

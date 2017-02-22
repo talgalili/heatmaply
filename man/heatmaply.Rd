@@ -19,10 +19,10 @@ heatmaply(x, ...)
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
   main = "", titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE,
-  key.title = NULL, return_ppxpy = FALSE, row_side_colors = NULL,
-  row_side_palette, col_side_colors = NULL, col_side_palette,
-  ColSideColors = NULL, RowSideColors = NULL, heatmap_layers = NULL,
-  branches_lwd = 0.6, plot_method = c("ggplot", "plotly"), file)
+  key.title = NULL, return_ppxpy = FALSE, row_side_colors, row_side_palette,
+  col_side_colors, col_side_palette, ColSideColors, RowSideColors,
+  heatmap_layers = NULL, branches_lwd = 0.6, plot_method = c("ggplot",
+  "plotly"), file)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
@@ -32,10 +32,10 @@ heatmaply(x, ...)
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
   main = "", titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE,
-  key.title = NULL, return_ppxpy = FALSE, row_side_colors = NULL,
-  row_side_palette, col_side_colors = NULL, col_side_palette,
-  plot_method = c("ggplot", "plotly"), ColSideColors = NULL,
-  RowSideColors = NULL, heatmap_layers = NULL, branches_lwd = 0.6)
+  key.title = NULL, return_ppxpy = FALSE, row_side_colors, row_side_palette,
+  col_side_colors, col_side_palette, plot_method = c("ggplot", "plotly"),
+  ColSideColors = NULL, RowSideColors = NULL, heatmap_layers = NULL,
+  branches_lwd = 0.6)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix

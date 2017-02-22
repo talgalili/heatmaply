@@ -103,8 +103,8 @@
 heatmapr <- function(x,
 
                       ## dendrogram control
-                      Rowv = TRUE,
-                      Colv = if (symm) "Rowv" else TRUE,
+                      Rowv,
+                      Colv,
                       distfun = dist,
                       hclustfun = hclust,
                       dendrogram = c("both", "row", "column", "none"),
@@ -142,8 +142,8 @@ heatmapr <- function(x,
                       brush_color = "#0000FF",
                       show_grid = TRUE,
                       anim_duration = 500,
-                      row_side_colors = NULL,
-                      col_side_colors = NULL,
+                      row_side_colors,
+                      col_side_colors,
                       seriate = c("OLO", "mean", "none", "GW"),
                       ...
 ) {
@@ -195,9 +195,12 @@ heatmapr <- function(x,
     Rowv <- dendrogram %in% c("both", "row")
   }
   if (missing(Colv)) {
-    Colv <- dendrogram %in% c("both", "column")
+    if (dendrogram %in% c("both", "column")) {
+      Colv <- if (symm) "Rowv" else TRUE
+    } else {
+      Colv <- FALSE
+    }
   }
-
 
   # switch("c",
   #        "a" = 4,
@@ -326,22 +329,20 @@ heatmapr <- function(x,
     cellnote <- cellnote[rowInd, colInd, drop = FALSE]
 
 
-  if (!is.null(row_side_colors)) {
+  if (!missing(row_side_colors)) {
     if(!(is.data.frame(row_side_colors) | is.matrix(row_side_colors))) {
       row_side_colors <- data.frame("row_side_colors" = row_side_colors)
     }
-    if (dim(row_side_colors)[1] != dim(x)[1])
-      stop("row_side_colors and x have different numbers of rows")
+    assert_that(nrow(row_side_colors) == nrow(x))
     row_side_colors <- row_side_colors[rowInd, , drop = FALSE]
   }
-  if (!is.null(col_side_colors)) {
+  if (!missing(col_side_colors)) {
     if( !(is.data.frame(col_side_colors) | is.matrix(col_side_colors)) ) {
-      col_side_colors <- matrix(col_side_colors, nrow = 1)
-      rownames(col_side_colors) <- "col_side_colors"
+      col_side_colors <- data.frame(col_side_colors)
+      colnames(col_side_colors) <- "col_side_colors"
     }
-    if (dim(col_side_colors)[2] != dim(x)[2])
-      stop("col_side_colors and x have different numbers of columns")
-    col_side_colors <- col_side_colors[, colInd, drop = FALSE]
+    assert_that(nrow(col_side_colors) == ncol(x))
+    col_side_colors <- col_side_colors[colInd, , drop = FALSE]
   }
 
   ## Dendrograms - Update the labels and change to dendToTree
@@ -447,9 +448,10 @@ heatmapr <- function(x,
   }
 
   heatmapr <- list(rows = rowDend, cols = colDend, matrix = mtx, # image = imgUri,
-                  theme = theme, options = options, 
-                  row_side_colors = row_side_colors,
-                  col_side_colors = col_side_colors)
+                  theme = theme, options = options)
+                  
+  if (!missing(row_side_colors)) heatmapr[["row_side_colors"]] <- row_side_colors
+  if (!missing(col_side_colors)) heatmapr[["col_side_colors"]] <- col_side_colors
 
   class(heatmapr) <- "heatmapr"
 

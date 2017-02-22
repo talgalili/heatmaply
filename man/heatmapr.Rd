@@ -15,8 +15,8 @@ heatmapr(x, Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE,
   cellnote, cellnote_scale = TRUE, theme = NULL, colors = "RdYlBu",
   width = NULL, height = NULL, xaxis_height = 80, yaxis_width = 120,
   xaxis_font_size = NULL, yaxis_font_size = NULL, brush_color = "#0000FF",
-  show_grid = TRUE, anim_duration = 500, row_side_colors = NULL,
-  col_side_colors = NULL, seriate = c("OLO", "mean", "none", "GW"), ...)
+  show_grid = TRUE, anim_duration = 500, row_side_colors, col_side_colors,
+  seriate = c("OLO", "mean", "none", "GW"), ...)
 }
 \arguments{
 \item{x}{A numeric matrix
