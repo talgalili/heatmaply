@@ -178,8 +178,6 @@ test_that("limits", {
     expect_is(h, "plotly")
     expect_warning(h <- heatmaply(t(mtcars), limits = c(0, 0)))
     expect_is(h, "plotly")
-    expect_warning(h <- heatmaply(t(mtcars), limits = c(0, max(mtcars) + 1)))
-    expect_is(h, "plotly")
     expect_error(heatmaply(t(mtcars), limits = c("a", "b")))
     expect_error(heatmaply(t(mtcars), limits = 1))
 })

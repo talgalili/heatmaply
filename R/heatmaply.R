@@ -619,7 +619,7 @@ heatmaply.heatmapr <- function(x,
     if(!is.numeric(limits)) stop("limits must be numeric")
     if(length(limits) != 2L) stop("limits must be of length 2 (i.e.: two dimensional)")
 
-    r <- range(x)
+    r <- range(as.matrix(x$matrix$data))
     l <- sort(limits)
 
     ## Warn for broken heatmap colors
