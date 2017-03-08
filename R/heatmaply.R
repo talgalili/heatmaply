@@ -691,7 +691,7 @@ heatmaply.heatmapr <- function(x,
                         row_dend_left = row_dend_left)
   } else {
     p <- plot_ly(z = data_mat, x = 1:ncol(data_mat), y = 1:nrow(data_mat), 
-      type = "heatmap") %>%
+      type = "heatmap", showlegend = FALSE) %>%
         layout(
           xaxis = list(
             tickvals = 1:ncol(data_mat), ticktext = colnames(data_mat),
@@ -701,12 +701,9 @@ heatmaply.heatmapr <- function(x,
             tickvals = 1:nrow(data_mat), ticktext = rownames(data_mat),
             showticklabels = TRUE
           )
-        )
+        ) %>% colorbar(len=0.2, y = 3)
   }
 
-  if(return_ppxpy) {
-    return(list(p=p, px=px, py=py))
-  }
   if (missing(row_side_colors)) {
     pr <- NULL
   } else {
@@ -737,11 +734,22 @@ heatmaply.heatmapr <- function(x,
       palette = col_side_palette, is_colors = !missing(ColSideColors))
   }
 
+  if(return_ppxpy) {
+    return(list(p=p, px=px, py=py, pr=pr, pc=pc))
+  }
+
   ## plotly:
   # turn p, px, and py to plotly objects if necessary
   if (!inherits(p, "plotly")) p <- ggplotly(p)
-  if(!is.null(px) && !inherits(px, "plotly")) px <- ggplotly(px, tooltip = "y")
-  if(!is.null(py) && !inherits(py, "plotly")) py <- ggplotly(py, tooltip = "y")
+  if(!is.null(px) && !inherits(px, "plotly")) {
+    px <- ggplotly(px, tooltip = "y") %>% 
+      layout(showlegend=FALSE)
+  }
+  if(!is.null(py) && !inherits(py, "plotly")) {
+    py <- ggplotly(py, tooltip = "y") %>% 
+      layout(showlegend=FALSE)
+  }
+
 
   # https://plot.ly/r/reference/#Layout_and_layout_style_objects
   p <- layout(p,              # all of layout's properties: /r/reference/#layout
@@ -757,30 +765,9 @@ heatmaply.heatmapr <- function(x,
     p <- hide_colorbar(p)
     # px <- hide_colorbar(px)
     # py <- hide_colorbar(py)
-    }
-  # TODO: this doesn't work because of the allignment. But using this might
-  # speedup the code to deal with MUCH larger matrices.
-  # p <- plot_ly(z = xx, type = "heatmap")
-  # p <- plot_ly(z = xx, type = "heatmap")
-  # ggplotly(p) # works great
-  # source for: theme(axis.text.x = element_text(angle = column_text_angle, hjust = 1))
-  # http://stackoverflow.com/questions/1330989/rotating-and-spacing-axis-labels-in-ggplot2
-  # if(row_dend_left) p <- p + scale_y_reverse()
-  # # hide axis ticks and grid lines
-  # eaxis <- list(
-  #   showticklabels = FALSE,
-  #   showgrid = FALSE,
-  #   zeroline = FALSE
-  # )
-  # p_empty <- plot_ly() %>%
-  #   # note that margin applies to entire plot, so we can
-  #   # add it here to make tick labels more readable
-  #   layout(margin = list(l = 200),
-  #          xaxis = eaxis,
-  #          yaxis = eaxis)
+  }
+
   top_corner <- plotly_empty()
-  # top_corner <- ggplotly(qplot(as.numeric(xx), geom="histogram"))
-  # create the subplot
 
   # Adjust top based on whether main is empty or not.
   if(is.na(margins[3])) margins[3] <- ifelse(main == "", 0, 30)
@@ -788,9 +775,11 @@ heatmaply.heatmapr <- function(x,
   heatmap_subplot <- heatmap_subplot_from_ggplotly(p = p, px = px, py = py,
     row_dend_left = row_dend_left, subplot_margin = subplot_margin,
     titleX = titleX, titleY = titleY, pr = pr, pc = pc, plot_method = plot_method)
-  l <- layout(heatmap_subplot, showlegend = FALSE)  %>%
-    layout(margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]))
-  # print(l)
+  l <- layout(heatmap_subplot) %>% 
+    layout(
+      margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]),
+      legend = list(y=0, yanchor="bottom"))
+
   l
 }
 
@@ -800,7 +789,7 @@ plotly_dend_row <- function(dend, flip = FALSE) {
   segs <- dend_data$segment
   p <- plot_ly(segs) %>% 
     add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend,
-      line=list(color = '#000000')) %>%
+      line=list(color = '#000000'), showlegend = FALSE) %>%
     layout(
       xaxis = list(
         title = "", 
@@ -827,7 +816,7 @@ plotly_dend_col <- function(dend, flip = FALSE) {
 
   plot_ly(segs) %>% 
     add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend,
-      line = list(color='#000000')) %>%
+      line = list(color='#000000'), showlegend = FALSE) %>%
     layout(
       xaxis = list(
         title = "", 
