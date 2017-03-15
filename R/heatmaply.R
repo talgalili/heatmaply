@@ -689,9 +689,13 @@ heatmaply.heatmapr <- function(x,
                         key.title = key.title,
                         layers = heatmap_layers,
                         row_dend_left = row_dend_left)
-  } else {
+  } else if (plot_method == "plotly") {
+    if (is.null(limits)) {
+
+    }
     p <- plot_ly(z = data_mat, x = 1:ncol(data_mat), y = 1:nrow(data_mat), 
-      type = "heatmap", showlegend = FALSE) %>%
+      type = "heatmap", showlegend = FALSE, colors=colors, 
+      zmin = limits[1], zmax = limits[2]) %>%
         layout(
           xaxis = list(
             tickvals = 1:ncol(data_mat), ticktext = colnames(data_mat),
@@ -701,7 +705,8 @@ heatmaply.heatmapr <- function(x,
             tickvals = 1:nrow(data_mat), ticktext = rownames(data_mat),
             showticklabels = TRUE
           )
-        ) %>% colorbar(len=0.2, y = 3)
+        ) %>% colorbar(lenmode = "fraction", y = 0, yanchor="bottom", len=0.3)
+    
   }
 
   if (missing(row_side_colors)) {
@@ -740,7 +745,7 @@ heatmaply.heatmapr <- function(x,
 
   ## plotly:
   # turn p, px, and py to plotly objects if necessary
-  if (!inherits(p, "plotly")) p <- ggplotly(p)
+  if (!inherits(p, "plotly")) p <- ggplotly(p) %>% layout(showlegend=FALSE)
   if(!is.null(px) && !inherits(px, "plotly")) {
     px <- ggplotly(px, tooltip = "y") %>% 
       layout(showlegend=FALSE)
@@ -749,7 +754,6 @@ heatmaply.heatmapr <- function(x,
     py <- ggplotly(py, tooltip = "y") %>% 
       layout(showlegend=FALSE)
   }
-
 
   # https://plot.ly/r/reference/#Layout_and_layout_style_objects
   p <- layout(p,              # all of layout's properties: /r/reference/#layout
@@ -775,12 +779,41 @@ heatmaply.heatmapr <- function(x,
   heatmap_subplot <- heatmap_subplot_from_ggplotly(p = p, px = px, py = py,
     row_dend_left = row_dend_left, subplot_margin = subplot_margin,
     titleX = titleX, titleY = titleY, pr = pr, pc = pc, plot_method = plot_method)
-  l <- layout(heatmap_subplot) %>% 
-    layout(
-      margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]),
-      legend = list(y=0, yanchor="bottom"))
+  l <- layout(heatmap_subplot,
+      margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]),      
+      legend = list(y=1, yanchor="top")
+    )
 
   l
+}
+
+
+make_colorscale <- function(colors) {
+    seq <- seq(0, 1, by = 1/length(colors))
+    scale <- lapply(seq_along(colors), 
+        function(i) {
+            # eg
+            # list(c(0, "rgb(255, 0, 0)"), c(1, "rgb(0, 255, 0)")),
+            if (i == 1) {
+                list(0, col2plotlyrgb(colors[i]))
+            } else if (i == length(colors)) {
+                list(1, col2plotlyrgb(colors[i]))
+            } else {
+                list(seq[i], col2plotlyrgb(colors[i]))
+            }
+        }
+    )
+    scale
+}
+
+col2plotlyrgb <- function(col) {
+    rgb <- col2rgb(col)
+    paste0(
+      "rgb(", 
+      rgb["red", ], ",", 
+      rgb["green", ], ",", 
+      rgb["blue", ], ")"
+    )
 }
 
 #' @importFrom ggdendro dendro_data
@@ -789,8 +822,9 @@ plotly_dend_row <- function(dend, flip = FALSE) {
   segs <- dend_data$segment
   p <- plot_ly(segs) %>% 
     add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend,
-      line=list(color = '#000000'), showlegend = FALSE) %>%
+      line=list(color = '#000000'), showlegend = FALSE, hoverinfo = "none") %>%
     layout(
+      hovermode = "closest",
       xaxis = list(
         title = "", 
         linecolor = "#ffffff", 
@@ -816,8 +850,9 @@ plotly_dend_col <- function(dend, flip = FALSE) {
 
   plot_ly(segs) %>% 
     add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend,
-      line = list(color='#000000'), showlegend = FALSE) %>%
+      line = list(color='#000000'), showlegend = FALSE, hoverinfo = "none") %>%
     layout(
+      hovermode = "closest",
       xaxis = list(
         title = "", 
         range = c(0, max(segs$x) + 1), 
