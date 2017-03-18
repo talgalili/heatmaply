@@ -9,7 +9,8 @@ The interface was designed based on \link{heatmap}, \link[gplots]{heatmap.2}, an
 \usage{
 heatmapr(x, Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE,
   distfun = dist, hclustfun = hclust, dist_method = NULL,
-  hclust_method = NULL, dendrogram = c("both", "row", "column", "none"),
+  hclust_method = NULL, distfun_row, hclustfun_row, distfun_col,
+  hclustfun_col, dendrogram = c("both", "row", "column", "none"),
   reorderfun = function(d, w) reorder(d, w), k_row, k_col, symm = FALSE,
   revC, scale = c("none", "row", "column"), na.rm = TRUE,
   labRow = rownames(x), labCol = colnames(x), cexRow, cexCol, digits = 3L,
@@ -38,6 +39,14 @@ this can be one of "euclidean", "maximum", "manhattan", "canberra", "binary" or 
 \item{hclust_method}{default is NULL (which results in "complete" to be used). Can accept alternative character strings indicating the
 method to be passed to hclustfun By default hclustfun is \link{hclust} hence
 this can be one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).}
+
+\item{distfun_row}{distfun for row dendrogram only.}
+
+\item{hclustfun_row}{hclustfun for col dendrogram only.}
+
+\item{distfun_col}{distfun for row dendrogram only.}
+
+\item{hclustfun_col}{hclustfun for col dendrogram only.}
 
 \item{dendrogram}{character string indicating whether to draw 'none', 'row', 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv (or Colv) arguments are honoured.}
 

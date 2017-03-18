@@ -52,6 +52,11 @@
 #' method to be passed to hclustfun By default hclustfun is \link{hclust} hence
 #' this can be one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).
 #'
+#' @param distfun_row distfun for row dendrogram only.
+#' @param hclustfun_row hclustfun for col dendrogram only.
+#' @param distfun_col distfun for row dendrogram only.
+#' @param hclustfun_col hclustfun for col dendrogram only.
+#'
 #' @param dendrogram character string indicating whether to draw 'none', 'row', 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv (or Colv) arguments are honoured.
 #' @param reorderfun function(d, w) of dendrogram and weights for reordering the row and column dendrograms. The default uses stats{reorder.dendrogram}
 #'
@@ -117,6 +122,13 @@ heatmapr <- function(x,
                       hclustfun = hclust,
                        dist_method = NULL,
                        hclust_method = NULL,
+
+
+                      distfun_row,
+                      hclustfun_row,
+                      distfun_col,
+                      hclustfun_col,
+
                       dendrogram = c("both", "row", "column", "none"),
                       reorderfun = function(d, w) reorder(d, w),
 
@@ -172,6 +184,11 @@ heatmapr <- function(x,
     hclustfun <- function(x) {hclustfun_old(x, method = hclust_method)}
   }
 
+
+  if(missing(distfun_row)) distfun_row <- distfun
+  if(missing(hclustfun_row)) hclustfun_row <- hclustfun
+  if(missing(distfun_col)) distfun_col <- distfun
+  if(missing(hclustfun_col)) hclustfun_col <- hclustfun
 
 
 
@@ -239,15 +256,15 @@ heatmapr <- function(x,
                      "mean" = rowMeans(x, na.rm = na.rm),
                      "none" = 1:nrow(x),
                      "OLO" = {
-                                dist_x <- distfun(x) # dist is on the rows by default
-                                hc_x <- hclustfun(dist_x)
+                                dist_x <- distfun_row(x) # dist is on the rows by default
+                                hc_x <- hclustfun_row(dist_x)
                                 dend_x <- as.dendrogram(hc_x)
                                 dend_x2 <- seriate_dendrogram(dend_x, dist_x, method = "OLO")
                                 dend_x2
                              },
                       "GW" = {
-                        dist_x <- distfun(x) # dist is on the rows by default
-                        hc_x <- hclustfun(dist_x)
+                        dist_x <- distfun_row(x) # dist is on the rows by default
+                        hc_x <- hclustfun_row(dist_x)
                         dend_x <- as.dendrogram(hc_x)
                         dend_x2 <- seriate_dendrogram(dend_x, dist_x, method = "GW")
                         dend_x2
@@ -259,7 +276,7 @@ heatmapr <- function(x,
 
   }
   if (is.numeric(Rowv)) {
-    Rowv <- reorderfun(as.dendrogram(hclustfun(distfun(x))), Rowv)
+    Rowv <- reorderfun(as.dendrogram(hclustfun_row(distfun_row(x))), Rowv)
     Rowv <- rev(Rowv) # I would rather the matrix will be with the first row at the top
   }
 
@@ -292,16 +309,16 @@ heatmapr <- function(x,
                     "mean" = colMeans(x, na.rm = na.rm),
                     "none" = 1:ncol(x),
                     "OLO" = {
-                      dist_x <- distfun(t(x)) # dist is on the rows by default
-                      hc_x <- hclustfun(dist_x)
+                      dist_x <- distfun_col(t(x)) # dist is on the rows by default
+                      hc_x <- hclustfun_col(dist_x)
                       o <- seriate(dist_x, method = "OLO", control = list(hclust = hc_x) )
                       dend_x <- as.dendrogram(hc_x)
                       dend_x2 <- rotate(dend_x, order = rev(labels(dist_x)[get_order(o)]))
                       dend_x2
                     },
                     "GW" = {
-                      dist_x <- distfun(t(x)) # dist is on the rows by default
-                      hc_x <- hclustfun(dist_x)
+                      dist_x <- distfun_col(t(x)) # dist is on the rows by default
+                      hc_x <- hclustfun_col(dist_x)
                       o <- seriate(dist_x, method = "GW", control = list(hclust = hc_x) )
                       dend_x <- as.dendrogram(hc_x)
                       dend_x2 <- rotate(dend_x, order = rev(labels(dist_x)[get_order(o)]))
@@ -311,7 +328,7 @@ heatmapr <- function(x,
     )
   }
   if (is.numeric(Colv)) {
-    Colv <- reorderfun(as.dendrogram(hclustfun(distfun(t(x)))), rev(Colv))
+    Colv <- reorderfun(as.dendrogram(hclustfun_col(distfun_col(t(x)))), rev(Colv))
   }
 
   if (is.hclust(Colv)) Colv <- as.dendrogram(Colv)

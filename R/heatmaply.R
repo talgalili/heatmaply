@@ -49,6 +49,11 @@
 #' method to be passed to hclustfun By default hclustfun is \link{hclust} hence
 #' this can be one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).
 #'
+#' @param distfun_row distfun for row dendrogram only.
+#' @param hclustfun_row hclustfun for col dendrogram only.
+#' @param distfun_col distfun for row dendrogram only.
+#' @param hclustfun_col hclustfun for col dendrogram only.
+#'
 #' @param dendrogram character string indicating whether to draw 'none', 'row', 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv (or Colv) arguments are honoured.
 #' @param reorderfun function(d, w) of dendrogram and weights for reordering the row and column dendrograms. The default uses stats{reorder.dendrogram}
 #'
@@ -249,6 +254,12 @@ heatmaply.default <- function(x,
                               hclustfun = hclust,
                               dist_method = NULL,
                               hclust_method = NULL,
+
+                              distfun_row,
+                              hclustfun_row,
+                              distfun_col,
+                              hclustfun_col,
+
                               dendrogram = c("both", "row", "column", "none"),
                               reorderfun = function(d, w) reorder(d, w),
 
@@ -340,6 +351,12 @@ heatmaply.default <- function(x,
     hclustfun = hclustfun,
     dist_method = dist_method,
     hclust_method = hclust_method,
+
+    distfun_row = distfun_row,
+    hclustfun_row = hclustfun_row,
+    distfun_col = distfun_col,
+    hclustfun_col = hclustfun_col,
+
     dendrogram = dendrogram,
     reorderfun = reorderfun,
 
