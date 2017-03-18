@@ -2,13 +2,13 @@ Package: heatmaply
 Type: Package
 Title: Interactive Cluster Heat Maps Using 'plotly'
 Version: 0.8.0
-Date: 2017-02-15
+Date: 2017-03-18
 Authors@R: c(person("Tal", "Galili", role = c("aut", "cre", "cph"), email =
     "tal.galili@gmail.com", comment = "https://www.r-statistics.com"),
     person("Alan", "Ocallaghan", comment = "https://github.com/Alanocallaghan",role = "ctb"),
     person("Yoav", "Benjamini", email = "ybenja@tau.ac.il",role = "ths"))
-Description: Create interactive 'heatmaps' that are usable from the R console,
-    in the 'RStudio' viewer pane, in 'R Markdown' documents, and in 'Shiny' apps.
+Description: Create interactive cluster 'heatmaps' that can be saved as a stand-alone HTML
+    file, embeded in 'R Markdown' documents or in a 'Shiny' apps, and available in the 'RStudio' viewer pane, .
     Hover the mouse pointer over a cell to show details or drag a rectangle to
     zoom. A 'heatmap' is a popular graphical method for visualizing high-dimensional
     data, in which a table of numbers are encoded as a grid of colored cells. The
@@ -18,9 +18,9 @@ Description: Create interactive 'heatmaps' that are usable from the R console,
     'heatmaps' allow the inspection of specific value by hovering the mouse over a
     cell, as well as zooming into a region of the 'heatmap' by dragging a rectangle
     around the relevant area. This work is based on the 'ggplot2' and 'plotly.js'
-    engine. It produces similar 'heatmaps' as 'd3heatmap', with the advantage of speed
-    ('plotly.js' is able to handle larger size matrix), and the ability to zoom from
-    the 'dendrogram' panes.
+    engine. It produces similar 'heatmaps' as 'heatmap.2' or 'd3heatmap', with the advantage of speed
+    ('plotly.js' is able to handle larger size matrix), the ability to zoom from the 'dendrogram' panes,
+    and the placing of factor variables in the sides of the `heatmap'.
 Depends:
     R (>= 3.0.0),
     plotly (>= 4.5.2),

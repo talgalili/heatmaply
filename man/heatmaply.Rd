@@ -12,9 +12,10 @@ heatmaply(x, ...)
   end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
   row_text_angle = 0, column_text_angle = 45, subplot_margin = 0,
   Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE, distfun = dist,
-  hclustfun = hclust, dendrogram = c("both", "row", "column", "none"),
-  reorderfun = function(d, w) reorder(d, w), k_row, k_col, symm = FALSE,
-  revC, row_dend_left = FALSE, margins = c(50, 50, NA, 0), ...,
+  hclustfun = hclust, dist_method = NULL, hclust_method = NULL,
+  dendrogram = c("both", "row", "column", "none"), reorderfun = function(d,
+  w) reorder(d, w), k_row, k_col, symm = FALSE, revC, row_dend_left = FALSE,
+  margins = c(50, 50, NA, 0), ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
@@ -70,6 +71,14 @@ If a single value is provided, it will be used as all four margins.}
 \item{distfun}{function used to compute the distance (dissimilarity) between both rows and columns. Defaults to dist.}
 
 \item{hclustfun}{function used to compute the hierarchical clustering when Rowv or Colv are not dendrograms. Defaults to hclust.}
+
+\item{dist_method}{default is NULL (which results in "euclidean" to be used). Can accept alternative character strings indicating the
+method to be passed to distfun. By default distfun. is \link{dist} hence
+this can be one of "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski".}
+
+\item{hclust_method}{default is NULL (which results in "complete" to be used). Can accept alternative character strings indicating the
+method to be passed to hclustfun By default hclustfun is \link{hclust} hence
+this can be one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).}
 
 \item{dendrogram}{character string indicating whether to draw 'none', 'row', 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv (or Colv) arguments are honoured.}
 

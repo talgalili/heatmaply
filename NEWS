@@ -1,4 +1,4 @@
-heatmaply 0.8.0 (2017-02-15)
+heatmaply 0.8.0 (2017-03-18)
 ==============================
 
 ### NEW FEATURES
@@ -6,6 +6,7 @@ heatmaply 0.8.0 (2017-02-15)
       * file parameter - allows to save a heatmaply plot as an HTML file.
       * Allow Rowv/Colv to also work for hclust (by turning them into a dendrogram).
       * Add examples to heatmaply's Rd and the vignette on using Rowv/Colv.
+      * Added the parameters hclust_method, dist_method to allow a more refined control over dist and hclust functions which are creating the dendrograms. A user wanting an even more refined control should just supply dendrograms directly to Rowv and Colv.
 
 
 

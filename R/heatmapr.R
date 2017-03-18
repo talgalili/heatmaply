@@ -44,6 +44,14 @@
 #' @param Colv determines if and how the column dendrogram should be reordered.	Has the options as the Rowv argument above and additionally when x is a square matrix, Colv = "Rowv" means that columns should be treated identically to the rows.
 #' @param distfun function used to compute the distance (dissimilarity) between both rows and columns. Defaults to dist.
 #' @param hclustfun function used to compute the hierarchical clustering when Rowv or Colv are not dendrograms. Defaults to hclust.
+#'
+#' @param dist_method default is NULL (which results in "euclidean" to be used). Can accept alternative character strings indicating the
+#' method to be passed to distfun. By default distfun. is \link{dist} hence
+#' this can be one of "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski".
+#' @param hclust_method default is NULL (which results in "complete" to be used). Can accept alternative character strings indicating the
+#' method to be passed to hclustfun By default hclustfun is \link{hclust} hence
+#' this can be one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).
+#'
 #' @param dendrogram character string indicating whether to draw 'none', 'row', 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv (or Colv) arguments are honoured.
 #' @param reorderfun function(d, w) of dendrogram and weights for reordering the row and column dendrograms. The default uses stats{reorder.dendrogram}
 #'
@@ -107,6 +115,8 @@ heatmapr <- function(x,
                       Colv = if (symm) "Rowv" else TRUE,
                       distfun = dist,
                       hclustfun = hclust,
+                       dist_method = NULL,
+                       hclust_method = NULL,
                       dendrogram = c("both", "row", "column", "none"),
                       reorderfun = function(d, w) reorder(d, w),
 
@@ -149,6 +159,21 @@ heatmapr <- function(x,
 
                       ...
 ) {
+
+
+  ## update hclust/dist functions?
+  ##====================
+  if(!is.null(dist_method)) {
+    distfun_old <- distfun
+    distfun <- function(x) {distfun_old(x, method = dist_method)}
+  }
+  if(!is.null(hclust_method)) {
+    hclustfun_old <- hclustfun
+    hclustfun <- function(x) {hclustfun_old(x, method = hclust_method)}
+  }
+
+
+
 
   ## x is a matrix!
   ##====================

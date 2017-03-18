@@ -8,9 +8,10 @@ The interface was designed based on \link{heatmap}, \link[gplots]{heatmap.2}, an
 }
 \usage{
 heatmapr(x, Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE,
-  distfun = dist, hclustfun = hclust, dendrogram = c("both", "row",
-  "column", "none"), reorderfun = function(d, w) reorder(d, w), k_row, k_col,
-  symm = FALSE, revC, scale = c("none", "row", "column"), na.rm = TRUE,
+  distfun = dist, hclustfun = hclust, dist_method = NULL,
+  hclust_method = NULL, dendrogram = c("both", "row", "column", "none"),
+  reorderfun = function(d, w) reorder(d, w), k_row, k_col, symm = FALSE,
+  revC, scale = c("none", "row", "column"), na.rm = TRUE,
   labRow = rownames(x), labCol = colnames(x), cexRow, cexCol, digits = 3L,
   cellnote, cellnote_scale = TRUE, theme = NULL, colors = "RdYlBu",
   width = NULL, height = NULL, xaxis_height = 80, yaxis_width = 120,
@@ -29,6 +30,14 @@ Defaults to \code{TRUE} unless \code{x} contains any \code{NA}s.}
 \item{distfun}{function used to compute the distance (dissimilarity) between both rows and columns. Defaults to dist.}
 
 \item{hclustfun}{function used to compute the hierarchical clustering when Rowv or Colv are not dendrograms. Defaults to hclust.}
+
+\item{dist_method}{default is NULL (which results in "euclidean" to be used). Can accept alternative character strings indicating the
+method to be passed to distfun. By default distfun. is \link{dist} hence
+this can be one of "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski".}
+
+\item{hclust_method}{default is NULL (which results in "complete" to be used). Can accept alternative character strings indicating the
+method to be passed to hclustfun By default hclustfun is \link{hclust} hence
+this can be one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).}
 
 \item{dendrogram}{character string indicating whether to draw 'none', 'row', 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv (or Colv) arguments are honoured.}
 
