@@ -298,6 +298,7 @@ heatmaply.default <- function(x,
   on.exit(options(device = old_dev))
   options(device = names(capabilities()[which(capabilities())])[1])
 
+  dendrogram <- match.arg(dendrogram)
 
   if(!(is.data.frame(x) | is.matrix(x))) stop("x must be either a data.frame or a matrix.")
 
@@ -336,8 +337,10 @@ heatmaply.default <- function(x,
     x <- x[, ss_c_numeric]
   }
 
-
-
+  # help dendrogram work again:
+  if(dendrogram == "row") Colv <- FALSE
+  if(dendrogram == "column") Rowv <- FALSE
+  if(dendrogram == "none") Rowv <- Colv <- FALSE
 
 
   hm <- heatmapr(x,
