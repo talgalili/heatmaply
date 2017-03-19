@@ -761,9 +761,11 @@ heatmaply.heatmapr <- function(x,
 
 
   # clean the modeBarButtons from irrelevent icons
-  l$x$config$modeBarButtonsToRemove <- list("sendDataToCloud", "select2d", "lasso2d","autoScale2d", "hoverCompareCartesian", "sendDataToCloud")
-  l <- config(l, displaylogo = FALSE, collaborate = FALSE) # ,
-              #modeBarButtonsToRemove = list("sendDataToCloud", "select2d", "lasso2d","autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian", "sendDataToCloud"))
+  # l$x$config$modeBarButtonsToRemove <- list("sendDataToCloud", "select2d", "lasso2d","autoScale2d", "hoverCompareCartesian", "sendDataToCloud")
+  # l <- config(l, displaylogo = FALSE, collaborate = FALSE) # ,
+  #             #modeBarButtonsToRemove = list("sendDataToCloud", "select2d", "lasso2d","autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian", "sendDataToCloud"))
+  l <- config(l, displaylogo = FALSE, collaborate = FALSE,
+        modeBarButtonsToRemove = c("sendDataToCloud", "select2d", "lasso2d","autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian", "sendDataToCloud"))
 
 
   l
