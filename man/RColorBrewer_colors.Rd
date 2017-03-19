@@ -86,7 +86,7 @@ YlOrBr(n)
 YlOrRd(n)
 }
 \arguments{
-\item{n}{the number of colors (≥ 1) to be in the palette.}
+\item{n}{the number of colors (>= 1) to be in the palette.}
 }
 \value{
 A character vector of color names.

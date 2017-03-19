@@ -50,7 +50,7 @@
 #' The diverging palettes are
 #' BrBG PiYG PRGn PuOr RdBu RdGy RdYlBu RdYlGn Spectral
 #'
-#' @param n the number of colors (≥ 1) to be in the palette.
+#' @param n the number of colors (>= 1) to be in the palette.
 #'
 #' @return
 #' A character vector of color names.
