@@ -170,14 +170,14 @@ We can use different colors than the default `viridis`. For example, we may want
 ```{r}
 # divergent_viridis_magma <- c(rev(viridis(100, begin = 0.3)), magma(100, begin = 0.3))
 # rwb <- colorRampPalette(colors = c("darkred", "white", "darkgreen"))
-library(RColorBrewer)
-# display.brewer.pal(11, "BrBG")
-BrBG <- colorRampPalette(brewer.pal(11, "BrBG"))
-Spectral <- colorRampPalette(brewer.pal(11, "Spectral"))
+# library(RColorBrewer)
+# # display.brewer.pal(11, "BrBG")
+# BrBG <- colorRampPalette(brewer.pal(11, "BrBG"))
+# Spectral <- colorRampPalette(brewer.pal(11, "Spectral"))
 
 heatmaply(cor(mtcars), margins = c(40, 40),
           k_col = 2, k_row = 2,
-          colors = BrBG(256),
+          colors = BrBG,
           limits = c(-1,1))
 
 ```
