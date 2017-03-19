@@ -8,6 +8,7 @@ heatmaply 0.8.0 (2017-03-18)
       * Add examples to heatmaply's Rd and the vignette on using Rowv/Colv.
       * Added the parameters hclust_method, dist_method to allow a more refined control over dist and hclust functions which are creating the dendrograms. A user wanting an even more refined control should just supply dendrograms directly to Rowv and Colv.
       * Added the parameters: distfun_row, hclustfun_row, distfun_col, hclustfun_col. They allow a more refine control over the dendrograms of the rows/columns (without the user needing to create the dendrograms from scratch)
+      * clean the modeBarButtons from irrelevent icons
   * RColorBrewer_colors - added colors to be available for the heatmap.
       The sequential palettes names are (less important since we have viridis):  Blues BuGn BuPu GnBu Greens Greys Oranges OrRd PuBu PuBuGn PuRd Purples RdPu Reds YlGn YlGnBu YlOrBr YlOrRd
       The diverging palettes are: BrBG PiYG PRGn PuOr RdBu RdGy RdYlBu RdYlGn Spectral

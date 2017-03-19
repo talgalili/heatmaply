@@ -722,7 +722,8 @@ heatmaply.heatmapr <- function(x,
     p <- hide_colorbar(p)
     # px <- hide_colorbar(px)
     # py <- hide_colorbar(py)
-    }
+  }
+
   # TODO: this doesn't work because of the allignment. But using this might
   # speedup the code to deal with MUCH larger matrices.
   # p <- plot_ly(z = xx, type = "heatmap")
@@ -756,6 +757,15 @@ heatmaply.heatmapr <- function(x,
   l <- layout(heatmap_subplot, showlegend = FALSE)  %>%
     layout(margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]))
   # print(l)
+
+
+
+  # clean the modeBarButtons from irrelevent icons
+  l$x$config$modeBarButtonsToRemove <- list("sendDataToCloud", "select2d", "lasso2d","autoScale2d", "hoverCompareCartesian", "sendDataToCloud")
+  l <- config(l, displaylogo = FALSE, collaborate = FALSE) # ,
+              #modeBarButtonsToRemove = list("sendDataToCloud", "select2d", "lasso2d","autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian", "sendDataToCloud"))
+
+
   l
 }
 
