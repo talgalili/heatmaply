@@ -1,30 +1,314 @@
-* 2016-11-05(Tal Galili) Fix "CRAN URL not in canonical form" |d5e662b| 
-|  README.md               | 2 +-
-|  vignettes/heatmaply.Rmd | 2 +-
+* 2017-03-19(Tal Galili) Added Jonathan Sidi as a contributor to the package. |8e254ce| 
+|  DESCRIPTION | 1 +
+|  1 file changed, 1 insertion(+)
+
+* 2017-03-19(Tal Galili) help "dendrogram" work again |639098f| 
+|  R/heatmaply.R | 7 +++++--
+|  1 file changed, 5 insertions(+), 2 deletions(-)
+
+* 2017-03-19(Tal Galili) Correct use of config and modeBarButtonsToRemove |2963637| 
+|  R/heatmaply.R | 8 +++++---
+|  1 file changed, 5 insertions(+), 3 deletions(-)
+
+* 2017-03-19(Tal Galili) clean the modeBarButtons from irrelevent icons |07b67bf| 
+|  NEWS          |  1 +
+|  R/heatmaply.R | 12 +++++++++++-
+|  2 files changed, 12 insertions(+), 1 deletion(-)
+
+* 2017-03-19(Tal Galili) Fix "RColorBrewer_colors.Rd: non-ASCII input and no declared encoding" (I hope) |772b592| 
+|  R/RColorBrewer.R           | 2 +-
+|  man/RColorBrewer_colors.Rd | 2 +-
 |  2 files changed, 2 insertions(+), 2 deletions(-)
 
-* 2016-11-05(Tal Galili) Fix "Possibly mis-spelled words in DESCRIPTION:" |4b8fdce| 
-|  DESCRIPTION | 14 +++++++-------
-|  1 file changed, 7 insertions(+), 7 deletions(-)
+* 2017-03-19(Tal Galili) RColorBrewer_colors - added colors to be available for the heatmap.       The sequential palettes names are (less important since we have viridis):  Blues BuGn BuPu GnBu Greens Greys Oranges OrRd PuBu PuBuGn PuRd Purples RdPu Reds YlGn YlGnBu YlOrBr YlOrRd       The diverging palettes are: BrBG PiYG PRGn PuOr RdBu RdGy RdYlBu RdYlGn Spectral |d47cfb6| 
+|  DESCRIPTION                |   7 +-
+|  NAMESPACE                  |  27 ++++++
+|  NEWS                       |   6 +-
+|  R/RColorBrewer.R           | 203 +++++++++++++++++++++++++++++++++++++++++++
+|  man/RColorBrewer_colors.Rd | 119 +++++++++++++++++++++++++
+|  vignettes/heatmaply.Rmd    |  10 +--
+|  6 files changed, 363 insertions(+), 9 deletions(-)
 
-* 2016-11-05(Tal Galili) added branches_lwd - to control the width of the dendrograms' width. Fix issue #24 |de93225| 
-|  NEWS             | 11 ++++++++---
-|  R/heatmaply.R    | 35 +++++++++++++++++++++++++++--------
-|  man/heatmaply.Rd | 10 ++++++----
-|  3 files changed, 41 insertions(+), 15 deletions(-)
+* 2017-03-19(Tal Galili) Added the parameters: distfun_row, hclustfun_row, distfun_col, hclustfun_col. They allow a more refine control over the dendrograms of the rows/columns (without the user needing to create the dendrograms from scratch) |e300694| 
+|  NEWS             |  1 +
+|  R/heatmaply.R    | 17 +++++++++++++++++
+|  R/heatmapr.R     | 37 +++++++++++++++++++++++++++----------
+|  man/heatmaply.Rd |  9 +++++++++
+|  man/heatmapr.Rd  | 11 ++++++++++-
+|  5 files changed, 64 insertions(+), 11 deletions(-)
 
-* 2016-11-05(Tal Galili) update date |5cf114f| 
+* 2017-03-18(Tal Galili) Added the parameters hclust_method, dist_method to allow a more refined control over dist and hclust functions which are creating the dendrograms. A user wanting an even more refined control should just supply dendrograms directly to Rowv and Colv. |3be8df4| 
+|  DESCRIPTION      | 12 ++++++------
+|  NEWS             |  3 ++-
+|  R/heatmaply.R    | 12 ++++++++++++
+|  R/heatmapr.R     | 25 +++++++++++++++++++++++++
+|  man/heatmaply.Rd | 15 ++++++++++++---
+|  man/heatmapr.Rd  | 15 ++++++++++++---
+|  6 files changed, 69 insertions(+), 13 deletions(-)
+
+* 2017-02-15(Tal Galili) Simplfy heatmaply document in order to avoid future warning messages. |c5870cc| 
+|  R/heatmaply.R    | 50 +-------------------------------------------------
+|  man/heatmaply.Rd | 20 +++-----------------
+|  2 files changed, 4 insertions(+), 66 deletions(-)
+
+* 2017-02-15(Tal Galili) *Cluster* heat maps. |9b11e55| 
 |  DESCRIPTION | 2 +-
-|  NEWS        | 4 ++--
-|  2 files changed, 3 insertions(+), 3 deletions(-)
+|  1 file changed, 1 insertion(+), 1 deletion(-)
 
-* 2016-11-05(Tal Galili) Add examples for using row_side_colors  and col_side_colors |376cd70| 
-|  vignettes/heatmaply.Rmd | 43 ++++++++++++++++++++++++++++++++++++++++++-
-|  1 file changed, 42 insertions(+), 1 deletion(-)
+* 2017-02-15(Tal Galili) Minor improvement to the example |f9e5eae| 
+|  vignettes/heatmaply.Rmd | 4 ++--
+|  1 file changed, 2 insertions(+), 2 deletions(-)
 
-* 2016-11-05(Tal Galili) Add a warning when using col_side_colors |fb3568f| 
+* 2017-02-15(Tal Galili) Fix heatmaply.heatmapr to work again with Rowv (fix a bug that was introduced in the previous 3 commits) |0d383f9| 
+|  R/heatmaply.R | 28 ++++++++++++++--------------
+|  1 file changed, 14 insertions(+), 14 deletions(-)
+
+* 2017-02-15(Tal Galili) Add examples to heatmaply's Rd and the vignette on using Rowv/Colv. |6c09b7f| 
+|  DESCRIPTION             |  2 +-
+|  NEWS                    |  3 ++-
+|  R/heatmaply.R           | 18 ++++++++++++++++++
+|  man/heatmaply.Rd        | 18 ++++++++++++++++++
+|  vignettes/heatmaply.Rmd | 29 +++++++++++++++++++++++++++++
+|  5 files changed, 68 insertions(+), 2 deletions(-)
+
+* 2017-02-15(Tal Galili) Add dendrogram control parameters to heatmaply's .Rd docs. This solve #34. |e669700| 
+|  R/heatmaply.R    | 74 ++++++++++++++++++++++++++++++++++++++++++++++++------
+|  man/heatmaply.Rd | 60 ++++++++++++++++++++++++++++++++++++++++---
+|  2 files changed, 124 insertions(+), 10 deletions(-)
+
+* 2017-02-15(Tal Galili) Allow Rowv/Colv to also work for hclust (by turning them into a dendrogram). |ae6dea1| 
+|  NAMESPACE       | 1 +
+|  NEWS            | 3 +++
+|  R/heatmapr.R    | 8 +++++++-
+|  R/zzz.R         | 2 +-
+|  man/heatmapr.Rd | 2 +-
+|  5 files changed, 13 insertions(+), 3 deletions(-)
+
+* 2017-02-08(Tal Galili) Once plotly will support axis which are positioned on the right, this should make it also work in heatmaply. |ab4d527| 
+|  DESCRIPTION   |  2 +-
+|  R/heatmaply.R | 14 ++++++++++----
+|  2 files changed, 11 insertions(+), 5 deletions(-)
+
+* 2017-02-01(Tal Galili) Vignette - The inclusion of xlab/ylab/main texts. |b599554| 
+|  vignettes/heatmaply.Rmd | 6 ++++--
+|  1 file changed, 4 insertions(+), 2 deletions(-)
+
+* 2017-01-22(Tal Galili) file parameter - allows to save a heatmaply plot as an HTML file. |0f12bff| 
+|  DESCRIPTION      |  6 +++---
+|  NAMESPACE        |  1 +
+|  NEWS             |  6 +++++-
+|  R/heatmaply.R    | 27 ++++++++++++++++++++++-----
+|  R/zzz.R          |  3 +++
+|  man/heatmaply.Rd | 16 +++++++++++++---
+|  6 files changed, 47 insertions(+), 12 deletions(-)
+
+* 2017-01-22(Tal Galili) Found the problem - is.vector(factor) == FALSE |5fb21fa| 
+|  R/heatmaply.R           | 7 -------
+|  R/heatmapr.R            | 4 ++--
+|  vignettes/heatmaply.Rmd | 5 +++++
+|  3 files changed, 7 insertions(+), 9 deletions(-)
+
+* 2017-01-22(Tal Galili) Fix "col_side_colors and x have different numbers of columns"? |f9d15df| 
+|  R/heatmaply.R | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2017-01-22(Tal Galili) make row_side_colors/col_side_colors work for vectors as well (by turning them to a data.frame). Fixes:  Error in if (dim(row_side_colors)[1] != dim(x)[1]) stop("row_side_colors and x have different numbers of rows") : argument is of length zero |34e1105| 
+|  DESCRIPTION   |  4 ++--
+|  NEWS          |  8 ++++++++
+|  R/heatmaply.R | 10 ++++++++++
+|  3 files changed, 20 insertions(+), 2 deletions(-)
+
+* 2017-01-21(Tal Galili) heatmaply 0.7.0 depends on dendextend 1.4.0 |79df26b| 
+|  DESCRIPTION | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2017-01-21(Tal Galili) If the "lwd" is already defined in Rowv/Colv then this parameter is ignored (it is checked using \link[dendextend]{has_edgePar}("lwd")). |b4b19f3| 
+|  DESCRIPTION      | 2 +-
+|  NEWS             | 2 +-
+|  R/heatmaply.R    | 7 ++++---
+|  man/heatmaply.Rd | 3 ++-
+|  4 files changed, 8 insertions(+), 6 deletions(-)
+
+* 2017-01-20(Tal Galili) * main - a new parameter for setting the title of the plot. * the margins parameter now accepts 4 elements (previously it was only 2), for bottom, left, top (relevant for the plot's title) and right margins. |1a3f5a3| 
+|  NEWS             |  2 ++
+|  R/heatmaply.R    | 25 ++++++++++++++++++-------
+|  man/heatmaply.Rd | 17 +++++++++++------
+|  3 files changed, 31 insertions(+), 13 deletions(-)
+
+* 2017-01-20(Tal Galili) Allow k_row and k_col to accept NA. This will pick the number of clusters using dendextend::find_k |a7baf3e| 
+|  NAMESPACE       | 1 +
+|  NEWS            | 2 ++
+|  R/heatmapr.R    | 4 ++++
+|  R/zzz.R         | 2 +-
+|  man/heatmapr.Rd | 6 ++++--
+|  5 files changed, 12 insertions(+), 3 deletions(-)
+
+* 2017-01-20(Tal Galili) is.na10 - added description, and also return integer instead of numeric. |6795d1f| 
+|  R/is.na10.R    | 6 +++++-
+|  man/is.na10.Rd | 5 +++++
+|  2 files changed, 10 insertions(+), 1 deletion(-)
+
+* 2017-01-20(Tal Galili) Fix no visible global function definition for ‘na.omit’ / ‘ecdf’ |5f0d2b4| 
+|  NAMESPACE | 2 ++
+|  R/zzz.R   | 4 ++--
+|  2 files changed, 4 insertions(+), 2 deletions(-)
+
+* 2017-01-20(Tal Galili) update to is.na10 |d148cd4| 
+|  vignettes/heatmaply.Rmd | 14 ++++++--------
+|  1 file changed, 6 insertions(+), 8 deletions(-)
+
+* 2017-01-20(Tal Galili) Check that x is either a data.frame or a matrix. |8e93476| 
 |  R/heatmaply.R | 3 +++
 |  1 file changed, 3 insertions(+)
+
+* 2017-01-20(Tal Galili) is.na10 - Indicates which elements are missing (either 1 and 0). Helpful for NA heatmaps. |6cab004| 
+|  DESCRIPTION    |  2 +-
+|  NAMESPACE      |  1 +
+|  NEWS           |  3 ++-
+|  R/is.na10.R    | 50 ++++++++++++++++++++++++++++++++++++++++++++++++++
+|  man/is.na10.Rd | 39 +++++++++++++++++++++++++++++++++++++++
+|  5 files changed, 93 insertions(+), 2 deletions(-)
+
+* 2017-01-19(Tal Galili) percentalize  -> percentize |54819b4| 
+|  NAMESPACE           |  8 ++++----
+|  NEWS                |  2 +-
+|  R/percentize.R      | 40 ++++++++++++++++++++--------------------
+|  man/normalize.Rd    | 10 +++++-----
+|  man/percentalize.Rd | 44 --------------------------------------------
+|  man/percentize.Rd   | 44 ++++++++++++++++++++++++++++++++++++++++++++
+|  6 files changed, 74 insertions(+), 74 deletions(-)
+
+* 2017-01-19(Tal Galili) percentalize -> percentize |fa44979| 
+|  R/percentalize.R | 191 -----------------------------------------------------
+|  R/percentize.R   | 191 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+|  2 files changed, 191 insertions(+), 191 deletions(-)
+
+* 2017-01-19(Tal Galili) rename ept.R to percentalize.R |6786889| 
+|  R/ept.R          | 191 -----------------------------------------------------
+|  R/percentalize.R | 191 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+|  2 files changed, 191 insertions(+), 191 deletions(-)
+
+* 2017-01-19(Tal Galili) normalize - a pre-processing function for adjusing the range of the variables to be from 0 to 1. |398ae80| 
+|  NAMESPACE        |  4 +++
+|  NEWS             |  2 ++
+|  R/ept.R          | 82 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+|  man/normalize.Rd | 42 ++++++++++++++++++++++++++++
+|  4 files changed, 130 insertions(+)
+
+* 2017-01-19(Tal Galili) rename ept to percentalize |87d93c5| 
+|  NAMESPACE           |  8 ++++----
+|  NEWS                |  2 +-
+|  R/ept.R             | 35 +++++++++++++++++++----------------
+|  man/ept.Rd          | 38 --------------------------------------
+|  man/percentalize.Rd | 44 ++++++++++++++++++++++++++++++++++++++++++++
+|  5 files changed, 68 insertions(+), 59 deletions(-)
+
+* 2017-01-18(Tal Galili) Correct handeling of NA in ept.data.frame (i.e.: ept_predict) |2cc6ec5| 
+|  R/ept.R | 16 ++++++++++++----
+|  1 file changed, 12 insertions(+), 4 deletions(-)
+
+* 2017-01-18(Tal Galili) Added S3 ept.matrix |11ac438| 
+|  NAMESPACE  | 1 +
+|  R/ept.R    | 9 ++++++++-
+|  man/ept.Rd | 1 +
+|  3 files changed, 10 insertions(+), 1 deletion(-)
+
+* 2017-01-18(Tal Galili) Add the function ept - a pre-processing function for performing the Empirical Percentile Transformation on a vector or data.frame. |0843e5e| 
+|  NAMESPACE  |  3 ++
+|  NEWS       |  2 ++
+|  R/ept.R    | 91 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+|  man/ept.Rd | 37 ++++++++++++++++++++++++
+|  4 files changed, 133 insertions(+)
+
+* 2017-01-18(Tal Galili) Non numeric columns are now added to `row_side_colors`, making heatmaply reasonably robust to heterogeneous data.frames. |2f21251| 
+|  DESCRIPTION   |  4 ++--
+|  NEWS          | 10 ++++++++++
+|  R/heatmaply.R | 25 +++++++++++++++++++++++++
+|  3 files changed, 37 insertions(+), 2 deletions(-)
+
+* 2016-12-25(Tal Galili) ignore TODO.txt |a62a622| 
+|  .Rbuildignore | 1 +
+|  .gitignore    | 1 +
+|  2 files changed, 2 insertions(+)
+
+* 2016-12-25(Tal Galili) branches_lwd - If NULL then it is ignored. |a7dbbc6| 
+|  R/heatmaply.R    | 3 ++-
+|  man/heatmaply.Rd | 3 ++-
+|  2 files changed, 4 insertions(+), 2 deletions(-)
+
+* 2016-11-12(Tal Galili) Update date |d1e0952| 
+|  DESCRIPTION | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2016-11-11(Tal Galili) Import hide_colorbar from plotly. Close issue #30 |b90b2ab| 
+|  NAMESPACE | 1 +
+|  NEWS      | 2 +-
+|  R/zzz.R   | 2 +-
+|  3 files changed, 3 insertions(+), 2 deletions(-)
+
+*   2016-11-08(Tal Galili) Merge pull request #29 from Alanocallaghan/master |60e7d02
+|\  
+| * 2016-11-08(Alan O'Callaghan) Revert "Fix col_side_colors tooltip bug (temporary)" |7bff61a| | 
+| |  R/heatmaply.R | 21 ++++++---------------
+| |  1 file changed, 6 insertions(+), 15 deletions(-)
+
+| *   2016-11-08(Alan O'Callaghan) Merge https://github.com/talgalili/heatmaply |0c1c8f2
+| |\  
+| |/  
+|/|   
+* | 2016-11-08(Tal Galili) Allow dendrogram parameter to work again. Fix issue #28 |ce1c278| | 
+| |  DESCRIPTION   | 4 ++--
+| |  NEWS          | 7 +++++++
+| |  R/heatmaply.R | 4 ++--
+| |  3 files changed, 11 insertions(+), 4 deletions(-)
+
+* | 2016-11-08(Tal Galili) Add dendextend functions to NAMESPACE |b736301| | 
+| |  NAMESPACE    |  5 +++++
+| |  R/heatmapr.R | 12 ++++++------
+| |  R/zzz.R      |  2 ++
+| |  3 files changed, 13 insertions(+), 6 deletions(-)
+
+* | 2016-11-05(Tal Galili) update log files |62d3dd7| | 
+| |  ChangeLog | 177 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+| |  NEWS.md   |  14 +++++
+| |  2 files changed, 191 insertions(+)
+
+* | 2016-11-05(Tal Galili) Fix "CRAN URL not in canonical form" |d5e662b| | 
+| |  README.md               | 2 +-
+| |  vignettes/heatmaply.Rmd | 2 +-
+| |  2 files changed, 2 insertions(+), 2 deletions(-)
+
+* | 2016-11-05(Tal Galili) Fix "Possibly mis-spelled words in DESCRIPTION:" |4b8fdce| | 
+| |  DESCRIPTION | 14 +++++++-------
+| |  1 file changed, 7 insertions(+), 7 deletions(-)
+
+* | 2016-11-05(Tal Galili) added branches_lwd - to control the width of the dendrograms' width. Fix issue #24 |de93225| | 
+| |  NEWS             | 11 ++++++++---
+| |  R/heatmaply.R    | 35 +++++++++++++++++++++++++++--------
+| |  man/heatmaply.Rd | 10 ++++++----
+| |  3 files changed, 41 insertions(+), 15 deletions(-)
+
+* | 2016-11-05(Tal Galili) update date |5cf114f| | 
+| |  DESCRIPTION | 2 +-
+| |  NEWS        | 4 ++--
+| |  2 files changed, 3 insertions(+), 3 deletions(-)
+
+* | 2016-11-05(Tal Galili) Add examples for using row_side_colors  and col_side_colors |376cd70| | 
+| |  vignettes/heatmaply.Rmd | 43 ++++++++++++++++++++++++++++++++++++++++++-
+| |  1 file changed, 42 insertions(+), 1 deletion(-)
+
+* | 2016-11-05(Tal Galili) Add a warning when using col_side_colors |fb3568f| | 
+| |  R/heatmaply.R | 3 +++
+| |  1 file changed, 3 insertions(+)
+
+| * 2016-11-08(Alanocallaghan) Fix column dendrogram bug |11b18d5| | 
+| |  R/heatmaply.R | 10 +++++++---
+| |  1 file changed, 7 insertions(+), 3 deletions(-)
+
+| * 2016-11-04(Alan O'Callaghan) Fix col_side_colors tooltip bug (temporary) |52651d6
+|/  |   
+|    R/heatmaply.R | 21 +++++++++++++++------
+|    1 file changed, 15 insertions(+), 6 deletions(-)
 
 * 2016-11-03(Tal Galili) Example for using row_side_colors |898528e| 
 |  R/heatmaply.R    | 10 +++++++++-

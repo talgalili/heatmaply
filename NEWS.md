@@ -1,3 +1,52 @@
+heatmaply 0.8.0 (2017-03-18)
+==============================
+
+### NEW FEATURES
+* heatmaply -
+      * file parameter - allows to save a heatmaply plot as an HTML file.
+      * Allow Rowv/Colv to also work for hclust (by turning them into a dendrogram).
+      * Add examples to heatmaply's Rd and the vignette on using Rowv/Colv.
+      * Added the parameters hclust_method, dist_method to allow a more refined control over dist and hclust functions which are creating the dendrograms. A user wanting an even more refined control should just supply dendrograms directly to Rowv and Colv.
+      * Added the parameters: distfun_row, hclustfun_row, distfun_col, hclustfun_col. They allow a more refine control over the dendrograms of the rows/columns (without the user needing to create the dendrograms from scratch)
+      * clean the modeBarButtons from irrelevent icons
+  * RColorBrewer_colors - added colors to be available for the heatmap.
+      The sequential palettes names are (less important since we have viridis):  Blues BuGn BuPu GnBu Greens Greys Oranges OrRd PuBu PuBuGn PuRd Purples RdPu Reds YlGn YlGnBu YlOrBr YlOrRd
+      The diverging palettes are: BrBG PiYG PRGn PuOr RdBu RdGy RdYlBu RdYlGn Spectral
+
+
+
+
+### BUG FIXES
+* heatmaply -
+  * make row_side_colors/col_side_colors work for vectors as well (by turning them to a data.frame). Fixes:  Error in if (dim(row_side_colors)[1] != dim(x)[1]) stop("row_side_colors and x have different numbers of rows") : argument is of length zero
+
+
+
+heatmaply 0.7.0 (2017-01-21)
+==============================
+
+### NEW FEATURES
+* heatmaply -
+      * Non numeric columns are now added to `row_side_colors`, making heatmaply reasonably robust to heterogeneous data.frames.
+      * main - a new parameter for setting the title of the plot.
+      * the margins parameter now accepts 4 elements (previously it was only 2), for bottom, left, top (relevant for the plot's title) and right margins.
+* heatmapr -
+      * Allow k_row and k_col to accept NA. This will pick the number of clusters using dendextend::find_k
+
+### NEW FUNCTIONS
+* percentize - a pre-processing function for performing the Empirical Percentile Transformation on a vector or data.frame.
+* normalize - a pre-processing function for adjusing the range of the variables to be from 0 to 1.
+* is.na10 - Indicates which elements are missing (either 1 and 0)
+
+
+
+heatmaply 0.6.1 (2016-11-11)
+==============================
+
+### BUG FIXES
+* Allow dendrogram parameter to work again.
+
+
 heatmaply 0.6.0 (2016-11-05)
 ==============================
 
