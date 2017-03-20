@@ -1,7 +1,7 @@
 Package: heatmaply
 Type: Package
 Title: Interactive Cluster Heat Maps Using 'plotly'
-Version: 0.8.1
+Version: 0.8.2
 Date: 2017-03-20
 Authors@R: c(person("Tal", "Galili", role = c("aut", "cre", "cph"), email =
     "tal.galili@gmail.com", comment = "https://www.r-statistics.com"),
@@ -9,7 +9,7 @@ Authors@R: c(person("Tal", "Galili", role = c("aut", "cre", "cph"), email =
     person("Alan", "Ocallaghan", comment = "https://github.com/Alanocallaghan",role = "ctb"),
     person("Yoav", "Benjamini", email = "ybenja@tau.ac.il",role = "ths"))
 Description: Create interactive cluster 'heatmaps' that can be saved as a stand-alone HTML
-    file, embeded in 'R Markdown' documents or in a 'Shiny' apps, and available in the 'RStudio' viewer pane, .
+    file, embedded in 'R Markdown' documents or in a 'Shiny' apps, and available in the 'RStudio' viewer pane, .
     Hover the mouse pointer over a cell to show details or drag a rectangle to
     zoom. A 'heatmap' is a popular graphical method for visualizing high-dimensional
     data, in which a table of numbers are encoded as a grid of colored cells. The
@@ -21,7 +21,7 @@ Description: Create interactive cluster 'heatmaps' that can be saved as a stand-
     around the relevant area. This work is based on the 'ggplot2' and 'plotly.js'
     engine. It produces similar 'heatmaps' as 'heatmap.2' or 'd3heatmap', with the advantage of speed
     ('plotly.js' is able to handle larger size matrix), the ability to zoom from the 'dendrogram' panes,
-    and the placing of factor variables in the sides of the `heatmap'.
+    and the placing of factor variables in the sides of the 'heatmap'.
 Depends:
     R (>= 3.0.0),
     plotly (>= 4.5.2),
