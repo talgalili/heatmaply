@@ -426,18 +426,31 @@ ggplot_heatmap <- function(xx,
                                     panel.background = element_blank())
   # heatmap
   # xx <- x$matrix$data
-  if(!is.data.frame(df)) df <- as.data.frame(xx)
+  if(!is.data.frame(xx)) df <- as.data.frame(xx)
+
+  if (is.null(dim_names <- names(dimnames(xx)))) {
+    dim_names <- c("row", "column")
+  }
+
   # colnames(df) <- x$matrix$cols
-  df$row <- if(!is.null(rownames(xx)))
-              {rownames(xx)} else
-              {1:nrow(xx)}
-  df$row <- with(df, factor(row, levels=row, ordered=TRUE))
-  mdf <- reshape2::melt(df, id.vars="row")
-  colnames(mdf)[2] <- "column" # rename "variable"
+  if(!is.null(rownames(xx))) {
+    df[[dim_names[[1]]]] <- rownames(xx)
+  } else {
+    df[[dim_names[[1]]]] <- 1:nrow(xx)
+  }
+  
+  df[[dim_names[[1]]]] <- factor(
+    df[[dim_names[[1]]]], 
+    levels=df[[dim_names[[1]]]], 
+    ordered=TRUE
+  )
+
+  mdf <- reshape2::melt(df, id.vars=dim_names[[1]])
+  colnames(mdf)[2] <- dim_names[[2]] # rename "variable"
   # TODO:
   # http://stackoverflow.com/questions/15921799/draw-lines-around-specific-areas-in-geom-tile
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
-  p <- ggplot(mdf, aes_string(x = "column", y = "row")) +
+  p <- ggplot(mdf, aes_string(x = dim_names[[2]], y = dim_names[[1]])) +
     geom_tile(aes_string(fill = "value"), color = grid_color, size = grid_size) +
     # scale_linetype_identity() +
     # scale_fill_viridis() +
