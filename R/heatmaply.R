@@ -916,7 +916,7 @@ side_color_plot <- function(df, palette,
 
   df[[type]] <- factor(df[[type]], levels = df[[type]], ordered = TRUE)
   df <- reshape2::melt(df, id.vars = type)
-  df[[label_name]] <- factor(df[[label_name]])
+  df[["value"]] <- factor(df[["value"]])
 
   id_var <- colnames(df)[1]
 
@@ -945,8 +945,8 @@ side_color_plot <- function(df, palette,
   }
 
   color_vals <- if (is_colors) levels(df[["value"]])
-  else palette(length(unique(df[["value"]])))
-  
+  else palette(nlevels(df[["value"]]))
+
   g <- ggplot(df, mapping = mapping) +
     geom_raster() +
     xlab("") +
