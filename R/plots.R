@@ -78,7 +78,7 @@ plotly_heatmap <- function(x, limits = range(x), colors,
           tickvals = 1:nrow(x), ticktext = rownames(x),
           showticklabels = TRUE
         )
-      ) %>% colorbar(lenmode = "fraction", y = 0, yanchor="bottom", len=0.3)
+      ) %>% plotly::colorbar(lenmode = "fraction", y = 0, yanchor="bottom", len=0.3)
 }    
 
 
@@ -102,7 +102,7 @@ make_colorscale <- function(colors) {
 }
 
 col2plotlyrgb <- function(col) {
-    rgb <- col2rgb(col)
+    rgb <- grDevices::col2rgb(col)
     paste0(
       "rgb(", 
       rgb["red", ], ",", 
