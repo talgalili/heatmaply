@@ -298,7 +298,8 @@ heatmaply.default <- function(x,
                               heatmap_layers = NULL,
                               branches_lwd = 0.6,
                               file,
-                              long_data
+                              long_data,
+                              label_names = c("row", "column", "value")
 ) {
   if (!missing(long_data)) {
     if (!missing(x)) warning("x and long_data should not be used together")
@@ -408,7 +409,8 @@ heatmaply.default <- function(x,
                      ColSideColors = ColSideColors,
                      RowSideColors = RowSideColors,
                      heatmap_layers = heatmap_layers,
-                     branches_lwd = branches_lwd
+                     branches_lwd = branches_lwd,
+                     label_names = label_names
                 ) # TODO: think more on what should be passed in "..."
 
   if(!missing(file)) hmly %>% saveWidget(file = file, selfcontained = TRUE)
@@ -435,6 +437,7 @@ ggplot_heatmap <- function(xx,
                            key.title = NULL,
                            layers,
                            row_dend_left = FALSE,
+                           label_names,
                            ...) {
   theme_clear_grid_heatmap <- theme(axis.line = element_line(color = "black"),
                                     panel.grid.major = element_blank(),
@@ -445,30 +448,38 @@ ggplot_heatmap <- function(xx,
   # xx <- x$matrix$data
   if(!is.data.frame(xx)) df <- as.data.frame(xx)
 
-  if (is.null(dim_names <- names(dimnames(xx)))) {
-    dim_names <- c("row", "column")
+  if (missing(label_names)) {
+    if (is.null(dim_names <- names(dimnames(xx)))) {
+      label_names <- c("row", "column", "value")
+    }    
+  } else {
+    assert_that(length(label_names) == 3)
   }
+  row <- label_names[[1]]
+  col <- label_names[[2]]
+  val <- label_names[[3]]
 
   # colnames(df) <- x$matrix$cols
   if(!is.null(rownames(xx))) {
-    df[[dim_names[[1]]]] <- rownames(xx)
+    df[[row]] <- rownames(xx)
   } else {
-    df[[dim_names[[1]]]] <- 1:nrow(xx)
+    df[[row]] <- 1:nrow(xx)
   }
   
-  df[[dim_names[[1]]]] <- factor(
-    df[[dim_names[[1]]]], 
-    levels=df[[dim_names[[1]]]], 
+  df[[row]] <- factor(
+    df[[row]], 
+    levels=df[[row]], 
     ordered=TRUE
   )
 
-  mdf <- reshape2::melt(df, id.vars=dim_names[[1]])
-  colnames(mdf)[2] <- dim_names[[2]] # rename "variable"
+  mdf <- reshape2::melt(df, id.vars=row)
+  colnames(mdf)[2:3] <- c(col, val) # rename "variable" and "value"
+
   # TODO:
   # http://stackoverflow.com/questions/15921799/draw-lines-around-specific-areas-in-geom-tile
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
-  p <- ggplot(mdf, aes_string(x = dim_names[[2]], y = dim_names[[1]])) +
-    geom_tile(aes_string(fill = "value"), color = grid_color, size = grid_size) +
+  p <- ggplot(mdf, aes_string(x = col, y = row)) +
+    geom_tile(aes_string(fill = val), color = grid_color, size = grid_size) +
     # scale_linetype_identity() +
     # scale_fill_viridis() +
     coord_cartesian(expand = FALSE) +
@@ -644,7 +655,8 @@ heatmaply.heatmapr <- function(x,
                                ColSideColors = NULL,
                                RowSideColors = NULL,
                                heatmap_layers = NULL,
-                               branches_lwd = 0.6
+                               branches_lwd = 0.6,
+                               label_names
                                ) {
   # informative errors for mis-specified limits
   if(!is.null(limits)) {
@@ -709,14 +721,16 @@ heatmaply.heatmapr <- function(x,
                       grid_color,
                       key.title = key.title,
                       layers = heatmap_layers,
-                      row_dend_left = row_dend_left)
+                      row_dend_left = row_dend_left,
+                      label_names = label_names)
   if(return_ppxpy) {
     return(list(p=p, px=px, py=py))
   }
   if (is.null(row_side_colors)) pr <- NULL
   else {
-    pr <- side_color_plot(x[["row_side_colors"]], type = "row",
-      palette = row_side_palette, is_colors = !is.null(RowSideColors))
+    pr <- side_color_plot(x[["row_side_colors"]], type = "row", 
+      text_angle = row_text_angle, palette = row_side_palette, 
+      is_colors = !is.null(RowSideColors), label_name = label_names[[1]])
   }
   if (is.null(col_side_colors)) pc <- NULL
   else {
@@ -729,7 +743,10 @@ heatmaply.heatmapr <- function(x,
     ## Just make sure it's character first
     side_color_df[] <- lapply(side_color_df, as.character)
     pc <- side_color_plot(side_color_df, type = "column",
-      palette = col_side_palette, is_colors = !is.null(ColSideColors))
+      text_angle = column_text_angle, palette = col_side_palette, 
+      is_colors = !is.null(ColSideColors),
+      label_name = label_names[[2]]
+    )
   }
 
   ## plotly:
@@ -869,28 +886,29 @@ if(FALSE) {
 #' plot
 #' @param scale_title Title of the color scale. Not currently used.
 #' @param type Horizontal or vertical plot? Valid values are "column" and "row"
-#' @param row_text_angle,column_text_angle the angle of the text of the rows/columns.
+#' @param text_angle the angle of the text of the rows/columns.
 #' @param is_colors Use if the values in df are valid colours and should not be mapped
 #'  to a color scheme, and instead should be plotted directly.
 #'
 #' @return A ggplot geom_tile object
-#'
-#' @export
 side_color_plot <- function(df, palette,
   scale_title = paste(type, "side colors"), type = c("column", "row"),
-  row_text_angle, column_text_angle, is_colors) {
+  text_angle, is_colors, label_name) {
 
   if (is.matrix(df)) df <- as.data.frame(df)
   assert_that(is.data.frame(df))
 
+  ## Cooerce to character
+  df[] <- lapply(df, as.character)
+
   ## TODO: Find out why names are dropped when dim(df)[2] == 1
   original_dim <- dim(df)
 
-  if (missing(column_text_angle)) column_text_angle <- 0
-  if (missing(row_text_angle)) row_text_angle <- 45
   if (missing(palette)) palette <- colorspace::rainbow_hcl
 
   type <- match.arg(type)
+  ## Custom label
+  if (!missing(label_name)) type <- label_name
   if (type %in% colnames(df))
     stop("Having", type, "in the colnames of the side_color df will drop data!")
 
@@ -898,13 +916,14 @@ side_color_plot <- function(df, palette,
 
   df[[type]] <- factor(df[[type]], levels = df[[type]], ordered = TRUE)
   df <- reshape2::melt(df, id.vars = type)
-  df[["value"]] <- factor(df[["value"]])
+  df[[label_name]] <- factor(df[[label_name]])
 
   id_var <- colnames(df)[1]
+
   if (type == "column") {
-    mapping <- aes_string(x = id_var, y = 'variable', fill = 'value')
+    mapping <- aes_string(x = id_var, y = "variable", fill = "value")
     if(original_dim[2] > 1) {
-      text_element <- element_text(angle = column_text_angle)
+      text_element <- element_text(angle = text_angle)
     } else text_element <- element_blank()
 
     theme <- theme(
@@ -914,10 +933,10 @@ side_color_plot <- function(df, palette,
         axis.ticks = element_blank())
   } else {
     if(original_dim[2] > 1) {
-      text_element <- element_text(angle = row_text_angle)
+      text_element <- element_text(angle = text_angle)
     } else text_element <- element_blank()
 
-    mapping <- aes_string(x = 'variable', y = id_var, fill = 'value')
+    mapping <- aes_string(x = "variable", y = id_var, fill = "value")
     theme <- theme(
         panel.background = element_blank(),
         axis.text.x = text_element,
@@ -927,7 +946,7 @@ side_color_plot <- function(df, palette,
 
   color_vals <- if (is_colors) levels(df[["value"]])
   else palette(length(unique(df[["value"]])))
-
+  
   g <- ggplot(df, mapping = mapping) +
     geom_raster() +
     xlab("") +
