@@ -44,7 +44,6 @@ Suggests:
     covr,
     rmarkdown,
     gplots,
-    htmlwidgets,
     RColorBrewer,
     testthat
 VignetteBuilder: knitr
