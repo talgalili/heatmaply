@@ -132,6 +132,11 @@
 #' You can relocate the file once it is created, or use \link{setwd} first.
 #' This is based on \link[htmlwidgets]{saveWidget}.
 #'
+#' @param long_data Data in long format. Replaces x, so both should not be used.
+#'  Colnames must be c("name", "variable", "value"). If you do not have a names 
+#'  column you can simply use a sequence of numbers from 1 to the number of "rows"
+#'  inthe data.
+#' 
 #'
 #' @export
 #' @examples
@@ -237,6 +242,7 @@ heatmaply <- function(x, ...) {
 
 #' @export
 #' @rdname heatmaply
+#' @importFrom assertthat assert_that
 heatmaply.default <- function(x,
                               # elements for scale_fill_gradientn
                               colors = viridis(n=256, alpha = 1, begin = 0,
@@ -291,8 +297,19 @@ heatmaply.default <- function(x,
                               RowSideColors = NULL,
                               heatmap_layers = NULL,
                               branches_lwd = 0.6,
-                              file
+                              file,
+                              long_data
 ) {
+  if (!missing(long_data)) {
+    if (!missing(x)) warning("x and long_data should not be used together")
+    assert_that(
+      ncol(long_data) == 3,
+      all(colnames(long_data) == c("name", "variable", "value"))
+    )
+    x <- reshape2::dcast(long_data, name ~ variable)
+    rownames(x) <- x$name
+    x$name <- NULL
+  }
   ## Suppress creation of new graphcis device, but on exit replace it.
   old_dev <- options()[["device"]]
   on.exit(options(device = old_dev))
@@ -772,17 +789,9 @@ heatmaply.heatmapr <- function(x,
     titleX = titleX, titleY = titleY, pr = pr, pc = pc)
   l <- layout(heatmap_subplot, showlegend = FALSE)  %>%
     layout(margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]))
-  # print(l)
-
-
-
-  # clean the modeBarButtons from irrelevent icons
-  # l$x$config$modeBarButtonsToRemove <- list("sendDataToCloud", "select2d", "lasso2d","autoScale2d", "hoverCompareCartesian", "sendDataToCloud")
-  # l <- config(l, displaylogo = FALSE, collaborate = FALSE) # ,
-  #             #modeBarButtonsToRemove = list("sendDataToCloud", "select2d", "lasso2d","autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian", "sendDataToCloud"))
+  
   l <- config(l, displaylogo = FALSE, collaborate = FALSE,
         modeBarButtonsToRemove = c("sendDataToCloud", "select2d", "lasso2d","autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian", "sendDataToCloud"))
-
 
   l
 }
@@ -872,7 +881,7 @@ side_color_plot <- function(df, palette,
   row_text_angle, column_text_angle, is_colors) {
 
   if (is.matrix(df)) df <- as.data.frame(df)
-  stopifnot(is.data.frame(df))
+  assert_that(is.data.frame(df))
 
   ## TODO: Find out why names are dropped when dim(df)[2] == 1
   original_dim <- dim(df)

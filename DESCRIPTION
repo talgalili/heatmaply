@@ -39,7 +39,8 @@ Imports:
     colorspace,
     RColorBrewer,
     GGally,
-    htmlwidgets
+    htmlwidgets,
+    assertthat
 Suggests:
     knitr,
     rmarkdown,

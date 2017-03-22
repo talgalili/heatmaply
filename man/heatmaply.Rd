@@ -24,7 +24,7 @@ heatmaply(x, ...)
   key.title = NULL, return_ppxpy = FALSE, row_side_colors = NULL,
   row_side_palette, col_side_colors = NULL, col_side_palette,
   ColSideColors = NULL, RowSideColors = NULL, heatmap_layers = NULL,
-  branches_lwd = 0.6, file)
+  branches_lwd = 0.6, file, long_data)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
@@ -168,6 +168,11 @@ For example: heatmaply(x, file = "heatmaply_plot.html").
 This should not include a directory, only the name of the file.
 You can relocate the file once it is created, or use \link{setwd} first.
 This is based on \link[htmlwidgets]{saveWidget}.}
+
+\item{long_data}{Data in long format. Replaces x, so both should not be used.
+Colnames must be c("name", "variable", "value"). If you do not have a names 
+column you can simply use a sequence of numbers from 1 to the number of "rows"
+inthe data.}
 }
 \description{
 An object of class heatmapr includes all the needed information
