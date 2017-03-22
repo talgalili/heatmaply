@@ -152,16 +152,16 @@ plotly_heatmap <- function(x, limits = range(x), colors,
     row_text_angle=0, column_text_angle=45, grid.color, grid.size, key.title, 
     row_dend_left) {
 
-  plot_ly(z = data_mat, x = 1:ncol(data_mat), y = 1:nrow(data_mat), 
+  plot_ly(z = x, x = 1:ncol(x), y = 1:nrow(x), 
     type = "heatmap", showlegend = FALSE, colors=colors, 
     zmin = limits[1], zmax = limits[2]) %>%
       layout(
         xaxis = list(
-          tickvals = 1:ncol(data_mat), ticktext = colnames(data_mat),
+          tickvals = 1:ncol(x), ticktext = colnames(x),
           showticklabels = TRUE
         ),
         yaxis = list(
-          tickvals = 1:nrow(data_mat), ticktext = rownames(data_mat),
+          tickvals = 1:nrow(x), ticktext = rownames(x),
           showticklabels = TRUE
         )
       ) %>% colorbar(lenmode = "fraction", y = 0, yanchor="bottom", len=0.3)
