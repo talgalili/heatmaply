@@ -157,10 +157,12 @@ plotly_heatmap <- function(x, limits = range(x), colors,
     zmin = limits[1], zmax = limits[2]) %>%
       layout(
         xaxis = list(
+          tickangle = row_text_angle,
           tickvals = 1:ncol(x), ticktext = colnames(x),
           showticklabels = TRUE
         ),
         yaxis = list(
+          tickangle = column_text_angle,
           tickvals = 1:nrow(x), ticktext = rownames(x),
           showticklabels = TRUE
         )

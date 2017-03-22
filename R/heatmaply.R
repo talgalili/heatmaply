@@ -581,7 +581,8 @@ heatmaply.heatmapr <- function(x,
                         layers = heatmap_layers,
                         row_dend_left = row_dend_left)
   } else if (plot_method == "plotly") {
-    p <- plotly_heatmap(data_mat, limits = limits, colors = colors)
+    p <- plotly_heatmap(data_mat, limits = limits, colors = colors, 
+      row_text_angle = row_text_angle, column_text_angle = column_text_angle)
   }
 
   if (missing(row_side_colors)) {
