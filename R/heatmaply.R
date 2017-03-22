@@ -659,6 +659,5 @@ heatmaply.heatmapr <- function(x,
       margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]),      
       legend = list(y=1, yanchor="top")
     )
-  class(l) <- c("heatmaply", class(l))
   l
 }
