@@ -165,10 +165,7 @@ normalize.data.frame <- function(x, ...) {
   ss_numeric <- sapply(x, is.numeric)
   normalize
 
-
-  for(i in which(ss_numeric)) {
-      x[, i] <- normalize(x[, i])
-  }
+  x[, ss_numeric] <- lapply(x[, ss_numeric], normalize)
 
   x
 }
