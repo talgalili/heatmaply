@@ -426,7 +426,7 @@ ggplot_heatmap <- function(xx,
                                     panel.background = element_blank())
   # heatmap
   # xx <- x$matrix$data
-  if(!is.data.frame(df)) df <- as.data.frame(xx)
+  if(!is.data.frame(xx)) df <- as.data.frame(xx)
   # colnames(df) <- x$matrix$cols
   df$row <- if(!is.null(rownames(xx)))
               {rownames(xx)} else

@@ -1,3 +1,14 @@
+heatmaply 0.8.3 (2017-03-28)
+==============================
+
+### BUG FIXES
+* Fix a mistake in an object's check in ggplot_heatmap. Props to Hannes Becker (https://twitter.com/SportsTribution/status/846764290484944896). The following no longer crashes heatmaply:
+      library(heatmaply)
+      df<-data.frame(1)
+      heatmaply(mtcars)
+
+
+
 heatmaply 0.8.2 (2017-03-20)
 ==============================
 
