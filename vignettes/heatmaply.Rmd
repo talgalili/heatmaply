@@ -102,7 +102,7 @@ heatmaply(cor(mtcars), margins = c(40, 40),
 ```
 
 
-Various setiation options
+Various seriation options
 -------------------
 
 heatmaply uses the `seriation` package to find optimal ordering of rows and columns. Optimal means to optimze the Hamiltonian path length that is restricted by the dendrogram structure. Which, in other words, means to rotate the branches so that the sum of distances between each adjacent leaf (label) will be minimized. This is related to a restricted version of the travel salesman problem. The default options is "OLO" (Optimal leaf ordering) which optimizes the above mention critirion (it works in O(n^4)). Another option is "GW" (Gruvaeus and Wainer) which aims for the same goal but uses a (faster?) heuristic. The option "mean" gives the output we would get by default from heatmap functions in other packages such as `gplots::heatmap.2`. The option "none" gives us the dendrograms without any rotation. 
