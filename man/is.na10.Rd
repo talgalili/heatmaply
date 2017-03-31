@@ -41,4 +41,3 @@ x \%>\% is.na10 \%>\% heatmaply( colors = c("grey80", "grey20"), k_col = 2, k_ro
 \seealso{
 \link{is.na}
 }
-

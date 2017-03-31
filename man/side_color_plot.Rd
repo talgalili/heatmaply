@@ -28,4 +28,3 @@ A ggplot geom_tile object
 \description{
 geom_tile for side color plots
 }
-
