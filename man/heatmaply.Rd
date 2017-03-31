@@ -15,9 +15,9 @@ heatmaply(x, ...)
   hclustfun = hclust, dist_method = NULL, hclust_method = NULL,
   distfun_row, hclustfun_row, distfun_col, hclustfun_col,
   dendrogram = c("both", "row", "column", "none"), reorderfun = function(d,
-  w) reorder(d, w), k_row, k_col, symm = FALSE, revC, row_dend_left = FALSE,
-  margins = c(50, 50, NA, 0), ...,
-  scale_fill_gradient_fun = scale_fill_gradientn(colors = if
+  w) reorder(d, w), k_row, k_col, symm = FALSE, revC, scale = c("none",
+  "row", "column"), na.rm = TRUE, row_dend_left = FALSE, margins = c(50,
+  50, NA, 0), ..., scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
   main = "", titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE,
@@ -104,6 +104,10 @@ If NA then \link[dendextend]{find_k} is used to deduce the optimal number of clu
 \item{revC}{logical indicating if the column order should be reversed for plotting.
 Default (when missing) - is FALSE, unless symm is TRUE.
 This is useful for cor matrix.}
+
+\item{scale}{character indicating if the values should be centered and scaled in either the row direction or the column direction, or none. The default is "none".}
+
+\item{na.rm}{logical indicating whether NA's should be removed.}
 
 \item{row_dend_left}{logical (default is FALSE). Should the row dendrogram be
 plotted on the left side of the heatmap. If false then it will be plotted on the right
@@ -273,4 +277,3 @@ heatmaply(x, Rowv = row_dend, Colv = col_dend)
 
 }
 }
-

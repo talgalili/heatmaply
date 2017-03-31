@@ -67,6 +67,9 @@
 #' Default (when missing) - is FALSE, unless symm is TRUE.
 #' This is useful for cor matrix.
 #'
+#' @param scale character indicating if the values should be centered and scaled in either the row direction or the column direction, or none. The default is "none".
+#' @param na.rm logical indicating whether NA's should be removed.
+#'
 #' @param row_dend_left logical (default is FALSE). Should the row dendrogram be
 #' plotted on the left side of the heatmap. If false then it will be plotted on the right
 #' side.
@@ -269,6 +272,10 @@ heatmaply.default <- function(x,
                               symm = FALSE,
                               revC,
 
+                              ## data scaling
+                              scale = c("none", "row", "column"),
+                              na.rm = TRUE,
+
                               row_dend_left = FALSE,
                               margins = c(50, 50, NA, 0),
                               ...,
@@ -368,6 +375,10 @@ heatmaply.default <- function(x,
 
     symm = symm,
     revC = revC,
+
+    ## data scaling
+    scale = scale,
+    na.rm = na.rm,
 
     ...)
   hmly <- heatmaply.heatmapr(hm, # colors = colors, limits = limits,
