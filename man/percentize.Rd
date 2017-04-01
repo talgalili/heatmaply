@@ -2,8 +2,8 @@
 % Please edit documentation in R/percentize.R
 \name{percentize}
 \alias{percentize}
-\alias{percentize.default}
 \alias{percentize.data.frame}
+\alias{percentize.default}
 \alias{percentize.matrix}
 \title{Empirical Percentile Transformation}
 \usage{
@@ -41,3 +41,4 @@ percentize(x[,1])
 
 }
 }
+

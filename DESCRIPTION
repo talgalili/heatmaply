@@ -8,20 +8,22 @@ Authors@R: c(person("Tal", "Galili", role = c("aut", "cre", "cph"), email =
     person("Jonathan", "Sidi", email = "yonis@metrumrg.com", comment = "https://github.com/yonicd",role = "ctb"),
     person("Alan", "O'Callaghan", comment = "https://github.com/Alanocallaghan",role = "ctb"),
     person("Yoav", "Benjamini", email = "ybenja@tau.ac.il",role = "ths"))
-Description: Create interactive cluster 'heatmaps' that can be saved as a stand-alone HTML
-    file, embedded in 'R Markdown' documents or in a 'Shiny' apps, and available in the 'RStudio' viewer pane, .
-    Hover the mouse pointer over a cell to show details or drag a rectangle to
-    zoom. A 'heatmap' is a popular graphical method for visualizing high-dimensional
-    data, in which a table of numbers are encoded as a grid of colored cells. The
-    rows and columns of the matrix are ordered to highlight patterns and are often
-    accompanied by 'dendrograms'. 'Heatmaps' are used in many fields for visualizing
-    observations, correlations, missing values patterns, and more. Interactive
-    'heatmaps' allow the inspection of specific value by hovering the mouse over a
-    cell, as well as zooming into a region of the 'heatmap' by dragging a rectangle
-    around the relevant area. This work is based on the 'ggplot2' and 'plotly.js'
-    engine. It produces similar 'heatmaps' as 'heatmap.2' or 'd3heatmap', with the advantage of speed
-    ('plotly.js' is able to handle larger size matrix), the ability to zoom from the 'dendrogram' panes,
-    and the placing of factor variables in the sides of the 'heatmap'.
+Description: Create interactive cluster 'heatmaps' that can be saved as a stand-
+    alone HTML file, embedded in 'R Markdown' documents or in a 'Shiny' apps, and
+    available in the 'RStudio' viewer pane, . Hover the mouse pointer over a cell
+    to show details or drag a rectangle to zoom. A 'heatmap' is a popular graphical
+    method for visualizing high-dimensional data, in which a table of numbers
+    are encoded as a grid of colored cells. The rows and columns of the matrix
+    are ordered to highlight patterns and are often accompanied by 'dendrograms'.
+    'Heatmaps' are used in many fields for visualizing observations, correlations,
+    missing values patterns, and more. Interactive 'heatmaps' allow the inspection
+    of specific value by hovering the mouse over a cell, as well as zooming into
+    a region of the 'heatmap' by dragging a rectangle around the relevant area.
+    This work is based on the 'ggplot2' and 'plotly.js' engine. It produces
+    similar 'heatmaps' as 'heatmap.2' or 'd3heatmap', with the advantage of speed
+    ('plotly.js' is able to handle larger size matrix), the ability to zoom from
+    the 'dendrogram' panes, and the placing of factor variables in the sides of the
+    'heatmap'.
 Depends:
     R (>= 3.0.0),
     plotly (>= 4.5.2),
@@ -54,4 +56,4 @@ URL: https://cran.r-project.org/package=heatmaply,
     https://www.r-statistics.com/tag/heatmaply/
 BugReports: https://github.com/talgalili/heatmaply/issues
 LazyData: TRUE
-RoxygenNote: 6.0.1
+RoxygenNote: 5.0.1

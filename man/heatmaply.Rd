@@ -11,23 +11,14 @@ heatmaply(x, ...)
 \method{heatmaply}{default}(x, colors = viridis(n = 256, alpha = 1, begin = 0,
   end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
   row_text_angle = 0, column_text_angle = 45, subplot_margin = 0,
-<<<<<<< HEAD
   cellnote = NULL, draw_cellnote = !is.null(cellnote), Rowv, Colv,
   distfun = dist, hclustfun = hclust, dist_method = NULL,
   hclust_method = NULL, distfun_row, hclustfun_row, distfun_col,
   hclustfun_col, dendrogram = c("both", "row", "column", "none"),
   reorderfun = function(d, w) reorder(d, w), k_row, k_col, symm = FALSE,
-  revC, row_dend_left = FALSE, margins = c(50, 50, NA, 0), ...,
+  revC, scale = c("none", "row", "column"), na.rm = TRUE,
+  row_dend_left = FALSE, margins = c(50, 50, NA, 0), ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = if
-=======
-  Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE, distfun = dist,
-  hclustfun = hclust, dist_method = NULL, hclust_method = NULL,
-  distfun_row, hclustfun_row, distfun_col, hclustfun_col,
-  dendrogram = c("both", "row", "column", "none"), reorderfun = function(d,
-  w) reorder(d, w), k_row, k_col, symm = FALSE, revC, scale = c("none",
-  "row", "column"), na.rm = TRUE, row_dend_left = FALSE, margins = c(50,
-  50, NA, 0), ..., scale_fill_gradient_fun = scale_fill_gradientn(colors = if
->>>>>>> 041a81fd8d0be779e513e32cf4902e1386ba9e48
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
   main = "", titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE,
@@ -304,3 +295,4 @@ heatmaply(x, Rowv = row_dend, Colv = col_dend)
 
 }
 }
+
