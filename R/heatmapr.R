@@ -147,7 +147,7 @@ heatmapr <- function(x,
 
                       ## value formatting
                       digits = 3L,
-                      cellnote,
+                      cellnote = NULL,
 
                       ##TODO: decide later which names/conventions to keep
                       theme = NULL,
