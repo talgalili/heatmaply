@@ -84,11 +84,14 @@ library(heatmaply)
 heatmaply(scale(mtcars))
 ```
 
+It is probably more useful to use scaling. heatmaply supports column
+and row scaling using the "scale" parameter.
 Because the labels are somewhat long, we need to manually fix the margins (hopefully this will be fixed in future versions of plotly). This also allows the inclusion of xlab/ylab/main texts.
 
 ```{r}
-heatmaply(scale(mtcars), xlab = "Features", ylab = "Cars", 
+heatmaply(mtcars, xlab = "Features", ylab = "Cars", 
 		main = "An example of title and xlab/ylab",
+    scale = "column",
 		margins = c(60,100,40,20) )
 # heatmaply(mtcars) %>% layout(margin = list(l = 130, b = 40), xaxis=list(tickfont=5))
 ```
@@ -111,26 +114,26 @@ The default options is "OLO" (Optimal leaf ordering) which optimizes the above c
 
 ```{r}
 # The default of heatmaply:
-heatmaply(scale(mtcars[1:10,]), margins = c(40, 130),
-          seriate = "OLO")
+heatmaply(mtcars[1:10,], margins = c(40, 130),
+          seriate = "OLO", scale = "column")
 ```
 
 ```{r}
 # Similar to OLO but less optimal (since it is a heuristic)
-heatmaply(scale(mtcars[1:10,]), margin = c(40, 130),
-          seriate = "GW")
+heatmaply(mtcars[1:10,], margin = c(40, 130),
+          seriate = "GW", scale = "column")
 ```
 
 ```{r}
 # the default by gplots::heatmaply.2
-heatmaply(scale(mtcars[1:10,]), margins = c(40, 130),
-          seriate = "mean")
+heatmaply(mtcars[1:10,], margins = c(40, 130),
+          seriate = "mean", scale = "column")
 ```
 
 ```{r}
 # the default output from hclust
-heatmaply(scale(mtcars[1:10,](,  margins = c(40, 130),
-          seriate = "none")
+heatmaply(mtcars[1:10,],  margins = c(40, 130),
+          seriate = "none", scale = "column")
 ```
 
 This works heavily relies on the seriation package (their [vignette](https://CRAN.R-project.org/package=seriation/vignettes/seriation.pdf) is well worth the read), and also lightly on the dendextend package (see [vignette](https://CRAN.R-project.org/package=dendextend/vignettes/introduction.html) )
@@ -157,7 +160,7 @@ col_dend  <- x %>% t %>% dist %>% hclust %>% as.dendrogram %>%
    ladderize
 #    rotate_DendSer(ser_weight = dist(t(x)))
 
-heatmaply(x, Rowv = row_dend, Colv = col_dend)
+heatmaply(x, Rowv = row_dend, Colv = col_dend, scale = "column")
 
 
 ```
@@ -190,13 +193,13 @@ Another example for using colors:
 
 ```{r}
 heatmaply(mtcars, margins = c(40, 130),
-          colors = heat.colors(100))
+          colors = heat.colors(100), scale = "column")
 ```
 
 Or even more customized colors using `scale_fill_gradient_fun`:
 
 ```{r}
-heatmaply(mtcars, margins = c(40, 130),
+heatmaply(mtcars, margins = c(40, 130), scale = "column",
           scale_fill_gradient_fun = ggplot2::scale_fill_gradient2(low = "blue", high = "red", midpoint = 200, limits = c(0, 500)))
 
 ```
@@ -214,7 +217,7 @@ library(heatmaply)
 airquality[1:10,] %>% is.na10 %>% 
   heatmaply(color = c("white","black"), grid_color = "grey",
             k_col =3, k_row = 3,
-            margins = c(40, 50)) 
+            margins = c(40, 50), scale = "column") 
 
 # airquality %>% is.na10 %>% 
 #   heatmaply(color = c("grey80", "grey20"), # grid_color = "grey",
