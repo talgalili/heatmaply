@@ -81,16 +81,16 @@ Default
 
 ```{r}
 library(heatmaply)
-heatmaply(mtcars)
+heatmaply(scale(mtcars))
 ```
 
-Because the labels are somewhat long, we need to manually fix the margins (hopefully this will be fixed in future versions of plot.ly). This also allows the inclusion of xlab/ylab/main texts.
+Because the labels are somewhat long, we need to manually fix the margins (hopefully this will be fixed in future versions of plotly). This also allows the inclusion of xlab/ylab/main texts.
 
 ```{r}
-heatmaply(mtcars, xlab = "Features", ylab = "Cars", 
+heatmaply(scale(mtcars), xlab = "Features", ylab = "Cars", 
 		main = "An example of title and xlab/ylab",
 		margins = c(60,100,40,20) )
-# heatmaply(mtcars) %>% layout(margin = list(l = 130, b = 40))
+# heatmaply(mtcars) %>% layout(margin = list(l = 130, b = 40), xaxis=list(tickfont=5))
 ```
 
 We can use this with correlation. Notice the use of limits to set the range of the colors, and how we color the branches:
@@ -102,32 +102,34 @@ heatmaply(cor(mtcars), margins = c(40, 40),
 ```
 
 
-Various setiation options
+Various seriation options
 -------------------
 
-heatmaply uses the `seriation` package to find optimal ordering of rows and columns. Optimal means to optimze the Hamiltonian path length that is restricted by the dendrogram structure. Which, in other words, means to rotate the branches so that the sum of distances between each adjacent leaf (label) will be minimized. This is related to a restricted version of the travel salesman problem. The default options is "OLO" (Optimal leaf ordering) which optimizes the above mention critirion (it works in O(n^4)). Another option is "GW" (Gruvaeus and Wainer) which aims for the same goal but uses a (faster?) heuristic. The option "mean" gives the output we would get by default from heatmap functions in other packages such as `gplots::heatmap.2`. The option "none" gives us the dendrograms without any rotation. 
+heatmaply uses the `seriation` package to find an optimal ordering of rows and columns. Optimal means to optimze the Hamiltonian path length that is restricted by the dendrogram structure. This, in other words, means to rotate the branches so that the sum of distances between each adjacent leaf (label) will be minimized. This is related to a restricted version of the travelling salesman problem. 
+
+The default options is "OLO" (Optimal leaf ordering) which optimizes the above criterion (in O(n^4)). Another option is "GW" ([Gruvaeus and Wainer](https://www.researchgate.net/publication/230266994_Two_additions_to_hierarchical_cluster_analysis)) which aims for the same goal but uses a potentially faster heuristic. The option "mean" gives the output we would get by default from heatmap functions in other packages such as `gplots::heatmap.2`. The option "none" gives us the dendrograms without any rotation. 
 
 ```{r}
 # The default of heatmaply:
-heatmaply(mtcars[1:10,], margins = c(40, 130),
+heatmaply(scale(mtcars[1:10,]), margins = c(40, 130),
           seriate = "OLO")
 ```
 
 ```{r}
 # Similar to OLO but less optimal (since it is a heuristic)
-heatmaply(mtcars[1:10,], margin = c(40, 130),
+heatmaply(scale(mtcars[1:10,]), margin = c(40, 130),
           seriate = "GW")
 ```
 
 ```{r}
 # the default by gplots::heatmaply.2
-heatmaply(mtcars[1:10,], margins = c(40, 130),
+heatmaply(scale(mtcars[1:10,]), margins = c(40, 130),
           seriate = "mean")
 ```
 
 ```{r}
 # the default output from hclust
-heatmaply(mtcars[1:10,],  margins = c(40, 130),
+heatmaply(scale(mtcars[1:10,](,  margins = c(40, 130),
           seriate = "none")
 ```
 
@@ -165,7 +167,7 @@ heatmaply(x, Rowv = row_dend, Colv = col_dend)
 Changing color palettes
 -------------------
 
-We can use different colors than the default `viridis`. For example, we may want to use other color pallates in order to get divergent colors for the correlations (these will sadly be less friendly for color blind people):
+We can use colors other than the default `viridis`. For example, we may want to use other color palettes in order to get divergent colors for the correlations (these will, sadly, be less useful for colorblind people):
 
 ```{r}
 # divergent_viridis_magma <- c(rev(viridis(100, begin = 0.3)), magma(100, begin = 0.3))
@@ -235,7 +237,7 @@ x  <- as.matrix(datasets::mtcars)
 gplots::heatmap.2(x, trace = "none", col = viridis(100), key = FALSE)
 ```
 
-And heatmaply (the only difference is the side of the row dendrogram. This might be possible to modify in future versions of ggplot/plotly/heatmaply):
+With heatmaply, the only difference is the side of the row dendrogram. This might be possible to modify in future versions of heatmaply:
 
 ```{r}
 heatmaply::heatmaply(x, seriate = "mean")
