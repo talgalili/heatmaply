@@ -1,4 +1,6 @@
-for (plot_method in c("ggplot", "plotly")) {
+for (plot_method in c(
+    # "ggplot", 
+    "plotly")) {
     for (bool in c(TRUE, FALSE)) {
 
         context(paste0(plot_method, ", row_dend_left=", bool))

@@ -35,6 +35,11 @@
 #'  the third is used as the top margin, and the fourth is used as the bottom margin.
 #'  If a single value is provided, it will be used as all four margins.
 #'
+#' @param cellnote Mouseover values for the data. Useful if applying scaling.
+#' @param draw_cellnote Should the cellnote annotations be drawn? Defaults is FALSE,
+#' if cellnote is not supplied, TRUE if cellnote is supplied. If TRUE and cellnote is not supplied,
+#' x will be used for cellnote.
+#' 
 #' @param Rowv determines if and how the row dendrogram should be reordered.	By default, it is TRUE, which implies dendrogram is computed and reordered based on row means. If NULL or FALSE, then no dendrogram is computed and no reordering is done. If a \link{dendrogram} (or \link{hclust}), then it is used "as-is", ie without any reordering. If a vector of integers, then dendrogram is computed and reordered based on the order of the vector.
 #' @param Colv determines if and how the column dendrogram should be reordered.	Has the options as the Rowv argument above and additionally when x is a square matrix, Colv = "Rowv" means that columns should be treated identically to the rows.
 #' @param distfun function used to compute the distance (dissimilarity) between both rows and columns. Defaults to dist.
@@ -255,6 +260,8 @@ heatmaply.default <- function(x,
                               row_text_angle = 0,
                               column_text_angle = 45,
                               subplot_margin = 0,
+                              cellnote = NULL,
+                              draw_cellnote = !is.null(cellnote),
 
                               ## dendrogram control
                               Rowv,
@@ -296,8 +303,8 @@ heatmaply.default <- function(x,
                               row_side_palette,
                               col_side_colors,
                               col_side_palette,
-                              ColSideColors,
-                              RowSideColors,
+                              ColSideColors = NULL,
+                              RowSideColors = NULL,
                               heatmap_layers = NULL,
                               branches_lwd = 0.6,
                               file,
@@ -324,10 +331,10 @@ heatmaply.default <- function(x,
   if(!missing(srtRow)) row_text_angle <- srtRow
   if(!missing(srtCol)) column_text_angle <- srtCol
 
-  if (!missing(ColSideColors)) {
+  if (!is.null(ColSideColors)) {
     col_side_colors <- ColSideColors
   }
-  if (!missing(RowSideColors)) {
+  if (!is.null(RowSideColors)) {
     row_side_colors <- RowSideColors
   }
 
@@ -365,6 +372,8 @@ heatmaply.default <- function(x,
     row_side_colors = row_side_colors,
     col_side_colors = col_side_colors,
 
+    cellnote = cellnote,
+
     ## dendrogram control
     Rowv = Rowv,
     Colv = Colv,
@@ -394,7 +403,6 @@ heatmaply.default <- function(x,
                      row_text_angle = row_text_angle,
                      column_text_angle = column_text_angle,
                      subplot_margin = subplot_margin,
-
                      row_dend_left = row_dend_left,
                      xlab=xlab, ylab=ylab, main = main,
                      titleX = titleX, titleY = titleY,
@@ -409,10 +417,10 @@ heatmaply.default <- function(x,
                      heatmap_layers = heatmap_layers,
                      ColSideColors = ColSideColors,
                      RowSideColors = RowSideColors,
-                     heatmap_layers = heatmap_layers,
                      branches_lwd = branches_lwd,
                      label_names = label_names,
-                     plot_method = plot_method
+                     plot_method = plot_method,
+                     draw_cellnote = draw_cellnote
                 ) # TODO: think more on what should be passed in "..."
 
   if(!missing(file)) hmly %>% saveWidget(file = file, selfcontained = TRUE)
@@ -553,6 +561,7 @@ heatmaply.heatmapr <- function(x,
                                hide_colorbar = FALSE,
                                key.title = NULL,
                                return_ppxpy = FALSE,
+                               draw_cellnote = FALSE,
                                row_side_colors,
                                row_side_palette,
                                col_side_colors,
@@ -630,12 +639,14 @@ heatmaply.heatmapr <- function(x,
   # create the heatmap
   data_mat <- x$matrix$data
 
-  if (plot_method == "ggplot") {
+  if (plot_method == "ggplot") {    
     p <- ggplot_heatmap(data_mat,
                       row_text_angle,
                       column_text_angle,
                       scale_fill_gradient_fun,
                       grid_color,
+                      cellnote = x$matrix$cellnote,
+                      draw_cellnote = draw_cellnote,
                       key.title = key.title,
                       layers = heatmap_layers,
                       row_dend_left = row_dend_left,

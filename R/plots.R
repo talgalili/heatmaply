@@ -13,6 +13,8 @@ ggplot_heatmap <- function(xx,
                            key.title = NULL,
                            layers,
                            row_dend_left = FALSE,
+                           cellnote = NULL,
+                           draw_cellnote = FALSE,
                            label_names,
                            ...) {
   theme_clear_grid_heatmap <- theme(axis.line = element_line(color = "black"),
@@ -41,12 +43,30 @@ ggplot_heatmap <- function(xx,
   } else {
     df[[row]] <- 1:nrow(xx)
   }
-  
+
   df[[row]] <- factor(
     df[[row]], 
-    levels=df[[row]], 
-    ordered=TRUE
+    levels = df[[row]], 
+    ordered = TRUE
   )
+
+  if (!is.null(cellnote)) {
+    cellnote <- as.data.frame(cellnote)
+    # colnames(df) <- x$matrix$cols
+    if(!is.null(rownames(cellnote))) {
+      cellnote[[row]] <- rownames(cellnote)
+    } else {
+      cellnote[[row]] <- 1:nrow(cellnote)
+    }
+    cellnote[[row]] <- factor(
+      cellnote[[row]], 
+      levels = cellnote[[row]], 
+      ordered = TRUE
+    )
+    mdf_c <- reshape2::melt(cellnote, id.vars=row)
+    mdf_c[, 3] <- as.factor(mdf_c[, 3])
+    colnames(mdf_c)[2:3] <- c(col, val) 
+  }
 
   mdf <- reshape2::melt(df, id.vars=row)
   colnames(mdf)[2:3] <- c(col, val) # rename "variable" and "value"
@@ -64,6 +84,12 @@ ggplot_heatmap <- function(xx,
     theme(axis.text.x = element_text(angle = column_text_angle, hjust = 1),
           axis.text.y = element_text(angle = row_text_angle, hjust = 1)
           )
+
+  if (!is.null(cellnote) && draw_cellnote) {
+    p <- p + geom_text(
+      data = mdf_c, 
+      mapping = aes_string(x = col, y = row, label = val))
+  }
 
   if(!missing(layers)) p <- p + layers
     ## Passed in to allow users to alter (courtesy of GenVisR)
@@ -84,7 +110,6 @@ ggplot_heatmap <- function(xx,
 
   p
 }
-
 
 
 plotly_heatmap <- function(x, limits = range(x), colors,
@@ -138,10 +163,10 @@ col2plotlyrgb <- function(col) {
     )
 }
 
-#' @importFrom ggdendro dendro_data
+#' @importFrom dendextend as.ggdend
 plotly_dend_row <- function(dend, flip = FALSE) {
-  dend_data <- dendro_data(dend)
-  segs <- dend_data$segment
+  dend_data <- as.ggdend(dend)
+  segs <- dend_data$segments
   p <- plot_ly(segs) %>% 
     add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend,
       line=list(color = '#000000'), showlegend = FALSE, hoverinfo = "none") %>%
@@ -166,9 +191,10 @@ plotly_dend_row <- function(dend, flip = FALSE) {
   p
 }
 
+
 plotly_dend_col <- function(dend, flip = FALSE) {
-  dend_data <- dendro_data(dend)
-  segs <- dend_data$segment
+  dend_data <- as.ggdend(dend)
+  segs <- dend_data$segments
 
   plot_ly(segs) %>% 
     add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend,
@@ -191,6 +217,7 @@ plotly_dend_col <- function(dend, flip = FALSE) {
 
 
 
+
 #'
 #' geom_tile for side color plots
 #'
@@ -199,28 +226,30 @@ plotly_dend_col <- function(dend, flip = FALSE) {
 #' plot
 #' @param scale_title Title of the color scale. Not currently used.
 #' @param type Horizontal or vertical plot? Valid values are "column" and "row"
-#' @param row_text_angle,column_text_angle the angle of the text of the rows/columns.
+#' @param text_angle the angle of the text of the rows/columns.
 #' @param is_colors Use if the values in df are valid colours and should not be mapped
 #'  to a color scheme, and instead should be plotted directly.
 #'
 #' @return A ggplot geom_tile object
-#'
-#' @export
 side_color_plot <- function(df, palette,
   scale_title = paste(type, "side colors"), type = c("column", "row"),
-  row_text_angle, column_text_angle, is_colors) {
+  text_angle = if (type == "row") 0 else 90, is_colors = FALSE, 
+  label_name = type) {
 
   if (is.matrix(df)) df <- as.data.frame(df)
-  stopifnot(is.data.frame(df))
+  assert_that(is.data.frame(df))
+
+  ## Cooerce to character
+  df[] <- lapply(df, as.character)
 
   ## TODO: Find out why names are dropped when dim(df)[2] == 1
   original_dim <- dim(df)
 
-  if (missing(column_text_angle)) column_text_angle <- 0
-  if (missing(row_text_angle)) row_text_angle <- 45
   if (missing(palette)) palette <- colorspace::rainbow_hcl
 
   type <- match.arg(type)
+  ## Custom label
+  if (!missing(label_name)) type <- label_name
   if (type %in% colnames(df))
     stop("Having", type, "in the colnames of the side_color df will drop data!")
 
@@ -231,10 +260,11 @@ side_color_plot <- function(df, palette,
   df[["value"]] <- factor(df[["value"]])
 
   id_var <- colnames(df)[1]
+
   if (type == "column") {
-    mapping <- aes_string(x = id_var, y = 'variable', fill = 'value')
+    mapping <- aes_string(x = id_var, y = "variable", fill = "value")
     if(original_dim[2] > 1) {
-      text_element <- element_text(angle = column_text_angle)
+      text_element <- element_text(angle = text_angle)
     } else text_element <- element_blank()
 
     theme <- theme(
@@ -244,10 +274,10 @@ side_color_plot <- function(df, palette,
         axis.ticks = element_blank())
   } else {
     if(original_dim[2] > 1) {
-      text_element <- element_text(angle = row_text_angle)
+      text_element <- element_text(angle = text_angle)
     } else text_element <- element_blank()
 
-    mapping <- aes_string(x = 'variable', y = id_var, fill = 'value')
+    mapping <- aes_string(x = "variable", y = id_var, fill = "value")
     theme <- theme(
         panel.background = element_blank(),
         axis.text.x = text_element,
@@ -256,7 +286,7 @@ side_color_plot <- function(df, palette,
   }
 
   color_vals <- if (is_colors) levels(df[["value"]])
-  else palette(length(unique(df[["value"]])))
+  else palette(nlevels(df[["value"]]))
 
   g <- ggplot(df, mapping = mapping) +
     geom_raster() +
@@ -269,4 +299,3 @@ side_color_plot <- function(df, palette,
     theme
   return(g)
 }
-

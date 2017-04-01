@@ -76,8 +76,6 @@
 #' @param digits integer indicating the number of decimal places to be used by \link{round} for 'label'.
 #' @param cellnote (optional) matrix of the same dimensions as \code{x} that has the human-readable version of each value, for displaying to the user on hover. If \code{NULL}, then \code{x} will be coerced using \code{\link{as.character}}.
 #' If missing, it will use \code{x}, after rounding it based on the \code{digits} parameter.
-#' @param cellnote_scale logical (default is TRUE). IF cellnote is missing and x is used,
-#' should cellnote be scaled if x is also scaled?
 #'
 #' @param cexRow positive numbers. If not missing, it will override \code{xaxis_font_size}
 #' and will give it a value cexRow*14
@@ -120,9 +118,8 @@ heatmapr <- function(x,
                       Colv,
                       distfun = dist,
                       hclustfun = hclust,
-                       dist_method = NULL,
-                       hclust_method = NULL,
-
+                      dist_method = NULL,
+                      hclust_method = NULL,
 
                       distfun_row,
                       hclustfun_row,
@@ -151,7 +148,6 @@ heatmapr <- function(x,
                       ## value formatting
                       digits = 3L,
                       cellnote,
-                      cellnote_scale = TRUE,
 
                       ##TODO: decide later which names/conventions to keep
                       theme = NULL,
@@ -367,9 +363,11 @@ heatmapr <- function(x,
   ## reorder x (and others)
   ##=======================
   x <- x[rowInd, colInd, drop = FALSE]
-  if (!missing(cellnote))
+  if (is.null(cellnote)) {
+    cellnote <- x
+  } else {
     cellnote <- cellnote[rowInd, colInd, drop = FALSE]
-
+  }
 
   if (!missing(row_side_colors)) {
     if(!(is.data.frame(row_side_colors) | is.matrix(row_side_colors))) {
@@ -408,12 +406,9 @@ heatmapr <- function(x,
   rowDend <- if(is.dendrogram(Rowv)) Rowv else NULL
   colDend <- if(is.dendrogram(Colv)) Colv else NULL
 
-
   ## Scale the data?
   ##====================
   scale <- match.arg(scale)
-
-  if(!cellnote_scale) x_unscaled <- x #keeps a backup for cellnote
 
   if(scale == "row") {
     x <- sweep(x, 1, rowMeans(x, na.rm = na.rm))
@@ -427,30 +422,27 @@ heatmapr <- function(x,
 
   ## cellnote
   ##====================
-  if(missing(cellnote)) {
-    if(cellnote_scale) {
-      cellnote <- round(x, digits = digits)
-    } else { # default
-      cellnote <- round(x_unscaled, digits = digits)
-    }
-  }
+  cellnote <- round(x, digits = digits)
+
 
   # Check that cellnote is o.k.:
-  if (is.null(dim(cellnote))) {
-    if (length(cellnote) != nr*nc) {
-      stop("Incorrect number of cellnote values")
+  if (!is.null(cellnote)) {
+    if (is.null(dim(cellnote))) {
+      if (length(cellnote) != nr*nc) {
+        stop("Incorrect number of cellnote values")
+      }
+      dim(cellnote) <- dim(x)
     }
-    dim(cellnote) <- dim(x)
+    if (!identical(dim(x), dim(cellnote))) {
+      stop("cellnote matrix must have same dimensions as x")
+    }
   }
-  if (!identical(dim(x), dim(cellnote))) {
-    stop("cellnote matrix must have same dimensions as x")
-  }
-
 
   ## Final touches before exporting the object
   ##=======================
 
-  mtx <- list(data = as.matrix(cellnote),
+  mtx <- list(data = as.matrix(x),
+              cellnote = cellnote,
               dim = dim(x),
               rows = rownames(x),
               cols = colnames(x)
@@ -489,8 +481,8 @@ heatmapr <- function(x,
     c(options, list(xclust_height = 0))
   }
 
-  heatmapr <- list(rows = rowDend, cols = colDend, matrix = mtx, # image = imgUri,
-                  theme = theme, options = options)
+  heatmapr <- list(rows = rowDend, cols = colDend, matrix = mtx,
+                  theme = theme, options = options, cellnote = cellnote)
                   
   if (!missing(row_side_colors)) heatmapr[["row_side_colors"]] <- row_side_colors
   if (!missing(col_side_colors)) heatmapr[["col_side_colors"]] <- col_side_colors
