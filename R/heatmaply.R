@@ -143,6 +143,7 @@
 #'  column you can simply use a sequence of numbers from 1 to the number of "rows"
 #'  inthe data.
 #' 
+#' @param label_names Names for labells of x, y and value/fill mouseover.
 #'
 #' @export
 #' @examples

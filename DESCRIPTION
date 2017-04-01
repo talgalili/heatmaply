@@ -46,7 +46,6 @@ Suggests:
     covr,
     rmarkdown,
     gplots,
-    RColorBrewer,
     testthat
 VignetteBuilder: knitr
 License: GPL-2 | GPL-3

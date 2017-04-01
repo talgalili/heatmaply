@@ -183,6 +183,8 @@ inthe data.}
 
 \item{plot_method}{Use "ggplot" or "plotly" to choose which library produces heatmap
 and dendrogram plots}
+
+\item{label_names}{Names for labells of x, y and value/fill mouseover.}
 }
 \description{
 An object of class heatmapr includes all the needed information
