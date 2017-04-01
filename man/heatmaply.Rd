@@ -10,21 +10,20 @@ heatmaply(x, ...)
 
 \method{heatmaply}{default}(x, colors = viridis(n = 256, alpha = 1, begin = 0,
   end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
-  row_text_angle = 0, column_text_angle = 45, subplot_margin = 0,
-  Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE, distfun = dist,
-  hclustfun = hclust, dist_method = NULL, hclust_method = NULL,
-  distfun_row, hclustfun_row, distfun_col, hclustfun_col,
-  dendrogram = c("both", "row", "column", "none"), reorderfun = function(d,
-  w) reorder(d, w), k_row, k_col, symm = FALSE, revC, row_dend_left = FALSE,
-  margins = c(50, 50, NA, 0), ...,
+  row_text_angle = 0, column_text_angle = 45, subplot_margin = 0, Rowv,
+  Colv, distfun = dist, hclustfun = hclust, dist_method = NULL,
+  hclust_method = NULL, distfun_row, hclustfun_row, distfun_col,
+  hclustfun_col, dendrogram = c("both", "row", "column", "none"),
+  reorderfun = function(d, w) reorder(d, w), k_row, k_col, symm = FALSE,
+  revC, row_dend_left = FALSE, margins = c(50, 50, NA, 0), ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
   main = "", titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE,
-  key.title = NULL, return_ppxpy = FALSE, row_side_colors = NULL,
-  row_side_palette, col_side_colors = NULL, col_side_palette,
-  ColSideColors = NULL, RowSideColors = NULL, heatmap_layers = NULL,
-  branches_lwd = 0.6, file, long_data, label_names = c("row", "column",
+  key.title = NULL, return_ppxpy = FALSE, row_side_colors, row_side_palette,
+  col_side_colors, col_side_palette, ColSideColors, RowSideColors,
+  heatmap_layers = NULL, branches_lwd = 0.6, file, long_data,
+  plot_method = c("ggplot", "plotly"), label_names = c("row", "column",
   "value"))
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
@@ -35,10 +34,10 @@ heatmaply(x, ...)
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
   main = "", titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE,
-  key.title = NULL, return_ppxpy = FALSE, row_side_colors = NULL,
-  row_side_palette, col_side_colors = NULL, col_side_palette,
-  ColSideColors = NULL, RowSideColors = NULL, heatmap_layers = NULL,
-  branches_lwd = 0.6, label_names)
+  key.title = NULL, return_ppxpy = FALSE, row_side_colors, row_side_palette,
+  col_side_colors, col_side_palette, plot_method = c("ggplot", "plotly"),
+  ColSideColors, RowSideColors, heatmap_layers = NULL, branches_lwd = 0.6,
+  label_names)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -174,6 +173,9 @@ This is based on \link[htmlwidgets]{saveWidget}.}
 Colnames must be c("name", "variable", "value"). If you do not have a names 
 column you can simply use a sequence of numbers from 1 to the number of "rows"
 inthe data.}
+
+\item{plot_method}{Use "ggplot" or "plotly" to choose which library produces heatmap
+and dendrogram plots}
 }
 \description{
 An object of class heatmapr includes all the needed information
