@@ -5,7 +5,7 @@
 \title{geom_tile for side color plots}
 \usage{
 side_color_plot(df, palette, scale_title = paste(type, "side colors"),
-  type = c("column", "row"), row_text_angle, column_text_angle, is_colors)
+  type = c("column", "row"), text_angle, is_colors, label_name)
 }
 \arguments{
 \item{df}{A "molten" data.frame as produced by (eg) reshape2::melt}
@@ -17,7 +17,7 @@ plot}
 
 \item{type}{Horizontal or vertical plot? Valid values are "column" and "row"}
 
-\item{row_text_angle, column_text_angle}{the angle of the text of the rows/columns.}
+\item{text_angle}{the angle of the text of the rows/columns.}
 
 \item{is_colors}{Use if the values in df are valid colours and should not be mapped
 to a color scheme, and instead should be plotted directly.}
