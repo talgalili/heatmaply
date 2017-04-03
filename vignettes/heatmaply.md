@@ -1,6 +1,6 @@
 ---
 title: "Introduction to heatmaply"
-date: "2017-02-22"
+date: "2017-04-03"
 author: "Tal Galili"
 output:
   html_document:

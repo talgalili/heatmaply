@@ -147,6 +147,7 @@
 #'  inthe data.
 #' 
 #' @param label_names Names for labells of x, y and value/fill mouseover.
+#' @param cex_row,cex_col Font size for row and column labels.
 #'
 #' @export
 #' @examples
@@ -581,8 +582,8 @@ heatmaply.heatmapr <- function(x,
                                heatmap_layers = NULL,
                                branches_lwd = 0.6,
                                label_names,
-                               cex_row,
-                               cex_col
+                               cex_row = 10,
+                               cex_col = 10
                                ) {
 
   plot_method <- match.arg(plot_method)

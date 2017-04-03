@@ -81,7 +81,7 @@ Default
 
 ```{r}
 library(heatmaply)
-heatmaply(scale(mtcars))
+heatmaply(mtcars)
 ```
 
 It is probably more useful to use scaling. heatmaply supports column
@@ -92,8 +92,7 @@ Because the labels are somewhat long, we need to manually fix the margins (hopef
 heatmaply(mtcars, xlab = "Features", ylab = "Cars", 
 		main = "An example of title and xlab/ylab",
     scale = "column",
-		margins = c(60,100,40,20) )
-# heatmaply(mtcars) %>% layout(margin = list(l = 130, b = 40), xaxis=list(tickfont=5))
+		margins = c(60,100,40,20))
 ```
 
 We can use this with correlation. Notice the use of limits to set the range of the colors, and how we color the branches:
