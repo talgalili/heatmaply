@@ -1,5 +1,6 @@
 
 [![Build Status](https://travis-ci.org/talgalili/heatmaply.png?branch=master)](https://travis-ci.org/talgalili/heatmaply)
+[![codecov.io](https://codecov.io/github/talgalili/heatmaply/coverage.svg?branch=master)](https://codecov.io/github/talgalili/heatmaply?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/heatmaply)](https://cran.r-project.org/package=heatmaply)
 ![](http://cranlogs.r-pkg.org/badges/heatmaply?color=yellow)
 ![](http://cranlogs.r-pkg.org/badges/grand-total/heatmaply?color=yellowgreen)
