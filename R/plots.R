@@ -1,5 +1,3 @@
-
-
 # xx is a data matrix
 ggplot_heatmap <- function(xx,
                            row_text_angle = 0,
@@ -16,6 +14,8 @@ ggplot_heatmap <- function(xx,
                            cellnote = NULL,
                            draw_cellnote = FALSE,
                            label_names,
+                           cex_row = 10,
+                           cex_col = 10,
                            ...) {
   theme_clear_grid_heatmap <- theme(axis.line = element_line(color = "black"),
                                     panel.grid.major = element_blank(),
@@ -81,8 +81,10 @@ ggplot_heatmap <- function(xx,
     coord_cartesian(expand = FALSE) +
     scale_fill_gradient_fun +
     theme_bw()+ theme_clear_grid_heatmap +
-    theme(axis.text.x = element_text(angle = column_text_angle, hjust = 1),
-          axis.text.y = element_text(angle = row_text_angle, hjust = 1)
+    theme(axis.text.x = element_text(angle = column_text_angle, 
+            size = cex_col, hjust = 1),
+          axis.text.y = element_text(angle = row_text_angle, 
+            size = cex_row, hjust = 1)
           )
 
   if (!is.null(cellnote) && draw_cellnote) {
@@ -114,19 +116,21 @@ ggplot_heatmap <- function(xx,
 
 plotly_heatmap <- function(x, limits = range(x), colors,
     row_text_angle=0, column_text_angle=45, grid.color, grid.size, key.title, 
-    row_dend_left) {
+    row_dend_left, cex_row = 10, cex_col = 10) {
 
   plot_ly(z = x, x = 1:ncol(x), y = 1:nrow(x), 
     type = "heatmap", showlegend = FALSE, colors=colors, 
     zmin = limits[1], zmax = limits[2]) %>%
       layout(
         xaxis = list(
-          tickangle = row_text_angle,
+          tickfont = list(size = cex_col),
+          tickangle = column_text_angle,
           tickvals = 1:ncol(x), ticktext = colnames(x),
           showticklabels = TRUE
         ),
         yaxis = list(
-          tickangle = column_text_angle,
+          tickfont = list(size = cex_row),
+          tickangle = row_text_angle,
           tickvals = 1:nrow(x), ticktext = rownames(x),
           showticklabels = TRUE
         )
