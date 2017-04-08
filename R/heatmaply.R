@@ -121,6 +121,13 @@
 #' @param row_side_palette,col_side_palette Color palette functions to be
 #'    used for row_side_colors and col_side_colors respectively.
 #'
+#' @param seriate character indicating the method of matrix sorting (default: "OLO").
+#' Implemented options include:
+#' "OLO" (Optimal leaf ordering, optimzes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
+#' "mean" (sorts the matrix based on the reorderfun using marginal means of the matrix. This is the default used by \link[gplots]{heatmap.2}),
+#' "none" (the default order produced by the dendrogram),
+#' "GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length that is restricted by the dendrogram structure)
+#'
 #' @param heatmap_layers ggplot object (eg, theme_bw()) to be added to
 #'  the heatmap before conversion to a plotly object.
 #'
@@ -296,6 +303,7 @@ heatmaply.default <- function(x,
                               col_side_palette,
                               ColSideColors = NULL,
                               RowSideColors = NULL,
+                              seriate = c("OLO", "mean", "none", "GW"),
                               heatmap_layers = NULL,
                               branches_lwd = 0.6,
                               file
@@ -349,10 +357,13 @@ heatmaply.default <- function(x,
   if(dendrogram == "column") Rowv <- FALSE
   if(dendrogram == "none") Rowv <- Colv <- FALSE
 
+  # this also occurs in heatmapr, so it may be o.k. to remove the following line.
+  seriate <- match.arg(seriate)
 
   hm <- heatmapr(x,
     row_side_colors = row_side_colors,
     col_side_colors = col_side_colors,
+    seriate = seriate,
 
     ## dendrogram control
     Rowv = Rowv,

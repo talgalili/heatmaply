@@ -23,8 +23,8 @@ heatmaply(x, ...)
   main = "", titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE,
   key.title = NULL, return_ppxpy = FALSE, row_side_colors = NULL,
   row_side_palette, col_side_colors = NULL, col_side_palette,
-  ColSideColors = NULL, RowSideColors = NULL, heatmap_layers = NULL,
-  branches_lwd = 0.6, file)
+  ColSideColors = NULL, RowSideColors = NULL, seriate = c("OLO", "mean",
+  "none", "GW"), heatmap_layers = NULL, branches_lwd = 0.6, file)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
@@ -159,6 +159,13 @@ used for row_side_colors and col_side_colors respectively.}
 
 \item{ColSideColors, RowSideColors}{passed to row_side_colors,col_side_colors in order
 to keep compatibility with \link[gplots]{heatmap.2}}
+
+\item{seriate}{character indicating the method of matrix sorting (default: "OLO").
+Implemented options include:
+"OLO" (Optimal leaf ordering, optimzes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
+"mean" (sorts the matrix based on the reorderfun using marginal means of the matrix. This is the default used by \link[gplots]{heatmap.2}),
+"none" (the default order produced by the dendrogram),
+"GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length that is restricted by the dendrogram structure)}
 
 \item{heatmap_layers}{ggplot object (eg, theme_bw()) to be added to
 the heatmap before conversion to a plotly object.}
