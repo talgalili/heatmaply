@@ -127,16 +127,18 @@ plotly_heatmap <- function(x, limits = range(x), colors,
           tickfont = list(size = fontsize_col),
           tickangle = column_text_angle,
           tickvals = 1:ncol(x), ticktext = colnames(x),
+          linecolor = "#ffffff",
           showticklabels = TRUE
         ),
         yaxis = list(
           tickfont = list(size = fontsize_row),
           tickangle = row_text_angle,
           tickvals = 1:nrow(x), ticktext = rownames(x),
+          linecolor = "#ffffff",
           showticklabels = TRUE
         )
       )
-  p <- p %>% plotly::colorbar(lenmode = "fraction", y = colorbar_ypos, 
+  p <- plotly::colorbar(p, lenmode = "fraction", y = colorbar_ypos, 
     yanchor = colorbar_yanchor, x = colorbar_xpos, len=colorbar_len)
   p
 }
@@ -144,7 +146,7 @@ plotly_heatmap <- function(x, limits = range(x), colors,
 
 
 make_colorscale <- function(colors) {
-    seq <- seq(0, 1, by = 1/length(colors))
+    seq <- seq(0, 1, by = 1 / length(colors))
     scale <- lapply(seq_along(colors), 
         function(i) {
             # eg
@@ -183,13 +185,14 @@ plotly_dend_row <- function(dend, flip = FALSE) {
     layout(
       hovermode = "closest",
       xaxis = list(
-        title = "", 
-        linecolor = "#ffffff", 
+        title = "",
+        # range = c(max(segs$y), 0),
+        linecolor = "#ffffff",
         showgrid = FALSE
       ),
       yaxis = list(
         title = "",
-        range = c(0, max(segs$x) + 1), 
+        # range = c(0, max(segs$x) + 1),
         linecolor = "#ffffff",
         showgrid = FALSE
       )
@@ -215,12 +218,14 @@ plotly_dend_col <- function(dend, flip = FALSE) {
       hovermode = "closest",
       xaxis = list(
         title = "", 
-        range = c(0, max(segs$x) + 1), 
+        # range = c(0, max(segs$x) + 1), 
         linecolor = "#ffffff",
         showgrid = FALSE
       ),
       yaxis = list(
-        title = "", 
+        title = "",
+        autorange = FALSE,
+        range = c(0, max(segs$y) + 1),
         linecolor = "#ffffff", 
         showgrid = FALSE
       )

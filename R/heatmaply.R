@@ -307,7 +307,7 @@ heatmaply.default <- function(x,
                               na.rm = TRUE,
 
                               row_dend_left = FALSE,
-                              margins = c(50, 50, NA, 0),
+                              margins = c(50, 50, NA, NA),
                               ...,
                               scale_fill_gradient_fun = scale_fill_gradientn(
                                 colors = if(is.function(colors)) colors(256) else colors,
@@ -595,7 +595,7 @@ heatmaply.heatmapr <- function(x,
                                subplot_margin = 0,
 
                                row_dend_left = FALSE,
-                               margins = c(50, 50, NA, 0),
+                               margins = c(50, 50, NA, NA),
                                ...,
                                scale_fill_gradient_fun = scale_fill_gradientn(
                                  colors = if(is.function(colors)) colors(256) else colors,
@@ -767,11 +767,11 @@ heatmaply.heatmapr <- function(x,
   ## plotly:
   # turn p, px, and py to plotly objects if necessary
   if (!inherits(p, "plotly")) p <- ggplotly(p) %>% layout(showlegend=FALSE)
-  if(!is.null(px) && !inherits(px, "plotly")) {
+  if (!is.null(px) && !inherits(px, "plotly")) {
     px <- ggplotly(px, tooltip = "y") %>% 
       layout(showlegend=FALSE)
   }
-  if(!is.null(py) && !inherits(py, "plotly")) {
+  if (!is.null(py) && !inherits(py, "plotly")) {
     py <- ggplotly(py, tooltip = "y") %>% 
       layout(showlegend=FALSE)
   }
@@ -786,14 +786,15 @@ heatmaply.heatmapr <- function(x,
               yaxis = list(           # layout's yaxis is a named list. List of valid keys: /r/reference/#layout-yaxis
                 title = ylab      # yaxis's title: /r/reference/#layout-yaxis-title
               ))
-  if(hide_colorbar) {
+  if (hide_colorbar) {
     p <- hide_colorbar(p)
     # px <- hide_colorbar(px)
     # py <- hide_colorbar(py)
   }
 
   # Adjust top based on whether main is empty or not.
-  if(is.na(margins[3])) margins[3] <- ifelse(main == "", 0, 30)
+  if (is.na(margins[3])) margins[3] <- ifelse(main == "", 0, 30)
+  if (is.na(margins[4])) margins[4] <- ifelse(row_dend_left, 100, 0)
 
   heatmap_subplot <- heatmap_subplot_from_ggplotly(p = p, px = px, py = py,
     row_dend_left = row_dend_left, subplot_margin = subplot_margin,
