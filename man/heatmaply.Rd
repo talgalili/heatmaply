@@ -26,7 +26,7 @@ heatmaply(x, ...)
   col_side_colors, col_side_palette, ColSideColors = NULL,
   RowSideColors = NULL, heatmap_layers = NULL, branches_lwd = 0.6, file,
   long_data, plot_method = c("ggplot", "plotly"), label_names = c("row",
-  "column", "value"), cex_row = 10, cex_col = 10)
+  "column", "value"), fontsize_row = 10, fontsize_col = 10, cexRow, cexCol)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
@@ -39,8 +39,8 @@ heatmaply(x, ...)
   key.title = NULL, return_ppxpy = FALSE, draw_cellnote = FALSE,
   row_side_colors, row_side_palette, col_side_colors, col_side_palette,
   plot_method = c("ggplot", "plotly"), ColSideColors, RowSideColors,
-  heatmap_layers = NULL, branches_lwd = 0.6, label_names, cex_row = 10,
-  cex_col = 10)
+  heatmap_layers = NULL, branches_lwd = 0.6, label_names,
+  fontsize_row = 10, fontsize_col = 10)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -192,7 +192,7 @@ and dendrogram plots}
 
 \item{label_names}{Names for labells of x, y and value/fill mouseover.}
 
-\item{cex_row, cex_col}{Font size for row and column labels.}
+\item{fontsize_row, fontsize_col, cexRow, cexCol}{Font size for row and column labels.}
 }
 \description{
 An object of class heatmapr includes all the needed information
@@ -298,4 +298,3 @@ heatmaply(x, Rowv = row_dend, Colv = col_dend)
 
 }
 }
-

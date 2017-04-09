@@ -147,7 +147,7 @@
 #'  inthe data.
 #' 
 #' @param label_names Names for labells of x, y and value/fill mouseover.
-#' @param cex_row,cex_col Font size for row and column labels.
+#' @param fontsize_row,fontsize_col,cexRow,cexCol Font size for row and column labels.
 #'
 #' @export
 #' @examples
@@ -320,8 +320,9 @@ heatmaply.default <- function(x,
                               long_data,
                               plot_method = c("ggplot", "plotly"),
                               label_names = c("row", "column", "value"),
-                              cex_row = 10, 
-                              cex_col = 10
+                              fontsize_row = 10, 
+                              fontsize_col = 10,
+                              cexRow, cexCol
 ) {
   if (!missing(long_data)) {
     if (!missing(x)) warning("x and long_data should not be used together")
@@ -349,6 +350,8 @@ heatmaply.default <- function(x,
     row_side_colors <- RowSideColors
   }
 
+  if (!missing(cexRow)) fontsize_row <- cexRow
+  if (!missing(cexCol)) fontsize_col <- cexCol
 
   # TODO: maybe create heatmaply.data.frame heatmaply.matrix instead.
   #       But right now I am not sure this would be needed.
@@ -436,8 +439,8 @@ heatmaply.default <- function(x,
                      label_names = label_names,
                      plot_method = plot_method,
                      draw_cellnote = draw_cellnote,
-                     cex_row = cex_row,
-                     cex_col = cex_col
+                     fontsize_row = fontsize_row,
+                     fontsize_col = fontsize_col
                 ) # TODO: think more on what should be passed in "..."
 
   if(!missing(file)) hmly %>% saveWidget(file = file, selfcontained = TRUE)
@@ -582,8 +585,8 @@ heatmaply.heatmapr <- function(x,
                                heatmap_layers = NULL,
                                branches_lwd = 0.6,
                                label_names,
-                               cex_row = 10,
-                               cex_col = 10
+                               fontsize_row = 10,
+                               fontsize_col = 10
                                ) {
 
   plot_method <- match.arg(plot_method)
@@ -663,11 +666,11 @@ heatmaply.heatmapr <- function(x,
                       layers = heatmap_layers,
                       row_dend_left = row_dend_left,
                       label_names = label_names,
-                      cex_row = cex_row, cex_col = cex_col)
+                      fontsize_row = fontsize_row, fontsize_col = fontsize_col)
   } else if (plot_method == "plotly") {
     p <- plotly_heatmap(data_mat, limits = limits, colors = colors, 
       row_text_angle = row_text_angle, column_text_angle = column_text_angle,
-      cex_row = cex_row, cex_col = cex_col)
+      fontsize_row = fontsize_row, fontsize_col = fontsize_col)
   }
 
   # TODO: Add native plotly sidecolor function. 
