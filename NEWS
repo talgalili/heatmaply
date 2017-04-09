@@ -3,6 +3,11 @@
 heatmaply 0.9.0 (2017-04-08)
 ==============================
 
+### NEW FEATURES
+* heatmaply -
+      * Slightly more sensible default for heights (in line with widths in any case), and adds subplot_widths and subplot_heights params for user customisation.
+
+
 ### NOTES
 * Added seriate to the docs of heatmaply.
 
