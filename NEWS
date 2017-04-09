@@ -8,23 +8,18 @@ heatmaply 0.9.0 (2017-04-08)
       * Slightly more sensible default for heights (in line with widths in any case), and adds subplot_widths and subplot_heights params for user customisation.
 
 
-### NOTES
-* Added seriate to the docs of heatmaply.
-
-
-
-heatmaply 0.8.3 (2017-03-31)
-==============================
-
-
 ### BUG FIXES
 * Fix a mistake in an object's check in ggplot_heatmap. Props to Hannes Becker (https://twitter.com/SportsTribution/status/846764290484944896). The following no longer crashes heatmaply:
       library(heatmaply)
       df<-data.frame(1)
       heatmaply(mtcars)
 
+
 ### NOTES
 * Added scale and na.rm parameters to the document of heatmaply.
+* Added seriate to the docs of heatmaply.
+* Improved vignette with fixing typos and adding examples.
+
 
 
 heatmaply 0.8.2 (2017-03-20)
