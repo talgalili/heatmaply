@@ -11,20 +11,23 @@ heatmaply(x, ...)
 \method{heatmaply}{default}(x, colors = viridis(n = 256, alpha = 1, begin = 0,
   end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
   row_text_angle = 0, column_text_angle = 45, subplot_margin = 0,
-  Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE, distfun = dist,
-  hclustfun = hclust, dist_method = NULL, hclust_method = NULL,
-  distfun_row, hclustfun_row, distfun_col, hclustfun_col,
-  dendrogram = c("both", "row", "column", "none"), reorderfun = function(d,
-  w) reorder(d, w), k_row, k_col, symm = FALSE, revC, scale = c("none",
-  "row", "column"), na.rm = TRUE, row_dend_left = FALSE, margins = c(50,
-  50, NA, 0), ..., scale_fill_gradient_fun = scale_fill_gradientn(colors = if
+  cellnote = NULL, draw_cellnote = !is.null(cellnote), Rowv, Colv,
+  distfun = dist, hclustfun = hclust, dist_method = NULL,
+  hclust_method = NULL, distfun_row, hclustfun_row, distfun_col,
+  hclustfun_col, dendrogram = c("both", "row", "column", "none"),
+  reorderfun = function(d, w) reorder(d, w), k_row, k_col, symm = FALSE,
+  revC, scale = c("none", "row", "column"), na.rm = TRUE,
+  row_dend_left = FALSE, margins = c(50, 50, NA, 0), ...,
+  scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
   main = "", titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE,
-  key.title = NULL, return_ppxpy = FALSE, row_side_colors = NULL,
-  row_side_palette, col_side_colors = NULL, col_side_palette,
-  ColSideColors = NULL, RowSideColors = NULL, seriate = c("OLO", "mean",
-  "none", "GW"), heatmap_layers = NULL, branches_lwd = 0.6, file,
+  key.title = NULL, return_ppxpy = FALSE, row_side_colors, row_side_palette,
+  col_side_colors, col_side_palette, ColSideColors = NULL,
+  RowSideColors = NULL, seriate = c("OLO", "mean", "none", "GW"),
+  heatmap_layers = NULL, branches_lwd = 0.6, file, long_data,
+  plot_method = c("ggplot", "plotly"), label_names = c("row", "column",
+  "value"), fontsize_row = 10, fontsize_col = 10, cexRow, cexCol,
   subplot_widths = NULL, subplot_heights = NULL)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
@@ -35,10 +38,12 @@ heatmaply(x, ...)
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
   main = "", titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE,
-  key.title = NULL, return_ppxpy = FALSE, row_side_colors = NULL,
-  row_side_palette, col_side_colors = NULL, col_side_palette,
-  ColSideColors = NULL, RowSideColors = NULL, heatmap_layers = NULL,
-  branches_lwd = 0.6, subplot_widths = NULL, subplot_heights = NULL)
+  key.title = NULL, return_ppxpy = FALSE, draw_cellnote = FALSE,
+  row_side_colors, row_side_palette, col_side_colors, col_side_palette,
+  plot_method = c("ggplot", "plotly"), ColSideColors, RowSideColors,
+  heatmap_layers = NULL, branches_lwd = 0.6, label_names,
+  fontsize_row = 10, fontsize_col = 10, subplot_widths = subplot_widths,
+  subplot_heights = subplot_heights)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -65,6 +70,12 @@ four values (all between 0 and 1). If four values are provided,
 the first is used as the left margin, the second is used as the right margin,
 the third is used as the top margin, and the fourth is used as the bottom margin.
 If a single value is provided, it will be used as all four margins.}
+
+\item{cellnote}{Mouseover values for the data. Useful if applying scaling.}
+
+\item{draw_cellnote}{Should the cellnote annotations be drawn? Defaults is FALSE,
+if cellnote is not supplied, TRUE if cellnote is supplied. If TRUE and cellnote is not supplied,
+x will be used for cellnote.}
 
 \item{Rowv}{determines if and how the row dendrogram should be reordered.    By default, it is TRUE, which implies dendrogram is computed and reordered based on row means. If NULL or FALSE, then no dendrogram is computed and no reordering is done. If a \link{dendrogram} (or \link{hclust}), then it is used "as-is", ie without any reordering. If a vector of integers, then dendrogram is computed and reordered based on the order of the vector.}
 
@@ -180,6 +191,18 @@ For example: heatmaply(x, file = "heatmaply_plot.html").
 This should not include a directory, only the name of the file.
 You can relocate the file once it is created, or use \link{setwd} first.
 This is based on \link[htmlwidgets]{saveWidget}.}
+
+\item{long_data}{Data in long format. Replaces x, so both should not be used.
+Colnames must be c("name", "variable", "value"). If you do not have a names 
+column you can simply use a sequence of numbers from 1 to the number of "rows"
+inthe data.}
+
+\item{plot_method}{Use "ggplot" or "plotly" to choose which library produces heatmap
+and dendrogram plots}
+
+\item{label_names}{Names for labells of x, y and value/fill mouseover.}
+
+\item{fontsize_row, fontsize_col, cexRow, cexCol}{Font size for row and column labels.}
 
 \item{subplot_widths, subplot_heights}{The relative widths and heights of each
 subplot. The length of these vectors will vary depending on the number of
