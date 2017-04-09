@@ -115,10 +115,11 @@ ggplot_heatmap <- function(xx,
 
 
 plotly_heatmap <- function(x, limits = range(x), colors,
-    row_text_angle=0, column_text_angle=45, grid.color, grid.size, key.title, 
-    row_dend_left, fontsize_row = 10, fontsize_col = 10) {
+    row_text_angle = 0, column_text_angle = 45, grid.color, grid.size, key.title, 
+    row_dend_left, fontsize_row = 10, fontsize_col = 10, colorbar_yanchor, 
+    colorbar_xpos, colorbar_ypos, colorbar_len = 0.3) {
 
-  plot_ly(z = x, x = 1:ncol(x), y = 1:nrow(x), 
+  p <- plot_ly(z = x, x = 1:ncol(x), y = 1:nrow(x), 
     type = "heatmap", showlegend = FALSE, colors=colors, 
     zmin = limits[1], zmax = limits[2]) %>%
       layout(
@@ -134,8 +135,11 @@ plotly_heatmap <- function(x, limits = range(x), colors,
           tickvals = 1:nrow(x), ticktext = rownames(x),
           showticklabels = TRUE
         )
-      ) %>% plotly::colorbar(lenmode = "fraction", y = 0, yanchor="bottom", len=0.3)
-}    
+      )
+  p <- p %>% plotly::colorbar(lenmode = "fraction", y = colorbar_ypos, 
+    yanchor = colorbar_yanchor, x = colorbar_xpos, len=colorbar_len)
+  p
+}
 
 
 
@@ -173,7 +177,9 @@ plotly_dend_row <- function(dend, flip = FALSE) {
   segs <- dend_data$segments
   p <- plot_ly(segs) %>% 
     add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend,
-      line=list(color = '#000000'), showlegend = FALSE, hoverinfo = "none") %>%
+      line=list(color = '#000000'), showlegend = FALSE
+      # , hoverinfo = "none"
+      ) %>%
     layout(
       hovermode = "closest",
       xaxis = list(
@@ -202,7 +208,9 @@ plotly_dend_col <- function(dend, flip = FALSE) {
 
   plot_ly(segs) %>% 
     add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend,
-      line = list(color='#000000'), showlegend = FALSE, hoverinfo = "none") %>%
+      line = list(color='#000000'), showlegend = FALSE
+      # , hoverinfo = "none"
+      ) %>%
     layout(
       hovermode = "closest",
       xaxis = list(
