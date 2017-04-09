@@ -41,3 +41,6 @@ percentize(x[,1])
 
 }
 }
+\seealso{
+\link{normalize}
+}

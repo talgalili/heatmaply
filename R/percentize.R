@@ -62,6 +62,7 @@ percentize_predict <- function(x, ecdf_fun = ecdf, ...) {
 #' percentize.default
 #' percentize.data.frame
 #' percentize.matrix
+#' @seealso \link{normalize}
 #' @examples
 #' \dontrun{
 #' x <- mtcars
@@ -114,7 +115,8 @@ percentize.matrix <- function(x, ...) {
 #' @export
 #'
 #' @description
-#' An Empirical Normalization Transformation brings data to the 0 to 1 scale.
+#' An Empirical Normalization Transformation brings data to the 0 to 1 scale
+#' by substracting the minimum and dividing by the maximum of all observations.
 #' This is similar to \link{percentize} in that it allows to compare variables
 #' of different scales, but it also keeps the shape of the distribution.
 #'
@@ -129,6 +131,7 @@ percentize.matrix <- function(x, ...) {
 #' normalize.default
 #' normalize.data.frame
 #' normalize.matrix
+#' @seealso \link{percentize}
 #' @examples
 #' \dontrun{
 #' x <- mtcars
@@ -141,8 +144,8 @@ percentize.matrix <- function(x, ...) {
 #'
 #' x <- data.frame(a = 1:10, b = 11:20)
 #' x[4:6, 1:2] <- NA
-#' percentize(x)
-#' percentize(x[,1])
+#' normalize(x)
+#' normalize(x[,1])
 #'
 #' }
 normalize <- function(x, ...) {
