@@ -143,7 +143,7 @@
 #' This is based on \link[htmlwidgets]{saveWidget}.
 #'
 #' @param subplot_widths,subplot_heights The relative widths and heights of each
-#'  subplot. The length of these vectors will vary depending on the number of 
+#'  subplot. The length of these vectors will vary depending on the number of
 #'  plots involved.
 #'
 #' @export
@@ -310,7 +310,7 @@ heatmaply.default <- function(x,
                               heatmap_layers = NULL,
                               branches_lwd = 0.6,
                               file,
-                              subplot_widths = NULL, 
+                              subplot_widths = NULL,
                               subplot_heights = NULL
 ) {
   ## Suppress creation of new graphcis device, but on exit replace it.
@@ -419,7 +419,7 @@ heatmaply.default <- function(x,
                      RowSideColors = RowSideColors,
                      heatmap_layers = heatmap_layers,
                      branches_lwd = branches_lwd,
-                     subplot_widths = subplot_widths, 
+                     subplot_widths = subplot_widths,
                      subplot_heights = subplot_heights
                 ) # TODO: think more on what should be passed in "..."
 
@@ -587,11 +587,11 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
 
 
   if (sum(!ind_null_col) != length(heights)) {
-    stop(paste("Number of subplot_heights supplied is not correct; should be", 
+    stop(paste("Number of subplot_heights supplied is not correct; should be",
       sum(!ind_null_col), "but is", length(heights)))
   }
   if (sum(!ind_null_row) != length(widths)) {
-    stop(paste("Number of subplot_widths supplied is not correct; should be", 
+    stop(paste("Number of subplot_widths supplied is not correct; should be",
       sum(!ind_null_row), "but is", length(widths)))
   }
 
@@ -654,8 +654,8 @@ heatmaply.heatmapr <- function(x,
                                RowSideColors = NULL,
                                heatmap_layers = NULL,
                                branches_lwd = 0.6,
-                               subplot_widths = subplot_widths, 
-                               subplot_heights = subplot_heights
+                               subplot_widths = NULL,
+                               subplot_heights = NULL
                                ) {
   # informative errors for mis-specified limits
   if(!is.null(limits)) {

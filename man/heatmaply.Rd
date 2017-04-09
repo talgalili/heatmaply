@@ -38,8 +38,7 @@ heatmaply(x, ...)
   key.title = NULL, return_ppxpy = FALSE, row_side_colors = NULL,
   row_side_palette, col_side_colors = NULL, col_side_palette,
   ColSideColors = NULL, RowSideColors = NULL, heatmap_layers = NULL,
-  branches_lwd = 0.6, subplot_widths = subplot_widths,
-  subplot_heights = subplot_heights)
+  branches_lwd = 0.6, subplot_widths = NULL, subplot_heights = NULL)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -183,7 +182,7 @@ You can relocate the file once it is created, or use \link{setwd} first.
 This is based on \link[htmlwidgets]{saveWidget}.}
 
 \item{subplot_widths, subplot_heights}{The relative widths and heights of each
-subplot. The length of these vectors will vary depending on the number of 
+subplot. The length of these vectors will vary depending on the number of
 plots involved.}
 }
 \description{
