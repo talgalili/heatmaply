@@ -155,7 +155,7 @@
 #' @param label_names Names for labells of x, y and value/fill mouseover.
 #' @param fontsize_row,fontsize_col,cexRow,cexCol Font size for row and column labels.
 #' @param subplot_widths,subplot_heights The relative widths and heights of each
-#'  subplot. The length of these vectors will vary depending on the number of 
+#'  subplot. The length of these vectors will vary depending on the number of
 #'  plots involved.
 #'
 #' @export
@@ -529,11 +529,11 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
 
 
   if (sum(!ind_null_col) != length(heights)) {
-    stop(paste("Number of subplot_heights supplied is not correct; should be", 
+    stop(paste("Number of subplot_heights supplied is not correct; should be",
       sum(!ind_null_col), "but is", length(heights)))
   }
   if (sum(!ind_null_row) != length(widths)) {
-    stop(paste("Number of subplot_widths supplied is not correct; should be", 
+    stop(paste("Number of subplot_widths supplied is not correct; should be",
       sum(!ind_null_row), "but is", length(widths)))
   }
 
@@ -620,6 +620,7 @@ heatmaply.heatmapr <- function(x,
                                subplot_heights = subplot_heights) {
 
   plot_method <- match.arg(plot_method)
+
   # informative errors for mis-specified limits
   if(!is.null(limits)) {
     if(!is.numeric(limits)) stop("limits must be numeric")

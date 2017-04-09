@@ -205,7 +205,7 @@ and dendrogram plots}
 \item{fontsize_row, fontsize_col, cexRow, cexCol}{Font size for row and column labels.}
 
 \item{subplot_widths, subplot_heights}{The relative widths and heights of each
-subplot. The length of these vectors will vary depending on the number of 
+subplot. The length of these vectors will vary depending on the number of
 plots involved.}
 }
 \description{
