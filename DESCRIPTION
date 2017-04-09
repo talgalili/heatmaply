@@ -2,15 +2,15 @@ Package: heatmaply
 Type: Package
 Title: Interactive Cluster Heat Maps Using 'plotly'
 Version: 0.9.0
-Date: 2017-04-08
+Date: 2017-04-09
 Authors@R: c(person("Tal", "Galili", role = c("aut", "cre", "cph"), email =
     "tal.galili@gmail.com", comment = "https://www.r-statistics.com"),
     person("Jonathan", "Sidi", email = "yonis@metrumrg.com", comment = "https://github.com/yonicd",role = "ctb"),
     person("Alan", "O'Callaghan", comment = "https://github.com/Alanocallaghan",role = "ctb"),
     person("Yoav", "Benjamini", email = "ybenja@tau.ac.il",role = "ths"))
 Description: Create interactive cluster 'heatmaps' that can be saved as a stand-
-    alone HTML file, embedded in 'R Markdown' documents or in a 'Shiny' apps, and
-    available in the 'RStudio' viewer pane, . Hover the mouse pointer over a cell
+    alone HTML file, embedded in 'R Markdown' documents or in a 'Shiny' app, and
+    available in the 'RStudio' viewer pane. Hover the mouse pointer over a cell
     to show details or drag a rectangle to zoom. A 'heatmap' is a popular graphical
     method for visualizing high-dimensional data, in which a table of numbers
     are encoded as a grid of colored cells. The rows and columns of the matrix
