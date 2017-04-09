@@ -25,7 +25,7 @@ heatmaply(x, ...)
   row_side_palette, col_side_colors = NULL, col_side_palette,
   ColSideColors = NULL, RowSideColors = NULL, seriate = c("OLO", "mean",
   "none", "GW"), heatmap_layers = NULL, branches_lwd = 0.6, file,
-  subplot_widths = subplot_widths, subplot_heights = subplot_heights)
+  subplot_widths = NULL, subplot_heights = NULL)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
