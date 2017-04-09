@@ -143,8 +143,8 @@ plotly_heatmap <- function(x, limits = range(x), colors,
   p
 }
 
-
-
+#' Create a plotly colorscale from a list of colors in any format. 
+#' Probably not needed currently
 make_colorscale <- function(colors) {
     seq <- seq(0, 1, by = 1 / length(colors))
     scale <- lapply(seq_along(colors), 
@@ -163,6 +163,7 @@ make_colorscale <- function(colors) {
     scale
 }
 
+#' Plotly takes colors in this format "rgb(255, 0, 0)"
 col2plotlyrgb <- function(col) {
     rgb <- grDevices::col2rgb(col)
     paste0(
@@ -232,9 +233,6 @@ plotly_dend_col <- function(dend, flip = FALSE) {
     )
 }
 
-
-
-
 #'
 #' geom_tile for side color plots
 #'
@@ -260,7 +258,7 @@ side_color_plot <- function(df, palette,
   ## Cooerce to character
   df[] <- lapply(df, as.character)
 
-  ## TODO: Find out why names are dropped when dim(df)[2] == 1
+  ## TODO: Find out why names are dropped when ncol(df) == 1
   original_dim <- dim(df)
 
   if (missing(palette)) palette <- colorspace::rainbow_hcl
