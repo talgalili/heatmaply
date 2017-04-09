@@ -115,10 +115,11 @@ ggplot_heatmap <- function(xx,
 
 
 plotly_heatmap <- function(x, limits = range(x), colors,
-    row_text_angle=0, column_text_angle=45, grid.color, grid.size, key.title, 
-    row_dend_left, fontsize_row = 10, fontsize_col = 10) {
+    row_text_angle = 0, column_text_angle = 45, grid.color, grid.size, key.title, 
+    row_dend_left, fontsize_row = 10, fontsize_col = 10, colorbar_yanchor, 
+    colorbar_xpos, colorbar_ypos, colorbar_len = 0.3) {
 
-  plot_ly(z = x, x = 1:ncol(x), y = 1:nrow(x), 
+  p <- plot_ly(z = x, x = 1:ncol(x), y = 1:nrow(x), 
     type = "heatmap", showlegend = FALSE, colors=colors, 
     zmin = limits[1], zmax = limits[2]) %>%
       layout(
@@ -126,21 +127,26 @@ plotly_heatmap <- function(x, limits = range(x), colors,
           tickfont = list(size = fontsize_col),
           tickangle = column_text_angle,
           tickvals = 1:ncol(x), ticktext = colnames(x),
+          linecolor = "#ffffff",
           showticklabels = TRUE
         ),
         yaxis = list(
           tickfont = list(size = fontsize_row),
           tickangle = row_text_angle,
           tickvals = 1:nrow(x), ticktext = rownames(x),
+          linecolor = "#ffffff",
           showticklabels = TRUE
         )
-      ) %>% plotly::colorbar(lenmode = "fraction", y = 0, yanchor="bottom", len=0.3)
-}    
+      )
+  p <- plotly::colorbar(p, lenmode = "fraction", y = colorbar_ypos, 
+    yanchor = colorbar_yanchor, x = colorbar_xpos, len=colorbar_len)
+  p
+}
 
-
-
+#' Create a plotly colorscale from a list of colors in any format. 
+#' Probably not needed currently
 make_colorscale <- function(colors) {
-    seq <- seq(0, 1, by = 1/length(colors))
+    seq <- seq(0, 1, by = 1 / length(colors))
     scale <- lapply(seq_along(colors), 
         function(i) {
             # eg
@@ -157,6 +163,7 @@ make_colorscale <- function(colors) {
     scale
 }
 
+#' Plotly takes colors in this format "rgb(255, 0, 0)"
 col2plotlyrgb <- function(col) {
     rgb <- grDevices::col2rgb(col)
     paste0(
@@ -173,17 +180,20 @@ plotly_dend_row <- function(dend, flip = FALSE) {
   segs <- dend_data$segments
   p <- plot_ly(segs) %>% 
     add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend,
-      line=list(color = '#000000'), showlegend = FALSE, hoverinfo = "none") %>%
+      line=list(color = '#000000'), showlegend = FALSE
+      # , hoverinfo = "none"
+      ) %>%
     layout(
       hovermode = "closest",
       xaxis = list(
-        title = "", 
-        linecolor = "#ffffff", 
+        title = "",
+        # range = c(max(segs$y), 0),
+        linecolor = "#ffffff",
         showgrid = FALSE
       ),
       yaxis = list(
         title = "",
-        range = c(0, max(segs$x) + 1), 
+        # range = c(0, max(segs$x) + 1),
         linecolor = "#ffffff",
         showgrid = FALSE
       )
@@ -202,25 +212,26 @@ plotly_dend_col <- function(dend, flip = FALSE) {
 
   plot_ly(segs) %>% 
     add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend,
-      line = list(color='#000000'), showlegend = FALSE, hoverinfo = "none") %>%
+      line = list(color='#000000'), showlegend = FALSE
+      # , hoverinfo = "none"
+      ) %>%
     layout(
       hovermode = "closest",
       xaxis = list(
         title = "", 
-        range = c(0, max(segs$x) + 1), 
+        # range = c(0, max(segs$x) + 1), 
         linecolor = "#ffffff",
         showgrid = FALSE
       ),
       yaxis = list(
-        title = "", 
+        title = "",
+        autorange = FALSE,
+        range = c(0, max(segs$y) + 1),
         linecolor = "#ffffff", 
         showgrid = FALSE
       )
     )
 }
-
-
-
 
 #'
 #' geom_tile for side color plots
@@ -247,7 +258,7 @@ side_color_plot <- function(df, palette,
   ## Cooerce to character
   df[] <- lapply(df, as.character)
 
-  ## TODO: Find out why names are dropped when dim(df)[2] == 1
+  ## TODO: Find out why names are dropped when ncol(df) == 1
   original_dim <- dim(df)
 
   if (missing(palette)) palette <- colorspace::rainbow_hcl

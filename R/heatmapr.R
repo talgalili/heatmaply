@@ -364,7 +364,7 @@ heatmapr <- function(x,
   ##=======================
   x <- x[rowInd, colInd, drop = FALSE]
   if (is.null(cellnote)) {
-    cellnote <- x
+    cellnote <- round(x, digits = digits)
   } else {
     cellnote <- cellnote[rowInd, colInd, drop = FALSE]
   }
@@ -422,9 +422,6 @@ heatmapr <- function(x,
 
   ## cellnote
   ##====================
-  cellnote <- round(x, digits = digits)
-
-
   # Check that cellnote is o.k.:
   if (!is.null(cellnote)) {
     if (is.null(dim(cellnote))) {

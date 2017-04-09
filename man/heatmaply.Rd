@@ -17,7 +17,7 @@ heatmaply(x, ...)
   hclustfun_col, dendrogram = c("both", "row", "column", "none"),
   reorderfun = function(d, w) reorder(d, w), k_row, k_col, symm = FALSE,
   revC, scale = c("none", "row", "column"), na.rm = TRUE,
-  row_dend_left = FALSE, margins = c(50, 50, NA, 0), ...,
+  row_dend_left = FALSE, margins = c(50, 50, NA, NA), ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
@@ -28,12 +28,12 @@ heatmaply(x, ...)
   heatmap_layers = NULL, branches_lwd = 0.6, file, long_data,
   plot_method = c("ggplot", "plotly"), label_names = c("row", "column",
   "value"), fontsize_row = 10, fontsize_col = 10, cexRow, cexCol,
-  subplot_widths = NULL, subplot_heights = NULL)
+  subplot_widths = NULL, subplot_heights = NULL, colorbar_len = 0.3)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
   row_text_angle = 0, column_text_angle = 45, subplot_margin = 0,
-  row_dend_left = FALSE, margins = c(50, 50, NA, 0), ...,
+  row_dend_left = FALSE, margins = c(50, 50, NA, NA), ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
@@ -42,8 +42,8 @@ heatmaply(x, ...)
   row_side_colors, row_side_palette, col_side_colors, col_side_palette,
   plot_method = c("ggplot", "plotly"), ColSideColors, RowSideColors,
   heatmap_layers = NULL, branches_lwd = 0.6, label_names,
-  fontsize_row = 10, fontsize_col = 10, subplot_widths = subplot_widths,
-  subplot_heights = subplot_heights)
+  fontsize_row = 10, fontsize_col = 10, subplot_widths = NULL,
+  subplot_heights = NULL, colorbar_len = 0.3)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -207,6 +207,9 @@ and dendrogram plots}
 \item{subplot_widths, subplot_heights}{The relative widths and heights of each
 subplot. The length of these vectors will vary depending on the number of
 plots involved.}
+
+\item{colorbar_len}{The length of the colorbar/color key relative to the total
+plot height. Only used if plot_method = "plotly"}
 }
 \description{
 An object of class heatmapr includes all the needed information

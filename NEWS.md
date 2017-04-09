@@ -1,3 +1,37 @@
+heatmaply 0.9.0 (2017-04-09)
+==============================
+
+This release adds unit testing and code coverage to the heatmaply package.
+Users should not be affected, but this will hopefully accelerate development
+and reduce the occurrence of bugs.
+
+* heatmaply - 
+    * plot_method argument ("plotly" or "ggplot") which controls the underlying
+      plot method used for dendrograms and the main heatmap.
+      Currently there is some disparity between the features 
+      available in both methods but it is hoped this can be addressed.
+      plotly will likely give higher performance for large matrices.
+    * Add colorbar_len argument, which controls the fraction of the total height
+      which the colorbar will take up.
+    * Allowed for colorbar and side color legends to be displayed simultaneously
+      when plot_method is "plotly"
+    * Added "long_data" argumnet, which allows the user to use data in "long" 
+      format (eg, http://www.theanalysisfactor.com/wide-and-long-data/).
+    * Added "label_names" argument, which allows the user to specify names to
+      replace "row" and "column" as the names of the mouseover co-ordinates.
+    * Added "cellnote" functionality, allowing the display of text overlaid
+      on the cells of the heatmap. Controlled by the "draw_cellnote" argument.
+    * Added "fontsize_row" and "fontsize_col" arguments to heatmaply,
+      which control font size for row and column labels. cexRow and cexCol are 
+      aliases.
+
+* heatmapr
+    * Removed some unused arguments and code.
+
+### BUG FIXES
+* heatmaply
+  * Fixed the cexRow and cexCol arguments, which were previously non-functional.
+
 heatmaply 0.8.0 (2017-03-18)
 ==============================
 

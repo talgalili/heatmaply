@@ -158,6 +158,9 @@
 #'  subplot. The length of these vectors will vary depending on the number of
 #'  plots involved.
 #'
+#' @param colorbar_len The length of the colorbar/color key relative to the total
+#' plot height. Only used if plot_method = "plotly"
+#' 
 #' @export
 #' @examples
 #' \dontrun{
@@ -304,7 +307,7 @@ heatmaply.default <- function(x,
                               na.rm = TRUE,
 
                               row_dend_left = FALSE,
-                              margins = c(50, 50, NA, 0),
+                              margins = c(50, 50, NA, NA),
                               ...,
                               scale_fill_gradient_fun = scale_fill_gradientn(
                                 colors = if(is.function(colors)) colors(256) else colors,
@@ -334,7 +337,8 @@ heatmaply.default <- function(x,
                               fontsize_col = 10,
                               cexRow, cexCol,
                               subplot_widths = NULL, 
-                              subplot_heights = NULL) {
+                              subplot_heights = NULL,
+                              colorbar_len = 0.3) {
 
   if (!missing(long_data)) {
     if (!missing(x)) warning("x and long_data should not be used together")
@@ -457,7 +461,8 @@ heatmaply.default <- function(x,
                      fontsize_row = fontsize_row,
                      fontsize_col = fontsize_col,
                      subplot_widths = subplot_widths, 
-                     subplot_heights = subplot_heights) 
+                     subplot_heights = subplot_heights,
+                     colorbar_len = colorbar_len) 
 
                      # TODO: think more on what should be passed in "..."
 
@@ -590,7 +595,7 @@ heatmaply.heatmapr <- function(x,
                                subplot_margin = 0,
 
                                row_dend_left = FALSE,
-                               margins = c(50, 50, NA, 0),
+                               margins = c(50, 50, NA, NA),
                                ...,
                                scale_fill_gradient_fun = scale_fill_gradientn(
                                  colors = if(is.function(colors)) colors(256) else colors,
@@ -616,8 +621,9 @@ heatmaply.heatmapr <- function(x,
                                label_names,
                                fontsize_row = 10,
                                fontsize_col = 10,
-                               subplot_widths = subplot_widths, 
-                               subplot_heights = subplot_heights) {
+                               subplot_widths = NULL, 
+                               subplot_heights = NULL, 
+                               colorbar_len = 0.3) {
 
   plot_method <- match.arg(plot_method)
 
@@ -699,9 +705,23 @@ heatmaply.heatmapr <- function(x,
                       label_names = label_names,
                       fontsize_row = fontsize_row, fontsize_col = fontsize_col)
   } else if (plot_method == "plotly") {
+    legend_yanchor <- "top"
+    legend_ypos <- 1
+    if (row_dend_left) {
+      legend_xpos <- 0 
+    } else {
+      legend_xpos <- 1
+      if (missing(row_side_colors) || missing(col_side_colors)) {
+        legend_yanchor <- "bottom"
+        legend_ypos <- 0
+      }
+    }
+
     p <- plotly_heatmap(data_mat, limits = limits, colors = colors, 
       row_text_angle = row_text_angle, column_text_angle = column_text_angle,
-      fontsize_row = fontsize_row, fontsize_col = fontsize_col)
+      fontsize_row = fontsize_row, fontsize_col = fontsize_col, 
+      colorbar_yanchor = legend_yanchor, colorbar_xpos = legend_xpos,
+      colorbar_ypos = 1, colorbar_len = colorbar_len)
   }
 
   # TODO: Add native plotly sidecolor function. 
@@ -747,11 +767,11 @@ heatmaply.heatmapr <- function(x,
   ## plotly:
   # turn p, px, and py to plotly objects if necessary
   if (!inherits(p, "plotly")) p <- ggplotly(p) %>% layout(showlegend=FALSE)
-  if(!is.null(px) && !inherits(px, "plotly")) {
+  if (!is.null(px) && !inherits(px, "plotly")) {
     px <- ggplotly(px, tooltip = "y") %>% 
       layout(showlegend=FALSE)
   }
-  if(!is.null(py) && !inherits(py, "plotly")) {
+  if (!is.null(py) && !inherits(py, "plotly")) {
     py <- ggplotly(py, tooltip = "y") %>% 
       layout(showlegend=FALSE)
   }
@@ -766,14 +786,15 @@ heatmaply.heatmapr <- function(x,
               yaxis = list(           # layout's yaxis is a named list. List of valid keys: /r/reference/#layout-yaxis
                 title = ylab      # yaxis's title: /r/reference/#layout-yaxis-title
               ))
-  if(hide_colorbar) {
+  if (hide_colorbar) {
     p <- hide_colorbar(p)
     # px <- hide_colorbar(px)
     # py <- hide_colorbar(py)
   }
 
   # Adjust top based on whether main is empty or not.
-  if(is.na(margins[3])) margins[3] <- ifelse(main == "", 0, 30)
+  if (is.na(margins[3])) margins[3] <- ifelse(main == "", 0, 30)
+  if (is.na(margins[4])) margins[4] <- ifelse(row_dend_left, 100, 0)
 
   heatmap_subplot <- heatmap_subplot_from_ggplotly(p = p, px = px, py = py,
     row_dend_left = row_dend_left, subplot_margin = subplot_margin,
