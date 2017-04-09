@@ -126,6 +126,12 @@
 #' 
 #' @param plot_method Use "ggplot" or "plotly" to choose which library produces heatmap
 #' and dendrogram plots
+#' @param seriate character indicating the method of matrix sorting (default: "OLO").
+#' Implemented options include:
+#' "OLO" (Optimal leaf ordering, optimzes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
+#' "mean" (sorts the matrix based on the reorderfun using marginal means of the matrix. This is the default used by \link[gplots]{heatmap.2}),
+#' "none" (the default order produced by the dendrogram),
+#' "GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length that is restricted by the dendrogram structure)
 #'
 #' @param heatmap_layers ggplot object (eg, theme_bw()) to be added to
 #'  the heatmap before conversion to a plotly object.
@@ -148,6 +154,9 @@
 #' 
 #' @param label_names Names for labells of x, y and value/fill mouseover.
 #' @param fontsize_row,fontsize_col,cexRow,cexCol Font size for row and column labels.
+#' @param subplot_widths,subplot_heights The relative widths and heights of each
+#'  subplot. The length of these vectors will vary depending on the number of 
+#'  plots involved.
 #'
 #' @export
 #' @examples
@@ -314,6 +323,7 @@ heatmaply.default <- function(x,
                               col_side_palette,
                               ColSideColors = NULL,
                               RowSideColors = NULL,
+                              seriate = c("OLO", "mean", "none", "GW"),
                               heatmap_layers = NULL,
                               branches_lwd = 0.6,
                               file,
@@ -322,8 +332,10 @@ heatmaply.default <- function(x,
                               label_names = c("row", "column", "value"),
                               fontsize_row = 10, 
                               fontsize_col = 10,
-                              cexRow, cexCol
-) {
+                              cexRow, cexCol,
+                              subplot_widths = NULL, 
+                              subplot_heights = NULL) {
+
   if (!missing(long_data)) {
     if (!missing(x)) warning("x and long_data should not be used together")
     assert_that(
@@ -381,10 +393,13 @@ heatmaply.default <- function(x,
   if(dendrogram == "column") Rowv <- FALSE
   if(dendrogram == "none") Rowv <- Colv <- FALSE
 
+  # this also occurs in heatmapr, so it may be o.k. to remove the following line.
+  seriate <- match.arg(seriate)
 
   hm <- heatmapr(x,
     row_side_colors = row_side_colors,
     col_side_colors = col_side_colors,
+    seriate = seriate,
 
     cellnote = cellnote,
 
@@ -440,8 +455,13 @@ heatmaply.default <- function(x,
                      plot_method = plot_method,
                      draw_cellnote = draw_cellnote,
                      fontsize_row = fontsize_row,
-                     fontsize_col = fontsize_col
-                ) # TODO: think more on what should be passed in "..."
+                     fontsize_col = fontsize_col,
+                     heatmap_layers = heatmap_layers,
+                     branches_lwd = branches_lwd,
+                     subplot_widths = subplot_widths, 
+                     subplot_heights = subplot_heights) 
+
+                     # TODO: think more on what should be passed in "..."
 
   if(!missing(file)) hmly %>% saveWidget(file = file, selfcontained = TRUE)
 
@@ -449,10 +469,11 @@ heatmaply.default <- function(x,
 }
 
 heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
-                                          row_dend_left, subplot_margin = 0,
+                                          row_dend_left = FALSE, subplot_margin = 0,
                                           titleX = TRUE, titleY = TRUE,
                                           widths=NULL, heights=NULL, 
                                           plot_method, ...) {
+
   if (is.null(widths)) {
     if (!is.null(px)) {
       if (is.null(pr)) {
@@ -474,7 +495,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
       if (is.null(pc)) {
         heights <- c(0.2, 0.8)
       } else {
-        heights <- c(0.2, 0.1, 0.7)
+        heights <- c(0.2, 0.05, 0.7)
       }
     } else {
       if (is.null(pc)) {
@@ -507,6 +528,16 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
 
   ind_null_row <- sapply(row3_list, is.null)
   ind_remove_row <- rep(ind_null_row, length.out = length(plots))
+
+
+  if (sum(!ind_null_col) != length(heights)) {
+    stop(paste("Number of subplot_heights supplied is not correct; should be", 
+      sum(!ind_null_col), "but is", length(heights)))
+  }
+  if (sum(!ind_null_row) != length(widths)) {
+    stop(paste("Number of subplot_widths supplied is not correct; should be", 
+      sum(!ind_null_row), "but is", length(widths)))
+  }
 
   ## Remove all null plots
   plots <- plots[!(ind_remove_row | ind_remove_col)]
@@ -586,8 +617,9 @@ heatmaply.heatmapr <- function(x,
                                branches_lwd = 0.6,
                                label_names,
                                fontsize_row = 10,
-                               fontsize_col = 10
-                               ) {
+                               fontsize_col = 10,
+                               subplot_widths = subplot_widths, 
+                               subplot_heights = subplot_heights) {
 
   plot_method <- match.arg(plot_method)
   # informative errors for mis-specified limits
@@ -751,5 +783,8 @@ heatmaply.heatmapr <- function(x,
       margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]),      
       legend = list(y=1, yanchor="top")
     )
+  l <- config(l, displaylogo = FALSE, collaborate = FALSE,
+        modeBarButtonsToRemove = c("sendDataToCloud", "select2d", "lasso2d","autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian", "sendDataToCloud"))
+
   l
 }

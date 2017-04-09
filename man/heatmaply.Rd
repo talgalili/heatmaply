@@ -24,9 +24,11 @@ heatmaply(x, ...)
   main = "", titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE,
   key.title = NULL, return_ppxpy = FALSE, row_side_colors, row_side_palette,
   col_side_colors, col_side_palette, ColSideColors = NULL,
-  RowSideColors = NULL, heatmap_layers = NULL, branches_lwd = 0.6, file,
-  long_data, plot_method = c("ggplot", "plotly"), label_names = c("row",
-  "column", "value"), fontsize_row = 10, fontsize_col = 10, cexRow, cexCol)
+  RowSideColors = NULL, seriate = c("OLO", "mean", "none", "GW"),
+  heatmap_layers = NULL, branches_lwd = 0.6, file, long_data,
+  plot_method = c("ggplot", "plotly"), label_names = c("row", "column",
+  "value"), fontsize_row = 10, fontsize_col = 10, cexRow, cexCol,
+  subplot_widths = NULL, subplot_heights = NULL)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
@@ -40,7 +42,8 @@ heatmaply(x, ...)
   row_side_colors, row_side_palette, col_side_colors, col_side_palette,
   plot_method = c("ggplot", "plotly"), ColSideColors, RowSideColors,
   heatmap_layers = NULL, branches_lwd = 0.6, label_names,
-  fontsize_row = 10, fontsize_col = 10)
+  fontsize_row = 10, fontsize_col = 10, subplot_widths = subplot_widths,
+  subplot_heights = subplot_heights)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -169,6 +172,13 @@ used for row_side_colors and col_side_colors respectively.}
 \item{ColSideColors, RowSideColors}{passed to row_side_colors,col_side_colors in order
 to keep compatibility with \link[gplots]{heatmap.2}}
 
+\item{seriate}{character indicating the method of matrix sorting (default: "OLO").
+Implemented options include:
+"OLO" (Optimal leaf ordering, optimzes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
+"mean" (sorts the matrix based on the reorderfun using marginal means of the matrix. This is the default used by \link[gplots]{heatmap.2}),
+"none" (the default order produced by the dendrogram),
+"GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length that is restricted by the dendrogram structure)}
+
 \item{heatmap_layers}{ggplot object (eg, theme_bw()) to be added to
 the heatmap before conversion to a plotly object.}
 
@@ -193,6 +203,10 @@ and dendrogram plots}
 \item{label_names}{Names for labells of x, y and value/fill mouseover.}
 
 \item{fontsize_row, fontsize_col, cexRow, cexCol}{Font size for row and column labels.}
+
+\item{subplot_widths, subplot_heights}{The relative widths and heights of each
+subplot. The length of these vectors will vary depending on the number of 
+plots involved.}
 }
 \description{
 An object of class heatmapr includes all the needed information
