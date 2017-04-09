@@ -310,8 +310,8 @@ heatmaply.default <- function(x,
                               heatmap_layers = NULL,
                               branches_lwd = 0.6,
                               file,
-                              subplot_widths = subplot_widths, 
-                              subplot_heights = subplot_heights
+                              subplot_widths = NULL, 
+                              subplot_heights = NULL
 ) {
   ## Suppress creation of new graphcis device, but on exit replace it.
   old_dev <- options()[["device"]]
@@ -527,10 +527,10 @@ ggplot_heatmap <- function(xx,
 # p
 #
 heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
-                                          row_dend_left, subplot_margin = 0,
+                                          row_dend_left = FALSE, subplot_margin = 0,
                                           titleX = TRUE, titleY = TRUE,
-                                          widths, heights, ...) {
-  if (missing(widths) || is.null(widths)) {
+                                          widths = NULL, heights = NULL, ...) {
+  if (is.null(widths)) {
     if (!is.null(px)) {
       if (is.null(pr)) {
         widths <- c(0.8, 0.2)
@@ -546,7 +546,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
     }
   }
 
-  if (missing(heights) || is.null(heights)) {
+  if (is.null(heights)) {
     if (!is.null(py)) {
       if (is.null(pc)) {
         heights <- c(0.2, 0.8)
