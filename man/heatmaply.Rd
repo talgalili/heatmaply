@@ -24,7 +24,8 @@ heatmaply(x, ...)
   key.title = NULL, return_ppxpy = FALSE, row_side_colors = NULL,
   row_side_palette, col_side_colors = NULL, col_side_palette,
   ColSideColors = NULL, RowSideColors = NULL, seriate = c("OLO", "mean",
-  "none", "GW"), heatmap_layers = NULL, branches_lwd = 0.6, file)
+  "none", "GW"), heatmap_layers = NULL, branches_lwd = 0.6, file,
+  subplot_widths = subplot_widths, subplot_heights = subplot_heights)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
@@ -37,7 +38,8 @@ heatmaply(x, ...)
   key.title = NULL, return_ppxpy = FALSE, row_side_colors = NULL,
   row_side_palette, col_side_colors = NULL, col_side_palette,
   ColSideColors = NULL, RowSideColors = NULL, heatmap_layers = NULL,
-  branches_lwd = 0.6)
+  branches_lwd = 0.6, subplot_widths = subplot_widths,
+  subplot_heights = subplot_heights)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -179,6 +181,10 @@ For example: heatmaply(x, file = "heatmaply_plot.html").
 This should not include a directory, only the name of the file.
 You can relocate the file once it is created, or use \link{setwd} first.
 This is based on \link[htmlwidgets]{saveWidget}.}
+
+\item{subplot_widths, subplot_heights}{The relative widths and heights of each
+subplot. The length of these vectors will vary depending on the number of 
+plots involved.}
 }
 \description{
 An object of class heatmapr includes all the needed information

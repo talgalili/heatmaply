@@ -142,6 +142,9 @@
 #' You can relocate the file once it is created, or use \link{setwd} first.
 #' This is based on \link[htmlwidgets]{saveWidget}.
 #'
+#' @param subplot_widths,subplot_heights The relative widths and heights of each
+#'  subplot. The length of these vectors will vary depending on the number of 
+#'  plots involved.
 #'
 #' @export
 #' @examples
@@ -306,7 +309,9 @@ heatmaply.default <- function(x,
                               seriate = c("OLO", "mean", "none", "GW"),
                               heatmap_layers = NULL,
                               branches_lwd = 0.6,
-                              file
+                              file,
+                              subplot_widths = subplot_widths, 
+                              subplot_heights = subplot_heights
 ) {
   ## Suppress creation of new graphcis device, but on exit replace it.
   old_dev <- options()[["device"]]
@@ -413,7 +418,9 @@ heatmaply.default <- function(x,
                      ColSideColors = ColSideColors,
                      RowSideColors = RowSideColors,
                      heatmap_layers = heatmap_layers,
-                     branches_lwd = branches_lwd
+                     branches_lwd = branches_lwd,
+                     subplot_widths = subplot_widths, 
+                     subplot_heights = subplot_heights
                 ) # TODO: think more on what should be passed in "..."
 
   if(!missing(file)) hmly %>% saveWidget(file = file, selfcontained = TRUE)
@@ -522,8 +529,8 @@ ggplot_heatmap <- function(xx,
 heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
                                           row_dend_left, subplot_margin = 0,
                                           titleX = TRUE, titleY = TRUE,
-                                          widths=NULL, heights=NULL, ...) {
-  if (is.null(widths)) {
+                                          widths, heights, ...) {
+  if (missing(widths) || is.null(widths)) {
     if (!is.null(px)) {
       if (is.null(pr)) {
         widths <- c(0.8, 0.2)
@@ -539,12 +546,12 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
     }
   }
 
-  if (is.null(heights)) {
+  if (missing(heights) || is.null(heights)) {
     if (!is.null(py)) {
       if (is.null(pc)) {
         heights <- c(0.2, 0.8)
       } else {
-        heights <- c(0.2, 0.1, 0.7)
+        heights <- c(0.2, 0.05, 0.7)
       }
     } else {
       if (is.null(pc)) {
@@ -577,6 +584,16 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
 
   ind_null_row <- sapply(row3_list, is.null)
   ind_remove_row <- rep(ind_null_row, length.out = length(plots))
+
+
+  if (sum(!ind_null_col) != length(heights)) {
+    stop(paste("Number of subplot_heights supplied is not correct; should be", 
+      sum(!ind_null_col), "but is", length(heights)))
+  }
+  if (sum(!ind_null_row) != length(widths)) {
+    stop(paste("Number of subplot_widths supplied is not correct; should be", 
+      sum(!ind_null_row), "but is", length(widths)))
+  }
 
   ## Remove all null plots
   plots <- plots[!(ind_remove_row | ind_remove_col)]
@@ -636,7 +653,9 @@ heatmaply.heatmapr <- function(x,
                                ColSideColors = NULL,
                                RowSideColors = NULL,
                                heatmap_layers = NULL,
-                               branches_lwd = 0.6
+                               branches_lwd = 0.6,
+                               subplot_widths = subplot_widths, 
+                               subplot_heights = subplot_heights
                                ) {
   # informative errors for mis-specified limits
   if(!is.null(limits)) {
@@ -778,7 +797,8 @@ heatmaply.heatmapr <- function(x,
 
   heatmap_subplot <- heatmap_subplot_from_ggplotly(p = p, px = px, py = py,
     row_dend_left = row_dend_left, subplot_margin = subplot_margin,
-    titleX = titleX, titleY = titleY, pr = pr, pc = pc)
+    titleX = titleX, titleY = titleY, pr = pr, pc = pc,
+    widths = subplot_widths, heights = subplot_heights)
   l <- layout(heatmap_subplot, showlegend = FALSE)  %>%
     layout(margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]))
   # print(l)
