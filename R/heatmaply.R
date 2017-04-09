@@ -456,8 +456,6 @@ heatmaply.default <- function(x,
                      draw_cellnote = draw_cellnote,
                      fontsize_row = fontsize_row,
                      fontsize_col = fontsize_col,
-                     heatmap_layers = heatmap_layers,
-                     branches_lwd = branches_lwd,
                      subplot_widths = subplot_widths, 
                      subplot_heights = subplot_heights) 
 
