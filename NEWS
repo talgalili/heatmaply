@@ -14,11 +14,14 @@ heatmaply 0.9.0 (2017-04-08)
       df<-data.frame(1)
       heatmaply(mtcars)
 
-
-### NOTES
-* Added scale and na.rm parameters to the document of heatmaply.
-* Added seriate to the docs of heatmaply.
-* Improved vignette with fixing typos and adding examples.
+### DOCS
+* heatmaply
+  * Added scale and na.rm parameters to the document.
+  * Added seriate.
+* Vignette
+  * fixing typos
+  * adding a section on data transformation.
+* Cross-ref percentize and normalize.
 
 
 
