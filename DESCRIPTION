@@ -40,7 +40,6 @@ Imports:
     grDevices,
     colorspace,
     RColorBrewer,
-    GGally,
     htmlwidgets,
     assertthat
 Suggests:
