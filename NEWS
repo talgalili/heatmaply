@@ -1,6 +1,6 @@
 
 
-heatmaply 0.9.0 (2017-04-08)
+heatmaply 0.9.0 (2017-04-10)
 ==============================
 
 This release adds unit testing and code coverage to the heatmaply package.
@@ -29,6 +29,8 @@ and reduce the occurrence of bugs.
     * Added "fontsize_row" and "fontsize_col" arguments to heatmaply,
       which control font size for row and column labels. cexRow and cexCol are
       aliases (in order to keep compatability with gplots::heatmap.2).
+    * Added "grid_gap" argument. Default is 0, higher numbers influence the gap between cells,
+      helping the user to identify distinct values/cells within the matrix.
 * heatmapr
     * Removed some unused arguments and code.
 * is.plotly - new function to check if an object is of class plotly or not.

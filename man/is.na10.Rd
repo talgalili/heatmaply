@@ -36,8 +36,11 @@ x[sample(nrow(x))[1:6],sample(ncol(x))[1:6]] <- NA
 x \%>\% is.na10 \%>\% heatmaply( colors = c("grey80", "grey20"), dendrogram = "none")
 x \%>\% is.na10 \%>\% heatmaply( colors = c("grey80", "grey20"), k_col = 2, k_row = 2)
 
+heatmaply(is.na10(airquality), grid_gap = 1,
+         colors = c("grey80", "grey20"), k_col = 2, k_row = 2)
+
 }
 }
 \seealso{
-\link{is.na}
+\link{is.na}, the grid_gap parameter in \link{heatmaply}.
 }

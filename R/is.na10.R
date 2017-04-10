@@ -12,7 +12,7 @@
 #' @param x a vector, matrix or data.frame.
 #' @param ... not used.
 #'
-#' @seealso \link{is.na}
+#' @seealso \link{is.na}, the grid_gap parameter in \link{heatmaply}.
 #' @return
 #' Returns a numeric (instead of a logical) variable/matrix of 1 (missing) or 0 (not missing) values (hence the name is.na10)
 #' while still presering the attributes resulted from running \link{is.na}.
@@ -32,6 +32,9 @@
 #' # nice grey colors from here: https://github.com/njtierney/visdat/blob/master/R/vis_miss_ly.R
 #' x %>% is.na10 %>% heatmaply( colors = c("grey80", "grey20"), dendrogram = "none")
 #' x %>% is.na10 %>% heatmaply( colors = c("grey80", "grey20"), k_col = 2, k_row = 2)
+#'
+#' heatmaply(is.na10(airquality), grid_gap = 1,
+#'          colors = c("grey80", "grey20"), k_col = 2, k_row = 2)
 #'
 #' }
 is.na10 <- function(x, ...) {

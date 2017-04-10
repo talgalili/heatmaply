@@ -113,6 +113,10 @@ is.plotly <- function(x) {
 #' Do not use this parameter on larger matrix sizes, as it can dramatically prolong the build time of the heatmap.
 #' (another parameter, grid_color, will be added in the future - once it is implemented in plotly)
 #'
+#' @param grid_gap this is a fast alternative to grid_color. The default is 0, but if a larger value
+#' is used (for example, 1), then the resulting heatmap will have a white grid which can
+#' help identify different cells. This is implemented using \link[plotly]{style} (with xgap and ygap).
+#'
 #' @param srtRow if supplied, this overrides row_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})
 #' @param srtCol if supplied, this overrides column_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})
 #'
@@ -277,6 +281,10 @@ is.plotly <- function(x) {
 #'
 #' heatmaply(x, Rowv = row_dend, Colv = col_dend)
 #'
+#'
+#' heatmaply(is.na10(airquality))
+#' heatmaply(is.na10(airquality), grid_gap = 1)
+#'
 #' }
 #' @importFrom plotly plot_ly add_segments
 #' @importFrom assertthat assert_that
@@ -333,6 +341,7 @@ heatmaply.default <- function(x,
                                 colors = if(is.function(colors)) colors(256) else colors,
                                 na.value = na.value, limits = limits),
                               grid_color = NA,
+                              grid_gap = 0,
                               srtRow, srtCol,
                               xlab = "", ylab = "",
                               main = "",
@@ -457,6 +466,7 @@ heatmaply.default <- function(x,
   hmly <- heatmaply.heatmapr(hm, colors = colors, limits = limits,
                      scale_fill_gradient_fun = scale_fill_gradient_fun,
                      grid_color = grid_color,
+                     grid_gap = grid_gap,
                      row_text_angle = row_text_angle,
                      column_text_angle = column_text_angle,
                      subplot_margin = subplot_margin,
@@ -621,6 +631,7 @@ heatmaply.heatmapr <- function(x,
                                  colors = if(is.function(colors)) colors(256) else colors,
                                  na.value = na.value, limits = limits),
                                grid_color = NA,
+                               grid_gap = 0,
                                srtRow, srtCol,
                                xlab = "", ylab = "",
                                main = "",
@@ -743,6 +754,12 @@ heatmaply.heatmapr <- function(x,
       colorbar_yanchor = legend_yanchor, colorbar_xpos = legend_xpos,
       colorbar_ypos = 1, colorbar_len = colorbar_len)
   }
+
+
+  if(grid_gap > 0) {
+    p <- style(p, xgap = grid_gap, ygap = grid_gap)
+  }
+
 
   # TODO: Add native plotly sidecolor function.
   # TODO: Possibly use function to generate all 3 plots to prevent complex logic here

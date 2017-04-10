@@ -20,12 +20,12 @@ heatmaply(x, ...)
   row_dend_left = FALSE, margins = c(50, 50, NA, NA), ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
-  limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
-  main = "", titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE,
-  key.title = NULL, return_ppxpy = FALSE, row_side_colors, row_side_palette,
-  col_side_colors, col_side_palette, ColSideColors = NULL,
-  RowSideColors = NULL, seriate = c("OLO", "mean", "none", "GW"),
-  heatmap_layers = NULL, branches_lwd = 0.6, file, long_data,
+  limits), grid_color = NA, grid_gap = 0, srtRow, srtCol, xlab = "",
+  ylab = "", main = "", titleX = TRUE, titleY = TRUE,
+  hide_colorbar = FALSE, key.title = NULL, return_ppxpy = FALSE,
+  row_side_colors, row_side_palette, col_side_colors, col_side_palette,
+  ColSideColors = NULL, RowSideColors = NULL, seriate = c("OLO", "mean",
+  "none", "GW"), heatmap_layers = NULL, branches_lwd = 0.6, file, long_data,
   plot_method = c("ggplot", "plotly"), label_names = c("row", "column",
   "value"), fontsize_row = 10, fontsize_col = 10, cexRow, cexCol,
   subplot_widths = NULL, subplot_heights = NULL, colorbar_len = 0.3)
@@ -36,12 +36,12 @@ heatmaply(x, ...)
   row_dend_left = FALSE, margins = c(50, 50, NA, NA), ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
-  limits), grid_color = NA, srtRow, srtCol, xlab = "", ylab = "",
-  main = "", titleX = TRUE, titleY = TRUE, hide_colorbar = FALSE,
-  key.title = NULL, return_ppxpy = FALSE, draw_cellnote = FALSE,
-  row_side_colors, row_side_palette, col_side_colors, col_side_palette,
-  plot_method = c("ggplot", "plotly"), ColSideColors, RowSideColors,
-  heatmap_layers = NULL, branches_lwd = 0.6, label_names,
+  limits), grid_color = NA, grid_gap = 0, srtRow, srtCol, xlab = "",
+  ylab = "", main = "", titleX = TRUE, titleY = TRUE,
+  hide_colorbar = FALSE, key.title = NULL, return_ppxpy = FALSE,
+  draw_cellnote = FALSE, row_side_colors, row_side_palette, col_side_colors,
+  col_side_palette, plot_method = c("ggplot", "plotly"), ColSideColors,
+  RowSideColors, heatmap_layers = NULL, branches_lwd = 0.6, label_names,
   fontsize_row = 10, fontsize_col = 10, subplot_widths = NULL,
   subplot_heights = NULL, colorbar_len = 0.3)
 }
@@ -138,6 +138,10 @@ is quite recommended)}
 \item{grid_color}{control the color of the heatmap grid. Default is NA. Value passed to \link[ggplot2]{geom_tile}.
 Do not use this parameter on larger matrix sizes, as it can dramatically prolong the build time of the heatmap.
 (another parameter, grid_color, will be added in the future - once it is implemented in plotly)}
+
+\item{grid_gap}{this is a fast alternative to grid_color. The default is 0, but if a larger value
+is used (for example, 1), then the resulting heatmap will have a white grid which can
+help identify different cells. This is implemented using \link[plotly]{style} (with xgap and ygap).}
 
 \item{srtRow}{if supplied, this overrides row_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})}
 
@@ -312,6 +316,10 @@ col_dend  <- x \%>\% t \%>\% dist \%>\% hclust \%>\% as.dendrogram \%>\%
 #    rotate_DendSer(ser_weight = dist(t(x)))
 
 heatmaply(x, Rowv = row_dend, Colv = col_dend)
+
+
+heatmaply(is.na10(airquality))
+heatmaply(is.na10(airquality), grid_gap = 1)
 
 }
 }
