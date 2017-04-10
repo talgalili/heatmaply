@@ -48,10 +48,11 @@ and reduce the occurrence of bugs.
 * heatmaply
   * Added scale and na.rm parameters to the document.
   * Added seriate.
-* Vignette
-  * fixing typos
-  * adding a section on data transformation.
 * Cross-ref percentize and normalize.
+* Vignette
+  * Re-organize sections
+  * Adding a section on data transformation.
+  * Fixing typos
 
 
 
