@@ -1,3 +1,10 @@
+
+
+# ggplot_heatmap(as.matrix(mtcars))
+# plotly_heatmap(as.matrix(mtcars))
+# style(plotly_heatmap(as.matrix(mtcars)), xgap = 5, ygap = 5)
+
+
 # xx is a data matrix
 ggplot_heatmap <- function(xx,
                            row_text_angle = 0,
@@ -29,7 +36,7 @@ ggplot_heatmap <- function(xx,
   if (missing(label_names)) {
     if (is.null(dim_names <- names(dimnames(xx)))) {
       label_names <- c("row", "column", "value")
-    }    
+    }
   } else {
     assert_that(length(label_names) == 3)
   }
@@ -45,8 +52,8 @@ ggplot_heatmap <- function(xx,
   }
 
   df[[row]] <- factor(
-    df[[row]], 
-    levels = df[[row]], 
+    df[[row]],
+    levels = df[[row]],
     ordered = TRUE
   )
 
@@ -59,13 +66,13 @@ ggplot_heatmap <- function(xx,
       cellnote[[row]] <- 1:nrow(cellnote)
     }
     cellnote[[row]] <- factor(
-      cellnote[[row]], 
-      levels = cellnote[[row]], 
+      cellnote[[row]],
+      levels = cellnote[[row]],
       ordered = TRUE
     )
     mdf_c <- reshape2::melt(cellnote, id.vars=row)
     mdf_c[, 3] <- as.factor(mdf_c[, 3])
-    colnames(mdf_c)[2:3] <- c(col, val) 
+    colnames(mdf_c)[2:3] <- c(col, val)
   }
 
   mdf <- reshape2::melt(df, id.vars=row)
@@ -81,15 +88,15 @@ ggplot_heatmap <- function(xx,
     coord_cartesian(expand = FALSE) +
     scale_fill_gradient_fun +
     theme_bw()+ theme_clear_grid_heatmap +
-    theme(axis.text.x = element_text(angle = column_text_angle, 
+    theme(axis.text.x = element_text(angle = column_text_angle,
             size = fontsize_col, hjust = 1),
-          axis.text.y = element_text(angle = row_text_angle, 
+          axis.text.y = element_text(angle = row_text_angle,
             size = fontsize_row, hjust = 1)
           )
 
   if (!is.null(cellnote) && draw_cellnote) {
     p <- p + geom_text(
-      data = mdf_c, 
+      data = mdf_c,
       mapping = aes_string(x = col, y = row, label = val))
   }
 
@@ -114,13 +121,14 @@ ggplot_heatmap <- function(xx,
 }
 
 
-plotly_heatmap <- function(x, limits = range(x), colors,
-    row_text_angle = 0, column_text_angle = 45, grid.color, grid.size, key.title, 
-    row_dend_left, fontsize_row = 10, fontsize_col = 10, colorbar_yanchor, 
-    colorbar_xpos, colorbar_ypos, colorbar_len = 0.3) {
+plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha = 1, begin = 0,
+                                                                  end = 1, option = "viridis"),
+    row_text_angle = 0, column_text_angle = 45, grid.color, grid.size, key.title = NULL,
+    row_dend_left = FALSE, fontsize_row = 10, fontsize_col = 10, colorbar_yanchor = 1,
+    colorbar_xpos = 1, colorbar_ypos = 1, colorbar_len = 0.3) {
 
-  p <- plot_ly(z = x, x = 1:ncol(x), y = 1:nrow(x), 
-    type = "heatmap", showlegend = FALSE, colors=colors, 
+  p <- plot_ly(z = x, x = 1:ncol(x), y = 1:nrow(x),
+    type = "heatmap", showlegend = FALSE, colors=colors,
     zmin = limits[1], zmax = limits[2]) %>%
       layout(
         xaxis = list(
@@ -138,16 +146,16 @@ plotly_heatmap <- function(x, limits = range(x), colors,
           showticklabels = TRUE
         )
       )
-  p <- plotly::colorbar(p, lenmode = "fraction", y = colorbar_ypos, 
+  p <- plotly::colorbar(p, lenmode = "fraction", y = colorbar_ypos,
     yanchor = colorbar_yanchor, x = colorbar_xpos, len=colorbar_len)
   p
 }
 
-#' Create a plotly colorscale from a list of colors in any format. 
+#' Create a plotly colorscale from a list of colors in any format.
 #' Probably not needed currently
 make_colorscale <- function(colors) {
     seq <- seq(0, 1, by = 1 / length(colors))
-    scale <- lapply(seq_along(colors), 
+    scale <- lapply(seq_along(colors),
         function(i) {
             # eg
             # list(c(0, "rgb(255, 0, 0)"), c(1, "rgb(0, 255, 0)")),
@@ -167,9 +175,9 @@ make_colorscale <- function(colors) {
 col2plotlyrgb <- function(col) {
     rgb <- grDevices::col2rgb(col)
     paste0(
-      "rgb(", 
-      rgb["red", ], ",", 
-      rgb["green", ], ",", 
+      "rgb(",
+      rgb["red", ], ",",
+      rgb["green", ], ",",
       rgb["blue", ], ")"
     )
 }
@@ -178,7 +186,7 @@ col2plotlyrgb <- function(col) {
 plotly_dend_row <- function(dend, flip = FALSE) {
   dend_data <- as.ggdend(dend)
   segs <- dend_data$segments
-  p <- plot_ly(segs) %>% 
+  p <- plot_ly(segs) %>%
     add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend,
       line=list(color = '#000000'), showlegend = FALSE
       # , hoverinfo = "none"
@@ -210,7 +218,7 @@ plotly_dend_col <- function(dend, flip = FALSE) {
   dend_data <- as.ggdend(dend)
   segs <- dend_data$segments
 
-  plot_ly(segs) %>% 
+  plot_ly(segs) %>%
     add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend,
       line = list(color='#000000'), showlegend = FALSE
       # , hoverinfo = "none"
@@ -218,8 +226,8 @@ plotly_dend_col <- function(dend, flip = FALSE) {
     layout(
       hovermode = "closest",
       xaxis = list(
-        title = "", 
-        # range = c(0, max(segs$x) + 1), 
+        title = "",
+        # range = c(0, max(segs$x) + 1),
         linecolor = "#ffffff",
         showgrid = FALSE
       ),
@@ -227,7 +235,7 @@ plotly_dend_col <- function(dend, flip = FALSE) {
         title = "",
         autorange = FALSE,
         range = c(0, max(segs$y) + 1),
-        linecolor = "#ffffff", 
+        linecolor = "#ffffff",
         showgrid = FALSE
       )
     )
@@ -249,7 +257,7 @@ plotly_dend_col <- function(dend, flip = FALSE) {
 #' @return A ggplot geom_tile object
 side_color_plot <- function(df, palette,
   scale_title = paste(type, "side colors"), type = c("column", "row"),
-  text_angle = if (type == "row") 0 else 90, is_colors = FALSE, 
+  text_angle = if (type == "row") 0 else 90, is_colors = FALSE,
   label_name = type) {
 
   if (is.matrix(df)) df <- as.data.frame(df)
