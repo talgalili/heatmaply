@@ -233,6 +233,8 @@ heatmaply(iris[,-5], k_row = 3, k_col = 2)
 heatmaply(cor(iris[,-5]))
 heatmaply(cor(iris[,-5]), limits = c(-1,1))
 heatmaply(mtcars, k_row = 3, k_col = 2)
+# heatmaply(mtcars, k_row = 3, k_col = 2, grid_color = "white")
+heatmaply(mtcars, k_row = 3, k_col = 2, grid_gap = 1)
 
 # make sure there is enough room for the labels:
 heatmaply(mtcars, margins = c(40, 130))

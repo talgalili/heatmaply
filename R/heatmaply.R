@@ -197,6 +197,8 @@ is.plotly <- function(x) {
 #' heatmaply(cor(iris[,-5]))
 #' heatmaply(cor(iris[,-5]), limits = c(-1,1))
 #' heatmaply(mtcars, k_row = 3, k_col = 2)
+#' # heatmaply(mtcars, k_row = 3, k_col = 2, grid_color = "white")
+#' heatmaply(mtcars, k_row = 3, k_col = 2, grid_gap = 1)
 #'
 #' # make sure there is enough room for the labels:
 #' heatmaply(mtcars, margins = c(40, 130))
@@ -502,6 +504,15 @@ heatmaply.default <- function(x,
   hmly
 }
 
+
+
+
+
+
+
+
+
+
 heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
                                           row_dend_left = FALSE, subplot_margin = 0,
                                           titleX = TRUE, titleY = TRUE,
@@ -606,10 +617,20 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
       } else if (num_cols == 3) {
         lay <- function(p) layout(p, yaxis3 = l)
       }
-
       s <- lay(s)
     }
   }
+
+
+  # s <- subplot(plots,
+  #   nrows = nrows,
+  #   widths = if(row_dend_left) rev(widths) else widths,
+  #   shareX = TRUE, shareY = TRUE,
+  #   titleX = titleX, titleY = titleY,
+  #   margin = subplot_margin,
+  #   heights = heights)
+
+
   return(s)
 }
 
@@ -845,4 +866,6 @@ heatmaply.heatmapr <- function(x,
         modeBarButtonsToRemove = c("sendDataToCloud", "select2d", "lasso2d","autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian", "sendDataToCloud"))
 
   l
+
 }
+

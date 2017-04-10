@@ -5,6 +5,35 @@
 # style(plotly_heatmap(as.matrix(mtcars)), xgap = 5, ygap = 5)
 
 
+
+
+#
+# library(ggplot2)
+# library(plotly)
+# # library(heatmaply)
+# ggplot_heatmap <- heatmaply:::ggplot_heatmap
+# class_to <- function(x, new_class) {
+#   class(x) <- new_class
+#   x
+# }
+# na_mat <- function(x) {
+#   x %>% is.na %>% class_to("numeric")
+# }
+#
+# p <- heatmaply:::ggplot_heatmap(na_mat(airquality),
+#                     scale_fill_gradient_fun = scale_fill_gradientn(colors= c("white","black")) ,
+#                     grid_color = "grey", grid_size = 1)
+# plot(p)
+# ggplotly(p)
+# p <- ggplot_heatmap(mtcars,
+#                     grid_color = "white")
+# p
+#
+
+
+
+
+
 # xx is a data matrix
 ggplot_heatmap <- function(xx,
                            row_text_angle = 0,
