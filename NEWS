@@ -29,9 +29,9 @@ and reduce the occurrence of bugs.
     * Added "fontsize_row" and "fontsize_col" arguments to heatmaply,
       which control font size for row and column labels. cexRow and cexCol are
       aliases (in order to keep compatability with gplots::heatmap.2).
-
 * heatmapr
     * Removed some unused arguments and code.
+* is.plotly - new function to check if an object is of class plotly or not.
 
 ### BUG FIXES
 * heatmaply

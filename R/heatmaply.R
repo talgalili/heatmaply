@@ -5,6 +5,26 @@
 # to answer later: http://stackoverflow.com/questions/34733829/questions-about-a-tutorial-regarding-interactive-heatmaps-with-plotly
 # to check: https://plot.ly/r/heatmaps/
 
+
+
+#' @title Checks if an object is of class plotly or not.
+#' @export
+#' @description
+#' Helpful for the plot_method in link{heatmaply}.
+#'
+#' @param x an object to check
+#'
+#' @return
+#' TRUE if the object ingerits "plotly" as a class.
+#'
+is.plotly <- function(x) {
+  inherits(x,"plotly")
+}
+
+
+
+
+
 #' @title  Cluster heatmap based on plotly
 #' @name heatmaply
 #'
@@ -39,7 +59,7 @@
 #' @param draw_cellnote Should the cellnote annotations be drawn? Defaults is FALSE,
 #' if cellnote is not supplied, TRUE if cellnote is supplied. If TRUE and cellnote is not supplied,
 #' x will be used for cellnote.
-#' 
+#'
 #' @param Rowv determines if and how the row dendrogram should be reordered.	By default, it is TRUE, which implies dendrogram is computed and reordered based on row means. If NULL or FALSE, then no dendrogram is computed and no reordering is done. If a \link{dendrogram} (or \link{hclust}), then it is used "as-is", ie without any reordering. If a vector of integers, then dendrogram is computed and reordered based on the order of the vector.
 #' @param Colv determines if and how the column dendrogram should be reordered.	Has the options as the Rowv argument above and additionally when x is a square matrix, Colv = "Rowv" means that columns should be treated identically to the rows.
 #' @param distfun function used to compute the distance (dissimilarity) between both rows and columns. Defaults to dist.
@@ -123,7 +143,7 @@
 #'
 #' @param ColSideColors,RowSideColors passed to row_side_colors,col_side_colors in order
 #' to keep compatibility with \link[gplots]{heatmap.2}
-#' 
+#'
 #' @param plot_method Use "ggplot" or "plotly" to choose which library produces heatmap
 #' and dendrogram plots
 #' @param seriate character indicating the method of matrix sorting (default: "OLO").
@@ -148,10 +168,10 @@
 #' This is based on \link[htmlwidgets]{saveWidget}.
 #'
 #' @param long_data Data in long format. Replaces x, so both should not be used.
-#'  Colnames must be c("name", "variable", "value"). If you do not have a names 
+#'  Colnames must be c("name", "variable", "value"). If you do not have a names
 #'  column you can simply use a sequence of numbers from 1 to the number of "rows"
 #'  inthe data.
-#' 
+#'
 #' @param label_names Names for labells of x, y and value/fill mouseover.
 #' @param fontsize_row,fontsize_col,cexRow,cexCol Font size for row and column labels.
 #' @param subplot_widths,subplot_heights The relative widths and heights of each
@@ -160,7 +180,7 @@
 #'
 #' @param colorbar_len The length of the colorbar/color key relative to the total
 #' plot height. Only used if plot_method = "plotly"
-#' 
+#'
 #' @export
 #' @examples
 #' \dontrun{
@@ -333,10 +353,10 @@ heatmaply.default <- function(x,
                               long_data,
                               plot_method = c("ggplot", "plotly"),
                               label_names = c("row", "column", "value"),
-                              fontsize_row = 10, 
+                              fontsize_row = 10,
                               fontsize_col = 10,
                               cexRow, cexCol,
-                              subplot_widths = NULL, 
+                              subplot_widths = NULL,
                               subplot_heights = NULL,
                               colorbar_len = 0.3) {
 
@@ -460,9 +480,9 @@ heatmaply.default <- function(x,
                      draw_cellnote = draw_cellnote,
                      fontsize_row = fontsize_row,
                      fontsize_col = fontsize_col,
-                     subplot_widths = subplot_widths, 
+                     subplot_widths = subplot_widths,
                      subplot_heights = subplot_heights,
-                     colorbar_len = colorbar_len) 
+                     colorbar_len = colorbar_len)
 
                      # TODO: think more on what should be passed in "..."
 
@@ -474,7 +494,7 @@ heatmaply.default <- function(x,
 heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
                                           row_dend_left = FALSE, subplot_margin = 0,
                                           titleX = TRUE, titleY = TRUE,
-                                          widths=NULL, heights=NULL, 
+                                          widths=NULL, heights=NULL,
                                           plot_method, ...) {
 
   if (is.null(widths)) {
@@ -563,8 +583,8 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
       num_rows <- sum(!ind_null_row)
       str <- ifelse(num_rows > 1, num_rows, "")
       l <- list(
-        anchor = paste0("x", str), 
-        side = "right", 
+        anchor = paste0("x", str),
+        side = "right",
         showticklabels=TRUE
       )
       num_cols <- sum(!ind_null_col)
@@ -621,8 +641,8 @@ heatmaply.heatmapr <- function(x,
                                label_names,
                                fontsize_row = 10,
                                fontsize_col = 10,
-                               subplot_widths = NULL, 
-                               subplot_heights = NULL, 
+                               subplot_widths = NULL,
+                               subplot_heights = NULL,
                                colorbar_len = 0.3) {
 
   plot_method <- match.arg(plot_method)
@@ -691,7 +711,7 @@ heatmaply.heatmapr <- function(x,
   # create the heatmap
   data_mat <- x$matrix$data
 
-  if (plot_method == "ggplot") {    
+  if (plot_method == "ggplot") {
     p <- ggplot_heatmap(data_mat,
                       row_text_angle,
                       column_text_angle,
@@ -708,7 +728,7 @@ heatmaply.heatmapr <- function(x,
     legend_yanchor <- "top"
     legend_ypos <- 1
     if (row_dend_left) {
-      legend_xpos <- 0 
+      legend_xpos <- 0
     } else {
       legend_xpos <- 1
       if (missing(row_side_colors) || missing(col_side_colors)) {
@@ -717,14 +737,14 @@ heatmaply.heatmapr <- function(x,
       }
     }
 
-    p <- plotly_heatmap(data_mat, limits = limits, colors = colors, 
+    p <- plotly_heatmap(data_mat, limits = limits, colors = colors,
       row_text_angle = row_text_angle, column_text_angle = column_text_angle,
-      fontsize_row = fontsize_row, fontsize_col = fontsize_col, 
+      fontsize_row = fontsize_row, fontsize_col = fontsize_col,
       colorbar_yanchor = legend_yanchor, colorbar_xpos = legend_xpos,
       colorbar_ypos = 1, colorbar_len = colorbar_len)
   }
 
-  # TODO: Add native plotly sidecolor function. 
+  # TODO: Add native plotly sidecolor function.
   # TODO: Possibly use function to generate all 3 plots to prevent complex logic here
   if (missing(row_side_colors)) {
     pr <- NULL
@@ -732,11 +752,11 @@ heatmaply.heatmapr <- function(x,
     side_color_df <- x[["row_side_colors"]]
     if (is.matrix(side_color_df)) side_color_df <- as.data.frame(side_color_df)
     assert_that(
-      nrow(side_color_df) == nrow(data_mat), 
+      nrow(side_color_df) == nrow(data_mat),
       is.data.frame(side_color_df)
     )
-    pr <- side_color_plot(x[["row_side_colors"]], type = "row", 
-      text_angle = row_text_angle, palette = row_side_palette, 
+    pr <- side_color_plot(x[["row_side_colors"]], type = "row",
+      text_angle = row_text_angle, palette = row_side_palette,
       is_colors = !is.null(RowSideColors), label_name = label_names[[1]])
   }
 
@@ -748,13 +768,13 @@ heatmaply.heatmapr <- function(x,
     side_color_df <- x[["col_side_colors"]]
     if (is.matrix(side_color_df)) side_color_df <- as.data.frame(side_color_df)
     assert_that(
-      nrow(side_color_df) == ncol(data_mat), 
+      nrow(side_color_df) == ncol(data_mat),
       is.data.frame(side_color_df)
     )
     ## Just make sure it's character first
     side_color_df[] <- lapply(side_color_df, as.character)
     pc <- side_color_plot(side_color_df, type = "column",
-      text_angle = column_text_angle, palette = col_side_palette, 
+      text_angle = column_text_angle, palette = col_side_palette,
       is_colors = !is.null(ColSideColors),
       label_name = label_names[[2]]
     )
@@ -766,13 +786,13 @@ heatmaply.heatmapr <- function(x,
 
   ## plotly:
   # turn p, px, and py to plotly objects if necessary
-  if (!inherits(p, "plotly")) p <- ggplotly(p) %>% layout(showlegend=FALSE)
-  if (!is.null(px) && !inherits(px, "plotly")) {
-    px <- ggplotly(px, tooltip = "y") %>% 
+  if (!is.plotly(p)) p <- ggplotly(p) %>% layout(showlegend=FALSE)
+  if (!is.null(px) && !is.plotly(px)) {
+    px <- ggplotly(px, tooltip = "y") %>%
       layout(showlegend=FALSE)
   }
-  if (!is.null(py) && !inherits(py, "plotly")) {
-    py <- ggplotly(py, tooltip = "y") %>% 
+  if (!is.null(py) && !is.plotly(py)) {
+    py <- ggplotly(py, tooltip = "y") %>%
       layout(showlegend=FALSE)
   }
 
@@ -800,7 +820,7 @@ heatmaply.heatmapr <- function(x,
     row_dend_left = row_dend_left, subplot_margin = subplot_margin,
     titleX = titleX, titleY = titleY, pr = pr, pc = pc, plot_method = plot_method)
   l <- layout(heatmap_subplot,
-      margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]),      
+      margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]),
       legend = list(y=1, yanchor="top")
     )
   l <- config(l, displaylogo = FALSE, collaborate = FALSE,
