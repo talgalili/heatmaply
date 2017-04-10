@@ -193,7 +193,7 @@ You can relocate the file once it is created, or use \link{setwd} first.
 This is based on \link[htmlwidgets]{saveWidget}.}
 
 \item{long_data}{Data in long format. Replaces x, so both should not be used.
-Colnames must be c("name", "variable", "value"). If you do not have a names 
+Colnames must be c("name", "variable", "value"). If you do not have a names
 column you can simply use a sequence of numbers from 1 to the number of "rows"
 inthe data.}
 
