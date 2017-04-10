@@ -23,7 +23,7 @@
 
 # http://stackoverflow.com/questions/10325231/when-writing-my-own-r-package-i-cant-seem-to-get-other-packages-to-import-corr
 
-#' @importFrom plotly plotly ggplotly plotly_empty subplot layout hide_colorbar config
+#' @importFrom plotly plotly ggplotly plotly_empty subplot layout hide_colorbar config style
 #' @importFrom scales col_factor col_numeric
 #' @importFrom viridis viridis
 #' @importFrom stats as.dendrogram dendrapply dist hclust is.leaf order.dendrogram reorder sd
