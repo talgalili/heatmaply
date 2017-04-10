@@ -171,7 +171,23 @@ make_colorscale <- function(colors) {
     scale
 }
 
+#' @title Color to RGB Text
+#' @description
 #' Plotly takes colors in this format "rgb(255, 0, 0)"
+#'
+#' @param col vector of any of the three kinds of R color specifications,
+#' i.e., either a color name (as listed by colors()),
+#' a hexadecimal string of the form "#rrggbb" or "#rrggbbaa" (see rgb),
+#' or a positive integer i meaning palette()[i].
+#'
+#' @return
+#' A character of the form "rgb(value1,value1,value3)"
+#'
+#' @seealso \link{col2rgb}
+#' @examples
+#' col2rgb("peachpuff")
+#' col2plotlyrgb("peachpuff")
+#'
 col2plotlyrgb <- function(col) {
     rgb <- grDevices::col2rgb(col)
     paste0(
@@ -182,7 +198,8 @@ col2plotlyrgb <- function(col) {
     )
 }
 
-#' @importFrom dendextend as.ggdend
+
+
 plotly_dend_row <- function(dend, flip = FALSE) {
   dend_data <- as.ggdend(dend)
   segs <- dend_data$segments
@@ -241,8 +258,9 @@ plotly_dend_col <- function(dend, flip = FALSE) {
     )
 }
 
-#'
-#' geom_tile for side color plots
+#' @title geom_tile for side color plots
+#' @description
+#' Important for
 #'
 #' @param df A "molten" data.frame as produced by (eg) reshape2::melt
 #' @param palette A function which can return colors to be used in the sidebar
@@ -255,6 +273,7 @@ plotly_dend_col <- function(dend, flip = FALSE) {
 #' @param label_name Name for the mouseover label, usually "row" or "column"
 #'
 #' @return A ggplot geom_tile object
+#'
 side_color_plot <- function(df, palette,
   scale_title = paste(type, "side colors"), type = c("column", "row"),
   text_angle = if (type == "row") 0 else 90, is_colors = FALSE,
