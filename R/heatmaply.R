@@ -112,6 +112,7 @@ is.plotly <- function(x) {
 #' @param grid_color control the color of the heatmap grid. Default is NA. Value passed to \link[ggplot2]{geom_tile}.
 #' Do not use this parameter on larger matrix sizes, as it can dramatically prolong the build time of the heatmap.
 #' (another parameter, grid_color, will be added in the future - once it is implemented in plotly)
+#' In the meantime it is MUCH better to use the grid_gap argument.
 #'
 #' @param grid_gap this is a fast alternative to grid_color. The default is 0, but if a larger value
 #' is used (for example, 1), then the resulting heatmap will have a white grid which can
@@ -196,6 +197,8 @@ is.plotly <- function(x) {
 #' heatmaply(cor(iris[,-5]))
 #' heatmaply(cor(iris[,-5]), limits = c(-1,1))
 #' heatmaply(mtcars, k_row = 3, k_col = 2)
+#' # heatmaply(mtcars, k_row = 3, k_col = 2, grid_color = "white")
+#' heatmaply(mtcars, k_row = 3, k_col = 2, grid_gap = 1)
 #'
 #' # make sure there is enough room for the labels:
 #' heatmaply(mtcars, margins = c(40, 130))
@@ -285,10 +288,13 @@ is.plotly <- function(x) {
 #' heatmaply(is.na10(airquality))
 #' heatmaply(is.na10(airquality), grid_gap = 1)
 #'
+#' # grid_gap can handle quite large data matrix
+#' heatmaply(matrix(1:10000,100,100), k_row = 3, k_col = 3, grid_gap = 1)
+#'
+#' # Examples of playing with font size:
+#' heatmaply(mtcars, fontsize_col = 20, fontsize_row = 5, margin = c(100,90))
+#'
 #' }
-#' @importFrom plotly plot_ly add_segments
-#' @importFrom assertthat assert_that
-
 heatmaply <- function(x, ...) {
   UseMethod("heatmaply")
 }
@@ -501,6 +507,15 @@ heatmaply.default <- function(x,
   hmly
 }
 
+
+
+
+
+
+
+
+
+
 heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
                                           row_dend_left = FALSE, subplot_margin = 0,
                                           titleX = TRUE, titleY = TRUE,
@@ -605,10 +620,20 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
       } else if (num_cols == 3) {
         lay <- function(p) layout(p, yaxis3 = l)
       }
-
       s <- lay(s)
     }
   }
+
+
+  # s <- subplot(plots,
+  #   nrows = nrows,
+  #   widths = if(row_dend_left) rev(widths) else widths,
+  #   shareX = TRUE, shareY = TRUE,
+  #   titleX = titleX, titleY = titleY,
+  #   margin = subplot_margin,
+  #   heights = heights)
+
+
   return(s)
 }
 
@@ -844,4 +869,6 @@ heatmaply.heatmapr <- function(x,
         modeBarButtonsToRemove = c("sendDataToCloud", "select2d", "lasso2d","autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian", "sendDataToCloud"))
 
   l
+
 }
+

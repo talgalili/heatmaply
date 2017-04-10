@@ -20,32 +20,23 @@
 
 #' @import dendextend
 #' @import ggplot2
+#' @import magrittr
+#' @import RColorBrewer
 
 # http://stackoverflow.com/questions/10325231/when-writing-my-own-r-package-i-cant-seem-to-get-other-packages-to-import-corr
-#' @importFrom plotly plotly ggplotly plotly_empty subplot layout hide_colorbar config
-NULL
 
-
+#' @importFrom plotly plotly ggplotly plotly_empty subplot layout hide_colorbar config style
 #' @importFrom scales col_factor col_numeric
-NULL
-
 #' @importFrom viridis viridis
-NULL
-
 #' @importFrom stats as.dendrogram dendrapply dist hclust is.leaf order.dendrogram reorder sd
-NULL
-
 #' @importFrom seriation seriate get_order
-NULL
-
-#' @importFrom dendextend set is.dendrogram is.hclust seriate_dendrogram rotate color_branches find_k
-NULL
-
+#' @importFrom dendextend set is.dendrogram is.hclust seriate_dendrogram rotate color_branches find_k as.ggdend
 #' @importFrom stats ecdf na.omit
+#' @importFrom htmlwidgets saveWidget
+#' @importFrom plotly plot_ly add_segments
+#' @importFrom assertthat assert_that
 NULL
 
-#' @importFrom htmlwidgets saveWidget
-NULL
 
 
 

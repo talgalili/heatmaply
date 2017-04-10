@@ -29,6 +29,5 @@ to a color scheme, and instead should be plotted directly.}
 A ggplot geom_tile object
 }
 \description{
-geom_tile for side color plots
+Important for creating annotation.
 }
-
