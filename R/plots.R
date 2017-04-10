@@ -146,8 +146,9 @@ plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha =
           showticklabels = TRUE
         )
       )
-  p <- plotly::colorbar(p, lenmode = "fraction", y = colorbar_ypos,
-    yanchor = colorbar_yanchor, x = colorbar_xpos, len=colorbar_len)
+  p <- plotly::colorbar(p, lenmode = "fraction", 
+    xanchor = "right", x = 0, y = colorbar_ypos,
+    yanchor = colorbar_yanchor, len=colorbar_len)
   p
 }
 

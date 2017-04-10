@@ -18,7 +18,7 @@
 #' TRUE if the object ingerits "plotly" as a class.
 #'
 is.plotly <- function(x) {
-  inherits(x,"plotly")
+  inherits(x, "plotly")
 }
 
 
