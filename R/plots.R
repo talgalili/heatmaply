@@ -151,8 +151,8 @@ plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha =
   p
 }
 
-#' Create a plotly colorscale from a list of colors in any format.
-#' Probably not needed currently
+# Create a plotly colorscale from a list of colors in any format.
+# Probably not needed currently
 make_colorscale <- function(colors) {
     seq <- seq(0, 1, by = 1 / length(colors))
     scale <- lapply(seq_along(colors),
@@ -171,7 +171,7 @@ make_colorscale <- function(colors) {
     scale
 }
 
-#' Plotly takes colors in this format "rgb(255, 0, 0)"
+# Plotly takes colors in this format "rgb(255, 0, 0)"
 col2plotlyrgb <- function(col) {
     rgb <- grDevices::col2rgb(col)
     paste0(
