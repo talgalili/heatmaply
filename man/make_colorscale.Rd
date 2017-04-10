@@ -2,12 +2,12 @@
 % Please edit documentation in R/plots.R
 \name{make_colorscale}
 \alias{make_colorscale}
-\title{Create a plotly colorscale from a list of colors in any format. 
+\title{Create a plotly colorscale from a list of colors in any format.
 Probably not needed currently}
 \usage{
 make_colorscale(colors)
 }
 \description{
-Create a plotly colorscale from a list of colors in any format. 
+Create a plotly colorscale from a list of colors in any format.
 Probably not needed currently
 }
