@@ -151,8 +151,12 @@ plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha =
   p
 }
 
-#' Create a plotly colorscale from a list of colors in any format.
-#' Probably not needed currently
+
+
+
+
+# Create a plotly colorscale from a list of colors in any format.
+# Probably not needed currently
 make_colorscale <- function(colors) {
     seq <- seq(0, 1, by = 1 / length(colors))
     scale <- lapply(seq_along(colors),
@@ -260,7 +264,7 @@ plotly_dend_col <- function(dend, flip = FALSE) {
 
 #' @title geom_tile for side color plots
 #' @description
-#' Important for
+#' Important for creating annotation.
 #'
 #' @param df A "molten" data.frame as produced by (eg) reshape2::melt
 #' @param palette A function which can return colors to be used in the sidebar
