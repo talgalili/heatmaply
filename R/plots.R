@@ -218,9 +218,10 @@ make_colorscale <- function(colors) {
 #'
 #' @seealso \link{col2rgb}
 #' @examples
+#' \dontrun{
 #' col2rgb("peachpuff")
 #' col2plotlyrgb("peachpuff")
-#'
+#' }
 col2plotlyrgb <- function(col) {
     rgb <- grDevices::col2rgb(col)
     paste0(

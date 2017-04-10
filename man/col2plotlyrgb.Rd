@@ -19,9 +19,10 @@ A character of the form "rgb(value1,value1,value3)"
 Plotly takes colors in this format "rgb(255, 0, 0)"
 }
 \examples{
+\dontrun{
 col2rgb("peachpuff")
 col2plotlyrgb("peachpuff")
-
+}
 }
 \seealso{
 \link{col2rgb}
