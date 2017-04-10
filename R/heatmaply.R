@@ -112,6 +112,7 @@ is.plotly <- function(x) {
 #' @param grid_color control the color of the heatmap grid. Default is NA. Value passed to \link[ggplot2]{geom_tile}.
 #' Do not use this parameter on larger matrix sizes, as it can dramatically prolong the build time of the heatmap.
 #' (another parameter, grid_color, will be added in the future - once it is implemented in plotly)
+#' In the meantime it is MUCH better to use the grid_gap argument.
 #'
 #' @param grid_gap this is a fast alternative to grid_color. The default is 0, but if a larger value
 #' is used (for example, 1), then the resulting heatmap will have a white grid which can
@@ -285,10 +286,10 @@ is.plotly <- function(x) {
 #' heatmaply(is.na10(airquality))
 #' heatmaply(is.na10(airquality), grid_gap = 1)
 #'
+#' # grid_gap can handle quite large data matrix
+#' heatmaply(matrix(1:10000,100,100), k_row = 3, k_col = 3, grid_gap = 1)
+#'
 #' }
-#' @importFrom plotly plot_ly add_segments
-#' @importFrom assertthat assert_that
-
 heatmaply <- function(x, ...) {
   UseMethod("heatmaply")
 }
