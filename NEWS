@@ -43,6 +43,7 @@ and reduce the occurrence of bugs.
       library(heatmaply)
       df<-data.frame(1)
       heatmaply(mtcars)
+  * Make sure limits work when NA are present.
 
 
 ### DOCS
