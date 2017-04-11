@@ -781,11 +781,6 @@ heatmaply.heatmapr <- function(x,
   }
 
 
-  if(grid_gap > 0) {
-    p <- style(p, xgap = grid_gap, ygap = grid_gap)
-  }
-
-
   # TODO: Add native plotly sidecolor function.
   # TODO: Possibly use function to generate all 3 plots to prevent complex logic here
   if (missing(row_side_colors)) {
@@ -858,6 +853,17 @@ heatmaply.heatmapr <- function(x,
   if (is.na(margins[3])) margins[3] <- ifelse(main == "", 0, 30)
   if (is.na(margins[4])) margins[4] <- ifelse(row_dend_left, 100, 0)
 
+  # add a white grid
+  if(grid_gap > 0) {
+    p <- style(p, xgap = grid_gap, ygap = grid_gap)
+    # doesn't seem to work.
+    # if(!is.null(pr)) pr <- style(pr, xgap = grid_gap)
+    # if(!is.null(pc)) pc <- style(pc, ygap = grid_gap)
+  }
+
+
+
+
   heatmap_subplot <- heatmap_subplot_from_ggplotly(p = p, px = px, py = py,
     row_dend_left = row_dend_left, subplot_margin = subplot_margin,
     titleX = titleX, titleY = titleY, pr = pr, pc = pc, plot_method = plot_method)
@@ -865,6 +871,8 @@ heatmaply.heatmapr <- function(x,
       margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]),
       legend = list(y=1, yanchor="top")
     )
+
+  # keep only relevant plotly options
   l <- config(l, displaylogo = FALSE, collaborate = FALSE,
         modeBarButtonsToRemove = c("sendDataToCloud", "select2d", "lasso2d","autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian", "sendDataToCloud"))
 
