@@ -331,8 +331,8 @@ heatmaply.default <- function(x,
                               dendrogram = c("both", "row", "column", "none"),
                               reorderfun = function(d, w) reorder(d, w),
 
-                              k_row,
-                              k_col,
+                              k_row = 1,
+                              k_col = 1,
 
                               symm = FALSE,
                               revC,

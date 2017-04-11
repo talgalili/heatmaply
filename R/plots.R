@@ -157,7 +157,7 @@ plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha =
     colorbar_xpos = 1, colorbar_ypos = 1, colorbar_len = 0.3) {
 
   p <- plot_ly(z = x, x = 1:ncol(x), y = 1:nrow(x),
-    type = "heatmap", showlegend = FALSE, colors=colors,
+    type = "heatmap", showlegend = FALSE, colors = colors,
     zmin = limits[1], zmax = limits[2]) %>%
       layout(
         xaxis = list(
@@ -165,6 +165,7 @@ plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha =
           tickangle = column_text_angle,
           tickvals = 1:ncol(x), ticktext = colnames(x),
           linecolor = "#ffffff",
+          range = c(0.5, ncol(x) + 0.5),
           showticklabels = TRUE
         ),
         yaxis = list(
@@ -172,11 +173,12 @@ plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha =
           tickangle = row_text_angle,
           tickvals = 1:nrow(x), ticktext = rownames(x),
           linecolor = "#ffffff",
+          range = c(0.5, nrow(x) + 0.5),
           showticklabels = TRUE
         )
       )
   p <- plotly::colorbar(p, lenmode = "fraction",
-    xanchor = "right", x = 0, y = colorbar_ypos,
+    xanchor = "right", x = colorbar_xpos, y = colorbar_ypos,
     yanchor = colorbar_yanchor, len=colorbar_len)
   p
 }
@@ -233,29 +235,38 @@ col2plotlyrgb <- function(col) {
     )
 }
 
-
+## Helper function to generate "normal" colors for dendrograms
+## ie black if one k or rainbow_hcl otherwise
+k_colors <- function(k) {
+  if (k > 1) {
+    colorspace::rainbow_hcl(k)
+  } else {
+    "black"
+  }
+}
 
 plotly_dend_row <- function(dend, flip = FALSE) {
   dend_data <- as.ggdend(dend)
   segs <- dend_data$segments
 
   p <- plot_ly(segs) %>%
-    add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend, 
-      line = list(color = ~col), 
-      showlegend = FALSE
+    add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend, color = ~col,
+      showlegend = FALSE, 
+      ## Have to get colors back from dendrogram otherwise plotly will make some up
+      colors = unique(dendextend::get_leaves_branches_col(dend))
       # , hoverinfo = "none"
       ) %>%
     layout(
       hovermode = "closest",
       xaxis = list(
         title = "",
-        # range = c(max(segs$y), 0),
+        range = c(0, max(segs$y)),
         linecolor = "#ffffff",
         showgrid = FALSE
       ),
       yaxis = list(
         title = "",
-        # range = c(0, max(segs$x) + 1),
+        range = c(0, nrow(dend_data$labels) + 1),
         linecolor = "#ffffff",
         showgrid = FALSE
       )
@@ -267,35 +278,36 @@ plotly_dend_row <- function(dend, flip = FALSE) {
   p
 }
 
-
+## TODO: Try to merge with above
 plotly_dend_col <- function(dend, flip = FALSE) {
   dend_data <- as.ggdend(dend)
   segs <- dend_data$segments
 
   plot_ly(segs) %>%
-    add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend,
-      line = list(color = ~col), showlegend = FALSE
+    add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend, color = ~col, 
+      showlegend = FALSE,
+      ## Have to get colors back from dendrogram otherwise plotly will make some up
+      colors = unique(dendextend::get_leaves_branches_col(dend))
       # , hoverinfo = "none"
       ) %>%
     layout(
       hovermode = "closest",
       xaxis = list(
         title = "",
-        # range = c(0, max(segs$x) + 1),
+        range = c(0, nrow(dend_data$labels) + 1),
         linecolor = "#ffffff",
         showgrid = FALSE
       ),
       yaxis = list(
         title = "",
-        autorange = FALSE,
-        range = c(0, max(segs$y) + 1),
+        range = c(0, max(segs$y)),
         linecolor = "#ffffff",
         showgrid = FALSE
       )
     )
 }
 
-#' @title geom_tile for side color plots
+#' @title Side color plots for heatmaps
 #' @description
 #' Important for creating annotation.
 #'

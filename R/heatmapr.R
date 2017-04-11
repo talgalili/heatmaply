@@ -129,8 +129,8 @@ heatmapr <- function(x,
                       dendrogram = c("both", "row", "column", "none"),
                       reorderfun = function(d, w) reorder(d, w),
 
-                      k_row,
-                      k_col,
+                      k_row = 1,
+                      k_col = 1,
 
                       symm = FALSE,
                       revC,
@@ -392,15 +392,20 @@ heatmapr <- function(x,
   #----------------
   # Due to the internal working of dendextend, in order to use it we first need
   # to populate the dendextend::dendextend_options() space:
-  if(!missing(k_row) | !missing(k_col)) dendextend::assign_dendextend_options()
+  # if(!missing(k_row) | !missing(k_col))  # Setting k_row and k_col to 1 by default
+  dendextend::assign_dendextend_options()
 
-  if(is.dendrogram(Rowv) & !missing(k_row)) {
+  if(is.dendrogram(Rowv)) {
     if(is.na(k_row)) k_row <- find_k(Rowv)$k
-    Rowv <- color_branches(Rowv, k = k_row)
+    
+    Rowv <- color_branches(Rowv, k = k_row, 
+      col = k_colors(k_row))
   }
-  if(is.dendrogram(Colv) & !missing(k_col)) {
+  if(is.dendrogram(Colv)) {
     if(is.na(k_col)) k_col <- find_k(Colv)$k
-    Colv <- color_branches(Colv, k = k_col)
+
+    Colv <- color_branches(Colv, k = k_col, 
+      col = k_colors(k_col))
   }
 
   rowDend <- if(is.dendrogram(Rowv)) Rowv else NULL
