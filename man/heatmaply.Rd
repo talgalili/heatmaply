@@ -28,7 +28,7 @@ heatmaply(x, ...)
   "none", "GW"), heatmap_layers = NULL, branches_lwd = 0.6, file, long_data,
   plot_method = c("ggplot", "plotly"), label_names = c("row", "column",
   "value"), fontsize_row = 10, fontsize_col = 10, cexRow, cexCol,
-  subplot_widths = NULL, subplot_heights = NULL, colorbar_len = 0.3)
+  subplot_widths = NULL, subplot_heights = NULL, colorbar_len = 0.3, col)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
@@ -51,11 +51,12 @@ Defaults to \code{TRUE} unless \code{x} contains any \code{NA}s.}
 
 \item{...}{other parameters passed to \link{heatmapr} (currently, various parameters may be ignored.}
 
-\item{colors}{a vector of colors to use for heatmap color.
+\item{colors, col}{a vector of colors to use for heatmap color.
 The default uses \code{\link[viridis]{viridis}(n=256, alpha = 1, begin = 0, end = 1, option = "viridis")}
 It is passed to \link[ggplot2]{scale_fill_gradientn}.
 If colors is a color function (with the first argument being `n` = the number of colors),
-it will be used to create 256 colors from that function.}
+it will be used to create 256 colors from that function.
+(col is there to stay compatible with \link[gplots]{heatmap.2})}
 
 \item{limits}{a two dimensional numeric vector specifying the data range for the scale.}
 

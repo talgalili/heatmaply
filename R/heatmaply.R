@@ -38,11 +38,12 @@ is.plotly <- function(x) {
 #' @param x can either be a heatmapr object, or a numeric matrix
 #'   Defaults to \code{TRUE} unless \code{x} contains any \code{NA}s.
 #'
-#' @param colors a vector of colors to use for heatmap color.
+#' @param colors,col a vector of colors to use for heatmap color.
 #' The default uses \code{\link[viridis]{viridis}(n=256, alpha = 1, begin = 0, end = 1, option = "viridis")}
 #' It is passed to \link[ggplot2]{scale_fill_gradientn}.
 #' If colors is a color function (with the first argument being `n` = the number of colors),
 #' it will be used to create 256 colors from that function.
+#' (col is there to stay compatible with \link[gplots]{heatmap.2})
 #' @param limits a two dimensional numeric vector specifying the data range for the scale.
 #' @param na.value color to use for missing values (default is "grey50").
 #'
@@ -373,7 +374,8 @@ heatmaply.default <- function(x,
                               cexRow, cexCol,
                               subplot_widths = NULL,
                               subplot_heights = NULL,
-                              colorbar_len = 0.3) {
+                              colorbar_len = 0.3,
+                              col) {
 
   if (!missing(long_data)) {
     if (!missing(x)) warning("x and long_data should not be used together")
@@ -385,6 +387,9 @@ heatmaply.default <- function(x,
     rownames(x) <- x$name
     x$name <- NULL
   }
+
+  # this is to fix the error: "argument * matches multiple formal arguments"
+  if(!missing(col)) colors <- col
 
   plot_method <- match.arg(plot_method)
   dendrogram <- match.arg(dendrogram)

@@ -1,7 +1,7 @@
 
 
 
-heatmaply 0.9.0 (2017-04-10)
+heatmaply 0.9.0 (2017-04-11)
 ==============================
 
 This release adds unit testing and code coverage to the heatmaply package.
@@ -44,6 +44,7 @@ and reduce the occurrence of bugs.
       df<-data.frame(1)
       heatmaply(mtcars)
   * Make sure limits work when NA are present.
+  * Fixing the error: "argument * matches multiple formal arguments" by adding an explicit "col" parameter to heatmaply.
 
 
 ### DOCS
