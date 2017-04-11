@@ -15,8 +15,8 @@ heatmaply(x, ...)
   distfun = dist, hclustfun = hclust, dist_method = NULL,
   hclust_method = NULL, distfun_row, hclustfun_row, distfun_col,
   hclustfun_col, dendrogram = c("both", "row", "column", "none"),
-  reorderfun = function(d, w) reorder(d, w), k_row, k_col, symm = FALSE,
-  revC, scale = c("none", "row", "column"), na.rm = TRUE,
+  reorderfun = function(d, w) reorder(d, w), k_row = 1, k_col = 1,
+  symm = FALSE, revC, scale = c("none", "row", "column"), na.rm = TRUE,
   row_dend_left = FALSE, margins = c(50, 50, NA, NA), ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
