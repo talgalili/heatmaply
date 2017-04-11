@@ -857,8 +857,8 @@ heatmaply.heatmapr <- function(x,
   if(grid_gap > 0) {
     p <- style(p, xgap = grid_gap, ygap = grid_gap)
     # doesn't seem to work.
-    # if(!is.null(pr)) pr <- style(pr, xgap = grid_gap)
-    # if(!is.null(pc)) pc <- style(pc, ygap = grid_gap)
+    if(!is.null(pr)) pr <- style(pr, xgap = grid_gap)
+    if(!is.null(pc)) pc <- style(pc, ygap = grid_gap)
   }
 
 

@@ -175,7 +175,7 @@ plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha =
           showticklabels = TRUE
         )
       )
-  p <- plotly::colorbar(p, lenmode = "fraction", 
+  p <- plotly::colorbar(p, lenmode = "fraction",
     xanchor = "right", x = 0, y = colorbar_ypos,
     yanchor = colorbar_yanchor, len=colorbar_len)
   p
@@ -367,7 +367,8 @@ side_color_plot <- function(df, palette,
   else palette(nlevels(df[["value"]]))
 
   g <- ggplot(df, mapping = mapping) +
-    geom_raster() +
+    # geom_raster() +
+    geom_tile() +
     xlab("") +
     ylab("") +
     scale_fill_manual(
