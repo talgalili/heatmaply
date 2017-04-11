@@ -238,9 +238,11 @@ col2plotlyrgb <- function(col) {
 plotly_dend_row <- function(dend, flip = FALSE) {
   dend_data <- as.ggdend(dend)
   segs <- dend_data$segments
+
   p <- plot_ly(segs) %>%
-    add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend,
-      line=list(color = '#000000'), showlegend = FALSE
+    add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend, 
+      line = list(color = ~col), 
+      showlegend = FALSE
       # , hoverinfo = "none"
       ) %>%
     layout(
@@ -272,7 +274,7 @@ plotly_dend_col <- function(dend, flip = FALSE) {
 
   plot_ly(segs) %>%
     add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend,
-      line = list(color='#000000'), showlegend = FALSE
+      line = list(color = ~col), showlegend = FALSE
       # , hoverinfo = "none"
       ) %>%
     layout(
