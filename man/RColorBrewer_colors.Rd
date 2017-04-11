@@ -107,6 +107,7 @@ BrBG PiYG PRGn PuOr RdBu RdGy RdYlBu RdYlGn Spectral
 \examples{
 \dontrun{
 
+library(RColorBrewer)
 display.brewer.all(n=11,type="div"); title(main = "Divergent color palette")
 display.brewer.all(n=9,type=c("seq")); title(main = "Sequential color palette")
 
