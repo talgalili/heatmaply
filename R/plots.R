@@ -253,7 +253,7 @@ plotly_dend_row <- function(dend, flip = FALSE) {
     add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend, color = ~col,
       showlegend = FALSE, 
       ## Have to get colors back from dendrogram otherwise plotly will make some up
-      colors = unique(dendextend::get_leaves_branches_col(dend))
+      colors = sort(unique(dendextend::get_leaves_branches_col(dend)))
       # , hoverinfo = "none"
       ) %>%
     layout(
@@ -287,7 +287,7 @@ plotly_dend_col <- function(dend, flip = FALSE) {
     add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend, color = ~col, 
       showlegend = FALSE,
       ## Have to get colors back from dendrogram otherwise plotly will make some up
-      colors = unique(dendextend::get_leaves_branches_col(dend))
+      colors = sort(unique(dendextend::get_leaves_branches_col(dend)))
       # , hoverinfo = "none"
       ) %>%
     layout(
