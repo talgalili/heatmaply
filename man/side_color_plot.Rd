@@ -2,7 +2,7 @@
 % Please edit documentation in R/plots.R
 \name{side_color_plot}
 \alias{side_color_plot}
-\title{geom_tile for side color plots}
+\title{Side color plots for heatmaps}
 \usage{
 side_color_plot(df, palette, scale_title = paste(type, "side colors"),
   type = c("column", "row"), text_angle = if (type == "row") 0 else 90,

@@ -331,8 +331,8 @@ heatmaply.default <- function(x,
                               dendrogram = c("both", "row", "column", "none"),
                               reorderfun = function(d, w) reorder(d, w),
 
-                              k_row,
-                              k_col,
+                              k_row = 1,
+                              k_col = 1,
 
                               symm = FALSE,
                               revC,
@@ -730,23 +730,30 @@ heatmaply.heatmapr <- function(x,
     py <- NULL
   } else {
     if (plot_method == "ggplot") {
+      col_ggdend <- as.ggdend(cols)
+      xlims <- c(0.5, nrow(col_ggdend$labels) + 0.5)
       py <- ggplot(cols, labels  = FALSE) + theme_bw() +
-        coord_cartesian(expand = FALSE) +
+        coord_cartesian(expand = FALSE, xlim = xlims) +
         theme_clear_grid_dends
     } else {
-      py <- plotly_dend_col(cols)
+      py <- plotly_dend(cols, side = "col")
     }
   }
   if(is.null(rows)) {
     px <- NULL
   } else {
     if (plot_method == "ggplot") {
-      px <- ggplot(rows, labels  = FALSE) +
+      row_ggdend <- as.ggdend(rows)
+      ylims <- c(0.5, nrow(row_ggdend$labels) + 0.5)
+
+      px <- ggplot(row_ggdend, labels  = FALSE) +
         # coord_cartesian(expand = FALSE) +
-        coord_flip(expand = FALSE) + theme_bw() + theme_clear_grid_dends
+        coord_flip(expand = FALSE, xlim = ylims) + 
+        theme_bw() + 
+        theme_clear_grid_dends
       if(row_dend_left) px <- px + scale_y_reverse()
     } else {
-      px <- plotly_dend_row(rows, flip = row_dend_left)
+      px <- plotly_dend(rows, flip = row_dend_left, side = "row")
     }
   }
   # create the heatmap

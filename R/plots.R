@@ -157,7 +157,7 @@ plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha =
     colorbar_xpos = 1, colorbar_ypos = 1, colorbar_len = 0.3) {
 
   p <- plot_ly(z = x, x = 1:ncol(x), y = 1:nrow(x),
-    type = "heatmap", showlegend = FALSE, colors=colors,
+    type = "heatmap", showlegend = FALSE, colors = colors,
     zmin = limits[1], zmax = limits[2]) %>%
       layout(
         xaxis = list(
@@ -165,6 +165,7 @@ plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha =
           tickangle = column_text_angle,
           tickvals = 1:ncol(x), ticktext = colnames(x),
           linecolor = "#ffffff",
+          range = c(0.5, ncol(x) + 0.5),
           showticklabels = TRUE
         ),
         yaxis = list(
@@ -172,11 +173,12 @@ plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha =
           tickangle = row_text_angle,
           tickvals = 1:nrow(x), ticktext = rownames(x),
           linecolor = "#ffffff",
+          range = c(0.5, nrow(x) + 0.5),
           showticklabels = TRUE
         )
       )
   p <- plotly::colorbar(p, lenmode = "fraction",
-    xanchor = "right", x = 0, y = colorbar_ypos,
+    xanchor = "right", x = colorbar_xpos, y = colorbar_ypos,
     yanchor = colorbar_yanchor, len=colorbar_len)
   p
 }
@@ -233,67 +235,79 @@ col2plotlyrgb <- function(col) {
     )
 }
 
+## Helper function to generate "normal" colors for dendrograms
+## ie black if one k or rainbow_hcl otherwise
+k_colors <- function(k) {
+  if (k > 1) {
+    colorspace::rainbow_hcl(k)
+  } else {
+    "black"
+  }
+}
 
-
-plotly_dend_row <- function(dend, flip = FALSE) {
+plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
+  side <- match.arg(side)
   dend_data <- as.ggdend(dend)
   segs <- dend_data$segments
-  p <- plot_ly(segs) %>%
-    add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend,
-      line=list(color = '#000000'), showlegend = FALSE
-      # , hoverinfo = "none"
-      ) %>%
-    layout(
-      hovermode = "closest",
-      xaxis = list(
-        title = "",
-        # range = c(max(segs$y), 0),
-        linecolor = "#ffffff",
-        showgrid = FALSE
-      ),
-      yaxis = list(
-        title = "",
-        # range = c(0, max(segs$x) + 1),
-        linecolor = "#ffffff",
-        showgrid = FALSE
-      )
-    )
+  colors <- sort(unique(dendextend::get_leaves_branches_col(dend)))
 
+  lab_max <- nrow(dend_data$labels)
+  if (side == "row") lab_max <- lab_max + 0.5
+  
+  axis1 <- list(
+    title = "",
+    range = c(0,  max(segs$y)),
+    linecolor = "#ffffff",
+    showgrid = FALSE
+  )
+  axis2 <- list(
+    title = "",
+    range = c(0, lab_max),
+    linecolor = "#ffffff",
+    showgrid = FALSE
+  )
+
+  ## Have to change x and y depending on which orientation
+  if (side == "row") {
+    add_plot_lines <- function(p) {
+      p %>% add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend, color = ~col,
+        showlegend = FALSE, 
+        ## Have to get colors back from dendrogram otherwise plotly will make some up
+        colors = colors, 
+        hoverinfo = "x"
+        ) %>%
+      layout(
+        hovermode = "closest",
+        xaxis = axis1,
+        yaxis = axis2
+      )
+    }
+  }
+  else {
+    add_plot_lines <- function(p) {
+      p %>% add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend, color = ~col, 
+        showlegend = FALSE,
+        ## Have to get colors back from dendrogram otherwise plotly will make some up
+        colors = sort(unique(dendextend::get_leaves_branches_col(dend))), 
+        hoverinfo = "y"
+      ) %>%
+      layout(
+        hovermode = "closest",
+        xaxis = axis2,
+        yaxis = axis1
+      )
+    }
+  }
+
+  p <- plot_ly(segs) %>% add_plot_lines()
+    
   if (flip) {
     p <- layout(p, xaxis = list(autorange = "reversed"))
   }
   p
 }
 
-
-plotly_dend_col <- function(dend, flip = FALSE) {
-  dend_data <- as.ggdend(dend)
-  segs <- dend_data$segments
-
-  plot_ly(segs) %>%
-    add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend,
-      line = list(color='#000000'), showlegend = FALSE
-      # , hoverinfo = "none"
-      ) %>%
-    layout(
-      hovermode = "closest",
-      xaxis = list(
-        title = "",
-        # range = c(0, max(segs$x) + 1),
-        linecolor = "#ffffff",
-        showgrid = FALSE
-      ),
-      yaxis = list(
-        title = "",
-        autorange = FALSE,
-        range = c(0, max(segs$y) + 1),
-        linecolor = "#ffffff",
-        showgrid = FALSE
-      )
-    )
-}
-
-#' @title geom_tile for side color plots
+#' @title Side color plots for heatmaps
 #' @description
 #' Important for creating annotation.
 #'
