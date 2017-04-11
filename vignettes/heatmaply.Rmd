@@ -37,7 +37,7 @@ Introduction
 
 A heatmap is a popular graphical method for visualizing high-dimensional data, in which a table of numbers are encoded as a grid of colored cells. The rows and columns of the matrix are ordered to highlight patterns and are often accompanied by dendrograms. Heatmaps are used in many fields for visualizing observations, correlations, missing values patterns, and more.
 
-Interactive heatmaps allow the inspection of specific value by hovering the mouse over a cell, as well as zooming into a region of the heatmap by draging a rectangle around the relevant area.
+Interactive heatmaps allow the inspection of specific value by hovering the mouse over a cell, as well as zooming into a region of the heatmap by dragging a rectangle around the relevant area.
 
 This work is based on the ggplot2 and plotly.js engine. It produces similar heatmaps as d3heatmap, with the advantage of speed (plotly.js is able to handle larger size matrix), and the ability to zoom from the dendrogram.
 
@@ -105,12 +105,12 @@ heatmaply(cor(mtcars), margins = c(40, 40),
 Data transformation (scaling, normalize, and percentize)
 ===========
 
-The variables in mtcars includes values that reflect different types of measurment, each with its own range (and meaning) of values. In such a case, it is best to transform the data so to have all the variables have comparable values.
+The variables in mtcars includes values that reflect different types of measurement, each with its own range (and meaning) of values. In such a case, it is best to transform the data so to have all the variables have comparable values.
 
 scale
 --------
 
-If we would assume all variables come from some normal distribution, then scaling (i.e.: substract the mean and devide by the standard deviation) would bring them all close to the standard normal distribution. In such a case, each value would reflect the distance from the mean in units of standard deviation. The "scale" parameter in heatmaply supports column and row scaling, and can be used as follows:
+If we would assume all variables come from some normal distribution, then scaling (i.e.: subtract the mean and divide by the standard deviation) would bring them all close to the standard normal distribution. In such a case, each value would reflect the distance from the mean in units of standard deviation. The "scale" parameter in heatmaply supports column and row scaling, and can be used as follows:
 
 ```{r}
 heatmaply(mtcars, xlab = "Features", ylab = "Cars", 
@@ -126,7 +126,7 @@ normalize
 
 When variables in the data comes from possibly different (and non-normal) distributions, other transformations may be in order. For example, scaling on a binary variable with many 0's and just a few 1's will lead to a column with a very extreme value that would cause the color legend to be very skewed by that variable, leading to a masking of the distribution of the rest of the variables.
 
-Another possibility is to use the `normalize` function to brings data to the 0 to 1 scale by substracting the minimum and dividing by the maximum of all observations. This preserves the shape of each variable's distribution while making them easily comparable on the same "scale". Using the function on mtcars easily reveals columns with only two (am, vs) or three (gear, cyl) variables compared with variables that have a higher resolution of possible values:
+Another possibility is to use the `normalize` function to brings data to the 0 to 1 scale by subtracting the minimum and dividing by the maximum of all observations. This preserves the shape of each variable's distribution while making them easily comparable on the same "scale". Using the function on mtcars easily reveals columns with only two (am, vs) or three (gear, cyl) variables compared with variables that have a higher resolution of possible values:
 
 
 ```{r}
@@ -225,7 +225,7 @@ Customized dendrograms and side annotation
 Various seriation options
 -------------------
 
-heatmaply uses the `seriation` package to find an optimal ordering of rows and columns. Optimal means to optimze the Hamiltonian path length that is restricted by the dendrogram structure. This, in other words, means to rotate the branches so that the sum of distances between each adjacent leaf (label) will be minimized. This is related to a restricted version of the travelling salesman problem. 
+heatmaply uses the `seriation` package to find an optimal ordering of rows and columns. Optimal means to optimize the Hamiltonian path length that is restricted by the dendrogram structure. This, in other words, means to rotate the branches so that the sum of distances between each adjacent leaf (label) will be minimized. This is related to a restricted version of the travelling salesman problem. 
 
 The default options is "OLO" (Optimal leaf ordering) which optimizes the above criterion (in O(n^4)). Another option is "GW" ([Gruvaeus and Wainer](https://www.researchgate.net/publication/230266994_Two_additions_to_hierarchical_cluster_analysis)) which aims for the same goal but uses a potentially faster heuristic. The option "mean" gives the output we would get by default from heatmap functions in other packages such as `gplots::heatmap.2`. The option "none" gives us the dendrograms without any rotation that is based on the data matrix. 
 
