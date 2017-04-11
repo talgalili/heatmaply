@@ -245,66 +245,66 @@ k_colors <- function(k) {
   }
 }
 
-plotly_dend_row <- function(dend, flip = FALSE) {
+plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
+  side <- match.arg(side)
   dend_data <- as.ggdend(dend)
   segs <- dend_data$segments
+  colors <- sort(unique(dendextend::get_leaves_branches_col(dend)))
 
-  p <- plot_ly(segs) %>%
-    add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend, color = ~col,
-      showlegend = FALSE, 
-      ## Have to get colors back from dendrogram otherwise plotly will make some up
-      colors = sort(unique(dendextend::get_leaves_branches_col(dend))), 
-      hoverinfo = "x"
-      ) %>%
-    layout(
-      hovermode = "closest",
-      xaxis = list(
-        title = "",
-        range = c(0, max(segs$y)),
-        linecolor = "#ffffff",
-        showgrid = FALSE
-      ),
-      yaxis = list(
-        title = "",
-        range = c(0, nrow(dend_data$labels) + 1),
-        linecolor = "#ffffff",
-        showgrid = FALSE
+  lab_max <- nrow(dend_data$labels)
+  if (side == "row") lab_max <- lab_max + 0.5
+  
+  axis1 <- list(
+    title = "",
+    range = c(0,  max(segs$y)),
+    linecolor = "#ffffff",
+    showgrid = FALSE
+  )
+  axis2 <- list(
+    title = "",
+    range = c(0, lab_max),
+    linecolor = "#ffffff",
+    showgrid = FALSE
+  )
+
+  ## Have to change x and y depending on which orientation
+  if (side == "row") {
+    add_plot_lines <- function(p) {
+      p %>% add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend, color = ~col,
+        showlegend = FALSE, 
+        ## Have to get colors back from dendrogram otherwise plotly will make some up
+        colors = colors, 
+        hoverinfo = "x"
+        ) %>%
+      layout(
+        hovermode = "closest",
+        xaxis = axis1,
+        yaxis = axis2
       )
-    )
+    }
+  }
+  else {
+    add_plot_lines <- function(p) {
+      p %>% add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend, color = ~col, 
+        showlegend = FALSE,
+        ## Have to get colors back from dendrogram otherwise plotly will make some up
+        colors = sort(unique(dendextend::get_leaves_branches_col(dend))), 
+        hoverinfo = "y"
+      ) %>%
+      layout(
+        hovermode = "closest",
+        xaxis = axis2,
+        yaxis = axis1
+      )
+    }
+  }
 
+  p <- plot_ly(segs) %>% add_plot_lines()
+    
   if (flip) {
     p <- layout(p, xaxis = list(autorange = "reversed"))
   }
   p
-}
-
-## TODO: Try to merge with above
-plotly_dend_col <- function(dend, flip = FALSE) {
-  dend_data <- as.ggdend(dend)
-  segs <- dend_data$segments
-
-  plot_ly(segs) %>%
-    add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend, color = ~col, 
-      showlegend = FALSE,
-      ## Have to get colors back from dendrogram otherwise plotly will make some up
-      colors = sort(unique(dendextend::get_leaves_branches_col(dend))), 
-      hoverinfo = "y"
-      ) %>%
-    layout(
-      hovermode = "closest",
-      xaxis = list(
-        title = "",
-        range = c(0, nrow(dend_data$labels) + 1),
-        linecolor = "#ffffff",
-        showgrid = FALSE
-      ),
-      yaxis = list(
-        title = "",
-        range = c(0, max(segs$y)),
-        linecolor = "#ffffff",
-        showgrid = FALSE
-      )
-    )
 }
 
 #' @title Side color plots for heatmaps
