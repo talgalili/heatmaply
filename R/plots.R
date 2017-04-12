@@ -333,7 +333,7 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
 #'
 side_color_plot <- function(df, palette,
   scale_title = paste(type, "side colors"), type = c("column", "row"),
-  text_angle = if (type == "row") 0 else 90, is_colors = FALSE,
+  text_angle = if (type == "column") 0 else 90, is_colors = FALSE,
   label_name = type) {
 
   if (is.matrix(df)) df <- as.data.frame(df)
