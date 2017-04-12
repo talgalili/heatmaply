@@ -184,5 +184,5 @@ test_that("limits", {
 
 test_that("cellnote", {
     h <- heatmaply(mtcars, draw_cellnote = TRUE)
-    expect_is(h, "heatmaply")
+    expect_is(h, "plotly")
 })
