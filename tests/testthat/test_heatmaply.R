@@ -182,3 +182,7 @@ test_that("limits", {
     expect_error(heatmaply(t(mtcars), limits = 1))
 })
 
+test_that("cellnote", {
+    h <- heatmaply(mtcars, draw_cellnote = TRUE)
+    expect_is(h, "plotly")
+})

@@ -39,7 +39,8 @@ is.plotly <- function(x) {
 #'   Defaults to \code{TRUE} unless \code{x} contains any \code{NA}s.
 #'
 #' @param colors,col a vector of colors to use for heatmap color.
-#' The default uses \code{\link[viridis]{viridis}(n=256, alpha = 1, begin = 0, end = 1, option = "viridis")}
+#' The default uses 
+#' \code{\link[viridis]{viridis}(n=256, alpha = 1, begin = 0, end = 1, option = "viridis")}
 #' It is passed to \link[ggplot2]{scale_fill_gradientn}.
 #' If colors is a color function (with the first argument being `n` = the number of colors),
 #' it will be used to create 256 colors from that function.
@@ -47,10 +48,13 @@ is.plotly <- function(x) {
 #' @param limits a two dimensional numeric vector specifying the data range for the scale.
 #' @param na.value color to use for missing values (default is "grey50").
 #'
-#' @param row_text_angle numeric (Default is 0), the angle of the text of the rows. (this is called srtRow in \link[gplots]{heatmap.2})
-#' @param column_text_angle numeric (Default is 45), the angle of the text of the columns. (this is called srtCol in \link[gplots]{heatmap.2})
+#' @param row_text_angle numeric (Default is 0), the angle of the text of the 
+#' rows. (this is called srtRow in \link[gplots]{heatmap.2})
+#' @param column_text_angle numeric (Default is 45), the angle of the text of 
+#' the columns. (this is called srtCol in \link[gplots]{heatmap.2})
 #'
-#' @param subplot_margin Currently not well implemented. It is passed to \link[plotly]{subplot}. Default is 0. Either a single value or
+#' @param subplot_margin Currently not well implemented. It is passed to 
+#' \link[plotly]{subplot}. Default is 0. Either a single value or
 #'  four values (all between 0 and 1). If four values are provided,
 #'  the first is used as the left margin, the second is used as the right margin,
 #'  the third is used as the top margin, and the fourth is used as the bottom margin.
@@ -58,18 +62,31 @@ is.plotly <- function(x) {
 #'
 #' @param cellnote Mouseover values for the data. Useful if applying scaling.
 #' @param draw_cellnote Should the cellnote annotations be drawn? Defaults is FALSE,
-#' if cellnote is not supplied, TRUE if cellnote is supplied. If TRUE and cellnote is not supplied,
-#' x will be used for cellnote.
+#' if cellnote is not supplied, TRUE if cellnote is supplied. If TRUE and 
+#' cellnote is not supplied, x will be used for cellnote.
 #'
-#' @param Rowv determines if and how the row dendrogram should be reordered.	By default, it is TRUE, which implies dendrogram is computed and reordered based on row means. If NULL or FALSE, then no dendrogram is computed and no reordering is done. If a \link{dendrogram} (or \link{hclust}), then it is used "as-is", ie without any reordering. If a vector of integers, then dendrogram is computed and reordered based on the order of the vector.
-#' @param Colv determines if and how the column dendrogram should be reordered.	Has the options as the Rowv argument above and additionally when x is a square matrix, Colv = "Rowv" means that columns should be treated identically to the rows.
-#' @param distfun function used to compute the distance (dissimilarity) between both rows and columns. Defaults to dist.
-#' @param hclustfun function used to compute the hierarchical clustering when Rowv or Colv are not dendrograms. Defaults to hclust.
+#' @param Rowv determines if and how the row dendrogram should be reordered.	
+#' By default, it is TRUE, which implies dendrogram is computed and reordered 
+#' based on row means. If NULL or FALSE, then no dendrogram is computed and 
+#' no reordering is done. If a \link{dendrogram} (or \link{hclust}), 
+#' then it is used "as-is", ie without any reordering. If a vector of integers, 
+#' then dendrogram is computed and reordered based on the order of the vector.
+#' @param Colv determines if and how the column dendrogram should be reordered.	
+#' Has the options as the Rowv argument above and additionally when x is a 
+#' square matrix, Colv = "Rowv" means that columns should be treated 
+#' identically to the rows.
+#' @param distfun function used to compute the distance (dissimilarity) 
+#' between both rows and columns. Defaults to dist.
+#' @param hclustfun function used to compute the hierarchical clustering 
+#' when Rowv or Colv are not dendrograms. Defaults to hclust.
 #'
-#' @param dist_method default is NULL (which results in "euclidean" to be used). Can accept alternative character strings indicating the
+#' @param dist_method default is NULL (which results in "euclidean" to be used). 
+#' Can accept alternative character strings indicating the
 #' method to be passed to distfun. By default distfun. is \link{dist} hence
-#' this can be one of "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski".
-#' @param hclust_method default is NULL (which results in "complete" to be used). Can accept alternative character strings indicating the
+#' this can be one of "euclidean", "maximum", "manhattan", "canberra", "binary" 
+#' or "minkowski".
+#' @param hclust_method default is NULL (which results in "complete" to be used). 
+#' Can accept alternative character strings indicating the
 #' method to be passed to hclustfun By default hclustfun is \link{hclust} hence
 #' this can be one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).
 #'
@@ -78,31 +95,45 @@ is.plotly <- function(x) {
 #' @param distfun_col distfun for row dendrogram only.
 #' @param hclustfun_col hclustfun for col dendrogram only.
 #'
-#' @param dendrogram character string indicating whether to draw 'none', 'row', 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv (or Colv) arguments are honoured.
-#' @param reorderfun function(d, w) of dendrogram and weights for reordering the row and column dendrograms. The default uses stats{reorder.dendrogram}
+#' @param dendrogram character string indicating whether to draw 'none', 'row', 
+#' 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv) 
+#' is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv 
+#' (or Colv) arguments are honoured.
+#' @param reorderfun function(d, w) of dendrogram and weights for reordering the 
+#' row and column dendrograms. The default uses stats{reorder.dendrogram}
 #'
-#' @param k_row an integer scalar with the desired number of groups by which to color the dendrogram's branches in the rows (uses \link[dendextend]{color_branches})
+#' @param k_row an integer scalar with the desired number of groups by which to 
+#' color the dendrogram's branches in the rows (uses \link[dendextend]{color_branches})
 #' If NA then \link[dendextend]{find_k} is used to deduce the optimal number of clusters.
-#' @param k_col an integer scalar with the desired number of groups by which to color the dendrogram's branches in the columns (uses \link[dendextend]{color_branches})
+#' @param k_col an integer scalar with the desired number of groups by which to 
+#' color the dendrogram's branches in the columns (uses \link[dendextend]{color_branches})
 #' If NA then \link[dendextend]{find_k} is used to deduce the optimal number of clusters.
 #'
-#' @param symm logical indicating if x should be treated symmetrically; can only be true when x is a square matrix.
+#' @param symm logical indicating if x should be treated symmetrically; can only 
+#' be true when x is a square matrix.
 #' @param revC logical indicating if the column order should be reversed for plotting.
 #' Default (when missing) - is FALSE, unless symm is TRUE.
 #' This is useful for cor matrix.
 #'
-#' @param scale character indicating if the values should be centered and scaled in either the row direction or the column direction, or none. The default is "none".
+#' @param scale character indicating if the values should be centered and scaled 
+#' in either the row direction or the column direction, or none. The default is 
+#' "none".
 #' @param na.rm logical indicating whether NA's should be removed.
 #'
 #' @param row_dend_left logical (default is FALSE). Should the row dendrogram be
-#' plotted on the left side of the heatmap. If false then it will be plotted on the right
-#' side.
+#' plotted on the left side of the heatmap. If false then it will be plotted on 
+#' the right side.
 #'
-#' @param margins numeric vector of length 4 (default is c(50,50,NA,0)) containing the margins (see \link[plotly]{layout}) for column, row and main title names, respectively.
-#' The top margin is NA by default. If main=="" then the top margin will be set to 0, otherwise it will get 30.
+#' @param margins numeric vector of length 4 (default is c(50,50,NA,0)) 
+#' containing the margins (see \link[plotly]{layout}) for column, row and main 
+#' title names, respectively. The top margin is NA by default. If main=="" 
+#' then the top margin will be set to 0, otherwise it will get 30.
 #' For a multiline title a larger default for the 3rd element should be set.
+#' The right margin is NA by default, meaning it will be zero if row_dend_left 
+#' is FALSE, or 100 if row_dend_left is TRUE.
 #'
-#' @param ... other parameters passed to \link{heatmapr} (currently, various parameters may be ignored.
+#' @param ... other parameters passed to \link{heatmapr} (currently, various 
+#' parameters may be ignored.
 #'
 #' @param scale_fill_gradient_fun A function that creates a smooth gradient for the heatmap.
 #' The default uses \link[ggplot2]{scale_fill_gradientn} with the values of colors, limits, and
@@ -110,8 +141,9 @@ is.plotly <- function(x) {
 #' \link{scale_color_gradient}() in order to get other results (although the virids default
 #' is quite recommended)
 #'
-#' @param grid_color control the color of the heatmap grid. Default is NA. Value passed to \link[ggplot2]{geom_tile}.
-#' Do not use this parameter on larger matrix sizes, as it can dramatically prolong the build time of the heatmap.
+#' @param grid_color control the color of the heatmap grid. Default is NA. 
+#' Value passed to \link[ggplot2]{geom_tile}. Do not use this parameter on 
+#' larger matrix sizes, as it can dramatically prolong the build time of the heatmap.
 #' (another parameter, grid_color, will be added in the future - once it is implemented in plotly)
 #' In the meantime it is MUCH better to use the grid_gap argument.
 #'
@@ -154,10 +186,13 @@ is.plotly <- function(x) {
 #' and dendrogram plots
 #' @param seriate character indicating the method of matrix sorting (default: "OLO").
 #' Implemented options include:
-#' "OLO" (Optimal leaf ordering, optimzes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
-#' "mean" (sorts the matrix based on the reorderfun using marginal means of the matrix. This is the default used by \link[gplots]{heatmap.2}),
+#' "OLO" (Optimal leaf ordering, optimzes the Hamiltonian path length that is 
+#' restricted by the dendrogram structure - works in O(n^4) )
+#' "mean" (sorts the matrix based on the reorderfun using marginal means of 
+#' the matrix. This is the default used by \link[gplots]{heatmap.2}),
 #' "none" (the default order produced by the dendrogram),
-#' "GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length that is restricted by the dendrogram structure)
+#' "GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length 
+#' that is restricted by the dendrogram structure)
 #'
 #' @param heatmap_layers ggplot object (eg, theme_bw()) to be added to
 #'  the heatmap before conversion to a plotly object.
@@ -167,7 +202,8 @@ is.plotly <- function(x) {
 #' parameter is ignored (it is checked using \link[dendextend]{has_edgePar}("lwd")).
 #'
 #'
-#' @param file HTML file name to save the heatmaply into. Should be a character string ending with ".html".
+#' @param file HTML file name to save the heatmaply into. Should be a character 
+#' string ending with ".html".
 #' For example: heatmaply(x, file = "heatmaply_plot.html").
 #' This should not include a directory, only the name of the file.
 #' You can relocate the file once it is created, or use \link{setwd} first.
@@ -187,6 +223,13 @@ is.plotly <- function(x) {
 #' @param colorbar_len The length of the colorbar/color key relative to the total
 #' plot height. Only used if plot_method = "plotly"
 #'
+#' @param colorbar_xanchor,colorbar_yanchor The x and y anchoring points of the 
+#' colorbar/color legend. Can be "left", "middle" or "right" for colorbar_xanchor,
+#' and "top", "middle" or "bottom" for colorbar_yanchor.
+#' See \code{\link[plotly]{colorbar}} for more details.
+#' @param colorbar_xpos,colorbar_ypos The x and y co-ordinates (in proportion of the plot window)
+#' of the colorbar/color legend. See \code{\link[plotly]{colorbar}} for more details.
+#' 
 #' @export
 #' @examples
 #' \dontrun{
@@ -342,7 +385,7 @@ heatmaply.default <- function(x,
                               na.rm = TRUE,
 
                               row_dend_left = FALSE,
-                              margins = c(50, 50, NA, NA),
+                              margins = c(NA, NA, NA, NA),
                               ...,
                               scale_fill_gradient_fun = scale_fill_gradientn(
                                 colors = if(is.function(colors)) colors(256) else colors,
@@ -375,6 +418,10 @@ heatmaply.default <- function(x,
                               subplot_widths = NULL,
                               subplot_heights = NULL,
                               colorbar_len = 0.3,
+                              colorbar_xanchor = if(row_dend_left) "right" else "left",
+                              colorbar_yanchor = "bottom",
+                              colorbar_xpos = if(row_dend_left) -0.1 else 1.1,
+                              colorbar_ypos = 0,
                               col) {
 
   if (!missing(long_data)) {
@@ -482,7 +529,7 @@ heatmaply.default <- function(x,
                      column_text_angle = column_text_angle,
                      subplot_margin = subplot_margin,
                      row_dend_left = row_dend_left,
-                     xlab=xlab, ylab=ylab, main = main,
+                     xlab = xlab, ylab = ylab, main = main,
                      titleX = titleX, titleY = titleY,
                      hide_colorbar = hide_colorbar,
                      key.title = key.title,
@@ -503,7 +550,11 @@ heatmaply.default <- function(x,
                      fontsize_col = fontsize_col,
                      subplot_widths = subplot_widths,
                      subplot_heights = subplot_heights,
-                     colorbar_len = colorbar_len)
+                     colorbar_len = colorbar_len,
+                     colorbar_xanchor = colorbar_xanchor,
+                     colorbar_yanchor = colorbar_yanchor,
+                     colorbar_xpos = colorbar_xpos,
+                     colorbar_ypos = colorbar_ypos)
 
                      # TODO: think more on what should be passed in "..."
 
@@ -656,7 +707,7 @@ heatmaply.heatmapr <- function(x,
                                subplot_margin = 0,
 
                                row_dend_left = FALSE,
-                               margins = c(50, 50, NA, NA),
+                               margins = c(NA, NA, NA, NA),
                                ...,
                                scale_fill_gradient_fun = scale_fill_gradientn(
                                  colors = if(is.function(colors)) colors(256) else colors,
@@ -685,6 +736,10 @@ heatmaply.heatmapr <- function(x,
                                fontsize_col = 10,
                                subplot_widths = NULL,
                                subplot_heights = NULL,
+                               colorbar_xanchor = if(row_dend_left) "right" else "left",
+                               colorbar_yanchor = "bottom",
+                               colorbar_xpos = if(row_dend_left) -0.1 else 1.1,
+                               colorbar_ypos = 0,
                                colorbar_len = 0.3) {
 
   plot_method <- match.arg(plot_method)
@@ -780,25 +835,14 @@ heatmaply.heatmapr <- function(x,
                       label_names = label_names,
                       fontsize_row = fontsize_row, fontsize_col = fontsize_col)
   } else if (plot_method == "plotly") {
-    legend_yanchor <- "top"
-    legend_ypos <- 1
-    if (row_dend_left) {
-      legend_xpos <- 0
-      legend_xanchor <- "left"
-    } else {
-      legend_xpos <- 1
-      legend_xanchor <- "right"
-      if (missing(row_side_colors) || missing(col_side_colors)) {
-        legend_yanchor <- "bottom"
-        legend_ypos <- 0
-      }
-    }
 
     p <- plotly_heatmap(data_mat, limits = limits, colors = colors,
+      key_title = key.title,
       row_text_angle = row_text_angle, column_text_angle = column_text_angle,
       fontsize_row = fontsize_row, fontsize_col = fontsize_col,
-      colorbar_yanchor = legend_yanchor, colorbar_xpos = legend_xpos,
-      colorbar_ypos = legend_ypos, colorbar_len = colorbar_len)
+      colorbar_yanchor = colorbar_yanchor, colorbar_xanchor = colorbar_xanchor,
+      colorbar_xpos = colorbar_xpos, colorbar_ypos = colorbar_ypos, 
+      colorbar_len = colorbar_len)
   }
 
 
@@ -814,7 +858,8 @@ heatmaply.heatmapr <- function(x,
       is.data.frame(side_color_df)
     )
     pr <- side_color_plot(x[["row_side_colors"]], type = "row",
-      text_angle = row_text_angle, palette = row_side_palette,
+      text_angle = column_text_angle, 
+      palette = row_side_palette,
       is_colors = !is.null(RowSideColors), label_name = label_names[[1]])
   }
 
@@ -832,7 +877,8 @@ heatmaply.heatmapr <- function(x,
     ## Just make sure it's character first
     side_color_df[] <- lapply(side_color_df, as.character)
     pc <- side_color_plot(side_color_df, type = "column",
-      text_angle = column_text_angle, palette = col_side_palette,
+      text_angle = row_text_angle, 
+      palette = col_side_palette,
       is_colors = !is.null(ColSideColors),
       label_name = label_names[[2]]
     )
@@ -872,8 +918,20 @@ heatmaply.heatmapr <- function(x,
 
   # Adjust top based on whether main is empty or not.
   if (is.na(margins[3])) margins[3] <- ifelse(main == "", 0, 30)
-  if (is.na(margins[4])) margins[4] <- ifelse(row_dend_left, 100, 0)
-
+  
+  
+  min_marg_row <- calc_margin(rownames(data_mat), 
+    fontsize = p$x$layout$yaxis$tickfont$size)
+  if (row_dend_left && is.na(margins[4])) {
+    margins[4] <- min_marg_row
+  } else if (!row_dend_left && is.na(margins[2])) {
+    margins[2] <- min_marg_row  
+  }
+  if (is.na(margins[1])) {
+    margins[1] <- calc_margin(colnames(data_mat), 
+        fontsize = p$x$layout$yaxis$tickfont$size)
+  }
+   
   # add a white grid
   if(grid_gap > 0) {
     p <- style(p, xgap = grid_gap, ygap = grid_gap)
@@ -881,8 +939,6 @@ heatmaply.heatmapr <- function(x,
     # if(!is.null(pr)) pr <- style(pr, xgap = grid_gap)
     # if(!is.null(pc)) pc <- style(pc, ygap = grid_gap)
   }
-
-
 
 
   heatmap_subplot <- heatmap_subplot_from_ggplotly(p = p, px = px, py = py,
@@ -901,3 +957,6 @@ heatmaply.heatmapr <- function(x,
 
 }
 
+calc_margin <- function(labels, fontsize) {
+    max(nchar(labels) * fontsize, na.rm = TRUE)
+}

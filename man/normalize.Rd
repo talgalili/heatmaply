@@ -2,8 +2,8 @@
 % Please edit documentation in R/percentize.R
 \name{normalize}
 \alias{normalize}
-\alias{normalize.default}
 \alias{normalize.data.frame}
+\alias{normalize.default}
 \alias{normalize.matrix}
 \title{Normalization transformation (0-1)}
 \usage{
@@ -43,3 +43,4 @@ normalize(x[,1])
 \seealso{
 \link{percentize}
 }
+

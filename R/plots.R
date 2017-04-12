@@ -153,8 +153,8 @@ ggplot_heatmap <- function(xx,
 plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha = 1, begin = 0,
                                                                   end = 1, option = "viridis"),
     row_text_angle = 0, column_text_angle = 45, grid.color, grid.size, key.title = NULL,
-    row_dend_left = FALSE, fontsize_row = 10, fontsize_col = 10, colorbar_xanchor = 1, 
-    colorbar_yanchor = 1, colorbar_xpos = 1, colorbar_ypos = 1, colorbar_len = 0.3) {
+    row_dend_left = FALSE, fontsize_row = 10, fontsize_col = 10, colorbar_xanchor = "left",
+    key_title = "", colorbar_yanchor = "bottom", colorbar_xpos = 1.1, colorbar_ypos = 1, colorbar_len = 0.3) {
 
   p <- plot_ly(z = x, x = 1:ncol(x), y = 1:nrow(x),
     type = "heatmap", showlegend = FALSE, colors = colors,
@@ -177,7 +177,7 @@ plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha =
           showticklabels = TRUE
         )
       )
-  p <- plotly::colorbar(p, lenmode = "fraction",
+  p <- plotly::colorbar(p, lenmode = "fraction", title = key_title,
     xanchor = colorbar_xanchor, x = colorbar_xpos, y = colorbar_ypos,
     yanchor = colorbar_yanchor, len=colorbar_len)
   p
@@ -333,7 +333,7 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
 #'
 side_color_plot <- function(df, palette,
   scale_title = paste(type, "side colors"), type = c("column", "row"),
-  text_angle = if (type == "row") 0 else 90, is_colors = FALSE,
+  text_angle = if (type == "column") 0 else 90, is_colors = FALSE,
   label_name = type) {
 
   if (is.matrix(df)) df <- as.data.frame(df)
