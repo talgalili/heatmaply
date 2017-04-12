@@ -41,12 +41,12 @@ Imports:
     colorspace,
     RColorBrewer,
     htmlwidgets,
+    gplots,
     assertthat
 Suggests:
     knitr,
     covr,
     rmarkdown,
-    gplots,
     testthat
 VignetteBuilder: knitr
 License: GPL-2 | GPL-3
