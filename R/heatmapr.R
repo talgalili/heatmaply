@@ -397,15 +397,15 @@ heatmapr <- function(x,
 
   if(is.dendrogram(Rowv)) {
     if(is.na(k_row)) k_row <- find_k(Rowv)$k
-    
-    Rowv <- color_branches(Rowv, k = k_row, 
-      col = k_colors(k_row))
+
+    if(k_row > 1) Rowv <- color_branches(Rowv, k = k_row,
+                            col = k_colors(k_row))
   }
   if(is.dendrogram(Colv)) {
     if(is.na(k_col)) k_col <- find_k(Colv)$k
 
-    Colv <- color_branches(Colv, k = k_col, 
-      col = k_colors(k_col))
+    if(k_col > 1) Colv <- color_branches(Colv, k = k_col,
+                            col = k_colors(k_col))
   }
 
   rowDend <- if(is.dendrogram(Rowv)) Rowv else NULL
@@ -485,7 +485,7 @@ heatmapr <- function(x,
 
   heatmapr <- list(rows = rowDend, cols = colDend, matrix = mtx,
                   theme = theme, options = options, cellnote = cellnote)
-                  
+
   if (!missing(row_side_colors)) heatmapr[["row_side_colors"]] <- row_side_colors
   if (!missing(col_side_colors)) heatmapr[["col_side_colors"]] <- col_side_colors
 
