@@ -258,7 +258,7 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   if (is.numeric(segs$col)) segs$col <- factor(segs$col)
 
   ## Need to somehow convert to colors that plotly will understand
-  if (is.numeric(colors)) colors <- gplots::col2hex(palette()[seq_along(colors)])
+  if (is.numeric(colors)) colors <- gplots::col2hex(grDevices::palette()[seq_along(colors)])
   if (is.null(colors)) colors <- "black"
 
   lab_max <- nrow(dend_data$labels)
