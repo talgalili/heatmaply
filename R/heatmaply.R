@@ -694,11 +694,17 @@ heatmaply.heatmapr <- function(x,
     if(length(limits) != 2L) stop("limits must be of length 2 (i.e.: two dimensional)")
 
     r <- range(as.matrix(x$matrix$data), na.rm = TRUE)
-    l <- sort(limits)
+    limits <- sort(limits)
 
     ## Warn for broken heatmap colors
-    if (l[1] > r[1]) warning("Lower limit is not <= lowest value in x, colors will be broken!")
-    if (l[2] < r[2]) warning("Upper limit is not >= highest value in x, colors will be broken!")
+    if (limits[1] > r[1]) {
+      limits[1] <- r[1]
+      warning("Lower limit is not <= lowest value in x, min of limits is set to the min of the range (otherwise, colors will be broken!)")
+    }
+    if (limits[2] < r[2]) {
+      limits[2] <- r[2]
+      warning("Upper limit is not >= highest value in x, max of limits is set to the max of the range (otherwise, colors will be broken!)")
+    }
   }
   if(!missing(srtRow)) row_text_angle <- srtRow
   if(!missing(srtCol)) column_text_angle <- srtCol
@@ -748,8 +754,8 @@ heatmaply.heatmapr <- function(x,
 
       px <- ggplot(row_ggdend, labels  = FALSE) +
         # coord_cartesian(expand = FALSE) +
-        coord_flip(expand = FALSE, xlim = ylims) + 
-        theme_bw() + 
+        coord_flip(expand = FALSE, xlim = ylims) +
+        theme_bw() +
         theme_clear_grid_dends
       if(row_dend_left) px <- px + scale_y_reverse()
     } else {
