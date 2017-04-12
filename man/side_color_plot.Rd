@@ -5,7 +5,7 @@
 \title{Side color plots for heatmaps}
 \usage{
 side_color_plot(df, palette, scale_title = paste(type, "side colors"),
-  type = c("column", "row"), text_angle = if (type == "row") 0 else 90,
+  type = c("column", "row"), text_angle = if (type == "column") 0 else 90,
   is_colors = FALSE, label_name = type)
 }
 \arguments{
@@ -31,3 +31,4 @@ A ggplot geom_tile object
 \description{
 Important for creating annotation.
 }
+

@@ -27,3 +27,4 @@ col2plotlyrgb("peachpuff")
 \seealso{
 \link{col2rgb}
 }
+

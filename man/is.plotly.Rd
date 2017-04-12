@@ -15,3 +15,4 @@ TRUE if the object ingerits "plotly" as a class.
 \description{
 Helpful for the plot_method in link{heatmaply}.
 }
+

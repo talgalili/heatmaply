@@ -44,3 +44,4 @@ heatmaply(is.na10(airquality), grid_gap = 1,
 \seealso{
 \link{is.na}, the grid_gap parameter in \link{heatmaply}.
 }
+
