@@ -820,10 +820,10 @@ heatmaply.heatmapr <- function(x,
     legend_ypos <- 1
     if (row_dend_left) {
       legend_xpos <- 0
-      legend_xanchor <- "left"
+      legend_xanchor <- "right"
     } else {
       legend_xpos <- 1
-      legend_xanchor <- "right"
+      legend_xanchor <- "left"
       if (!missing(row_side_colors) || !missing(col_side_colors)) {
         legend_yanchor <- "bottom"
         legend_ypos <- 0
