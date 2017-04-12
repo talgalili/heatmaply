@@ -418,10 +418,10 @@ heatmaply.default <- function(x,
                               subplot_widths = NULL,
                               subplot_heights = NULL,
                               colorbar_len = 0.3,
-                              colorbar_xanchor = "left",
-                              colorbar_yanchor = "bottom",
-                              colorbar_xpos = 1.1,
-                              colorbar_ypos = 1,
+                              colorbar_xanchor = if(row_dend_left) "right" else "left",
+                              colorbar_yanchor = "top",
+                              colorbar_xpos = if(row_dend_left) -0.1 else 1.1,
+                              colorbar_ypos = 0,
                               col) {
 
   if (!missing(long_data)) {
@@ -736,9 +736,9 @@ heatmaply.heatmapr <- function(x,
                                fontsize_col = 10,
                                subplot_widths = NULL,
                                subplot_heights = NULL,
-                               colorbar_xanchor = "right",
+                               colorbar_xanchor = if(row_dend_left) "right" else "left",
                                colorbar_yanchor = "top",
-                               colorbar_xpos = - 0.2,
+                               colorbar_xpos = if(row_dend_left) -0.1 else 1.1,
                                colorbar_ypos = 0,
                                colorbar_len = 0.3) {
 
