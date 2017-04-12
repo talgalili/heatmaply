@@ -595,6 +595,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
   ## Remove all null plots
   plots <- plots[!(ind_remove_row | ind_remove_col)]
 
+
   ## Interim solution before removing warnings in documented way
   suppressMessages(
     suppressWarnings(
@@ -736,7 +737,7 @@ heatmaply.heatmapr <- function(x,
         coord_cartesian(expand = FALSE, xlim = xlims) +
         theme_clear_grid_dends
     } else {
-      py <- plotly_dend(cols, side = "col")
+      suppressWarnings(      py <- plotly_dend(cols, side = "col"))
     }
   }
   if(is.null(rows)) {
@@ -777,8 +778,10 @@ heatmaply.heatmapr <- function(x,
     legend_ypos <- 1
     if (row_dend_left) {
       legend_xpos <- 0
+      legend_xanchor <- "left"
     } else {
       legend_xpos <- 1
+      legend_xanchor <- "right"
       if (missing(row_side_colors) || missing(col_side_colors)) {
         legend_yanchor <- "bottom"
         legend_ypos <- 0
@@ -789,7 +792,7 @@ heatmaply.heatmapr <- function(x,
       row_text_angle = row_text_angle, column_text_angle = column_text_angle,
       fontsize_row = fontsize_row, fontsize_col = fontsize_col,
       colorbar_yanchor = legend_yanchor, colorbar_xpos = legend_xpos,
-      colorbar_ypos = 1, colorbar_len = colorbar_len)
+      colorbar_ypos = legend_ypos, colorbar_len = colorbar_len)
   }
 
 

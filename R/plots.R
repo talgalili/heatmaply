@@ -153,8 +153,8 @@ ggplot_heatmap <- function(xx,
 plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha = 1, begin = 0,
                                                                   end = 1, option = "viridis"),
     row_text_angle = 0, column_text_angle = 45, grid.color, grid.size, key.title = NULL,
-    row_dend_left = FALSE, fontsize_row = 10, fontsize_col = 10, colorbar_yanchor = 1,
-    colorbar_xpos = 1, colorbar_ypos = 1, colorbar_len = 0.3) {
+    row_dend_left = FALSE, fontsize_row = 10, fontsize_col = 10, colorbar_xanchor = 1, 
+    colorbar_yanchor = 1, colorbar_xpos = 1, colorbar_ypos = 1, colorbar_len = 0.3) {
 
   p <- plot_ly(z = x, x = 1:ncol(x), y = 1:nrow(x),
     type = "heatmap", showlegend = FALSE, colors = colors,
@@ -178,7 +178,7 @@ plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha =
         )
       )
   p <- plotly::colorbar(p, lenmode = "fraction",
-    xanchor = "right", x = colorbar_xpos, y = colorbar_ypos,
+    xanchor = colorbar_xanchor, x = colorbar_xpos, y = colorbar_ypos,
     yanchor = colorbar_yanchor, len=colorbar_len)
   p
 }
@@ -249,7 +249,17 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   side <- match.arg(side)
   dend_data <- as.ggdend(dend)
   segs <- dend_data$segments
+  ## Have to get colors back from dendrogram otherwise plotly will make some up
   colors <- sort(unique(dendextend::get_leaves_branches_col(dend)))
+  if (is.null(segs$col) || all(is.na(segs$col))) {
+    segs$col <- rep(1, length(segs$col))
+  }
+
+  if (is.numeric(segs$col)) segs$col <- factor(segs$col)
+
+  ## Need to somehow convert to colors that plotly will understand
+  if (is.numeric(colors)) colors <- gplots::col2hex(palette()[seq_along(colors)])
+  if (is.null(colors)) colors <- "black"
 
   lab_max <- nrow(dend_data$labels)
   if (side == "row") lab_max <- lab_max + 0.5
@@ -272,7 +282,6 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
     add_plot_lines <- function(p) {
       p %>% add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend, color = ~col,
         showlegend = FALSE, 
-        ## Have to get colors back from dendrogram otherwise plotly will make some up
         colors = colors, 
         hoverinfo = "x"
         ) %>%
@@ -287,8 +296,7 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
     add_plot_lines <- function(p) {
       p %>% add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend, color = ~col, 
         showlegend = FALSE,
-        ## Have to get colors back from dendrogram otherwise plotly will make some up
-        colors = sort(unique(dendextend::get_leaves_branches_col(dend))), 
+        colors = colors, 
         hoverinfo = "y"
       ) %>%
       layout(
