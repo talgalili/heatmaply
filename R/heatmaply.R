@@ -837,6 +837,7 @@ heatmaply.heatmapr <- function(x,
   } else if (plot_method == "plotly") {
 
     p <- plotly_heatmap(data_mat, limits = limits, colors = colors,
+      key_title = key.title,
       row_text_angle = row_text_angle, column_text_angle = column_text_angle,
       fontsize_row = fontsize_row, fontsize_col = fontsize_col,
       colorbar_yanchor = colorbar_yanchor, colorbar_xanchor = colorbar_xanchor,

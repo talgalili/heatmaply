@@ -4,10 +4,14 @@ test_that("seriate", {
     expect_is(heatmapr(mtcars, seriate = "GW"), "heatmapr")
 })
 
+test_that("cellnote", {
+    expect_is(heatmapr(mtcars, seriate = "GW", cellnote = mtcars), "heatmapr")
+})
+
 
 test_that("Rowv, Colv", {
-    expect_is(heatmapr(mtcars, Colv = 1:ncol(mtcars), Rowv = 1:ncol(mtcars)), 
-        "heatmapr")
+	hmapr <- heatmapr(mtcars, Colv = 1:ncol(mtcars), Rowv = 1:ncol(mtcars))
+    expect_true(is.heatmapr(hmapr))
 })
 
 test_that("symm, revc", {
