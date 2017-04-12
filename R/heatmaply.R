@@ -223,6 +223,13 @@ is.plotly <- function(x) {
 #' @param colorbar_len The length of the colorbar/color key relative to the total
 #' plot height. Only used if plot_method = "plotly"
 #'
+#' @param colorbar_xanchor,colorbar_yanchor The x and y anchoring points of the 
+#' colorbar/color legend. Can be "left", "middle" or "right" for colorbar_xanchor,
+#' and "top", "middle" or "bottom" for colorbar_yanchor.
+#' See \code{\link[plotly]{colorbar}} for more details.
+#' @param colorbar_xpos,colorbar_ypos The x and y co-ordinates (in proportion of the plot window)
+#' of the colorbar/color legend. See \code{\link[plotly]{colorbar}} for more details.
+#' 
 #' @export
 #' @examples
 #' \dontrun{
@@ -411,6 +418,10 @@ heatmaply.default <- function(x,
                               subplot_widths = NULL,
                               subplot_heights = NULL,
                               colorbar_len = 0.3,
+                              colorbar_xanchor = "left",
+                              colorbar_yanchor = "bottom",
+                              colorbar_xpos = 1.1,
+                              colorbar_ypos = 1,
                               col) {
 
   if (!missing(long_data)) {
@@ -539,7 +550,11 @@ heatmaply.default <- function(x,
                      fontsize_col = fontsize_col,
                      subplot_widths = subplot_widths,
                      subplot_heights = subplot_heights,
-                     colorbar_len = colorbar_len)
+                     colorbar_len = colorbar_len,
+                     colorbar_xanchor = colorbar_xanchor,
+                     colorbar_yanchor = colorbar_yanchor,
+                     colorbar_xpos = colorbar_xpos,
+                     colorbar_ypos = colorbar_ypos)
 
                      # TODO: think more on what should be passed in "..."
 
@@ -721,6 +736,10 @@ heatmaply.heatmapr <- function(x,
                                fontsize_col = 10,
                                subplot_widths = NULL,
                                subplot_heights = NULL,
+                               colorbar_xanchor = "left",
+                               colorbar_yanchor = "bottom",
+                               colorbar_xpos = 1.1,
+                               colorbar_ypos = 1,
                                colorbar_len = 0.3) {
 
   plot_method <- match.arg(plot_method)
@@ -816,25 +835,13 @@ heatmaply.heatmapr <- function(x,
                       label_names = label_names,
                       fontsize_row = fontsize_row, fontsize_col = fontsize_col)
   } else if (plot_method == "plotly") {
-    legend_yanchor <- "top"
-    legend_ypos <- 1
-    if (row_dend_left) {
-      legend_xpos <- 0
-      legend_xanchor <- "right"
-    } else {
-      legend_xpos <- 1
-      legend_xanchor <- "left"
-      if (!missing(row_side_colors) || !missing(col_side_colors)) {
-        legend_yanchor <- "bottom"
-        legend_ypos <- 0
-      }
-    }
 
     p <- plotly_heatmap(data_mat, limits = limits, colors = colors,
       row_text_angle = row_text_angle, column_text_angle = column_text_angle,
       fontsize_row = fontsize_row, fontsize_col = fontsize_col,
-      colorbar_yanchor = legend_yanchor, colorbar_xpos = legend_xpos,
-      colorbar_ypos = legend_ypos, colorbar_len = colorbar_len)
+      colorbar_yanchor = colorbar_yanchor, colorbar_xanchor = colorbar_xanchor,
+      colorbar_xpos = colorbar_xpos, colorbar_ypos = colorbar_ypos, 
+      colorbar_len = colorbar_len)
   }
 
 

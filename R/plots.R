@@ -153,8 +153,8 @@ ggplot_heatmap <- function(xx,
 plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha = 1, begin = 0,
                                                                   end = 1, option = "viridis"),
     row_text_angle = 0, column_text_angle = 45, grid.color, grid.size, key.title = NULL,
-    row_dend_left = FALSE, fontsize_row = 10, fontsize_col = 10, colorbar_xanchor = "middle", 
-    colorbar_yanchor = "middle", colorbar_xpos = 1, colorbar_ypos = 1, colorbar_len = 0.3) {
+    row_dend_left = FALSE, fontsize_row = 10, fontsize_col = 10, colorbar_xanchor = "left", 
+    colorbar_yanchor = "bottom", colorbar_xpos = 1.1, colorbar_ypos = 1, colorbar_len = 0.3) {
 
   p <- plot_ly(z = x, x = 1:ncol(x), y = 1:nrow(x),
     type = "heatmap", showlegend = FALSE, colors = colors,
@@ -178,7 +178,7 @@ plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha =
         )
       )
   p <- plotly::colorbar(p, lenmode = "fraction",
-    xanchor = "left", x = 1.2, y = colorbar_ypos,
+    xanchor = colorbar_xanchor, x = colorbar_xpos, y = colorbar_ypos,
     yanchor = colorbar_yanchor, len=colorbar_len)
   p
 }

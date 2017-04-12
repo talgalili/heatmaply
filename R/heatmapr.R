@@ -240,14 +240,6 @@ heatmapr <- function(x,
     }
   }
 
-  # switch("c",
-  #        "a" = 4,
-  #        "b" = 5,
-  #        "c" = {
-  #          5+3
-  #          2+1
-  #        })
-
   if (isTRUE(Rowv)) {
     Rowv <- switch(seriate,
                      "mean" = rowMeans(x, na.rm = na.rm),
@@ -294,8 +286,6 @@ heatmapr <- function(x,
   # making the order of the matrix rows comparable with heatmap.2
   Rowv <- rev(Rowv)
   rowInd <- rev(rowInd)
-
-
 
   if (identical(Colv, "Rowv")) {
     # i.e.: if symm=TRUE
@@ -366,7 +356,7 @@ heatmapr <- function(x,
   if (is.null(cellnote)) {
     cellnote <- round(x, digits = digits)
   } else {
-    cellnote <- cellnote[rowInd, colInd, drop = FALSE]
+    cellnote <- round(cellnote[rowInd, colInd, drop = FALSE], digits = digits)
   }
 
   if (!missing(row_side_colors)) {
