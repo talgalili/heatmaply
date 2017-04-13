@@ -250,7 +250,6 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   dend_data <- as.ggdend(dend)
   segs <- dend_data$segments
   ## Have to get colors back from dendrogram otherwise plotly will make some up
-  colors <- sort(unique(dendextend::get_leaves_branches_col(dend)))
   if (is.null(segs$col) || all(is.na(segs$col))) {
     segs$col <- rep(1, length(segs$col))
   }
@@ -259,8 +258,12 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   if (is.numeric(segs$col)) segs$col <- factor(segs$col)
 
   ## Need to somehow convert to colors that plotly will understand
+  # colors <- unique(dendextend::get_leaves_branches_col(dend))
+  # if(!is.null(colors)) colors <- sort(colors)
+  colors <- sort(unique(segs$col))
   if (is.numeric(colors)) colors <- gplots::col2hex(grDevices::palette()[seq_along(colors)])
-  if (is.null(colors)) colors <- "black"
+  # if (is.null(colors)) colors <- "black"
+
 
   lab_max <- nrow(dend_data$labels)
   if (side == "row") lab_max <- lab_max + 0.5
