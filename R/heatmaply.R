@@ -957,6 +957,7 @@ heatmaply.heatmapr <- function(x,
 
 }
 
+## TODO: Better/safer estimation of total size, or use monospace.
 calc_margin <- function(labels, fontsize) {
-    max(nchar(labels) * fontsize, na.rm = TRUE)
+    max(nchar(labels) * fontsize, na.rm = TRUE) / 2
 }
