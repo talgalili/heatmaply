@@ -914,6 +914,7 @@ heatmaply.heatmapr <- function(x,
     
     p <- p %>% add_trace(y = mdf$row, x = mdf$variable, text = mdf$value,
         type = "scatter", mode = "text", textposition = "middle right",
+        hoverinfo = "none",
         textfont = list(color = plotly::toRGB(cellnote_color), size = 16)) 
     # p <- p %>% add_trace(data = mdf, type = "scatter", mode = "text",
     #     textfont = list(color = '#000000', size = 16),
