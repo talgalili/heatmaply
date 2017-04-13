@@ -254,6 +254,7 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   if (is.null(segs$col) || all(is.na(segs$col))) {
     segs$col <- rep(1, length(segs$col))
   }
+  segs$col[is.na(segs$col)] <- "black" # default value for NA is "black"
 
   if (is.numeric(segs$col)) segs$col <- factor(segs$col)
 
@@ -263,7 +264,7 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
 
   lab_max <- nrow(dend_data$labels)
   if (side == "row") lab_max <- lab_max + 0.5
-  
+
   axis1 <- list(
     title = "",
     range = c(0,  max(segs$y)),
@@ -281,8 +282,8 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   if (side == "row") {
     add_plot_lines <- function(p) {
       p %>% add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend, color = ~col,
-        showlegend = FALSE, 
-        colors = colors, 
+        showlegend = FALSE,
+        colors = colors,
         hoverinfo = "x"
         ) %>%
       layout(
@@ -294,9 +295,9 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   }
   else {
     add_plot_lines <- function(p) {
-      p %>% add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend, color = ~col, 
+      p %>% add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend, color = ~col,
         showlegend = FALSE,
-        colors = colors, 
+        colors = colors,
         hoverinfo = "y"
       ) %>%
       layout(
@@ -308,7 +309,7 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   }
 
   p <- plot_ly(segs) %>% add_plot_lines()
-    
+
   if (flip) {
     p <- layout(p, xaxis = list(autorange = "reversed"))
   }
