@@ -11,13 +11,14 @@ heatmaply(x, ...)
 \method{heatmaply}{default}(x, colors = viridis(n = 256, alpha = 1, begin = 0,
   end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
   row_text_angle = 0, column_text_angle = 45, subplot_margin = 0,
-  cellnote = NULL, draw_cellnote = !is.null(cellnote), Rowv, Colv,
-  distfun = dist, hclustfun = hclust, dist_method = NULL,
-  hclust_method = NULL, distfun_row, hclustfun_row, distfun_col,
-  hclustfun_col, dendrogram = c("both", "row", "column", "none"),
-  reorderfun = function(d, w) reorder(d, w), k_row = 1, k_col = 1,
-  symm = FALSE, revC, scale = c("none", "row", "column"), na.rm = TRUE,
-  row_dend_left = FALSE, margins = c(NA, NA, NA, NA), ...,
+  cellnote = NULL, draw_cellnote = !is.null(cellnote),
+  cellnote_color = "white", Rowv, Colv, distfun = dist,
+  hclustfun = hclust, dist_method = NULL, hclust_method = NULL,
+  distfun_row, hclustfun_row, distfun_col, hclustfun_col,
+  dendrogram = c("both", "row", "column", "none"), reorderfun = function(d,
+  w) reorder(d, w), k_row = 1, k_col = 1, symm = FALSE, revC,
+  scale = c("none", "row", "column"), na.rm = TRUE, row_dend_left = FALSE,
+  margins = c(NA, NA, NA, NA), ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, grid_gap = 0, srtRow, srtCol, xlab = "",
@@ -42,9 +43,10 @@ heatmaply(x, ...)
   limits), grid_color = NA, grid_gap = 0, srtRow, srtCol, xlab = "",
   ylab = "", main = "", titleX = TRUE, titleY = TRUE,
   hide_colorbar = FALSE, key.title = NULL, return_ppxpy = FALSE,
-  draw_cellnote = FALSE, row_side_colors, row_side_palette, col_side_colors,
-  col_side_palette, plot_method = c("ggplot", "plotly"), ColSideColors,
-  RowSideColors, heatmap_layers = NULL, branches_lwd = 0.6, label_names,
+  draw_cellnote = FALSE, cellnote_color = "white", row_side_colors,
+  row_side_palette, col_side_colors, col_side_palette,
+  plot_method = c("ggplot", "plotly"), ColSideColors, RowSideColors,
+  heatmap_layers = NULL, branches_lwd = 0.6, label_names,
   fontsize_row = 10, fontsize_col = 10, subplot_widths = NULL,
   subplot_heights = NULL, colorbar_xanchor = if (row_dend_left) "right" else
   "left", colorbar_yanchor = "bottom", colorbar_xpos = if (row_dend_left)
@@ -54,11 +56,11 @@ heatmaply(x, ...)
 \item{x}{can either be a heatmapr object, or a numeric matrix
 Defaults to \code{TRUE} unless \code{x} contains any \code{NA}s.}
 
-\item{...}{other parameters passed to \link{heatmapr} (currently, various 
+\item{...}{other parameters passed to \link{heatmapr} (currently, various
 parameters may be ignored.}
 
 \item{colors, col}{a vector of colors to use for heatmap color.
-The default uses 
+The default uses
 \code{\link[viridis]{viridis}(n=256, alpha = 1, begin = 0, end = 1, option = "viridis")}
 It is passed to \link[ggplot2]{scale_fill_gradientn}.
 If colors is a color function (with the first argument being `n` = the number of colors),
@@ -69,13 +71,13 @@ it will be used to create 256 colors from that function.
 
 \item{na.value}{color to use for missing values (default is "grey50").}
 
-\item{row_text_angle}{numeric (Default is 0), the angle of the text of the 
+\item{row_text_angle}{numeric (Default is 0), the angle of the text of the
 rows. (this is called srtRow in \link[gplots]{heatmap.2})}
 
-\item{column_text_angle}{numeric (Default is 45), the angle of the text of 
+\item{column_text_angle}{numeric (Default is 45), the angle of the text of
 the columns. (this is called srtCol in \link[gplots]{heatmap.2})}
 
-\item{subplot_margin}{Currently not well implemented. It is passed to 
+\item{subplot_margin}{Currently not well implemented. It is passed to
 \link[plotly]{subplot}. Default is 0. Either a single value or
  four values (all between 0 and 1). If four values are provided,
  the first is used as the left margin, the second is used as the right margin,
@@ -85,34 +87,36 @@ the columns. (this is called srtCol in \link[gplots]{heatmap.2})}
 \item{cellnote}{Mouseover values for the data. Useful if applying scaling.}
 
 \item{draw_cellnote}{Should the cellnote annotations be drawn? Defaults is FALSE,
-if cellnote is not supplied, TRUE if cellnote is supplied. If TRUE and 
+if cellnote is not supplied, TRUE if cellnote is supplied. If TRUE and
 cellnote is not supplied, x will be used for cellnote.}
 
+\item{cellnote_color}{The color of the cellnote text to be used.}
+
 \item{Rowv}{determines if and how the row dendrogram should be reordered.
-By default, it is TRUE, which implies dendrogram is computed and reordered 
-based on row means. If NULL or FALSE, then no dendrogram is computed and 
-no reordering is done. If a \link{dendrogram} (or \link{hclust}), 
-then it is used "as-is", ie without any reordering. If a vector of integers, 
+By default, it is TRUE, which implies dendrogram is computed and reordered
+based on row means. If NULL or FALSE, then no dendrogram is computed and
+no reordering is done. If a \link{dendrogram} (or \link{hclust}),
+then it is used "as-is", ie without any reordering. If a vector of integers,
 then dendrogram is computed and reordered based on the order of the vector.}
 
 \item{Colv}{determines if and how the column dendrogram should be reordered.
-Has the options as the Rowv argument above and additionally when x is a 
-square matrix, Colv = "Rowv" means that columns should be treated 
+Has the options as the Rowv argument above and additionally when x is a
+square matrix, Colv = "Rowv" means that columns should be treated
 identically to the rows.}
 
-\item{distfun}{function used to compute the distance (dissimilarity) 
+\item{distfun}{function used to compute the distance (dissimilarity)
 between both rows and columns. Defaults to dist.}
 
-\item{hclustfun}{function used to compute the hierarchical clustering 
+\item{hclustfun}{function used to compute the hierarchical clustering
 when Rowv or Colv are not dendrograms. Defaults to hclust.}
 
-\item{dist_method}{default is NULL (which results in "euclidean" to be used). 
+\item{dist_method}{default is NULL (which results in "euclidean" to be used).
 Can accept alternative character strings indicating the
 method to be passed to distfun. By default distfun. is \link{dist} hence
-this can be one of "euclidean", "maximum", "manhattan", "canberra", "binary" 
+this can be one of "euclidean", "maximum", "manhattan", "canberra", "binary"
 or "minkowski".}
 
-\item{hclust_method}{default is NULL (which results in "complete" to be used). 
+\item{hclust_method}{default is NULL (which results in "complete" to be used).
 Can accept alternative character strings indicating the
 method to be passed to hclustfun By default hclustfun is \link{hclust} hence
 this can be one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).}
@@ -125,45 +129,45 @@ this can be one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA
 
 \item{hclustfun_col}{hclustfun for col dendrogram only.}
 
-\item{dendrogram}{character string indicating whether to draw 'none', 'row', 
-'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv) 
-is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv 
+\item{dendrogram}{character string indicating whether to draw 'none', 'row',
+'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv)
+is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv
 (or Colv) arguments are honoured.}
 
-\item{reorderfun}{function(d, w) of dendrogram and weights for reordering the 
+\item{reorderfun}{function(d, w) of dendrogram and weights for reordering the
 row and column dendrograms. The default uses stats{reorder.dendrogram}}
 
-\item{k_row}{an integer scalar with the desired number of groups by which to 
+\item{k_row}{an integer scalar with the desired number of groups by which to
 color the dendrogram's branches in the rows (uses \link[dendextend]{color_branches})
 If NA then \link[dendextend]{find_k} is used to deduce the optimal number of clusters.}
 
-\item{k_col}{an integer scalar with the desired number of groups by which to 
+\item{k_col}{an integer scalar with the desired number of groups by which to
 color the dendrogram's branches in the columns (uses \link[dendextend]{color_branches})
 If NA then \link[dendextend]{find_k} is used to deduce the optimal number of clusters.}
 
-\item{symm}{logical indicating if x should be treated symmetrically; can only 
+\item{symm}{logical indicating if x should be treated symmetrically; can only
 be true when x is a square matrix.}
 
 \item{revC}{logical indicating if the column order should be reversed for plotting.
 Default (when missing) - is FALSE, unless symm is TRUE.
 This is useful for cor matrix.}
 
-\item{scale}{character indicating if the values should be centered and scaled 
-in either the row direction or the column direction, or none. The default is 
+\item{scale}{character indicating if the values should be centered and scaled
+in either the row direction or the column direction, or none. The default is
 "none".}
 
 \item{na.rm}{logical indicating whether NA's should be removed.}
 
 \item{row_dend_left}{logical (default is FALSE). Should the row dendrogram be
-plotted on the left side of the heatmap. If false then it will be plotted on 
+plotted on the left side of the heatmap. If false then it will be plotted on
 the right side.}
 
-\item{margins}{numeric vector of length 4 (default is c(50,50,NA,0)) 
-containing the margins (see \link[plotly]{layout}) for column, row and main 
-title names, respectively. The top margin is NA by default. If main=="" 
+\item{margins}{numeric vector of length 4 (default is c(50,50,NA,0))
+containing the margins (see \link[plotly]{layout}) for column, row and main
+title names, respectively. The top margin is NA by default. If main==""
 then the top margin will be set to 0, otherwise it will get 30.
 For a multiline title a larger default for the 3rd element should be set.
-The right margin is NA by default, meaning it will be zero if row_dend_left 
+The right margin is NA by default, meaning it will be zero if row_dend_left
 is FALSE, or 100 if row_dend_left is TRUE.}
 
 \item{scale_fill_gradient_fun}{A function that creates a smooth gradient for the heatmap.
@@ -172,8 +176,8 @@ na.value that are supplied by the user. The user can input a customized function
 \link{scale_color_gradient}() in order to get other results (although the virids default
 is quite recommended)}
 
-\item{grid_color}{control the color of the heatmap grid. Default is NA. 
-Value passed to \link[ggplot2]{geom_tile}. Do not use this parameter on 
+\item{grid_color}{control the color of the heatmap grid. Default is NA.
+Value passed to \link[ggplot2]{geom_tile}. Do not use this parameter on
 larger matrix sizes, as it can dramatically prolong the build time of the heatmap.
 (another parameter, grid_color, will be added in the future - once it is implemented in plotly)
 In the meantime it is MUCH better to use the grid_gap argument.}
@@ -217,12 +221,12 @@ to keep compatibility with \link[gplots]{heatmap.2}}
 
 \item{seriate}{character indicating the method of matrix sorting (default: "OLO").
 Implemented options include:
-"OLO" (Optimal leaf ordering, optimzes the Hamiltonian path length that is 
+"OLO" (Optimal leaf ordering, optimzes the Hamiltonian path length that is
 restricted by the dendrogram structure - works in O(n^4) )
-"mean" (sorts the matrix based on the reorderfun using marginal means of 
+"mean" (sorts the matrix based on the reorderfun using marginal means of
 the matrix. This is the default used by \link[gplots]{heatmap.2}),
 "none" (the default order produced by the dendrogram),
-"GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length 
+"GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length
 that is restricted by the dendrogram structure)}
 
 \item{heatmap_layers}{ggplot object (eg, theme_bw()) to be added to
@@ -232,7 +236,7 @@ the heatmap before conversion to a plotly object.}
 If NULL then it is ignored. If the "lwd" is already defined in Rowv/Colv then this
 parameter is ignored (it is checked using \link[dendextend]{has_edgePar}("lwd")).}
 
-\item{file}{HTML file name to save the heatmaply into. Should be a character 
+\item{file}{HTML file name to save the heatmaply into. Should be a character
 string ending with ".html".
 For example: heatmaply(x, file = "heatmaply_plot.html").
 This should not include a directory, only the name of the file.
@@ -258,7 +262,7 @@ plots involved.}
 \item{colorbar_len}{The length of the colorbar/color key relative to the total
 plot height. Only used if plot_method = "plotly"}
 
-\item{colorbar_xanchor, colorbar_yanchor}{The x and y anchoring points of the 
+\item{colorbar_xanchor, colorbar_yanchor}{The x and y anchoring points of the
 colorbar/color legend. Can be "left", "middle" or "right" for colorbar_xanchor,
 and "top", "middle" or "bottom" for colorbar_yanchor.
 See \code{\link[plotly]{colorbar}} for more details.}
@@ -382,4 +386,3 @@ heatmaply(mtcars, fontsize_col = 20, fontsize_row = 5, margin = c(100,90))
 
 }
 }
-

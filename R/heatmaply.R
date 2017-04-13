@@ -64,6 +64,7 @@ is.plotly <- function(x) {
 #' @param draw_cellnote Should the cellnote annotations be drawn? Defaults is FALSE,
 #' if cellnote is not supplied, TRUE if cellnote is supplied. If TRUE and
 #' cellnote is not supplied, x will be used for cellnote.
+#' @param cellnote_color The color of the cellnote text to be used. 
 #'
 #' @param Rowv determines if and how the row dendrogram should be reordered.
 #' By default, it is TRUE, which implies dendrogram is computed and reordered
@@ -357,6 +358,7 @@ heatmaply.default <- function(x,
                               subplot_margin = 0,
                               cellnote = NULL,
                               draw_cellnote = !is.null(cellnote),
+                              cellnote_color = "white",
 
                               ## dendrogram control
                               Rowv,
@@ -439,6 +441,15 @@ heatmaply.default <- function(x,
   if(!missing(col)) colors <- col
 
   plot_method <- match.arg(plot_method)
+
+  if (plot_method == "ggplot") {
+    ## Suppress creation of new graphcis device, but on exit replace it.
+    ## TODO: Avoid this or find better method
+    old_dev <- options()[["device"]]
+    on.exit(options(device = old_dev))
+    options(device = names(capabilities()[which(capabilities())])[1])
+  }
+
   dendrogram <- match.arg(dendrogram)
 
   if(!(is.data.frame(x) | is.matrix(x))) stop("x must be either a data.frame or a matrix.")
@@ -486,6 +497,7 @@ heatmaply.default <- function(x,
 
   # this also occurs in heatmapr, so it may be o.k. to remove the following line.
   seriate <- match.arg(seriate)
+  if (is.numeric(cellnote_color)) cellnote_color <- grDevices::palette()[cellnote_color]
 
   hm <- heatmapr(x,
     row_side_colors = row_side_colors,
@@ -546,6 +558,7 @@ heatmaply.default <- function(x,
                      label_names = label_names,
                      plot_method = plot_method,
                      draw_cellnote = draw_cellnote,
+                     cellnote_color = cellnote_color,
                      fontsize_row = fontsize_row,
                      fontsize_col = fontsize_col,
                      subplot_widths = subplot_widths,
@@ -722,6 +735,7 @@ heatmaply.heatmapr <- function(x,
                                key.title = NULL,
                                return_ppxpy = FALSE,
                                draw_cellnote = FALSE,
+                               cellnote_color = "white",
                                row_side_colors,
                                row_side_palette,
                                col_side_colors,
@@ -827,8 +841,6 @@ heatmaply.heatmapr <- function(x,
                       column_text_angle,
                       scale_fill_gradient_fun,
                       grid_color,
-                      cellnote = x$matrix$cellnote,
-                      draw_cellnote = draw_cellnote,
                       key.title = key.title,
                       layers = heatmap_layers,
                       row_dend_left = row_dend_left,
@@ -891,6 +903,24 @@ heatmaply.heatmapr <- function(x,
   ## plotly:
   # turn p, px, and py to plotly objects if necessary
   if (!is.plotly(p)) p <- ggplotly(p) %>% layout(showlegend=FALSE)
+  if (draw_cellnote) {
+    df <- as.data.frame(x[["cellnote"]])
+    
+    df$row <- 1:nrow(df)
+    mdf <- reshape2::melt(df, id.vars="row")
+    mdf$variable <- factor(mdf$variable, levels = p$x$layout$xaxis$ticktext)
+    mdf$variable <- as.numeric(mdf$variable)
+    mdf$value <- factor(mdf$value)
+    
+    p <- p %>% add_trace(y = mdf$row, x = mdf$variable, text = mdf$value,
+        type = "scatter", mode = "text", textposition = "middle right",
+        textfont = list(color = plotly::toRGB(cellnote_color), size = 16)) 
+    # p <- p %>% add_trace(data = mdf, type = "scatter", mode = "text",
+    #     textfont = list(color = '#000000', size = 16),
+    #     textposition = "middle left",
+    #     y = ~row, x = ~variable, text = ~value)
+    
+  }
   if (!is.null(px) && !is.plotly(px)) {
     px <- ggplotly(px, tooltip = "y") %>%
       layout(showlegend=FALSE)
@@ -940,7 +970,6 @@ heatmaply.heatmapr <- function(x,
     # if(!is.null(pc)) pc <- style(pc, ygap = grid_gap)
   }
 
-
   heatmap_subplot <- heatmap_subplot_from_ggplotly(p = p, px = px, py = py,
     row_dend_left = row_dend_left, subplot_margin = subplot_margin,
     titleX = titleX, titleY = titleY, pr = pr, pc = pc, plot_method = plot_method)
@@ -959,7 +988,7 @@ heatmaply.heatmapr <- function(x,
 
 ## TODO: Better/safer estimation of total size, or use monospace.
 calc_margin <- function(labels, fontsize) {
-    max(nchar(labels) * fontsize, na.rm = TRUE) * 0.55
+    max(nchar(labels) * fontsize, na.rm = TRUE) * 0.6
   # http://stackoverflow.com/questions/19113725/what-dependency-between-font-size-and-width-of-char-in-monospace-font
 
 }

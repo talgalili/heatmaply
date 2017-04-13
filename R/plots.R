@@ -47,8 +47,6 @@ ggplot_heatmap <- function(xx,
                            key.title = NULL,
                            layers,
                            row_dend_left = FALSE,
-                           cellnote = NULL,
-                           draw_cellnote = FALSE,
                            label_names,
                            fontsize_row = 10,
                            fontsize_col = 10,
@@ -86,24 +84,6 @@ ggplot_heatmap <- function(xx,
     ordered = TRUE
   )
 
-  if (!is.null(cellnote)) {
-    cellnote <- as.data.frame(cellnote)
-    # colnames(df) <- x$matrix$cols
-    if(!is.null(rownames(cellnote))) {
-      cellnote[[row]] <- rownames(cellnote)
-    } else {
-      cellnote[[row]] <- 1:nrow(cellnote)
-    }
-    cellnote[[row]] <- factor(
-      cellnote[[row]],
-      levels = cellnote[[row]],
-      ordered = TRUE
-    )
-    mdf_c <- reshape2::melt(cellnote, id.vars=row)
-    mdf_c[, 3] <- as.factor(mdf_c[, 3])
-    colnames(mdf_c)[2:3] <- c(col, val)
-  }
-
   mdf <- reshape2::melt(df, id.vars=row)
   colnames(mdf)[2:3] <- c(col, val) # rename "variable" and "value"
 
@@ -122,12 +102,6 @@ ggplot_heatmap <- function(xx,
           axis.text.y = element_text(angle = row_text_angle,
             size = fontsize_row, hjust = 1)
           )
-
-  if (!is.null(cellnote) && draw_cellnote) {
-    p <- p + geom_text(
-      data = mdf_c,
-      mapping = aes_string(x = col, y = row, label = val))
-  }
 
   if(!missing(layers)) p <- p + layers
     ## Passed in to allow users to alter (courtesy of GenVisR)
