@@ -1,7 +1,7 @@
 
 
 
-heatmaply 0.9.0 (2017-04-12)
+heatmaply 0.9.0 (2017-04-13)
 ==============================
 
 This release adds unit testing and code coverage to the heatmaply package.
@@ -39,7 +39,7 @@ and reduce the occurrence of bugs.
 ### BUG FIXES
 * heatmaply
   * Fixed the cexRow and cexCol arguments, which were previously non-functional.
-* Fix a mistake in an object's check in ggplot_heatmap. Props to Hannes Becker (https://twitter.com/SportsTribution/status/846764290484944896). The following no longer crashes heatmaply:
+  * Fix a mistake in an object's check in ggplot_heatmap. Props to Hannes Becker (https://twitter.com/SportsTribution/status/846764290484944896). The following no longer crashes heatmaply:
       library(heatmaply)
       df<-data.frame(1)
       heatmaply(mtcars)

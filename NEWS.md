@@ -1,36 +1,72 @@
-heatmaply 0.9.0 (2017-04-09)
+
+
+
+heatmaply 0.9.0 (2017-04-13)
 ==============================
 
 This release adds unit testing and code coverage to the heatmaply package.
 Users should not be affected, but this will hopefully accelerate development
 and reduce the occurrence of bugs.
 
-* heatmaply - 
+
+### NEW FEATURES
+* heatmaply -
+    * Slightly more sensible default for heights (in line with widths in any case), and adds subplot_widths and subplot_heights params for user customisation.
     * plot_method argument ("plotly" or "ggplot") which controls the underlying
       plot method used for dendrograms and the main heatmap.
-      Currently there is some disparity between the features 
+      Currently there is some disparity between the features
       available in both methods but it is hoped this can be addressed.
       plotly will likely give higher performance for large matrices.
     * Add colorbar_len argument, which controls the fraction of the total height
       which the colorbar will take up.
     * Allowed for colorbar and side color legends to be displayed simultaneously
       when plot_method is "plotly"
-    * Added "long_data" argumnet, which allows the user to use data in "long" 
+    * Added "long_data" argumnet, which allows the user to use data in "long"
       format (eg, http://www.theanalysisfactor.com/wide-and-long-data/).
     * Added "label_names" argument, which allows the user to specify names to
       replace "row" and "column" as the names of the mouseover co-ordinates.
     * Added "cellnote" functionality, allowing the display of text overlaid
       on the cells of the heatmap. Controlled by the "draw_cellnote" argument.
     * Added "fontsize_row" and "fontsize_col" arguments to heatmaply,
-      which control font size for row and column labels. cexRow and cexCol are 
-      aliases.
-
+      which control font size for row and column labels. cexRow and cexCol are
+      aliases (in order to keep compatability with gplots::heatmap.2).
+    * Added "grid_gap" argument. Default is 0, higher numbers influence the gap between cells,
+      helping the user to identify distinct values/cells within the matrix.
 * heatmapr
     * Removed some unused arguments and code.
+* is.plotly - new function to check if an object is of class plotly or not.
 
 ### BUG FIXES
 * heatmaply
   * Fixed the cexRow and cexCol arguments, which were previously non-functional.
+  * Fix a mistake in an object's check in ggplot_heatmap. Props to Hannes Becker (https://twitter.com/SportsTribution/status/846764290484944896). The following no longer crashes heatmaply:
+      library(heatmaply)
+      df<-data.frame(1)
+      heatmaply(mtcars)
+  * Make sure limits work when NA are present.
+  * Fixing the error: "argument * matches multiple formal arguments" by adding an explicit "col" parameter to heatmaply.
+
+
+### DOCS
+* heatmaply
+  * Added scale and na.rm parameters to the document.
+  * Added seriate.
+* Cross-ref percentize and normalize.
+* Vignette
+  * Re-organize sections
+  * Adding a section on data transformation.
+  * Fixing typos
+
+
+
+heatmaply 0.8.2 (2017-03-20)
+==============================
+
+
+### BUG FIXES
+* Remove temp files.
+* Fix missing import and two typos.
+
 
 heatmaply 0.8.0 (2017-03-18)
 ==============================
@@ -183,17 +219,14 @@ heatmaply 0.1.0 (2016-05-14)
 
 TODO:
 ==============================
-* add bars for extra categories
 * remove unneeded code from d3heatmap
 * add many options for controlling the heatmap "as it should be"
 * implement all relevant options streight to heatmaply.
 * ggheatmap?
 * Expose widths and heights from heatmap_subplot_from_ggplotly to heatmaply
 
-* create colors from RcolorBrewer
 * write example for using seriation+dendextend for heatmaps.
 
-* add seriation to imports
 * Show the following example for using seriation:
 
 
