@@ -1,25 +1,27 @@
 
 
 
-heatmaply 0.9.0 (2017-04-13)
+heatmaply 0.9.0 (2017-04-14)
 ==============================
 
 This release adds unit testing and code coverage to the heatmaply package.
 Users should not be affected, but this will hopefully accelerate development
 and reduce the occurrence of bugs.
 
+### NEW FUNCTIONS
+* heatmaply_na, heatmaply_cor - wrappers for heatmaply for exploring missing values patterns, and for correlation matrix.
 
 ### NEW FEATURES
 * `heatmaply` -
-    * Use slightly more sensible default for heights (in line with widths in any case), 
+    * Use slightly more sensible default for heights (in line with widths in any case),
       and add `subplot_widths` and `subplot_heights` arguments for user customisation.
     * `plot_method` argument ("plotly" or "ggplot") which controls the underlying
       plot method used for dendrograms and the main heatmap.
       Currently there is some disparity between the features
       available in both methods but it is hoped this can be addressed.
       plotly will likely give higher performance for large matrices.
-    * Row names of matrix are now shown when `plot_method = "plotly". 
-      This functionality should also be added to the function when 
+    * Row names of matrix are now shown when `plot_method = "plotly".
+      This functionality should also be added to the function when
       `plot_method = "ggplot"`, once changes are made to the plotly R package.
     * Add `colorbar_len` argument, which controls the fraction of the total height
       which the colorbar/color legend will take up.
@@ -52,14 +54,14 @@ and reduce the occurrence of bugs.
 ### BUG FIXES
 * `heatmaply`
   * Fix the `cexRow` and `cexCol` arguments, which were previously non-functional.
-  * Fix a mistake in an object's check in ggplot_heatmap. Props to Hannes Becker 
-    (https://twitter.com/SportsTribution/status/846764290484944896). 
+  * Fix a mistake in an object's check in ggplot_heatmap. Props to Hannes Becker
+    (https://twitter.com/SportsTribution/status/846764290484944896).
     The following no longer crashes heatmaply:
         library(heatmaply)
         df <- data.frame(1)
         heatmaply(mtcars)
   * Make sure limits work when NA are present.
-  * Fix the error: "argument * matches multiple formal arguments" by adding 
+  * Fix the error: "argument * matches multiple formal arguments" by adding
     an explicit "col" argument to heatmaply.
 
 

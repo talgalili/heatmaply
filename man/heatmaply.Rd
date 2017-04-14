@@ -2,11 +2,17 @@
 % Please edit documentation in R/heatmaply.R
 \name{heatmaply}
 \alias{heatmaply}
+\alias{heatmaply_na}
+\alias{heatmaply_cor}
 \alias{heatmaply.default}
 \alias{heatmaply.heatmapr}
 \title{Cluster heatmap based on plotly}
 \usage{
 heatmaply(x, ...)
+
+heatmaply_na(x, grid_gap = 1, colors = c("grey80", "grey20"), ...)
+
+heatmaply_cor(x, limits = c(-1, 1), colors = RdBu, ...)
 
 \method{heatmaply}{default}(x, colors = viridis(n = 256, alpha = 1, begin = 0,
   end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
@@ -58,6 +64,10 @@ Defaults to \code{TRUE} unless \code{x} contains any \code{NA}s.}
 
 \item{...}{other parameters passed to \link{heatmapr} (currently, various
 parameters may be ignored.}
+
+\item{grid_gap}{this is a fast alternative to grid_color. The default is 0, but if a larger value
+is used (for example, 1), then the resulting heatmap will have a white grid which can
+help identify different cells. This is implemented using \link[plotly]{style} (with xgap and ygap).}
 
 \item{colors, col}{a vector of colors to use for heatmap color.
 The default uses
@@ -182,10 +192,6 @@ larger matrix sizes, as it can dramatically prolong the build time of the heatma
 (another parameter, grid_color, will be added in the future - once it is implemented in plotly)
 In the meantime it is MUCH better to use the grid_gap argument.}
 
-\item{grid_gap}{this is a fast alternative to grid_color. The default is 0, but if a larger value
-is used (for example, 1), then the resulting heatmap will have a white grid which can
-help identify different cells. This is implemented using \link[plotly]{style} (with xgap and ygap).}
-
 \item{srtRow}{if supplied, this overrides row_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})}
 
 \item{srtCol}{if supplied, this overrides column_text_angle (this is to stay compatible with \link[gplots]{heatmap.2})}
@@ -276,6 +282,13 @@ for producing a heatmap. The goal is to seperate the pre-processing of the
 heatmap elements from the graphical rendaring of the object, which could be done
 
 (Please submit an issue on github if you have a feature that you wish to have added)
+
+heatmaply_na is a wrapper for `heatmaply` which comes with defaults that are better
+for exploring missing value (NA) patters. Specifically, the grid_gap is set to 1, and the
+colors include two shades of grey. It also calculates the \link{is.na10} autmoatically.
+
+heatmaply_cor is a wrapper for `heatmaply` which comes with defaults that are better
+for correlation matrixes. Specifically, the limits are set from -1 to 1, and the color palette is \link{RdBu}.
 }
 \examples{
 \dontrun{
@@ -385,4 +398,6 @@ heatmaply(matrix(1:10000,100,100), k_row = 3, k_col = 3, grid_gap = 1)
 heatmaply(mtcars, fontsize_col = 20, fontsize_row = 5, margin = c(100,90))
 
 }
+heatmaply_na(airquality)
+heatmaply_cor(cor(mtcars))
 }

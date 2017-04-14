@@ -64,7 +64,7 @@ is.plotly <- function(x) {
 #' @param draw_cellnote Should the cellnote annotations be drawn? Defaults is FALSE,
 #' if cellnote is not supplied, TRUE if cellnote is supplied. If TRUE and
 #' cellnote is not supplied, x will be used for cellnote.
-#' @param cellnote_color The color of the cellnote text to be used. 
+#' @param cellnote_color The color of the cellnote text to be used.
 #'
 #' @param Rowv determines if and how the row dendrogram should be reordered.
 #' By default, it is TRUE, which implies dendrogram is computed and reordered
@@ -344,9 +344,46 @@ heatmaply <- function(x, ...) {
   UseMethod("heatmaply")
 }
 
+
+#' @export
+#' @description
+#' heatmaply_na is a wrapper for `heatmaply` which comes with defaults that are better
+#' for exploring missing value (NA) patters. Specifically, the grid_gap is set to 1, and the
+#' colors include two shades of grey. It also calculates the \link{is.na10} autmoatically.
+#' @rdname heatmaply
+#' @examples
+#' heatmaply_na(airquality)
+heatmaply_na <- function(x,
+                         grid_gap = 1,
+                         colors = c("grey80", "grey20"),
+                         ...) {
+  heatmaply(is.na10(x), grid_gap = grid_gap,
+            colors = colors,...)
+}
+
+#' @export
+#' @description
+#' heatmaply_cor is a wrapper for `heatmaply` which comes with defaults that are better
+#' for correlation matrixes. Specifically, the limits are set from -1 to 1, and the color palette is \link{RdBu}.
+#' @rdname heatmaply
+#' @examples
+#' heatmaply_cor(cor(mtcars))
+heatmaply_cor <- function(x,
+                         limits = c(-1,1),
+                         colors = RdBu,
+                         ...) {
+  heatmaply(x, limits = limits, # symm = TRUE,
+            colors = colors,...)
+}
+
+
+
+
+
+
+
 #' @export
 #' @rdname heatmaply
-#' @importFrom assertthat assert_that
 heatmaply.default <- function(x,
                               # elements for scale_fill_gradientn
                               colors = viridis(n=256, alpha = 1, begin = 0,
@@ -905,22 +942,22 @@ heatmaply.heatmapr <- function(x,
   if (!is.plotly(p)) p <- ggplotly(p) %>% layout(showlegend=FALSE)
   if (draw_cellnote) {
     df <- as.data.frame(x[["cellnote"]])
-    
+
     df$row <- 1:nrow(df)
     mdf <- reshape2::melt(df, id.vars="row")
     mdf$variable <- factor(mdf$variable, levels = p$x$layout$xaxis$ticktext)
     mdf$variable <- as.numeric(mdf$variable)
     mdf$value <- factor(mdf$value)
-    
+
     p <- p %>% add_trace(y = mdf$row, x = mdf$variable, text = mdf$value,
         type = "scatter", mode = "text", textposition = "middle right",
         hoverinfo = "none",
-        textfont = list(color = plotly::toRGB(cellnote_color), size = 16)) 
+        textfont = list(color = plotly::toRGB(cellnote_color), size = 16))
     # p <- p %>% add_trace(data = mdf, type = "scatter", mode = "text",
     #     textfont = list(color = '#000000', size = 16),
     #     textposition = "middle left",
     #     y = ~row, x = ~variable, text = ~value)
-    
+
   }
   if (!is.null(px) && !is.plotly(px)) {
     px <- ggplotly(px, tooltip = "y") %>%
