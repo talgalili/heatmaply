@@ -252,6 +252,10 @@ heatmaplyWelcomeMessage <- function(){
 
 
 
+# Search [^\x00-\x7F]+
+# with notepad++ with regex, in order to find non-ascii values.
+# Source: http://stackoverflow.com/questions/20889996/notepad-how-to-remove-all-non-ascii-characters-with-regex
+
 
 
 # when a function is renamed, its document in man must be removed - otherwise it may cause problems with the built check (it will try to run the code in the example, and will fail.)

@@ -81,7 +81,7 @@ Default
 
 The default settings in heatmaply attempt to be both useful yet not too computationally intensive. Here is an example based on the `mtcars` dataset:
 
-> The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).
+> The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973-74 models).
 
 
 ```{r}

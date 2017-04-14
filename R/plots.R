@@ -31,7 +31,7 @@
 #
 
 
-
+# heatmaply:::ggplot_heatmap(as.matrix(mtcars))
 
 
 # xx is a data matrix
