@@ -352,7 +352,9 @@ heatmaply <- function(x, ...) {
 #' colors include two shades of grey. It also calculates the \link{is.na10} autmoatically.
 #' @rdname heatmaply
 #' @examples
+#' \dontrun{
 #' heatmaply_na(airquality)
+#' }
 heatmaply_na <- function(x,
                          grid_gap = 1,
                          colors = c("grey80", "grey20"),
@@ -367,7 +369,9 @@ heatmaply_na <- function(x,
 #' for correlation matrixes. Specifically, the limits are set from -1 to 1, and the color palette is \link{RdBu}.
 #' @rdname heatmaply
 #' @examples
+#' \dontrun{
 #' heatmaply_cor(cor(mtcars))
+#' }
 heatmaply_cor <- function(x,
                          limits = c(-1,1),
                          colors = RdBu,

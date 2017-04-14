@@ -398,6 +398,10 @@ heatmaply(matrix(1:10000,100,100), k_row = 3, k_col = 3, grid_gap = 1)
 heatmaply(mtcars, fontsize_col = 20, fontsize_row = 5, margin = c(100,90))
 
 }
+\dontrun{
 heatmaply_na(airquality)
+}
+\dontrun{
 heatmaply_cor(cor(mtcars))
+}
 }

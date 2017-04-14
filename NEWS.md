@@ -1,7 +1,5 @@
 
-
-
-heatmaply 0.9.0 (2017-04-14)
+heatmaply 0.9.1 (2017-04-14)
 ==============================
 
 This release adds unit testing and code coverage to the heatmaply package.
