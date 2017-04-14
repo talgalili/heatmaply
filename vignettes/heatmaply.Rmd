@@ -72,19 +72,28 @@ And then you may load the package using:
 library("heatmaply")
 ```
 
-Usage
+Basic usage
 ======
 
 
 Default
 -------------
 
+The default settings in heatmaply attempt to be both useful yet not too computationally intensive. Here is an example based on the `mtcars` dataset:
+
+> The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).
+
+
 ```{r}
 library(heatmaply)
 heatmaply(mtcars)
 ```
 
-Because the labels are somewhat long, we need to manually fix the margins (hopefully this will be fixed in future versions of plotly). This also allows the inclusion of xlab/ylab/main texts.
+The margins parameter
+-------------
+
+
+By default heatmaply tries to fix the margins of the plot based on the length of the labels, but this system is not perfect. Hence, we sometimes need to manually fix the margins (hopefully this will be fixed in future versions of plotly). This is also helpful when including xlab/ylab/main texts.
 
 ```{r}
 heatmaply(mtcars, xlab = "Features", ylab = "Cars", 
@@ -92,7 +101,7 @@ heatmaply(mtcars, xlab = "Features", ylab = "Cars",
 		margins = c(60,100,40,20))
 ```
 
-We can use this with correlation. Notice the use of limits to set the range of the colors, and how we color the branches:
+We can use the margins parameter with correlation heatmaps. Notice the use of limits to set the range of the colors, and how we color the branches:
 
 ```{r}
 heatmaply(cor(mtcars), margins = c(40, 40),
@@ -221,7 +230,7 @@ heatmaply(percentize(mtcars), margins = c(40, 130),
 Or even more customized colors using `scale_fill_gradient_fun`:
 
 ```{r}
-heatmaply(percentize(mtcars), margins = c(40, 130), 
+heatmaply(mtcars, margins = c(40, 130), 
           scale_fill_gradient_fun = ggplot2::scale_fill_gradient2(low = "blue", high = "red", midpoint = 200, limits = c(0, 500)))
 
 ```
@@ -304,11 +313,23 @@ x  <- as.matrix(datasets::mtcars)
 gplots::heatmap.2(x, trace = "none", col = viridis(100), key = FALSE)
 ```
 
-With heatmaply, the only difference is the side of the row dendrogram. This might be possible to modify in future versions of heatmaply:
+With heatmaply, the only difference is the side of the row dendrogram. This is because the `ggplotly` function from plotly does not (yet) handle axes placed in different locations than the default.
 
 ```{r}
-heatmaply::heatmaply(x, seriate = "mean")
+library(heatmaply)
+heatmaply(x, seriate = "mean")
 ```
+
+We can get a more similar version by using the following:
+
+```{r}
+library(heatmaply)
+heatmaply(x, seriate = "mean", 
+          row_dend_left = TRUE, plot_method = "plotly",
+          margins = c(40,NA,NA,NA))
+```
+
+Some options may not always work nicely when Using plot_method = "plotly", but for your purpose it might work well enough. Also, using this option would mean the heatmap will be faster and could handle larger matrix sizes.
 
 
 
@@ -357,7 +378,7 @@ heatmaply(x[,-c(8,9)], seriate = "mean",
 Credit
 ========
 
-This package is thanks to the amazing work done by MANY people in the open source community. Beyond the many people working on the pipeline of R, thanks should go to the plotly team, and especially to Carson Sievert and others working on the R package of plotly. Also, many of the design elements were inspired by the work done on heatmap, heatmap.2 and d3heatmap, so special thanks goes to the R core team, Gregory R. Warnes, and Joe Cheng from RStudio. The dendrogram side of the package is based on the work in dendextend, in which special thanks should go to Andrie de Vries for his original work on bringing dendrograms to ggplot2 (which evolved into the richer ggdend objects, as implemented in dendextend).
+This package is thanks to the amazing work done by MANY people in the open source community. Beyond the many people working on the pipeline of R, thanks should go to the plotly team, and especially to Carson Sievert and others working on the R package of plotly. Also, many of the design elements were inspired by the work done on heatmap, heatmap.2 and d3heatmap, so special thanks goes to the R core team, Gregory R. Warnes, and Joe Cheng from RStudio. The dendrogram side of the package is based on the work in dendextend, in which special thanks should go to Andrie de Vries for his original work on the ggdendro package was the first to bring dendrograms to ggplot2 (this later evolved into the richer ggdend objects, as implemented in dendextend). Thanks should also go to Alan O'Callaghan for his many contributions to getting the package to work better with plotly, as well as for Jonathan Sidi for his work on the shinyHeatmply package. Lastely, my thanks goes to Yoav Benjamini for his support and helpful comments on this work.
 
 
 Contact
