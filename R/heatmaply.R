@@ -399,7 +399,7 @@ heatmaply.default <- function(x,
                               subplot_margin = 0,
                               cellnote = NULL,
                               draw_cellnote = !is.null(cellnote),
-                              cellnote_color = "white",
+                              cellnote_color = "auto",
 
                               ## dendrogram control
                               Rowv,
@@ -538,6 +538,7 @@ heatmaply.default <- function(x,
 
   # this also occurs in heatmapr, so it may be o.k. to remove the following line.
   seriate <- match.arg(seriate)
+
   if (is.numeric(cellnote_color)) cellnote_color <- grDevices::palette()[cellnote_color]
 
   hm <- heatmapr(x,
@@ -776,7 +777,7 @@ heatmaply.heatmapr <- function(x,
                                key.title = NULL,
                                return_ppxpy = FALSE,
                                draw_cellnote = FALSE,
-                               cellnote_color = "white",
+                               cellnote_color = "auto",
                                row_side_colors,
                                row_side_palette,
                                col_side_colors,
@@ -945,8 +946,13 @@ heatmaply.heatmapr <- function(x,
   # turn p, px, and py to plotly objects if necessary
   if (!is.plotly(p)) p <- ggplotly(p) %>% layout(showlegend=FALSE)
   if (draw_cellnote) {
-    df <- as.data.frame(x[["cellnote"]])
 
+    ## Predict cell color luminosity based on colorscale
+    if (cellnote_color == "auto") {
+      cellnote_color <- predict_colors(p, plot_method)
+    }
+
+    df <- as.data.frame(x[["cellnote"]])
     df$row <- 1:nrow(df)
     mdf <- reshape2::melt(df, id.vars="row")
     mdf$variable <- factor(mdf$variable, levels = p$x$layout$xaxis$ticktext)
@@ -956,7 +962,7 @@ heatmaply.heatmapr <- function(x,
     p <- p %>% add_trace(y = mdf$row, x = mdf$variable, text = mdf$value,
         type = "scatter", mode = "text", textposition = "middle right",
         hoverinfo = "none",
-        textfont = list(color = plotly::toRGB(cellnote_color), size = 16))
+        textfont = list(color = plotly::toRGB(cellnote_color), size = 12))
     # p <- p %>% add_trace(data = mdf, type = "scatter", mode = "text",
     #     textfont = list(color = '#000000', size = 16),
     #     textposition = "middle left",
@@ -1033,4 +1039,62 @@ calc_margin <- function(labels, fontsize) {
     max(nchar(labels) * fontsize, na.rm = TRUE) * 0.6
   # http://stackoverflow.com/questions/19113725/what-dependency-between-font-size-and-width-of-char-in-monospace-font
 
+}
+
+
+
+
+## Predict luminosity of cells and change text based on that
+predict_colors <- function(p, plot_method) {
+
+  ## http://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
+  colorscale_df <- p$x$data[[1]]$colorscale
+  rownames(colorscale_df) <- colorscale_df[, 1]
+  cell_values <- as.data.frame(p$x$data[[1]]$z)
+  cell_values$row <- 1:nrow(cell_values)
+  cell_values_m <- reshape2::melt(cell_values, id.vars = "row")
+  cell_values_vector <- cell_values_m$value
+  ## Need to normalise to (0, 1) scale as this is what plotly
+  ## uses internally
+  if (plot_method == "plotly") {
+    ## Need to convert plotly colors to hex colors 
+    colorscale_df[, 2] <- parse_plotly_color(colorscale_df[, 2])
+
+    cell_values_vector <- normalize(as.numeric(cell_values_vector))
+    ## Then need to sort, find nearest neighbour, and map across
+    cell_values_vector_sort <- sort(cell_values_vector, 
+      index.return = TRUE)
+    nearest_neighbours <- sapply(cell_values_vector_sort[[1]],
+      function(val) {
+        max(colorscale_df[as.numeric(colorscale_df[, 1]) <= val, 1])
+      }
+    )
+    names(nearest_neighbours) <- cell_values_vector_sort[[1]]
+    cell_values_vector <- nearest_neighbours[as.character(cell_values_vector)]
+  }
+  
+  cell_values_vector <- as.character(cell_values_vector)
+  cell_colors <- unlist(colorscale_df[cell_values_vector, 2])
+  cell_colors_rgb <- colorspace::hex2RGB(cell_colors)
+  cell_font_colors <- sapply(seq_len(nrow(cell_colors_rgb@coords)), 
+    function(i) {
+      col <- cell_colors_rgb@coords[i, ]
+      luma <- (0.2126 * col[1]) + 
+        (0.7152 * col[2]) + 
+        (0.0722 * col[3])
+      ifelse (luma < 0.4, "white", "black")
+    }
+  )
+  cell_font_colors
+}
+
+
+parse_plotly_color <- function(color) {
+  r <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+),\\d+)", 
+    "\\1", color)
+  g <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+),\\d+)", 
+    "\\2", color)
+  b <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+),\\d+)", 
+    "\\3", color)
+  rgb(r, g, b, maxColorValue = 255)
 }
