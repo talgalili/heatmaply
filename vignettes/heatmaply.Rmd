@@ -98,6 +98,10 @@ We can use this with correlation. Notice the use of limits to set the range of t
 heatmaply(cor(mtcars), margins = c(40, 40),
           k_col = 2, k_row = 2,
           limits = c(-1,1))
+# Better to use:
+# heatmaply_cor(cor(mtcars), margins = c(40, 40),
+#           k_col = 2, k_row = 2)
+
 ```
 
 
@@ -161,6 +165,9 @@ heatmaply(is.na10(airquality), grid_gap = 1,
             k_col =3, k_row = 3,
             margins = c(55, 30),
             colors = c("grey80", "grey20"))
+# Better to use:
+# heatmaply_na(airquality, k_col =3, k_row = 3,
+            # margins = c(55, 30))
 
 
 # warning - using grid_color cannot handle a large matrix!
@@ -196,6 +203,9 @@ heatmaply(cor(mtcars), margins = c(40, 40),
           k_col = 2, k_row = 2,
           colors = BrBG,
           limits = c(-1,1))
+# Better to use:
+# heatmaply_cor(cor(mtcars), margins = c(40, 40),
+#           k_col = 2, k_row = 2)
 
 ```
 
