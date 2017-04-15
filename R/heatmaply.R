@@ -479,7 +479,7 @@ heatmaply.default <- function(x,
   }
 
   # this is to fix the error: "argument * matches multiple formal arguments"
-  if(!missing(col)) colors <- col
+  if (!missing(col)) colors <- col
 
   plot_method <- match.arg(plot_method)
 
@@ -493,10 +493,10 @@ heatmaply.default <- function(x,
 
   dendrogram <- match.arg(dendrogram)
 
-  if(!(is.data.frame(x) | is.matrix(x))) stop("x must be either a data.frame or a matrix.")
+  if (!(is.data.frame(x) | is.matrix(x))) stop("x must be either a data.frame or a matrix.")
 
-  if(!missing(srtRow)) row_text_angle <- srtRow
-  if(!missing(srtCol)) column_text_angle <- srtCol
+  if (!missing(srtRow)) row_text_angle <- srtRow
+  if (!missing(srtCol)) column_text_angle <- srtCol
 
   if (!is.null(ColSideColors)) {
     col_side_colors <- ColSideColors
@@ -510,19 +510,19 @@ heatmaply.default <- function(x,
 
   # TODO: maybe create heatmaply.data.frame heatmaply.matrix instead.
   #       But right now I am not sure this would be needed.
-  if(is.data.frame(x)) {
+  if (is.data.frame(x)) {
     ss_c_numeric <- sapply(x, is.numeric)
   }
-  if(is.matrix(x)) {
+  if (is.matrix(x)) {
     ss_c_numeric <- apply(x, 2, is.numeric)
   }
 
   # We must have some numeric values to be able to make a heatmap
-  if(!any(ss_c_numeric)) stop("heatmaply only works for data.frame/matrix which includes some numeric columns.")
+  if (!any(ss_c_numeric)) stop("heatmaply only works for data.frame/matrix which includes some numeric columns.")
 
   # If we have non-numeric columns, we should move them to row_side_colors
   # TODO: add a parameter to control removing of non-numeric columns without moving them to row_side_colors
-  if(!all(ss_c_numeric)) {
+  if (!all(ss_c_numeric)) {
     row_side_colors <- if (missing(row_side_colors)) {
       data.frame(x[, !ss_c_numeric, drop= FALSE])
     } else {
@@ -532,9 +532,9 @@ heatmaply.default <- function(x,
   }
 
   # help dendrogram work again:
-  if(dendrogram == "row") Colv <- FALSE
-  if(dendrogram == "column") Rowv <- FALSE
-  if(dendrogram == "none") Rowv <- Colv <- FALSE
+  if (dendrogram == "row") Colv <- FALSE
+  if (dendrogram == "column") Rowv <- FALSE
+  if (dendrogram == "none") Rowv <- Colv <- FALSE
 
   # this also occurs in heatmapr, so it may be o.k. to remove the following line.
   seriate <- match.arg(seriate)
@@ -613,7 +613,7 @@ heatmaply.default <- function(x,
 
                      # TODO: think more on what should be passed in "..."
 
-  if(!missing(file)) hmly %>% saveWidget(file = file, selfcontained = TRUE)
+  if (!missing(file)) hmly %>% saveWidget(file = file, selfcontained = TRUE)
 
   hmly
 }
@@ -801,9 +801,9 @@ heatmaply.heatmapr <- function(x,
   plot_method <- match.arg(plot_method)
 
   # informative errors for mis-specified limits
-  if(!is.null(limits)) {
-    if(!is.numeric(limits)) stop("limits must be numeric")
-    if(length(limits) != 2L) stop("limits must be of length 2 (i.e.: two dimensional)")
+  if (!is.null(limits)) {
+    if (!is.numeric(limits)) stop("limits must be numeric")
+    if (length(limits) != 2L) stop("limits must be of length 2 (i.e.: two dimensional)")
 
     r <- range(as.matrix(x$matrix$data), na.rm = TRUE)
     limits <- sort(limits)
@@ -818,8 +818,8 @@ heatmaply.heatmapr <- function(x,
       warning("Upper limit is not >= highest value in x, max of limits is set to the max of the range (otherwise, colors will be broken!)")
     }
   }
-  if(!missing(srtRow)) row_text_angle <- srtRow
-  if(!missing(srtCol)) column_text_angle <- srtCol
+  if (!missing(srtRow)) row_text_angle <- srtRow
+  if (!missing(srtCol)) column_text_angle <- srtCol
 
   # x is a heatmapr object.
   # heatmapr <- list(rows = rowDend, cols = colDend, matrix = mtx, image = imgUri,
@@ -836,7 +836,7 @@ heatmaply.heatmapr <- function(x,
   rows <- x$rows
   cols <- x$cols
 
-  if(!is.null(branches_lwd) && branches_lwd != 1) {
+  if (!is.null(branches_lwd) && branches_lwd != 1) {
     if(is.dendrogram(rows) && !has_edgePar(rows, "lwd")) rows <- set(rows, "branches_lwd", branches_lwd)
     if(is.dendrogram(cols) && !has_edgePar(cols, "lwd")) cols <- set(cols, "branches_lwd", branches_lwd)
   }
@@ -844,7 +844,7 @@ heatmaply.heatmapr <- function(x,
 
 
   # this is using dendextend
-  if(is.null(cols)) {
+  if (is.null(cols)) {
     py <- NULL
   } else {
     if (plot_method == "ggplot") {
@@ -857,7 +857,7 @@ heatmaply.heatmapr <- function(x,
       suppressWarnings(      py <- plotly_dend(cols, side = "col"))
     }
   }
-  if(is.null(rows)) {
+  if (is.null(rows)) {
     px <- NULL
   } else {
     if (plot_method == "ggplot") {
@@ -869,7 +869,7 @@ heatmaply.heatmapr <- function(x,
         coord_flip(expand = FALSE, xlim = ylims) +
         theme_bw() +
         theme_clear_grid_dends
-      if(row_dend_left) px <- px + scale_y_reverse()
+      if (row_dend_left) px <- px + scale_y_reverse()
     } else {
       px <- plotly_dend(rows, flip = row_dend_left, side = "row")
     }
@@ -938,7 +938,7 @@ heatmaply.heatmapr <- function(x,
     )
   }
 
-  if(return_ppxpy) {
+  if (return_ppxpy) {
     return(list(p=p, px=px, py=py, pr=pr, pc=pc))
   }
 
@@ -962,12 +962,8 @@ heatmaply.heatmapr <- function(x,
     p <- p %>% add_trace(y = mdf$row, x = mdf$variable, text = mdf$value,
         type = "scatter", mode = "text", textposition = "middle right",
         hoverinfo = "none",
-        textfont = list(color = plotly::toRGB(cellnote_color), size = 12))
-    # p <- p %>% add_trace(data = mdf, type = "scatter", mode = "text",
-    #     textfont = list(color = '#000000', size = 16),
-    #     textposition = "middle left",
-    #     y = ~row, x = ~variable, text = ~value)
-
+        textfont = list(color = plotly::toRGB(cellnote_color), size = 12)
+      )
   }
   if (!is.null(px) && !is.plotly(px)) {
     px <- ggplotly(px, tooltip = "y") %>%

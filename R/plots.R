@@ -130,6 +130,8 @@ plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha =
     row_dend_left = FALSE, fontsize_row = 10, fontsize_col = 10, colorbar_xanchor = "left",
     key_title = "", colorbar_yanchor = "bottom", colorbar_xpos = 1.1, colorbar_ypos = 1, colorbar_len = 0.3) {
 
+  if (is.function(colors)) colors <- colors(256)
+
   p <- plot_ly(z = x, x = 1:ncol(x), y = 1:nrow(x),
     type = "heatmap", showlegend = FALSE, colors = colors,
     zmin = limits[1], zmax = limits[2]) %>%
