@@ -65,7 +65,11 @@ is.plotly <- function(x) {
 #' if cellnote is not supplied, TRUE if cellnote is supplied. If TRUE and
 #' cellnote is not supplied, x will be used for cellnote.
 #' @param cellnote_color The color of the cellnote text to be used.
-#'
+#' @param cellnote_textposition The text positioning/centering of the cellnote.
+#' Default is "middle right". Options are 
+#' "top left", "top center", "top right", "middle left", "middle center", 
+#' "middle right", "bottom left", "bottom center", "bottom right"
+#' 
 #' @param Rowv determines if and how the row dendrogram should be reordered.
 #' By default, it is TRUE, which implies dendrogram is computed and reordered
 #' based on row means. If NULL or FALSE, then no dendrogram is computed and
@@ -400,6 +404,7 @@ heatmaply.default <- function(x,
                               cellnote = NULL,
                               draw_cellnote = !is.null(cellnote),
                               cellnote_color = "auto",
+                              cellnote_textposition = "middle right",
 
                               ## dendrogram control
                               Rowv,
@@ -600,6 +605,7 @@ heatmaply.default <- function(x,
                      label_names = label_names,
                      plot_method = plot_method,
                      draw_cellnote = draw_cellnote,
+                     cellnote_textposition = cellnote_textposition,
                      cellnote_color = cellnote_color,
                      fontsize_row = fontsize_row,
                      fontsize_col = fontsize_col,
@@ -778,6 +784,7 @@ heatmaply.heatmapr <- function(x,
                                return_ppxpy = FALSE,
                                draw_cellnote = FALSE,
                                cellnote_color = "auto",
+                               cellnote_textposition = "middle right",
                                row_side_colors,
                                row_side_palette,
                                col_side_colors,
@@ -799,6 +806,10 @@ heatmaply.heatmapr <- function(x,
                                colorbar_len = 0.3) {
 
   plot_method <- match.arg(plot_method)
+  cellnote_textposition <- match.arg(cellnote_textposition, 
+    choices = c("top left", "top center" , "top right", "middle left", 
+      "middle center", "middle right", "bottom left", "bottom center", 
+      "bottom right"))
 
   # informative errors for mis-specified limits
   if (!is.null(limits)) {
@@ -945,8 +956,8 @@ heatmaply.heatmapr <- function(x,
   ## plotly:
   # turn p, px, and py to plotly objects if necessary
   if (!is.plotly(p)) p <- ggplotly(p) %>% layout(showlegend=FALSE)
+  
   if (draw_cellnote) {
-
     ## Predict cell color luminosity based on colorscale
     if (cellnote_color == "auto") {
       cellnote_color <- predict_colors(p, plot_method)
@@ -960,7 +971,7 @@ heatmaply.heatmapr <- function(x,
     mdf$value <- factor(mdf$value)
 
     p <- p %>% add_trace(y = mdf$row, x = mdf$variable, text = mdf$value,
-        type = "scatter", mode = "text", textposition = "middle right",
+        type = "scatter", mode = "text", textposition = cellnote_textposition,
         hoverinfo = "none",
         textfont = list(color = plotly::toRGB(cellnote_color), size = 12)
       )

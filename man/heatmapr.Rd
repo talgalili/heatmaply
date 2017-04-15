@@ -143,4 +143,3 @@ heatmaply(hm)
 \seealso{
 \link{heatmap}, \link[gplots]{heatmap.2},  \link[d3heatmap]{d3heatmap}
 }
-

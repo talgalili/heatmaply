@@ -15,4 +15,3 @@ logical - is the object of class heatmapr.
 \description{
 Is the object of class heatmapr.
 }
-
