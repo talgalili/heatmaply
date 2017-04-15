@@ -1045,7 +1045,6 @@ predict_colors <- function(p, plot_method) {
 
   ## http://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
   colorscale_df <- p$x$data[[1]]$colorscale
-  rownames(colorscale_df) <- colorscale_df[, 1]
   cell_values <- as.data.frame(p$x$data[[1]]$z)
   cell_values$row <- 1:nrow(cell_values)
   cell_values_m <- reshape2::melt(cell_values, id.vars = "row")
@@ -1057,20 +1056,26 @@ predict_colors <- function(p, plot_method) {
     colorscale_df[, 2] <- parse_plotly_color(colorscale_df[, 2])
 
     cell_values_vector <- normalize(as.numeric(cell_values_vector))
+    ## interpolate to 256 colors because that's probably enough
+    colorscale_df <- data.frame(
+      stats::approx(as.numeric(colorscale_df[, 1]), n = 256)$y, 
+      grDevices::colorRampPalette(colorscale_df[, 2])(256)
+    )
+    
     ## Then need to sort, find nearest neighbour, and map across
-    cell_values_vector_sort <- sort(cell_values_vector, 
-      index.return = TRUE)
-    nearest_neighbours <- sapply(cell_values_vector_sort[[1]],
+    cell_values_vector_sort <- sort(cell_values_vector)
+    nearest_neighbours <- sapply(cell_values_vector_sort,
       function(val) {
         max(colorscale_df[as.numeric(colorscale_df[, 1]) <= val, 1])
       }
     )
-    names(nearest_neighbours) <- cell_values_vector_sort[[1]]
+    names(nearest_neighbours) <- cell_values_vector_sort
     cell_values_vector <- nearest_neighbours[as.character(cell_values_vector)]
   }
-  
+
   cell_values_vector <- as.character(cell_values_vector)
-  cell_colors <- unlist(colorscale_df[cell_values_vector, 2])
+  ind <- match(cell_values_vector, colorscale_df[, 1])
+  cell_colors <- unlist(colorscale_df[ind, 2])
   cell_colors_rgb <- colorspace::hex2RGB(cell_colors)
   cell_font_colors <- sapply(seq_len(nrow(cell_colors_rgb@coords)), 
     function(i) {
