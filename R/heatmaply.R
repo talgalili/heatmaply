@@ -339,6 +339,14 @@ is.plotly <- function(x) {
 #' # Examples of playing with font size:
 #' heatmaply(mtcars, fontsize_col = 20, fontsize_row = 5, margin = c(100,90))
 #'
+#'
+#'
+#' # Example for using subplot_width/subplot_height
+#'
+#' heatmaply(percentize(mtcars),
+#'      subplot_widths=c(0.6, 0.4),
+#'      subplot_heights=c(0.05, 0.95))
+#'
 #' }
 heatmaply <- function(x, ...) {
   UseMethod("heatmaply")
