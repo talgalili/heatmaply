@@ -377,7 +377,7 @@ heatmaply_cor <- function(x,
                          colors = RdBu,
                          ...) {
   heatmaply(x, limits = limits, # symm = TRUE,
-            colors = colors,...)
+            colors = colors, ...)
 }
 
 
@@ -630,7 +630,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
                                           row_dend_left = FALSE, subplot_margin = 0,
                                           titleX = TRUE, titleY = TRUE,
                                           widths=NULL, heights=NULL,
-                                          plot_method, ...) {
+                                          plot_method) {
 
   if (is.null(widths)) {
     if (!is.null(px)) {
@@ -646,6 +646,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
         widths <- c(0.9, 0.1)
       }
     }
+    if(row_dend_left) widths <- rev(widths)
   }
 
   if (is.null(heights)) {
@@ -700,13 +701,12 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
   ## Remove all null plots
   plots <- plots[!(ind_remove_row | ind_remove_col)]
 
-
   ## Interim solution before removing warnings in documented way
   suppressMessages(
     suppressWarnings(
       s <- subplot(plots,
         nrows = nrows,
-        widths = if(row_dend_left) rev(widths) else widths,
+        widths = widths,
         shareX = TRUE, shareY = TRUE,
         titleX = titleX, titleY = titleY,
         margin = subplot_margin,
@@ -1010,6 +1010,7 @@ heatmaply.heatmapr <- function(x,
 
   heatmap_subplot <- heatmap_subplot_from_ggplotly(p = p, px = px, py = py,
     row_dend_left = row_dend_left, subplot_margin = subplot_margin,
+    widths = subplot_widths, heights = subplot_heights,
     titleX = titleX, titleY = titleY, pr = pr, pc = pc, plot_method = plot_method)
   l <- layout(heatmap_subplot,
       margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]),
