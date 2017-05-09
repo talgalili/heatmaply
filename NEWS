@@ -1,4 +1,18 @@
 
+heatmaply 0.9.3
+==============================
+### BUG FIXES
+* heatmaply
+	- `cellnote` would previously not work with character matrices. This is now fixed.
+	- heatmaply would formerly ignore colour functions when plot_method = "plotly"
+	
+### NEW FEATURES
+* heatmaply 
+	- Add "auto" cellnote colouring, which predicts the luminosity of cells and switches between black and white text as 	       appropriate, for readability
+	- Add `cellnote_textposition` argument, which controls the justification of cellnote within a cell.
+	  See [the plotly documentation](https://plot.ly/javascript/reference/#scatter-textposition) for more details.
+	
+
 heatmaply 0.9.2 (2017-05-05)
 ==============================
 
