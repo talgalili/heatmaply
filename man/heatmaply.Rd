@@ -397,6 +397,14 @@ heatmaply(matrix(1:10000,100,100), k_row = 3, k_col = 3, grid_gap = 1)
 # Examples of playing with font size:
 heatmaply(mtcars, fontsize_col = 20, fontsize_row = 5, margin = c(100,90))
 
+
+
+# Example for using subplot_width/subplot_height
+
+heatmaply(percentize(mtcars),
+     subplot_widths=c(0.6, 0.4),
+     subplot_heights=c(0.05, 0.95))
+
 }
 \dontrun{
 heatmaply_na(airquality)
