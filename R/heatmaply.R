@@ -703,7 +703,6 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
   ind_null_row <- sapply(row3_list, is.null)
   ind_remove_row <- rep(ind_null_row, length.out = length(plots))
 
-
   if (sum(!ind_null_col) != length(heights)) {
     stop(paste("Number of subplot_heights supplied is not correct; should be",
       sum(!ind_null_col), "but is", length(heights)))
@@ -974,8 +973,9 @@ heatmaply.heatmapr <- function(x,
     df <- as.data.frame(x[["cellnote"]])
     df$row <- 1:nrow(df)
     mdf <- reshape2::melt(df, id.vars="row")
-    mdf$variable <- factor(mdf$variable, levels = p$x$layout$xaxis$ticktext)
-    mdf$variable <- as.numeric(mdf$variable)
+    ## TODO: Enforce same dimnames to ensure it's not scrambled?
+    # mdf$variable <- factor(mdf$variable, levels = p$x$layout$xaxis$ticktext)
+    mdf$variable <- as.numeric(as.factor(mdf$variable))
     mdf$value <- factor(mdf$value)
 
     p <- p %>% add_trace(y = mdf$row, x = mdf$variable, text = mdf$value,
