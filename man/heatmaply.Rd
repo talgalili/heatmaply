@@ -18,13 +18,13 @@ heatmaply_cor(x, limits = c(-1, 1), colors = RdBu, ...)
   end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
   row_text_angle = 0, column_text_angle = 45, subplot_margin = 0,
   cellnote = NULL, draw_cellnote = !is.null(cellnote),
-  cellnote_color = "white", Rowv, Colv, distfun = dist,
-  hclustfun = hclust, dist_method = NULL, hclust_method = NULL,
-  distfun_row, hclustfun_row, distfun_col, hclustfun_col,
-  dendrogram = c("both", "row", "column", "none"), reorderfun = function(d,
-  w) reorder(d, w), k_row = 1, k_col = 1, symm = FALSE, revC,
-  scale = c("none", "row", "column"), na.rm = TRUE, row_dend_left = FALSE,
-  margins = c(NA, NA, NA, NA), ...,
+  cellnote_color = "auto", cellnote_textposition = "middle right", Rowv,
+  Colv, distfun = dist, hclustfun = hclust, dist_method = NULL,
+  hclust_method = NULL, distfun_row, hclustfun_row, distfun_col,
+  hclustfun_col, dendrogram = c("both", "row", "column", "none"),
+  reorderfun = function(d, w) reorder(d, w), k_row = 1, k_col = 1,
+  symm = FALSE, revC, scale = c("none", "row", "column"), na.rm = TRUE,
+  row_dend_left = FALSE, margins = c(NA, NA, NA, NA), ...,
   scale_fill_gradient_fun = scale_fill_gradientn(colors = if
   (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
   limits), grid_color = NA, grid_gap = 0, srtRow, srtCol, xlab = "",
@@ -49,14 +49,15 @@ heatmaply_cor(x, limits = c(-1, 1), colors = RdBu, ...)
   limits), grid_color = NA, grid_gap = 0, srtRow, srtCol, xlab = "",
   ylab = "", main = "", titleX = TRUE, titleY = TRUE,
   hide_colorbar = FALSE, key.title = NULL, return_ppxpy = FALSE,
-  draw_cellnote = FALSE, cellnote_color = "white", row_side_colors,
-  row_side_palette, col_side_colors, col_side_palette,
-  plot_method = c("ggplot", "plotly"), ColSideColors, RowSideColors,
-  heatmap_layers = NULL, branches_lwd = 0.6, label_names,
-  fontsize_row = 10, fontsize_col = 10, subplot_widths = NULL,
-  subplot_heights = NULL, colorbar_xanchor = if (row_dend_left) "right" else
-  "left", colorbar_yanchor = "bottom", colorbar_xpos = if (row_dend_left)
-  -0.1 else 1.1, colorbar_ypos = 0, colorbar_len = 0.3)
+  draw_cellnote = FALSE, cellnote_color = "auto",
+  cellnote_textposition = "middle right", row_side_colors, row_side_palette,
+  col_side_colors, col_side_palette, plot_method = c("ggplot", "plotly"),
+  ColSideColors, RowSideColors, heatmap_layers = NULL, branches_lwd = 0.6,
+  label_names, fontsize_row = 10, fontsize_col = 10,
+  subplot_widths = NULL, subplot_heights = NULL, colorbar_xanchor = if
+  (row_dend_left) "right" else "left", colorbar_yanchor = "bottom",
+  colorbar_xpos = if (row_dend_left) -0.1 else 1.1, colorbar_ypos = 0,
+  colorbar_len = 0.3)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -101,6 +102,11 @@ if cellnote is not supplied, TRUE if cellnote is supplied. If TRUE and
 cellnote is not supplied, x will be used for cellnote.}
 
 \item{cellnote_color}{The color of the cellnote text to be used.}
+
+\item{cellnote_textposition}{The text positioning/centering of the cellnote.
+Default is "middle right". Options are 
+"top left", "top center", "top right", "middle left", "middle center", 
+"middle right", "bottom left", "bottom center", "bottom right"}
 
 \item{Rowv}{determines if and how the row dendrogram should be reordered.
 By default, it is TRUE, which implies dendrogram is computed and reordered

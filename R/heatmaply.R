@@ -65,7 +65,11 @@ is.plotly <- function(x) {
 #' if cellnote is not supplied, TRUE if cellnote is supplied. If TRUE and
 #' cellnote is not supplied, x will be used for cellnote.
 #' @param cellnote_color The color of the cellnote text to be used.
-#'
+#' @param cellnote_textposition The text positioning/centering of the cellnote.
+#' Default is "middle right". Options are 
+#' "top left", "top center", "top right", "middle left", "middle center", 
+#' "middle right", "bottom left", "bottom center", "bottom right"
+#' 
 #' @param Rowv determines if and how the row dendrogram should be reordered.
 #' By default, it is TRUE, which implies dendrogram is computed and reordered
 #' based on row means. If NULL or FALSE, then no dendrogram is computed and
@@ -407,7 +411,8 @@ heatmaply.default <- function(x,
                               subplot_margin = 0,
                               cellnote = NULL,
                               draw_cellnote = !is.null(cellnote),
-                              cellnote_color = "white",
+                              cellnote_color = "auto",
+                              cellnote_textposition = "middle right",
 
                               ## dendrogram control
                               Rowv,
@@ -546,6 +551,7 @@ heatmaply.default <- function(x,
 
   # this also occurs in heatmapr, so it may be o.k. to remove the following line.
   seriate <- match.arg(seriate)
+
   if (is.numeric(cellnote_color)) cellnote_color <- grDevices::palette()[cellnote_color]
 
   hm <- heatmapr(x,
@@ -607,6 +613,7 @@ heatmaply.default <- function(x,
                      label_names = label_names,
                      plot_method = plot_method,
                      draw_cellnote = draw_cellnote,
+                     cellnote_textposition = cellnote_textposition,
                      cellnote_color = cellnote_color,
                      fontsize_row = fontsize_row,
                      fontsize_col = fontsize_col,
@@ -784,7 +791,8 @@ heatmaply.heatmapr <- function(x,
                                key.title = NULL,
                                return_ppxpy = FALSE,
                                draw_cellnote = FALSE,
-                               cellnote_color = "white",
+                               cellnote_color = "auto",
+                               cellnote_textposition = "middle right",
                                row_side_colors,
                                row_side_palette,
                                col_side_colors,
@@ -806,6 +814,10 @@ heatmaply.heatmapr <- function(x,
                                colorbar_len = 0.3) {
 
   plot_method <- match.arg(plot_method)
+  cellnote_textposition <- match.arg(cellnote_textposition, 
+    choices = c("top left", "top center" , "top right", "middle left", 
+      "middle center", "middle right", "bottom left", "bottom center", 
+      "bottom right"))
 
   # informative errors for mis-specified limits
   if (!is.null(limits)) {
@@ -952,9 +964,14 @@ heatmaply.heatmapr <- function(x,
   ## plotly:
   # turn p, px, and py to plotly objects if necessary
   if (!is.plotly(p)) p <- ggplotly(p) %>% layout(showlegend=FALSE)
+  
   if (draw_cellnote) {
-    df <- as.data.frame(x[["cellnote"]])
+    ## Predict cell color luminosity based on colorscale
+    if (cellnote_color == "auto") {
+      cellnote_color <- predict_colors(p, plot_method)
+    }
 
+    df <- as.data.frame(x[["cellnote"]])
     df$row <- 1:nrow(df)
     mdf <- reshape2::melt(df, id.vars="row")
     mdf$variable <- factor(mdf$variable, levels = p$x$layout$xaxis$ticktext)
@@ -962,7 +979,7 @@ heatmaply.heatmapr <- function(x,
     mdf$value <- factor(mdf$value)
 
     p <- p %>% add_trace(y = mdf$row, x = mdf$variable, text = mdf$value,
-        type = "scatter", mode = "text", textposition = "middle right",
+        type = "scatter", mode = "text", textposition = cellnote_textposition,
         hoverinfo = "none",
         textfont = list(color = plotly::toRGB(cellnote_color), size = 12)
       )
@@ -1038,4 +1055,67 @@ calc_margin <- function(labels, fontsize) {
     max(nchar(labels) * fontsize, na.rm = TRUE) * 0.6
   # http://stackoverflow.com/questions/19113725/what-dependency-between-font-size-and-width-of-char-in-monospace-font
 
+}
+
+
+
+
+## Predict luminosity of cells and change text based on that
+predict_colors <- function(p, plot_method) {
+
+  ## http://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
+  colorscale_df <- p$x$data[[1]]$colorscale
+  cell_values <- as.data.frame(p$x$data[[1]]$z)
+  cell_values$row <- 1:nrow(cell_values)
+  cell_values_m <- reshape2::melt(cell_values, id.vars = "row")
+  cell_values_vector <- cell_values_m$value
+  ## Need to normalise to (0, 1) scale as this is what plotly
+  ## uses internally
+  if (plot_method == "plotly") {
+    ## Need to convert plotly colors to hex colors 
+    colorscale_df[, 2] <- parse_plotly_color(colorscale_df[, 2])
+
+    cell_values_vector <- normalize(as.numeric(cell_values_vector))
+    ## interpolate to 256 colors because that's probably enough
+    colorscale_df <- data.frame(
+      stats::approx(as.numeric(colorscale_df[, 1]), n = 256)$y, 
+      grDevices::colorRampPalette(colorscale_df[, 2])(256)
+    )
+    
+    ## Then need to sort, find nearest neighbour, and map across
+    cell_values_vector_sort <- sort(cell_values_vector)
+    nearest_neighbours <- sapply(cell_values_vector_sort,
+      function(val) {
+        max(colorscale_df[as.numeric(colorscale_df[, 1]) <= val, 1])
+      }
+    )
+    names(nearest_neighbours) <- cell_values_vector_sort
+    cell_values_vector <- nearest_neighbours[as.character(cell_values_vector)]
+  }
+
+  cell_values_vector <- as.character(cell_values_vector)
+  ind <- match(cell_values_vector, colorscale_df[, 1])
+  cell_colors <- unlist(colorscale_df[ind, 2])
+  cell_colors_rgb <- colorspace::hex2RGB(cell_colors)
+  cell_font_colors <- sapply(seq_len(nrow(cell_colors_rgb@coords)), 
+    function(i) {
+      col <- cell_colors_rgb@coords[i, ]
+      luma <- (0.2126 * col[1]) + 
+        (0.7152 * col[2]) + 
+        (0.0722 * col[3])
+      ifelse (luma < 0.4, "white", "black")
+    }
+  )
+  cell_font_colors
+}
+
+
+parse_plotly_color <- function(color) {
+  r <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+),\\d+)", 
+    "\\1", color)
+  g <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+),\\d+)", 
+    "\\2", color)
+  b <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+),\\d+)", 
+    "\\3", color)
+  rgb(r, g, b, maxColorValue = 255)
 }
