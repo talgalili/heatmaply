@@ -352,12 +352,12 @@ heatmapr <- function(x,
 
   ## reorder x (and others)
   ##=======================
-  x <- x[rowInd, colInd, drop = FALSE]
-  if (is.null(cellnote)) {
-    cellnote <- round(x, digits = digits)
-  } else {
-    cellnote <- round(cellnote[rowInd, colInd, drop = FALSE], digits = digits)
+  if (is.null(cellnote)) cellnote <- x
+  if (is.numeric(cellnote)) {
+    cellnote <- round(cellnote, digits = digits)
   }
+  x <- x[rowInd, colInd, drop = FALSE]
+  cellnote <- cellnote[rowInd, colInd, drop = FALSE]
 
   if (!missing(row_side_colors)) {
     if(!(is.data.frame(row_side_colors) | is.matrix(row_side_colors))) {
