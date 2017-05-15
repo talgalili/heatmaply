@@ -66,10 +66,10 @@ is.plotly <- function(x) {
 #' cellnote is not supplied, x will be used for cellnote.
 #' @param cellnote_color The color of the cellnote text to be used.
 #' @param cellnote_textposition The text positioning/centering of the cellnote.
-#' Default is "middle right". Options are 
-#' "top left", "top center", "top right", "middle left", "middle center", 
+#' Default is "middle right". Options are
+#' "top left", "top center", "top right", "middle left", "middle center",
 #' "middle right", "bottom left", "bottom center", "bottom right"
-#' 
+#'
 #' @param Rowv determines if and how the row dendrogram should be reordered.
 #' By default, it is TRUE, which implies dendrogram is computed and reordered
 #' based on row means. If NULL or FALSE, then no dendrogram is computed and
@@ -168,7 +168,7 @@ is.plotly <- function(x) {
 #' @param titleY logical (TRUE). should y-axis titles be retained? (passed to \link[plotly]{subplot}).
 #'
 #'
-#' @param hide_colorbar logical (FALSE). If TRUE, then the color bar is hidden.
+#' @param hide_colorbar logical (FALSE). If TRUE, then the color bar (i.e.: the legend) is hidden.
 #'
 #' @param key.title (character) main title of the color key. If set to NULL (default) no title will be plotted.
 #'
@@ -813,9 +813,9 @@ heatmaply.heatmapr <- function(x,
                                colorbar_len = 0.3) {
 
   plot_method <- match.arg(plot_method)
-  cellnote_textposition <- match.arg(cellnote_textposition, 
-    choices = c("top left", "top center" , "top right", "middle left", 
-      "middle center", "middle right", "bottom left", "bottom center", 
+  cellnote_textposition <- match.arg(cellnote_textposition,
+    choices = c("top left", "top center" , "top right", "middle left",
+      "middle center", "middle right", "bottom left", "bottom center",
       "bottom right"))
 
   # informative errors for mis-specified limits
@@ -963,7 +963,7 @@ heatmaply.heatmapr <- function(x,
   ## plotly:
   # turn p, px, and py to plotly objects if necessary
   if (!is.plotly(p)) p <- ggplotly(p) %>% layout(showlegend=FALSE)
-  
+
   if (draw_cellnote) {
     ## Predict cell color luminosity based on colorscale
     if (cellnote_color == "auto") {
@@ -1072,16 +1072,16 @@ predict_colors <- function(p, plot_method) {
   ## Need to normalise to (0, 1) scale as this is what plotly
   ## uses internally
   if (plot_method == "plotly") {
-    ## Need to convert plotly colors to hex colors 
+    ## Need to convert plotly colors to hex colors
     colorscale_df[, 2] <- parse_plotly_color(colorscale_df[, 2])
 
     cell_values_vector <- normalize(as.numeric(cell_values_vector))
     ## interpolate to 256 colors because that's probably enough
     colorscale_df <- data.frame(
-      stats::approx(as.numeric(colorscale_df[, 1]), n = 256)$y, 
+      stats::approx(as.numeric(colorscale_df[, 1]), n = 256)$y,
       grDevices::colorRampPalette(colorscale_df[, 2])(256)
     )
-    
+
     ## Then need to sort, find nearest neighbour, and map across
     cell_values_vector_sort <- sort(cell_values_vector)
     nearest_neighbours <- sapply(cell_values_vector_sort,
@@ -1097,11 +1097,11 @@ predict_colors <- function(p, plot_method) {
   ind <- match(cell_values_vector, colorscale_df[, 1])
   cell_colors <- unlist(colorscale_df[ind, 2])
   cell_colors_rgb <- colorspace::hex2RGB(cell_colors)
-  cell_font_colors <- sapply(seq_len(nrow(cell_colors_rgb@coords)), 
+  cell_font_colors <- sapply(seq_len(nrow(cell_colors_rgb@coords)),
     function(i) {
       col <- cell_colors_rgb@coords[i, ]
-      luma <- (0.2126 * col[1]) + 
-        (0.7152 * col[2]) + 
+      luma <- (0.2126 * col[1]) +
+        (0.7152 * col[2]) +
         (0.0722 * col[3])
       ifelse (luma < 0.4, "white", "black")
     }
@@ -1111,11 +1111,11 @@ predict_colors <- function(p, plot_method) {
 
 
 parse_plotly_color <- function(color) {
-  r <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+),\\d+)", 
+  r <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+),\\d+)",
     "\\1", color)
-  g <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+),\\d+)", 
+  g <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+),\\d+)",
     "\\2", color)
-  b <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+),\\d+)", 
+  b <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+),\\d+)",
     "\\3", color)
   rgb(r, g, b, maxColorValue = 255)
 }

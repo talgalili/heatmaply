@@ -104,8 +104,8 @@ cellnote is not supplied, x will be used for cellnote.}
 \item{cellnote_color}{The color of the cellnote text to be used.}
 
 \item{cellnote_textposition}{The text positioning/centering of the cellnote.
-Default is "middle right". Options are 
-"top left", "top center", "top right", "middle left", "middle center", 
+Default is "middle right". Options are
+"top left", "top center", "top right", "middle left", "middle center",
 "middle right", "bottom left", "bottom center", "bottom right"}
 
 \item{Rowv}{determines if and how the row dendrogram should be reordered.
@@ -212,7 +212,7 @@ In the meantime it is MUCH better to use the grid_gap argument.}
 
 \item{titleY}{logical (TRUE). should y-axis titles be retained? (passed to \link[plotly]{subplot}).}
 
-\item{hide_colorbar}{logical (FALSE). If TRUE, then the color bar is hidden.}
+\item{hide_colorbar}{logical (FALSE). If TRUE, then the color bar (i.e.: the legend) is hidden.}
 
 \item{key.title}{(character) main title of the color key. If set to NULL (default) no title will be plotted.}
 
