@@ -12,7 +12,7 @@
 * [Introduction](#introduction)
 * [Installation](#installation)
 * [Usage](#usage)
-* [Credit](#credit)
+* [Acknowledgements](#Acknowledgements)
 * [Contact](#contact)
 
 
@@ -32,7 +32,7 @@ A heatmap is a popular graphical method for visualizing high-dimensional data, i
 
 Interactive heatmaps allow the inspection of specific value by hovering the mouse over a cell, as well as zooming into a region of the heatmap by draging a rectangle around the relevant area.
 
-This work is based on the ggplot2 and plotly.js engine. It produces similar heatmaps as d3heatmap, with the advatange of speed (plotly.js is able to handle larger size matrix), and the ability to zoom from the dendrogram.
+This work is based on the ggplot2 and plotly.js engine. It produces similar heatmaps as d3heatmap (or the static heatmap.2 from gplots), with the advatange of more features such as speed (plotly.js is able to handle larger size matrix), sidebar annotation, and the ability to zoom from the dendrogram.
 
 
 ## Installation
@@ -82,9 +82,15 @@ heatmaply(mtcars, k_row = 3, k_col = 2)
 
 
 
-## Credit
+## Acknowledgements
 
-This package is thanks to the amazing work done by MANY people in the open source community. Beyond the many people working on the pipeline of R, thanks should go to the plotly team, and especially to Carson Sievert and others working on the R package of plotly. Also, many of the design elements were inspired by the work done on heatmap, heatmap.2 and d3heatmap, so special thanks goes to the R core team, Gregory R. Warnes, and Joe Cheng from RStudio. The dendrogram side of the package is based on the work in dendextend, in which special thanks should go to Andrie de Vries for his original work on bringing dendrograms to ggplot2 (which evolved into the richer ggdend objects, as implemented in dendextend).
+
+This package is thanks to the amazing work done by MANY people in the open source community. Beyond the many people working on the pipeline of R, thanks should go to the people working on ggplot2 (Hadley Wickham, etc.) and plotly (Carson Sievert, etc.). Also, many of the design elements were inspired by the work done on heatmap, heatmap.2 and d3heatmap, so special thanks goes to the R core team, Gregory R. Warnes, and Joe Cheng from RStudio. The dendrogram side of the package is based on the work in dendextend, in which special thanks should go to Andrie de Vries for his original work on bringing dendrograms to ggplot2 (which evolved into the richer ggdend objects, as implemented in dendextend). 
+
+The work on heatmaply was done by Tal Galili, Alan O'Callaghan, and Jonathan Sidi (mostly on shinyHeatmaply).
+
+
+**Funding**: This work was supported in part by the European Union Seventh Framework Programme (FP7/2007-2013) under grant agreement no. 604102 (Human Brain Project).  
 
 
 ## Contact
