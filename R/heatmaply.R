@@ -104,6 +104,7 @@ is.plotly <- function(x) {
 #' 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv)
 #' is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv
 #' (or Colv) arguments are honoured.
+#' It also accepts TRUE/FALSE as synonyms for "both"/"none".
 #' @param reorderfun function(d, w) of dendrogram and weights for reordering the
 #' row and column dendrograms. The default uses stats{reorder.dendrogram}
 #'
@@ -504,7 +505,18 @@ heatmaply.default <- function(x,
     options(device = names(capabilities()[which(capabilities())])[1])
   }
 
+
+  if(is.logical(dendrogram)) {
+    # Using if and not ifelse to make sure the output is a "scalar".
+    dendrogram <- if(dendrogram) "both" else "none"
+    # if(T) "both" else "none"
+    # if(F) "both" else "none"
+  }
   dendrogram <- match.arg(dendrogram)
+
+
+
+
 
   if (!(is.data.frame(x) | is.matrix(x))) stop("x must be either a data.frame or a matrix.")
 

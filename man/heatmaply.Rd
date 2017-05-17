@@ -148,7 +148,8 @@ this can be one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA
 \item{dendrogram}{character string indicating whether to draw 'none', 'row',
 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv)
 is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv
-(or Colv) arguments are honoured.}
+(or Colv) arguments are honoured.
+It also accepts TRUE/FALSE as synonyms for "both"/"none".}
 
 \item{reorderfun}{function(d, w) of dendrogram and weights for reordering the
 row and column dendrograms. The default uses stats{reorder.dendrogram}}
