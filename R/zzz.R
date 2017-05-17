@@ -18,6 +18,18 @@
 
 
 
+
+
+# ### add new branches:
+# ### http://r-pkgs.had.co.nz/git.html#git-branch
+# git checkout -b faster_01
+# git push --set-upstream origin faster_01
+
+
+
+
+
+
 #' @import dendextend
 #' @import ggplot2
 #' @import magrittr
