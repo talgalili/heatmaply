@@ -38,7 +38,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = RdBu, ...)
   subplot_widths = NULL, subplot_heights = NULL, colorbar_len = 0.3,
   colorbar_xanchor = if (row_dend_left) "right" else "left",
   colorbar_yanchor = "bottom", colorbar_xpos = if (row_dend_left) -0.1 else
-  1.1, colorbar_ypos = 0, tickmode_auto = FALSE, col)
+  1.1, colorbar_ypos = 0, showticklabels = TRUE, col)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
@@ -57,7 +57,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = RdBu, ...)
   subplot_widths = NULL, subplot_heights = NULL, colorbar_xanchor = if
   (row_dend_left) "right" else "left", colorbar_yanchor = "bottom",
   colorbar_xpos = if (row_dend_left) -0.1 else 1.1, colorbar_ypos = 0,
-  colorbar_len = 0.3, tickmode_auto = FALSE)
+  colorbar_len = 0.3, showticklabels = TRUE)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -283,9 +283,9 @@ See \code{\link[plotly]{colorbar}} for more details.}
 \item{colorbar_xpos, colorbar_ypos}{The x and y co-ordinates (in proportion of the plot window)
 of the colorbar/color legend. See \code{\link[plotly]{colorbar}} for more details.}
 
-\item{tickmode_auto}{defalt is FALSE. If TRUE, then the ticks plotted are adjusted autmoatically.
-They will only present the number of row/column. This option should be used when working
-with medium to large matrix size as it makes the heatmap much faster.}
+\item{showticklabels}{defalt is TRUE. If FALSE, then the ticks are removed from the sides
+of the plot. This option should be used when working
+with medium to large matrix size as it makes the heatmap much faster (and the hover still works).}
 }
 \description{
 An object of class heatmapr includes all the needed information

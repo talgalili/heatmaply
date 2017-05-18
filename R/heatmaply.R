@@ -236,9 +236,9 @@ is.plotly <- function(x) {
 #' @param colorbar_xpos,colorbar_ypos The x and y co-ordinates (in proportion of the plot window)
 #' of the colorbar/color legend. See \code{\link[plotly]{colorbar}} for more details.
 #'
-#' @param tickmode_auto defalt is FALSE. If TRUE, then the ticks plotted are adjusted autmoatically.
-#' They will only present the number of row/column. This option should be used when working
-#' with medium to large matrix size as it makes the heatmap much faster.
+#' @param showticklabels defalt is TRUE. If FALSE, then the ticks are removed from the sides
+#' of the plot. This option should be used when working
+#' with medium to large matrix size as it makes the heatmap much faster (and the hover still works).
 #'
 #' @export
 #' @examples
@@ -483,7 +483,7 @@ heatmaply.default <- function(x,
                               colorbar_yanchor = "bottom",
                               colorbar_xpos = if(row_dend_left) -0.1 else 1.1,
                               colorbar_ypos = 0,
-                              tickmode_auto = FALSE,
+                              showticklabels = TRUE,
                               col) {
 
   if (!missing(long_data)) {
@@ -641,7 +641,7 @@ heatmaply.default <- function(x,
                      colorbar_yanchor = colorbar_yanchor,
                      colorbar_xpos = colorbar_xpos,
                      colorbar_ypos = colorbar_ypos,
-                     tickmode_auto = tickmode_auto
+                     showticklabels = showticklabels
                      )
 
                      # TODO: think more on what should be passed in "..."
@@ -830,7 +830,7 @@ heatmaply.heatmapr <- function(x,
                                colorbar_xpos = if(row_dend_left) -0.1 else 1.1,
                                colorbar_ypos = 0,
                                colorbar_len = 0.3,
-                               tickmode_auto = FALSE
+                               showticklabels = TRUE
                                ) {
 
   plot_method <- match.arg(plot_method)
@@ -939,11 +939,6 @@ heatmaply.heatmapr <- function(x,
   }
 
 
-  if(tickmode_auto) {
-    p <- p %>% ggplotly() %>%
-      layout(yaxis = list(tickmode='auto'),
-             xaxis = list(tickmode='auto'))
-  }
 
 
 
@@ -1062,6 +1057,19 @@ heatmaply.heatmapr <- function(x,
     # if(!is.null(pr)) pr <- style(pr, xgap = grid_gap)
     # if(!is.null(pc)) pc <- style(pc, ygap = grid_gap)
   }
+
+
+  if(!showticklabels) {
+    p <- p %>%
+      layout(yaxis = list(showticklabels = FALSE),
+             xaxis = list(showticklabels = FALSE))
+
+      # ggplotly() %>%
+      # layout(yaxis = list(tickmode='auto'),
+      #        xaxis = list(tickmode='auto'))
+  }
+
+
 
   heatmap_subplot <- heatmap_subplot_from_ggplotly(p = p, px = px, py = py,
     row_dend_left = row_dend_left, subplot_margin = subplot_margin,
