@@ -236,6 +236,10 @@ is.plotly <- function(x) {
 #' @param colorbar_xpos,colorbar_ypos The x and y co-ordinates (in proportion of the plot window)
 #' of the colorbar/color legend. See \code{\link[plotly]{colorbar}} for more details.
 #'
+#' @param tickmode_auto defalt is FALSE. If TRUE, then the ticks plotted are adjusted autmoatically.
+#' They will only present the number of row/column. This option should be used when working
+#' with medium to large matrix size as it makes the heatmap much faster.
+#'
 #' @export
 #' @examples
 #' \dontrun{
@@ -479,6 +483,7 @@ heatmaply.default <- function(x,
                               colorbar_yanchor = "bottom",
                               colorbar_xpos = if(row_dend_left) -0.1 else 1.1,
                               colorbar_ypos = 0,
+                              tickmode_auto = FALSE,
                               col) {
 
   if (!missing(long_data)) {
@@ -635,7 +640,9 @@ heatmaply.default <- function(x,
                      colorbar_xanchor = colorbar_xanchor,
                      colorbar_yanchor = colorbar_yanchor,
                      colorbar_xpos = colorbar_xpos,
-                     colorbar_ypos = colorbar_ypos)
+                     colorbar_ypos = colorbar_ypos,
+                     tickmode_auto = tickmode_auto
+                     )
 
                      # TODO: think more on what should be passed in "..."
 
@@ -822,7 +829,9 @@ heatmaply.heatmapr <- function(x,
                                colorbar_yanchor = "bottom",
                                colorbar_xpos = if(row_dend_left) -0.1 else 1.1,
                                colorbar_ypos = 0,
-                               colorbar_len = 0.3) {
+                               colorbar_len = 0.3,
+                               tickmode_auto = FALSE
+                               ) {
 
   plot_method <- match.arg(plot_method)
   cellnote_textposition <- match.arg(cellnote_textposition,
@@ -928,6 +937,15 @@ heatmaply.heatmapr <- function(x,
       colorbar_xpos = colorbar_xpos, colorbar_ypos = colorbar_ypos,
       colorbar_len = colorbar_len)
   }
+
+
+  if(tickmode_auto) {
+    p <- p %>% ggplotly() %>%
+      layout(yaxis = list(tickmode='auto'),
+             xaxis = list(tickmode='auto'))
+  }
+
+
 
 
   # TODO: Add native plotly sidecolor function.

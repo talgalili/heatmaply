@@ -5,6 +5,7 @@ heatmaply 0.10.0 (2017-05-17)
 * heatmaply
 	- `cellnote` would previously not work with character matrices. This is now fixed.
 	- heatmaply would formerly ignore colour functions when plot_method = "plotly"
+	- tickmode_auto - a parameter to allow turning the ticks into row/column numbers - thus making the rendering of the plot much faster.
 
 ### NEW FEATURES
 * heatmaply
