@@ -236,9 +236,13 @@ is.plotly <- function(x) {
 #' @param colorbar_xpos,colorbar_ypos The x and y co-ordinates (in proportion of the plot window)
 #' of the colorbar/color legend. See \code{\link[plotly]{colorbar}} for more details.
 #'
-#' @param showticklabels defalt is TRUE. If FALSE, then the ticks are removed from the sides
-#' of the plot. This option should be used when working
-#' with medium to large matrix size as it makes the heatmap much faster (and the hover still works).
+#' @param showticklabels A logical vector of length two (defalt is TRUE).
+#' If FALSE, then the ticks are removed from the sides of the plot. The first location refers to
+#' the x axis and the second to the y axis. If only one value is supplied (TRUE/FALSE) then it is
+#' replicated to get to length 2. When using this parameter, it might be worth also adjusting
+#' margins.
+#' This option should be used when working with medium to large matrix size as it
+#' makes the heatmap much faster (and the hover still works).
 #'
 #' @export
 #' @examples
@@ -483,7 +487,7 @@ heatmaply.default <- function(x,
                               colorbar_yanchor = "bottom",
                               colorbar_xpos = if(row_dend_left) -0.1 else 1.1,
                               colorbar_ypos = 0,
-                              showticklabels = TRUE,
+                              showticklabels = c(TRUE, TRUE),
                               col) {
 
   if (!missing(long_data)) {
@@ -830,7 +834,7 @@ heatmaply.heatmapr <- function(x,
                                colorbar_xpos = if(row_dend_left) -0.1 else 1.1,
                                colorbar_ypos = 0,
                                colorbar_len = 0.3,
-                               showticklabels = TRUE
+                               showticklabels = c(TRUE, TRUE)
                                ) {
 
   plot_method <- match.arg(plot_method)
@@ -1059,10 +1063,12 @@ heatmaply.heatmapr <- function(x,
   }
 
 
-  if(!showticklabels) {
+  if(!all(showticklabels)) {
+    if(!is.logical(showticklabels)) stop("showticklabels must be a logical vector of length 2 or 1")
+    if(length(showticklabels) == 1) showticklabels <- rep(showticklabels, 2)
     p <- p %>%
-      layout(yaxis = list(showticklabels = FALSE),
-             xaxis = list(showticklabels = FALSE))
+      layout(xaxis = list(showticklabels = showticklabels[1]),
+             yaxis = list(showticklabels = showticklabels[2]))
 
       # ggplotly() %>%
       # layout(yaxis = list(tickmode='auto'),
