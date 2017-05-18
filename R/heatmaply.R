@@ -360,6 +360,17 @@ is.plotly <- function(x) {
 #'      subplot_widths=c(0.6, 0.4),
 #'      subplot_heights=c(0.05, 0.95))
 #'
+#'
+#'
+#' # Example of removing labels and thus making the plot faster
+#' heatmaply(iris, showticklabels = c(T,F), margins = c(80,10))
+#'
+#' # this is what allows for a much larger matrix to be printed:
+#' set.seed(2017-05-18)
+#' large_x <- matrix(rnorm(19), 1000,100)
+#' heatmaply(large_x, dendrogram = F, showticklabels = F, margins = c(1,1))
+#'
+#'
 #' }
 heatmaply <- function(x, ...) {
   UseMethod("heatmaply")
