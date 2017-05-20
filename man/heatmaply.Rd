@@ -12,7 +12,7 @@ heatmaply(x, ...)
 
 heatmaply_na(x, grid_gap = 1, colors = c("grey80", "grey20"), ...)
 
-heatmaply_cor(x, limits = c(-1, 1), colors = RdBu, ...)
+heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
 
 \method{heatmaply}{default}(x, colors = viridis(n = 256, alpha = 1, begin = 0,
   end = 1, option = "viridis"), limits = NULL, na.value = "grey50",

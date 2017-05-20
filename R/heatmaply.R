@@ -406,7 +406,7 @@ heatmaply_na <- function(x,
 #' }
 heatmaply_cor <- function(x,
                          limits = c(-1,1),
-                         colors = RdBu,
+                         colors = cool_warm,
                          ...) {
   heatmaply(x, limits = limits, # symm = TRUE,
             colors = colors, ...)
