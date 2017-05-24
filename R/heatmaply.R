@@ -380,7 +380,7 @@ heatmaply <- function(x, ...) {
 #' @export
 #' @description
 #' heatmaply_na is a wrapper for `heatmaply` which comes with defaults that are better
-#' for exploring missing value (NA) patters. Specifically, the grid_gap is set to 1, and the
+#' for exploring missing value (NA) patterns. Specifically, the grid_gap is set to 1, and the
 #' colors include two shades of grey. It also calculates the \link{is.na10} autmoatically.
 #' @rdname heatmaply
 #' @examples
@@ -518,6 +518,13 @@ heatmaply.default <- function(x,
   plot_method <- match.arg(plot_method)
 
   if (plot_method == "ggplot") {
+
+    ggplot_version <- utils::packageDescription("ggplot2")[["Version"]]
+    if (utils::compareVersion(ggplot_version, "2.2.1.9000") == -1) {
+        warning("ggplotly for heatmaply does not work well with previous ggplot versions")
+        warning("We recommend installing the latest ggplot2 version: `devtools::install_github(\"tidyverse/ggplot2\")`")
+    }
+
     ## Suppress creation of new graphcis device, but on exit replace it.
     ## TODO: Avoid this or find better method
     old_dev <- options()[["device"]]

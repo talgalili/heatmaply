@@ -299,7 +299,7 @@ heatmap elements from the graphical rendaring of the object, which could be done
 (Please submit an issue on github if you have a feature that you wish to have added)
 
 heatmaply_na is a wrapper for `heatmaply` which comes with defaults that are better
-for exploring missing value (NA) patters. Specifically, the grid_gap is set to 1, and the
+for exploring missing value (NA) patterns. Specifically, the grid_gap is set to 1, and the
 colors include two shades of grey. It also calculates the \link{is.na10} autmoatically.
 
 heatmaply_cor is a wrapper for `heatmaply` which comes with defaults that are better
