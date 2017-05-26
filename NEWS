@@ -1,5 +1,5 @@
 
-heatmaply 0.10.0 (2017-05-20)
+heatmaply 0.10.0 (2017-05-26)
 ==============================
 
 ### NEW FUNCTIONS
@@ -12,6 +12,7 @@ heatmaply 0.10.0 (2017-05-20)
 	  See [the plotly documentation](https://plot.ly/javascript/reference/#scatter-textposition) for more details.
   - dendrogram parameter can now accept TRUE/FALSE as synonyms for "both"/"none".
 * heatmaply_cor now uses cool_warm instead of RdBu.
+* Added a warning for when not using the latest ggplot version.
 
 ### BUG FIXES
 * heatmaply
