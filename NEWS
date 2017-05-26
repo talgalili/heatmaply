@@ -11,6 +11,7 @@ heatmaply 0.10.0 (2017-05-26)
 	- Add `cellnote_textposition` argument, which controls the justification of cellnote within a cell.
 	  See [the plotly documentation](https://plot.ly/javascript/reference/#scatter-textposition) for more details.
   - dendrogram parameter can now accept TRUE/FALSE as synonyms for "both"/"none".
+	- showticklabels = c(TRUE, TRUE) - a 2d parameter to allow turning off of tick labels in the rows/columns - thus making the rendering of the plot much faster for larger matrix.
 * heatmaply_cor now uses cool_warm instead of RdBu.
 * Added a warning for when not using the latest ggplot version.
 
@@ -18,7 +19,6 @@ heatmaply 0.10.0 (2017-05-26)
 * heatmaply
 	- `cellnote` would previously not work with character matrices. This is now fixed.
 	- heatmaply would formerly ignore colour functions when plot_method = "plotly"
-	- showticklabels = c(TRUE, TRUE) - a 2d parameter to allow turning off of tick labels in the rows/columns - thus making the rendering of the plot much faster for larger matrix.
 
 
 
