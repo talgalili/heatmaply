@@ -519,12 +519,6 @@ heatmaply.default <- function(x,
 
   if (plot_method == "ggplot") {
 
-    ggplot_version <- utils::packageDescription("ggplot2")[["Version"]]
-    if (utils::compareVersion(ggplot_version, "2.2.1.9000") == -1) {
-        warning("ggplotly for heatmaply does not work well with previous ggplot versions")
-        warning("We recommend installing the latest ggplot2 version: `devtools::install_github(\"tidyverse/ggplot2\")`")
-    }
-
     ## Suppress creation of new graphcis device, but on exit replace it.
     ## TODO: Avoid this or find better method
     old_dev <- options()[["device"]]
