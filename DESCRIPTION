@@ -26,7 +26,7 @@ Description: Create interactive cluster 'heatmaps' that can be saved as a stand-
     'heatmap'.
 Depends:
     R (>= 3.0.0),
-    plotly (>= 4.7.0),
+    plotly (>= 4.6.0),
     viridis
 Imports:
     ggplot2 (>= 2.2.0),
