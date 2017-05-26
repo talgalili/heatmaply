@@ -38,6 +38,7 @@ Imports:
     utils,
     stats,
     grDevices,
+    methods,
     colorspace,
     RColorBrewer,
     htmlwidgets,
