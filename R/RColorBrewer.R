@@ -33,6 +33,17 @@
 
 
 
+# importFrom("grDevices", "rgb")
+# importFrom("methods", "as")
+
+
+#' @importFrom grDevices rgb
+#' @importFrom methods as
+
+
+
+
+
 
 #' @title RColorBrewer color Ramp Palette
 #' @name RColorBrewer_colors
