@@ -375,6 +375,35 @@ heatmaply(x[,-c(8,9)], seriate = "mean",
 ```
 
 
+Sidenotes
+=============
+
+We considred using the fastcluster package for clustering, but the time gain was too small compared to the rest of the bottlenecks in the package.
+
+```{r, eval = FALSE}
+
+# library(microbenchmark)
+# 
+# 
+# library(heatmaply)
+# x <- matrix(1:1000, 500, 2)
+# 
+# microbenchmark(
+#   heatmaply(x, hclustfun = stats::hclust),
+#   heatmaply(x, hclustfun = fastcluster::hclust),
+#   times = 10
+# )
+# 
+# x <- matrix(1:1000, 1000, 2)
+# microbenchmark(
+#   stats::hclust(dist(x)),
+#   fastcluster::hclust(dist(x)),
+#   times = 10
+# )
+
+
+```
+
 
 
 Credit
