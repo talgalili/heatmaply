@@ -1,8 +1,8 @@
 Package: heatmaply
 Type: Package
 Title: Interactive Cluster Heat Maps Using 'plotly'
-Version: 0.10.0
-Date: 2017-05-17
+Version: 0.10.1
+Date: 2017-05-27
 Authors@R: c(person("Tal", "Galili", role = c("aut", "cre", "cph"), email =
     "tal.galili@gmail.com", comment = "https://www.r-statistics.com"),
     person("Jonathan", "Sidi", email = "yonis@metrumrg.com", comment = "https://github.com/yonicd",role = "ctb"),
@@ -26,10 +26,10 @@ Description: Create interactive cluster 'heatmaps' that can be saved as a stand-
     'heatmap'.
 Depends:
     R (>= 3.0.0),
-    plotly (>= 4.5.2),
+    plotly (>= 4.6.0),
     viridis
 Imports:
-    ggplot2 (>= 2.1.0),
+    ggplot2 (>= 2.2.0),
     dendextend (>= 1.4.0),
     magrittr (>= 1.0.1),
     reshape2,
@@ -38,6 +38,7 @@ Imports:
     utils,
     stats,
     grDevices,
+    methods,
     colorspace,
     RColorBrewer,
     htmlwidgets,

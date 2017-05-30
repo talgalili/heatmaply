@@ -29,6 +29,7 @@
 \alias{YlGnBu}
 \alias{YlOrBr}
 \alias{YlOrRd}
+\alias{cool_warm}
 \title{RColorBrewer color Ramp Palette}
 \usage{
 BrBG(n)
@@ -84,6 +85,8 @@ YlGnBu(n)
 YlOrBr(n)
 
 YlOrRd(n)
+
+cool_warm(n)
 }
 \arguments{
 \item{n}{the number of colors (>= 1) to be in the palette.}
@@ -103,6 +106,8 @@ Blues BuGn BuPu GnBu Greens Greys Oranges OrRd PuBu PuBuGn PuRd Purples RdPu Red
 
 The diverging palettes are
 BrBG PiYG PRGn PuOr RdBu RdGy RdYlBu RdYlGn Spectral
+And also cool_warm. The cool_warm palette is based on Kenneth Moreland's proposal (see ref).
+It goes from blue (cool) to ref (warm), based on well thought-out design elements.
 }
 \examples{
 \dontrun{
@@ -111,9 +116,36 @@ library(RColorBrewer)
 display.brewer.all(n=11,type="div"); title(main = "Divergent color palette")
 display.brewer.all(n=9,type=c("seq")); title(main = "Sequential color palette")
 
+
+
+img <- function(obj, nam) {
+  image(1:length(obj), 1, as.matrix(1:length(obj)), col=obj,
+        main = nam, ylab = "", xaxt = "n", yaxt = "n",  bty = "n")
+}
+
+par(mfrow = c(10,1))
+img(rev(cool_warm(500)), "cool_warm, (Moreland 2009)")
+img(RdBu(500), "RdBu")
+img(BrBG(500), "BrBG")
+img(PiYG(500), "PiYG")
+img(PRGn(500), "PRGn")
+img(PuOr(500), "PuOr")
+img(RdGy(500), "RdGy")
+img(RdYlBu(500), "RdYlBu")
+img(RdYlGn(500), "RdYlGn")
+img(Spectral(500), "Spectral")
+
+
 library(heatmaply)
 heatmaply(cor(mtcars), colors = PiYG, limits = c(-1,1))
 heatmaply(cor(mtcars), colors = RdBu, limits = c(-1,1))
 
 }
+}
+\references{
+* Moreland, Kenneth. "Diverging color maps for scientific visualization." Advances in Visual Computing (2009): 92-103.
+url: http://www.kennethmoreland.com/color-maps/
+The code was provided here: http://stackoverflow.com/a/44073011/256662
+Thanks to the user YAK, who relied on the code from the Rgnuplot package
+(which is duplicated here, in order to save the need to import the entire package)
 }

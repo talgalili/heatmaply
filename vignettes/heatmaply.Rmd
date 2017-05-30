@@ -144,7 +144,7 @@ Another possibility is to use the `normalize` function to brings data to the 0 t
 
 ```{r}
 heatmaply(normalize(mtcars), xlab = "Features", ylab = "Cars", 
-		main = "Data transformation using 'scale'",
+		main = "Data transformation using 'normalize'",
 		margins = c(60,100,40,20))
 ```
 
@@ -155,9 +155,11 @@ An alternative to `normalize` is the `percentize` function. This is similar to r
 
 ```{r}
 heatmaply(percentize(mtcars), xlab = "Features", ylab = "Cars", 
-		main = "Data transformation using 'scale'",
+		main = "Data transformation using 'percentize'",
 		margins = c(60,100,40,20))
 ```
+
+Notice that for binary variables (0 and 1), `percentize` will turn all 0 values to their proportion and all 1 values will remain 1. This means the transformation is not symmatric for 0 and 1. Hence, if scaling for clustering, it might be better to use `rank` for dealing with tie values (if no ties are present, then `percentize` will perform similarly to `rank`).
 
 
 
@@ -372,6 +374,35 @@ heatmaply(x[,-c(8,9)], seriate = "mean",
 
 ```
 
+
+Sidenotes
+=============
+
+We considred using the fastcluster package for clustering, but the time gain was too small compared to the rest of the bottlenecks in the package.
+
+```{r, eval = FALSE}
+
+# library(microbenchmark)
+# 
+# 
+# library(heatmaply)
+# x <- matrix(1:1000, 500, 2)
+# 
+# microbenchmark(
+#   heatmaply(x, hclustfun = stats::hclust),
+#   heatmaply(x, hclustfun = fastcluster::hclust),
+#   times = 10
+# )
+# 
+# x <- matrix(1:1000, 1000, 2)
+# microbenchmark(
+#   stats::hclust(dist(x)),
+#   fastcluster::hclust(dist(x)),
+#   times = 10
+# )
+
+
+```
 
 
 

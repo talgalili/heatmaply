@@ -236,6 +236,14 @@ is.plotly <- function(x) {
 #' @param colorbar_xpos,colorbar_ypos The x and y co-ordinates (in proportion of the plot window)
 #' of the colorbar/color legend. See \code{\link[plotly]{colorbar}} for more details.
 #'
+#' @param showticklabels A logical vector of length two (defalt is TRUE).
+#' If FALSE, then the ticks are removed from the sides of the plot. The first location refers to
+#' the x axis and the second to the y axis. If only one value is supplied (TRUE/FALSE) then it is
+#' replicated to get to length 2. When using this parameter, it might be worth also adjusting
+#' margins.
+#' This option should be used when working with medium to large matrix size as it
+#' makes the heatmap much faster (and the hover still works).
+#'
 #' @export
 #' @examples
 #' \dontrun{
@@ -352,6 +360,17 @@ is.plotly <- function(x) {
 #'      subplot_widths=c(0.6, 0.4),
 #'      subplot_heights=c(0.05, 0.95))
 #'
+#'
+#'
+#' # Example of removing labels and thus making the plot faster
+#' heatmaply(iris, showticklabels = c(T,F), margins = c(80,10))
+#'
+#' # this is what allows for a much larger matrix to be printed:
+#' set.seed(2017-05-18)
+#' large_x <- matrix(rnorm(19), 1000,100)
+#' heatmaply(large_x, dendrogram = F, showticklabels = F, margins = c(1,1))
+#'
+#'
 #' }
 heatmaply <- function(x, ...) {
   UseMethod("heatmaply")
@@ -361,7 +380,7 @@ heatmaply <- function(x, ...) {
 #' @export
 #' @description
 #' heatmaply_na is a wrapper for `heatmaply` which comes with defaults that are better
-#' for exploring missing value (NA) patters. Specifically, the grid_gap is set to 1, and the
+#' for exploring missing value (NA) patterns. Specifically, the grid_gap is set to 1, and the
 #' colors include two shades of grey. It also calculates the \link{is.na10} autmoatically.
 #' @rdname heatmaply
 #' @examples
@@ -387,7 +406,7 @@ heatmaply_na <- function(x,
 #' }
 heatmaply_cor <- function(x,
                          limits = c(-1,1),
-                         colors = RdBu,
+                         colors = cool_warm,
                          ...) {
   heatmaply(x, limits = limits, # symm = TRUE,
             colors = colors, ...)
@@ -479,6 +498,7 @@ heatmaply.default <- function(x,
                               colorbar_yanchor = "bottom",
                               colorbar_xpos = if(row_dend_left) -0.1 else 1.1,
                               colorbar_ypos = 0,
+                              showticklabels = c(TRUE, TRUE),
                               col) {
 
   if (!missing(long_data)) {
@@ -498,6 +518,7 @@ heatmaply.default <- function(x,
   plot_method <- match.arg(plot_method)
 
   if (plot_method == "ggplot") {
+
     ## Suppress creation of new graphcis device, but on exit replace it.
     ## TODO: Avoid this or find better method
     old_dev <- options()[["device"]]
@@ -635,7 +656,9 @@ heatmaply.default <- function(x,
                      colorbar_xanchor = colorbar_xanchor,
                      colorbar_yanchor = colorbar_yanchor,
                      colorbar_xpos = colorbar_xpos,
-                     colorbar_ypos = colorbar_ypos)
+                     colorbar_ypos = colorbar_ypos,
+                     showticklabels = showticklabels
+                     )
 
                      # TODO: think more on what should be passed in "..."
 
@@ -822,7 +845,9 @@ heatmaply.heatmapr <- function(x,
                                colorbar_yanchor = "bottom",
                                colorbar_xpos = if(row_dend_left) -0.1 else 1.1,
                                colorbar_ypos = 0,
-                               colorbar_len = 0.3) {
+                               colorbar_len = 0.3,
+                               showticklabels = c(TRUE, TRUE)
+                               ) {
 
   plot_method <- match.arg(plot_method)
   cellnote_textposition <- match.arg(cellnote_textposition,
@@ -928,6 +953,10 @@ heatmaply.heatmapr <- function(x,
       colorbar_xpos = colorbar_xpos, colorbar_ypos = colorbar_ypos,
       colorbar_len = colorbar_len)
   }
+
+
+
+
 
 
   # TODO: Add native plotly sidecolor function.
@@ -1044,6 +1073,21 @@ heatmaply.heatmapr <- function(x,
     # if(!is.null(pr)) pr <- style(pr, xgap = grid_gap)
     # if(!is.null(pc)) pc <- style(pc, ygap = grid_gap)
   }
+
+
+  if(!all(showticklabels)) {
+    if(!is.logical(showticklabels)) stop("showticklabels must be a logical vector of length 2 or 1")
+    if(length(showticklabels) == 1) showticklabels <- rep(showticklabels, 2)
+    p <- p %>%
+      layout(xaxis = list(showticklabels = showticklabels[1]),
+             yaxis = list(showticklabels = showticklabels[2]))
+
+      # ggplotly() %>%
+      # layout(yaxis = list(tickmode='auto'),
+      #        xaxis = list(tickmode='auto'))
+  }
+
+
 
   heatmap_subplot <- heatmap_subplot_from_ggplotly(p = p, px = px, py = py,
     row_dend_left = row_dend_left, subplot_margin = subplot_margin,

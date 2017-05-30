@@ -1,4 +1,37 @@
 
+heatmaply 0.10.0 (2017-05-26)
+==============================
+
+### NEW FUNCTIONS
+* cool_warm - a new divergent color pallette (from blue to red) based on Kenneth Moreland's proposal in (Diverging color maps for scientific visualization." Advances in Visual Computing (2009)), provided by the user YAK in (http://stackoverflow.com/a/44073011/256662), and which relies on code from the Rgnuplot package.
+
+### NEW FEATURES
+* heatmaply
+	- Add "auto" cellnote colouring, which predicts the luminosity of cells and switches between black and white text as 	       appropriate, for readability
+	- Add `cellnote_textposition` argument, which controls the justification of cellnote within a cell.
+	  See [the plotly documentation](https://plot.ly/javascript/reference/#scatter-textposition) for more details.
+  - dendrogram parameter can now accept TRUE/FALSE as synonyms for "both"/"none".
+	- showticklabels = c(TRUE, TRUE) - a 2d parameter to allow turning off of tick labels in the rows/columns - thus making the rendering of the plot much faster for larger matrix.
+* heatmaply_cor now uses cool_warm instead of RdBu.
+* Added a warning for when not using the latest ggplot version.
+
+### BUG FIXES
+* heatmaply
+	- `cellnote` would previously not work with character matrices. This is now fixed.
+	- heatmaply would formerly ignore colour functions when plot_method = "plotly"
+
+
+
+
+heatmaply 0.9.2 (2017-05-05)
+==============================
+
+### BUG FIXES
+* `heatmaply`
+  * Fix subplot_width/subplot_height
+
+
+
 heatmaply 0.9.1 (2017-04-14)
 ==============================
 
