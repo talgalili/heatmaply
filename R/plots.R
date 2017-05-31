@@ -461,7 +461,7 @@ discrete_colorscale <- function(colors) {
 }
 
 
-
+#' @importFrom stats setNames
 plotly_side_color_plot <- function(df, palette=NULL,
     scale_title = paste(type, "side colors"), type = c("column", "row"),
     text_angle = if (type == "column") 0 else 90, is_colors = FALSE,
