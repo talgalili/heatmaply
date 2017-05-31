@@ -250,7 +250,7 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
 #'
 #' @return A ggplot geom_tile object
 #'
-side_color_plot <- function(df, palette,
+ggplot_side_color_plot <- function(df, palette = NULL,
   scale_title = paste(type, "side colors"), type = c("column", "row"),
   text_angle = if (type == "column") 0 else 90, is_colors = FALSE,
   label_name = type) {
@@ -264,7 +264,7 @@ side_color_plot <- function(df, palette,
   ## TODO: Find out why names are dropped when ncol(df) == 1
   original_dim <- dim(df)
 
-  if (missing(palette)) palette <- colorspace::rainbow_hcl
+  if (is.null(palette)) palette <- colorspace::rainbow_hcl
 
   type <- match.arg(type)
   ## Custom label
@@ -304,8 +304,12 @@ side_color_plot <- function(df, palette,
         axis.ticks = element_blank())
   }
 
-  color_vals <- if (is_colors) levels(df[["value"]])
-  else palette(nlevels(df[["value"]]))
+  if (is.function(palette)) {
+    palette <- setNames(palette(nlevels(df[["value"]])), levels(df[["value"]]))
+  } else if (!all(levels(df[["value"]] %in% names(palette)))) {
+    stop(paste("Not all levels of the", type, "side colors are mapped in the", type, "palette"))
+  }
+ 
 
   g <- ggplot(df, mapping = mapping) +
     # geom_raster() +
@@ -315,7 +319,7 @@ side_color_plot <- function(df, palette,
     scale_fill_manual(
       name = NULL,
       breaks = levels(df[["value"]]),
-      values = color_vals) +
+      values = palette[levels(df[["value"]])]) +
     theme
   return(g)
 }
@@ -391,18 +395,19 @@ parse_plotly_color <- function(color) {
 # Probably not needed currently
 make_colorscale <- function(colors) {
     seq <- seq(0, 1, by = 1 / length(colors))
-    scale <- lapply(seq_along(colors),
-        function(i) {
-            # eg
-            # list(c(0, "rgb(255, 0, 0)"), c(1, "rgb(0, 255, 0)")),
+    scale <- list(
+        sapply(seq_along(colors),
+          function(i) {
             if (i == 1) {
-                list(0, col2plotlyrgb(colors[i]))
+                0
             } else if (i == length(colors)) {
-                list(1, col2plotlyrgb(colors[i]))
+                1
             } else {
-                list(seq[i], col2plotlyrgb(colors[i]))
+                seq[i]
             }
-        }
+          }
+        ),
+        col2plotlyrgb(colors)
     )
     scale
 }
@@ -443,4 +448,108 @@ k_colors <- function(k) {
   } else {
     "black"
   }
+}
+
+
+
+
+# Create a plotly colorscale from a list of colors in any format.
+discrete_colorscale <- function(colors) {
+    colors <- rep(colors, each=100)
+    seq <- seq(0, 1, length.out = length(colors))
+    setNames(data.frame(seq, colors), NULL)
+}
+
+
+
+plotly_side_color_plot <- function(df, palette=NULL,
+    scale_title = paste(type, "side colors"), type = c("column", "row"),
+    text_angle = if (type == "column") 0 else 90, is_colors = FALSE,
+    label_name = type, fontsize = 10) {
+
+  type <- match.arg(type)
+
+  data <- df
+  data[] <- lapply(df, as.character)
+  if (type == "column") {
+      data <- t(data)
+  }
+  data <- as.data.frame(data)
+  data_vals <- unlist(data)
+  levels <- unique(data_vals)
+
+  if (is.null(palette)) palette <- colorspace::rainbow_hcl
+  if (is.function(palette)) {
+    palette <- setNames(palette(length(levels)), levels)
+  } else if (!all(levels %in% names(palette))) {
+    stop(paste("Not all levels of the", type, "side colors are mapped in the", type, "palette"))
+  }
+
+  levs2colors <- palette[levels]
+
+  levs2nums <- setNames(seq_along(levels), levels)
+
+  df_nums <- data
+  df_nums[] <- lapply(data, function(col) as.numeric(levs2nums[as.character(col)]))
+  df_nums <- as.matrix(df_nums)
+
+  key_title <- paste(type, "annotation")
+
+  text_mat <- data
+  text_mat[] <- lapply(seq_along(text_mat),
+    function(i) {
+      if (type == "row") {
+        paste0(
+          "value: ", data[, i], "<br>",
+          "variable: ", colnames(data)[i], "<br>",
+          label_name, ": ", rownames(data)  
+        )        
+      } else {
+        paste0(
+          "value: ", data[, i], "<br>",
+          label_name, ": ", rownames(data), "<br>",
+          "variable: ", colnames(data)[i]
+        )
+      }
+    }
+  )
+  
+  ## https://stackoverflow.com/questions/42524450/using-discrete-custom-color-in-a-plotly-heatmap
+  p <- plot_ly(z = df_nums, x = 1:ncol(df_nums), y = 1:nrow(df_nums),
+    text = as.matrix(text_mat), hoverinfo = "text",
+    type = "heatmap", showlegend = FALSE, colors = levs2colors, 
+    colorscale = discrete_colorscale(levs2colors),
+    colorbar = list(
+      # Capitalise first letter
+      title = paste(gsub("^(\\w)", "\\U\\1", type, perl = TRUE), "annotation"),
+      tickmode = 'array',
+      tickvals = seq(1.5, length(levels) - 0.5, length.out = length(levels)),
+      ticktext = levels,
+      len = 0.2)) 
+  if (type == "row") {
+    p <- p %>% layout(
+      xaxis = list(
+        tickfont = list(size = fontsize),
+        tickangle = text_angle,
+        tickvals = 1:ncol(data), ticktext = colnames(data),
+        linecolor = "#ffffff",
+        range = c(0.5, ncol(data) + 0.5),
+        showticklabels = TRUE
+      ),
+      yaxis = list(showticklabels = FALSE)
+    )
+  } else {
+    p <- p %>% layout(
+      yaxis = list(
+        tickfont = list(size = fontsize),
+        tickangle = text_angle,
+        tickvals = 1:nrow(data), ticktext = rownames(data),
+        linecolor = "#ffffff",
+        range = c(0.5, nrow(data) + 0.5),
+        showticklabels = TRUE
+      ),
+      xaxis = list(showticklabels = FALSE)
+    )
+  }
+  p
 }

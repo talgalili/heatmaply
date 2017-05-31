@@ -476,9 +476,9 @@ heatmaply.default <- function(x,
                               key.title = NULL,
                               return_ppxpy = FALSE,
                               row_side_colors,
-                              row_side_palette,
+                              row_side_palette = NULL,
                               col_side_colors,
-                              col_side_palette,
+                              col_side_palette = NULL,
                               ColSideColors = NULL,
                               RowSideColors = NULL,
                               seriate = c("OLO", "mean", "none", "GW"),
@@ -828,9 +828,9 @@ heatmaply.heatmapr <- function(x,
                                cellnote_color = "auto",
                                cellnote_textposition = "middle right",
                                row_side_colors,
-                               row_side_palette,
+                               row_side_palette = NULL,
                                col_side_colors,
-                               col_side_palette,
+                               col_side_palette = NULL,
                                plot_method = c("ggplot", "plotly"),
                                ColSideColors,
                                RowSideColors,
@@ -970,10 +970,19 @@ heatmaply.heatmapr <- function(x,
       nrow(side_color_df) == nrow(data_mat),
       is.data.frame(side_color_df)
     )
-    pr <- side_color_plot(x[["row_side_colors"]], type = "row",
-      text_angle = column_text_angle,
-      palette = row_side_palette,
-      is_colors = !is.null(RowSideColors), label_name = label_names[[1]])
+    ## Just make sure it's character first
+    side_color_df[] <- lapply(side_color_df, as.character)
+    if (plot_method == "ggplot") {
+      pr <- ggplot_side_color_plot(side_color_df, type = "row",
+        text_angle = column_text_angle,
+        palette = row_side_palette,
+        is_colors = !is.null(RowSideColors), label_name = label_names[[1]])
+    } else {
+      pr <- plotly_side_color_plot(side_color_df, type = "row",
+        text_angle = column_text_angle,
+        palette = row_side_palette,
+        label_name = label_names[[1]])
+    }
   }
 
   if (missing(col_side_colors)) {
@@ -989,12 +998,20 @@ heatmaply.heatmapr <- function(x,
     )
     ## Just make sure it's character first
     side_color_df[] <- lapply(side_color_df, as.character)
-    pc <- side_color_plot(side_color_df, type = "column",
-      text_angle = row_text_angle,
-      palette = col_side_palette,
-      is_colors = !is.null(ColSideColors),
-      label_name = label_names[[2]]
-    )
+    if (plot_method == "ggplot") {
+      pc <- ggplot_side_color_plot(side_color_df, type = "column",
+        text_angle = row_text_angle,
+        palette = col_side_palette,
+        is_colors = !is.null(ColSideColors),
+        label_name = label_names[[2]]
+      )
+    } else {
+      pc <- plotly_side_color_plot(side_color_df, type = "column",
+        text_angle = row_text_angle,
+        palette = col_side_palette,
+        label_name = label_names[[2]]
+      )
+    }
   }
 
   if (return_ppxpy) {
