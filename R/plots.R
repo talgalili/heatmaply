@@ -391,54 +391,54 @@ parse_plotly_color <- function(color) {
 
 
 
-# Create a plotly colorscale from a list of colors in any format.
-# Probably not needed currently
-make_colorscale <- function(colors) {
-    seq <- seq(0, 1, by = 1 / length(colors))
-    scale <- list(
-        sapply(seq_along(colors),
-          function(i) {
-            if (i == 1) {
-                0
-            } else if (i == length(colors)) {
-                1
-            } else {
-                seq[i]
-            }
-          }
-        ),
-        col2plotlyrgb(colors)
-    )
-    scale
-}
+# # Create a plotly colorscale from a list of colors in any format.
+# # Probably not needed currently
+# make_colorscale <- function(colors) {
+#     seq <- seq(0, 1, by = 1 / length(colors))
+#     scale <- list(
+#         sapply(seq_along(colors),
+#           function(i) {
+#             if (i == 1) {
+#                 0
+#             } else if (i == length(colors)) {
+#                 1
+#             } else {
+#                 seq[i]
+#             }
+#           }
+#         ),
+#         col2plotlyrgb(colors)
+#     )
+#     scale
+# }
 
-#' @title Color to RGB Text
-#' @description
-#' Plotly takes colors in this format "rgb(255, 0, 0)"
-#'
-#' @param col vector of any of the three kinds of R color specifications,
-#' i.e., either a color name (as listed by colors()),
-#' a hexadecimal string of the form "#rrggbb" or "#rrggbbaa" (see rgb),
-#' or a positive integer i meaning palette()[i].
-#'
-#' @return
-#' A character of the form "rgb(value1,value1,value3)"
-#'
-#' @seealso \link{col2rgb}
-#' @examples
-#' \dontrun{
-#' col2rgb("peachpuff")
-#' col2plotlyrgb("peachpuff")
-#' }
-col2plotlyrgb <- function(col) {
-    rgb <- grDevices::col2rgb(col)
-    paste0(
-      "rgb(",
-      rgb["red", ], ",",
-      rgb["green", ], ",",
-      rgb["blue", ], ")"
-    )
-}
+# #' @title Color to RGB Text
+# #' @description
+# #' Plotly takes colors in this format "rgb(255, 0, 0)"
+# #'
+# #' @param col vector of any of the three kinds of R color specifications,
+# #' i.e., either a color name (as listed by colors()),
+# #' a hexadecimal string of the form "#rrggbb" or "#rrggbbaa" (see rgb),
+# #' or a positive integer i meaning palette()[i].
+# #'
+# #' @return
+# #' A character of the form "rgb(value1,value1,value3)"
+# #'
+# #' @seealso \link{col2rgb}
+# #' @examples
+# #' \dontrun{
+# #' col2rgb("peachpuff")
+# #' col2plotlyrgb("peachpuff")
+# #' }
+# col2plotlyrgb <- function(col) {
+#     rgb <- grDevices::col2rgb(col)
+#     paste0(
+#       "rgb(",
+#       rgb["red", ], ",",
+#       rgb["green", ], ",",
+#       rgb["blue", ], ")"
+#     )
+# }
 
 ## Helper function to generate "normal" colors for dendrograms
 ## ie black if one k or rainbow_hcl otherwise
@@ -507,8 +507,8 @@ plotly_side_color_plot <- function(df, palette=NULL,
       } else {
         paste0(
           "value: ", data[, i], "<br>",
-          label_name, ": ", rownames(data), "<br>",
-          "variable: ", colnames(data)[i]
+          label_name, ": ", colnames(data)[i], "<br>",
+          "variable: ", rownames(data)
         )
       }
     }
