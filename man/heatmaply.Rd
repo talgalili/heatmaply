@@ -38,7 +38,8 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   subplot_widths = NULL, subplot_heights = NULL, colorbar_len = 0.3,
   colorbar_xanchor = if (row_dend_left) "right" else "left",
   colorbar_yanchor = "bottom", colorbar_xpos = if (row_dend_left) -0.1 else
-  1.1, colorbar_ypos = 0, showticklabels = c(TRUE, TRUE), col)
+  1.1, colorbar_ypos = 0, showticklabels = c(TRUE, TRUE),
+  dynamicTicks = FALSE, col)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
@@ -57,7 +58,8 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   subplot_widths = NULL, subplot_heights = NULL, colorbar_xanchor = if
   (row_dend_left) "right" else "left", colorbar_yanchor = "bottom",
   colorbar_xpos = if (row_dend_left) -0.1 else 1.1, colorbar_ypos = 0,
-  colorbar_len = 0.3, showticklabels = c(TRUE, TRUE))
+  colorbar_len = 0.3, showticklabels = c(TRUE, TRUE),
+  dynamicTicks = FALSE)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -290,6 +292,11 @@ replicated to get to length 2. When using this parameter, it might be worth also
 margins.
 This option should be used when working with medium to large matrix size as it
 makes the heatmap much faster (and the hover still works).}
+
+\item{dynamicTicks}{(defalut: FALSE). passed to \link[plotly]{ggplotly}:
+should plotly.js dynamically generate axis tick labels?
+Dynamic ticks are useful for updating ticks in response to zoom/pan interactions; however,
+they can not always reproduce labels as they would appear in the static ggplot2 image.}
 }
 \description{
 An object of class heatmapr includes all the needed information

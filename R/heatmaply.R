@@ -244,6 +244,11 @@ is.plotly <- function(x) {
 #' This option should be used when working with medium to large matrix size as it
 #' makes the heatmap much faster (and the hover still works).
 #'
+#' @param dynamicTicks (defalut: FALSE). passed to \link[plotly]{ggplotly}:
+#' should plotly.js dynamically generate axis tick labels?
+#' Dynamic ticks are useful for updating ticks in response to zoom/pan interactions; however,
+#' they can not always reproduce labels as they would appear in the static ggplot2 image.
+#'
 #' @export
 #' @examples
 #' \dontrun{
@@ -499,6 +504,8 @@ heatmaply.default <- function(x,
                               colorbar_xpos = if(row_dend_left) -0.1 else 1.1,
                               colorbar_ypos = 0,
                               showticklabels = c(TRUE, TRUE),
+                              dynamicTicks = FALSE,
+
                               col) {
 
   if (!missing(long_data)) {
@@ -657,7 +664,8 @@ heatmaply.default <- function(x,
                      colorbar_yanchor = colorbar_yanchor,
                      colorbar_xpos = colorbar_xpos,
                      colorbar_ypos = colorbar_ypos,
-                     showticklabels = showticklabels
+                     showticklabels = showticklabels,
+                     dynamicTicks = dynamicTicks
                      )
 
                      # TODO: think more on what should be passed in "..."
@@ -846,7 +854,8 @@ heatmaply.heatmapr <- function(x,
                                colorbar_xpos = if(row_dend_left) -0.1 else 1.1,
                                colorbar_ypos = 0,
                                colorbar_len = 0.3,
-                               showticklabels = c(TRUE, TRUE)
+                               showticklabels = c(TRUE, TRUE),
+                               dynamicTicks = FALSE
                                ) {
 
   plot_method <- match.arg(plot_method)
@@ -1003,7 +1012,8 @@ heatmaply.heatmapr <- function(x,
 
   ## plotly:
   # turn p, px, and py to plotly objects if necessary
-  if (!is.plotly(p)) p <- ggplotly(p) %>% layout(showlegend=FALSE)
+  if (!is.plotly(p)) p <- ggplotly(p, dynamicTicks = dynamicTicks) %>% layout(showlegend=FALSE)
+
 
   if (draw_cellnote) {
     ## Predict cell color luminosity based on colorscale
@@ -1026,11 +1036,11 @@ heatmaply.heatmapr <- function(x,
       )
   }
   if (!is.null(px) && !is.plotly(px)) {
-    px <- ggplotly(px, tooltip = "y") %>%
+    px <- ggplotly(px, tooltip = "y", dynamicTicks = dynamicTicks) %>%
       layout(showlegend=FALSE)
   }
   if (!is.null(py) && !is.plotly(py)) {
-    py <- ggplotly(py, tooltip = "y") %>%
+    py <- ggplotly(py, tooltip = "y", dynamicTicks = dynamicTicks) %>%
       layout(showlegend=FALSE)
   }
 
