@@ -101,7 +101,8 @@ heatmaply(mtcars, xlab = "Features", ylab = "Cars",
 		margins = c(60,100,40,20))
 ```
 
-We can use the margins parameter with correlation heatmaps. Notice the use of limits to set the range of the colors, and how we color the branches:
+We can use the margins parameter with correlation heatmaps. Notice the use of limits to set the range of the colors, and how we color the branches
+(see dendextend::color_branches for further detail on k_row and k_col):
 
 ```{r}
 heatmaply(cor(mtcars), margins = c(40, 40),
@@ -112,6 +113,7 @@ heatmaply(cor(mtcars), margins = c(40, 40),
 #           k_col = 2, k_row = 2)
 
 ```
+
 
 
 

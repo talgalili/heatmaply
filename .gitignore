@@ -6,3 +6,8 @@ lib
 *.html
 vignettes/.build.timestamp
 *.jpeg
+GDC*
+MANIFEST.txt
+*.gz
+Makefile
+test2.rda
