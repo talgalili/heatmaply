@@ -462,7 +462,7 @@ discrete_colorscale <- function(colors) {
 
 
 #' @importFrom stats setNames
-plotly_side_color_plot <- function(df, palette=NULL,
+plotly_side_color_plot <- function(df, palette = NULL,
     scale_title = paste(type, "side colors"), type = c("column", "row"),
     text_angle = if (type == "column") 0 else 90, is_colors = FALSE,
     label_name = type, fontsize = 10) {
@@ -477,6 +477,7 @@ plotly_side_color_plot <- function(df, palette=NULL,
   data <- as.data.frame(data)
   data_vals <- unlist(data)
   levels <- unique(data_vals)
+  levels <- setdiff(levels, NA)
 
   if (is.null(palette)) palette <- colorspace::rainbow_hcl
   if (is.function(palette)) {
@@ -485,7 +486,7 @@ plotly_side_color_plot <- function(df, palette=NULL,
     stop(paste("Not all levels of the", type, "side colors are mapped in the", type, "palette"))
   }
 
-  levs2colors <- palette[levels]
+  levs2colors <- palette[as.character(levels)]
 
   levs2nums <- setNames(seq_along(levels), levels)
 
