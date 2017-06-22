@@ -36,12 +36,6 @@ Introduction
 Required packages
 =================
 
-```{r}
-library("DESeq2")
-suppressPackageStartupMessages(library("TCGAbiolinks"))
-library("SummarizedExperiment")
-```
-
 
 
 heatmaply workflow
