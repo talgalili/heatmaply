@@ -32,14 +32,14 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   hide_colorbar = FALSE, key.title = NULL, return_ppxpy = FALSE,
   row_side_colors, row_side_palette, col_side_colors, col_side_palette,
   ColSideColors = NULL, RowSideColors = NULL, seriate = c("OLO", "mean",
-  "none", "GW"), heatmap_layers = NULL, branches_lwd = 0.6, file, long_data,
-  plot_method = c("ggplot", "plotly"), label_names = c("row", "column",
-  "value"), fontsize_row = 10, fontsize_col = 10, cexRow, cexCol,
-  subplot_widths = NULL, subplot_heights = NULL, colorbar_len = 0.3,
-  colorbar_xanchor = if (row_dend_left) "right" else "left",
-  colorbar_yanchor = "bottom", colorbar_xpos = if (row_dend_left) -0.1 else
-  1.1, colorbar_ypos = 0, showticklabels = c(TRUE, TRUE),
-  dynamicTicks = FALSE, col)
+  "none", "GW"), heatmap_layers = NULL, side_color_layers = NULL,
+  branches_lwd = 0.6, file, long_data, plot_method = c("ggplot", "plotly"),
+  label_names = c("row", "column", "value"), fontsize_row = 10,
+  fontsize_col = 10, cexRow, cexCol, subplot_widths = NULL,
+  subplot_heights = NULL, colorbar_len = 0.3, colorbar_xanchor = if
+  (row_dend_left) "right" else "left", colorbar_yanchor = "bottom",
+  colorbar_xpos = if (row_dend_left) -0.1 else 1.1, colorbar_ypos = 0,
+  showticklabels = c(TRUE, TRUE), dynamicTicks = FALSE, col)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
@@ -53,13 +53,13 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   draw_cellnote = FALSE, cellnote_color = "auto",
   cellnote_textposition = "middle right", row_side_colors, row_side_palette,
   col_side_colors, col_side_palette, plot_method = c("ggplot", "plotly"),
-  ColSideColors, RowSideColors, heatmap_layers = NULL, branches_lwd = 0.6,
-  label_names, fontsize_row = 10, fontsize_col = 10,
-  subplot_widths = NULL, subplot_heights = NULL, colorbar_xanchor = if
-  (row_dend_left) "right" else "left", colorbar_yanchor = "bottom",
-  colorbar_xpos = if (row_dend_left) -0.1 else 1.1, colorbar_ypos = 0,
-  colorbar_len = 0.3, showticklabels = c(TRUE, TRUE),
-  dynamicTicks = FALSE)
+  ColSideColors, RowSideColors, heatmap_layers = NULL,
+  side_color_layers = NULL, branches_lwd = 0.6, label_names,
+  fontsize_row = 10, fontsize_col = 10, subplot_widths = NULL,
+  subplot_heights = NULL, colorbar_xanchor = if (row_dend_left) "right" else
+  "left", colorbar_yanchor = "bottom", colorbar_xpos = if (row_dend_left)
+  -0.1 else 1.1, colorbar_ypos = 0, colorbar_len = 0.3,
+  showticklabels = c(TRUE, TRUE), dynamicTicks = FALSE)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -246,6 +246,9 @@ that is restricted by the dendrogram structure)}
 
 \item{heatmap_layers}{ggplot object (eg, theme_bw()) to be added to
 the heatmap before conversion to a plotly object.}
+
+\item{side_color_layers}{Layers to be added to side color plots, similar to 
+heatmap_layers.}
 
 \item{branches_lwd}{numeric (default is 0.6). The width of the dendrograms' branches.
 If NULL then it is ignored. If the "lwd" is already defined in Rowv/Colv then this
