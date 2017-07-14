@@ -202,7 +202,8 @@ is.plotly <- function(x) {
 #'
 #' @param heatmap_layers ggplot object (eg, theme_bw()) to be added to
 #'  the heatmap before conversion to a plotly object.
-#'
+#' @param side_color_layers Layers to be added to side color plots, similar to 
+#' 	heatmap_layers.
 #' @param branches_lwd numeric (default is 0.6). The width of the dendrograms' branches.
 #' If NULL then it is ignored. If the "lwd" is already defined in Rowv/Colv then this
 #' parameter is ignored (it is checked using \link[dendextend]{has_edgePar}("lwd")).
@@ -488,6 +489,7 @@ heatmaply.default <- function(x,
                               RowSideColors = NULL,
                               seriate = c("OLO", "mean", "none", "GW"),
                               heatmap_layers = NULL,
+                              side_color_layers = NULL,
                               branches_lwd = 0.6,
                               file,
                               long_data,
@@ -647,6 +649,7 @@ heatmaply.default <- function(x,
                      col_side_colors = col_side_colors,
                      col_side_palette = col_side_palette,
                      heatmap_layers = heatmap_layers,
+                     side_color_layers = side_color_layers,
                      ColSideColors = ColSideColors,
                      RowSideColors = RowSideColors,
                      branches_lwd = branches_lwd,
@@ -843,6 +846,7 @@ heatmaply.heatmapr <- function(x,
                                ColSideColors,
                                RowSideColors,
                                heatmap_layers = NULL,
+                               side_color_layers = NULL,
                                branches_lwd = 0.6,
                                label_names,
                                fontsize_row = 10,
@@ -982,7 +986,9 @@ heatmaply.heatmapr <- function(x,
     pr <- side_color_plot(x[["row_side_colors"]], type = "row",
       text_angle = column_text_angle,
       palette = row_side_palette,
-      is_colors = !is.null(RowSideColors), label_name = label_names[[1]])
+      is_colors = !is.null(RowSideColors), 
+      label_name = label_names[[1]]
+    ) + side_color_layers
   }
 
   if (missing(col_side_colors)) {
@@ -1003,7 +1009,7 @@ heatmaply.heatmapr <- function(x,
       palette = col_side_palette,
       is_colors = !is.null(ColSideColors),
       label_name = label_names[[2]]
-    )
+    ) + side_color_layers
   }
 
   if (return_ppxpy) {
