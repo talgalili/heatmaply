@@ -30,16 +30,17 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   limits), grid_color = NA, grid_gap = 0, srtRow, srtCol, xlab = "",
   ylab = "", main = "", titleX = TRUE, titleY = TRUE,
   hide_colorbar = FALSE, key.title = NULL, return_ppxpy = FALSE,
-  row_side_colors, row_side_palette, col_side_colors, col_side_palette,
-  ColSideColors = NULL, RowSideColors = NULL, seriate = c("OLO", "mean",
-  "none", "GW"), heatmap_layers = NULL, side_color_layers = NULL,
-  branches_lwd = 0.6, file, long_data, plot_method = c("ggplot", "plotly"),
-  label_names = c("row", "column", "value"), fontsize_row = 10,
-  fontsize_col = 10, cexRow, cexCol, subplot_widths = NULL,
-  subplot_heights = NULL, colorbar_len = 0.3, colorbar_xanchor = if
-  (row_dend_left) "right" else "left", colorbar_yanchor = "bottom",
-  colorbar_xpos = if (row_dend_left) -0.1 else 1.1, colorbar_ypos = 0,
-  showticklabels = c(TRUE, TRUE), dynamicTicks = FALSE, col)
+  row_side_colors, row_side_palette = NULL, col_side_colors,
+  col_side_palette = NULL, ColSideColors = NULL, RowSideColors = NULL,
+  seriate = c("OLO", "mean", "none", "GW"), heatmap_layers = NULL,
+  side_color_layers = NULL, branches_lwd = 0.6, file, long_data,
+  plot_method = c("ggplot", "plotly"), label_names = c("row", "column",
+  "value"), fontsize_row = 10, fontsize_col = 10, cexRow, cexCol,
+  subplot_widths = NULL, subplot_heights = NULL, colorbar_len = 0.3,
+  colorbar_xanchor = if (row_dend_left) "right" else "left",
+  colorbar_yanchor = "bottom", colorbar_xpos = if (row_dend_left) -0.1 else
+  1.1, colorbar_ypos = 0, showticklabels = c(TRUE, TRUE),
+  dynamicTicks = FALSE, col)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
@@ -51,15 +52,16 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   ylab = "", main = "", titleX = TRUE, titleY = TRUE,
   hide_colorbar = FALSE, key.title = NULL, return_ppxpy = FALSE,
   draw_cellnote = FALSE, cellnote_color = "auto",
-  cellnote_textposition = "middle right", row_side_colors, row_side_palette,
-  col_side_colors, col_side_palette, plot_method = c("ggplot", "plotly"),
-  ColSideColors, RowSideColors, heatmap_layers = NULL,
-  side_color_layers = NULL, branches_lwd = 0.6, label_names,
-  fontsize_row = 10, fontsize_col = 10, subplot_widths = NULL,
-  subplot_heights = NULL, colorbar_xanchor = if (row_dend_left) "right" else
-  "left", colorbar_yanchor = "bottom", colorbar_xpos = if (row_dend_left)
-  -0.1 else 1.1, colorbar_ypos = 0, colorbar_len = 0.3,
-  showticklabels = c(TRUE, TRUE), dynamicTicks = FALSE)
+  cellnote_textposition = "middle right", row_side_colors,
+  row_side_palette = NULL, col_side_colors, col_side_palette = NULL,
+  plot_method = c("ggplot", "plotly"), ColSideColors, RowSideColors,
+  heatmap_layers = NULL, side_color_layers = NULL, branches_lwd = 0.6,
+  label_names, fontsize_row = 10, fontsize_col = 10,
+  subplot_widths = NULL, subplot_heights = NULL, colorbar_xanchor = if
+  (row_dend_left) "right" else "left", colorbar_yanchor = "bottom",
+  colorbar_xpos = if (row_dend_left) -0.1 else 1.1, colorbar_ypos = 0,
+  colorbar_len = 0.3, showticklabels = c(TRUE, TRUE),
+  dynamicTicks = FALSE)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix

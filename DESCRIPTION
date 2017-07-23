@@ -48,7 +48,8 @@ Suggests:
     knitr,
     covr,
     rmarkdown,
-    testthat
+    testthat,
+    DESeq2
 VignetteBuilder: knitr
 License: GPL-2 | GPL-3
 URL: https://cran.r-project.org/package=heatmaply,
