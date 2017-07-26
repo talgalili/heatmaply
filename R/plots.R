@@ -251,9 +251,9 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
 #' @return A ggplot geom_tile object
 #'
 ggplot_side_color_plot <- function(df, palette = NULL,
-  scale_title = paste(type, "side colors"), type = c("column", "row"),
-  text_angle = if (type == "column") 0 else 90, is_colors = FALSE,
-  label_name = type) {
+    scale_title = paste(type, "side colors"), type = c("column", "row"),
+    text_angle = if (type == "column") 0 else 90, is_colors = FALSE,
+    label_name = type) {
 
   if (is.matrix(df)) df <- as.data.frame(df)
   assert_that(is.data.frame(df))
