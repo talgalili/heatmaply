@@ -937,7 +937,9 @@ heatmaply.heatmapr <- function(x,
         coord_flip(expand = FALSE, xlim = ylims) +
         theme_bw() +
         theme_clear_grid_dends
+
       if (row_dend_left) px <- px + scale_y_reverse()
+      
     } else {
       px <- plotly_dend(rows, flip = row_dend_left, side = "row")
     }
@@ -1029,6 +1031,15 @@ heatmaply.heatmapr <- function(x,
 
   if (return_ppxpy) {
     return(list(p=p, px=px, py=py, pr=pr, pc=pc))
+  } else {
+  	if (!is.null(pc)) {
+      pc <- ggplotly(pc)
+  		pc <- layout(pc, showlegend = TRUE)
+  	}
+  	if (!is.null(pr)) {
+      pr <- ggplotly(pr)
+  		pr <- layout(pr, showlegend = TRUE)
+  	}
   }
 
   ## plotly:

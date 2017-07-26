@@ -280,39 +280,40 @@ ggplot_side_color_plot <- function(df, palette = NULL,
 
   id_var <- colnames(df)[1]
 
+  common_theme <- theme(
+    panel.background = element_blank(),
+    axis.ticks = element_blank())
+
   if (type == "column") {
     mapping <- aes_string(x = id_var, y = "variable", fill = "value")
     if(original_dim[2] > 1) {
       text_element <- element_text(angle = text_angle)
     } else text_element <- element_blank()
 
-    theme <- theme(
-        panel.background = element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = text_element,
-        axis.ticks = element_blank())
+    specific_theme <- theme(
+      axis.text.x = element_blank(),
+      axis.text.y = text_element,
+    )
   } else {
     if(original_dim[2] > 1) {
       text_element <- element_text(angle = text_angle)
     } else text_element <- element_blank()
 
     mapping <- aes_string(x = "variable", y = id_var, fill = "value")
-    theme <- theme(
-        panel.background = element_blank(),
-        axis.text.x = text_element,
-        axis.text.y = element_blank(),
-        axis.ticks = element_blank())
+    specific_theme <- theme(
+      axis.text.x = text_element,
+      axis.text.y = element_blank()
+    )
   }
-
+  theme <- list(common_theme, specific_theme)
+  
   if (is.function(palette)) {
     palette <- setNames(palette(nlevels(df[["value"]])), levels(df[["value"]]))
   } else if (!all(levels(df[["value"]] %in% names(palette)))) {
     stop(paste("Not all levels of the", type, "side colors are mapped in the", type, "palette"))
   }
  
-
   g <- ggplot(df, mapping = mapping) +
-    # geom_raster() +
     geom_tile() +
     xlab("") +
     ylab("") +
@@ -337,6 +338,7 @@ predict_colors <- function(p, plot_method) {
   cell_values$row <- 1:nrow(cell_values)
   cell_values_m <- reshape2::melt(cell_values, id.vars = "row")
   cell_values_vector <- cell_values_m$value
+
   ## Need to normalise to (0, 1) scale as this is what plotly
   ## uses internally
   if (plot_method == "plotly") {
