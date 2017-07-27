@@ -308,7 +308,7 @@ ggplot_side_color_plot <- function(df, palette = NULL,
   
   if (is.function(palette)) {
     palette <- setNames(palette(nlevels(df[["value"]])), levels(df[["value"]]))
-  } else if (!all(levels(df[["value"]] %in% names(palette)))) {
+  } else if (!all(levels(factor(df[["value"]])) %in% names(palette))) {
     stop(paste("Not all levels of the", type, "side colors are mapped in the", type, "palette"))
   }
  
