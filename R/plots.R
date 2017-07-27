@@ -326,14 +326,15 @@ ggplot_side_color_plot <- function(df, palette = NULL,
 
 
 
-
-
 ## Predict luminosity of cells and change text based on that
-predict_colors <- function(p, plot_method) {
+## http://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
+predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale, 
+    cell_values=p$x$data[[1]]$z, plot_method=c("ggplot", "plotly")) {
 
-  ## http://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
-  colorscale_df <- p$x$data[[1]]$colorscale
-  cell_values <- as.data.frame(p$x$data[[1]]$z)
+
+  plot_method <- match.arg(plot_method)
+
+  cell_values <- as.data.frame(cell_values)
   cell_values$row <- 1:nrow(cell_values)
   cell_values_m <- reshape2::melt(cell_values, id.vars = "row")
   cell_values_vector <- cell_values_m$value
@@ -379,12 +380,15 @@ predict_colors <- function(p, plot_method) {
   cell_font_colors
 }
 
+
+
+
 parse_plotly_color <- function(color) {
-  r <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+),\\d+)",
+  r <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+)(,\\d+)?)",
     "\\1", color)
-  g <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+),\\d+)",
+  g <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+)(,\\d+)?)",
     "\\2", color)
-  b <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+),\\d+)",
+  b <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+)(,\\d+)?)",
     "\\3", color)
   rgb(r, g, b, maxColorValue = 255)
 }
@@ -459,7 +463,6 @@ discrete_colorscale <- function(colors) {
     seq <- seq(0, 1, length.out = length(colors))
     setNames(data.frame(seq, colors), NULL)
 }
-
 
 #' @importFrom stats setNames
 plotly_side_color_plot <- function(df, palette = NULL,

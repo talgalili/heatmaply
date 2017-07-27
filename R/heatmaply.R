@@ -922,7 +922,7 @@ heatmaply.heatmapr <- function(x,
         coord_cartesian(expand = FALSE, xlim = xlims) +
         theme_clear_grid_dends
     } else {
-      suppressWarnings(      py <- plotly_dend(cols, side = "col"))
+      suppressWarnings(py <- plotly_dend(cols, side = "col"))
     }
   }
   if (is.null(rows)) {
@@ -1050,7 +1050,7 @@ heatmaply.heatmapr <- function(x,
   if (draw_cellnote) {
     ## Predict cell color luminosity based on colorscale
     if (cellnote_color == "auto") {
-      cellnote_color <- predict_colors(p, plot_method)
+      cellnote_color <- predict_colors(p, plot_method = plot_method)
     }
 
     df <- as.data.frame(x[["cellnote"]])
