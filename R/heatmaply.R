@@ -897,7 +897,7 @@ heatmaply.heatmapr <- function(x,
   theme_clear_grid_dends <- theme(axis.line=element_blank(),axis.text.x=element_blank(),
         axis.text.y=element_blank(),axis.ticks=element_blank(),
         axis.title.x=element_blank(),
-        axis.title.y=element_blank(),legend.position="none",
+        axis.title.y=element_blank(), legend.position="none",
         panel.background=element_blank(),panel.border=element_blank(),panel.grid.major=element_blank(),
         panel.grid.minor=element_blank(),plot.background=element_blank())
   # dendrograms:
@@ -937,7 +937,9 @@ heatmaply.heatmapr <- function(x,
         coord_flip(expand = FALSE, xlim = ylims) +
         theme_bw() +
         theme_clear_grid_dends
+
       if (row_dend_left) px <- px + scale_y_reverse()
+      
     } else {
       px <- plotly_dend(rows, flip = row_dend_left, side = "row")
     }
@@ -1029,11 +1031,20 @@ heatmaply.heatmapr <- function(x,
 
   if (return_ppxpy) {
     return(list(p=p, px=px, py=py, pr=pr, pc=pc))
+  } else {
+  	if (!is.null(pc)) {
+      pc <- ggplotly(pc)
+  		pc <- layout(pc, showlegend = TRUE)
+  	}
+  	if (!is.null(pr)) {
+      pr <- ggplotly(pr)
+  		pr <- layout(pr, showlegend = TRUE)
+  	}
   }
 
   ## plotly:
   # turn p, px, and py to plotly objects if necessary
-  if (!is.plotly(p)) p <- ggplotly(p, dynamicTicks = dynamicTicks) %>% layout(showlegend=FALSE)
+  if (!is.plotly(p)) p <- ggplotly(p, dynamicTicks = dynamicTicks) %>% layout(showlegend=TRUE)
 
 
   if (draw_cellnote) {
@@ -1058,11 +1069,11 @@ heatmaply.heatmapr <- function(x,
   }
   if (!is.null(px) && !is.plotly(px)) {
     px <- ggplotly(px, tooltip = "y", dynamicTicks = dynamicTicks) %>%
-      layout(showlegend=FALSE)
+      layout(showlegend = FALSE)
   }
   if (!is.null(py) && !is.plotly(py)) {
     py <- ggplotly(py, tooltip = "y", dynamicTicks = dynamicTicks) %>%
-      layout(showlegend=FALSE)
+      layout(showlegend = FALSE)
   }
 
   # https://plot.ly/r/reference/#Layout_and_layout_style_objects
@@ -1126,7 +1137,7 @@ heatmaply.heatmapr <- function(x,
     titleX = titleX, titleY = titleY, pr = pr, pc = pc, plot_method = plot_method)
   l <- layout(heatmap_subplot,
       margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]),
-      legend = list(y=1, yanchor="top")
+      legend = list(y = 1, yanchor = "top")
     )
 
   # keep only relevant plotly options

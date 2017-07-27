@@ -84,7 +84,7 @@ ggplot_heatmap <- function(xx,
     ordered = TRUE
   )
 
-  mdf <- reshape2::melt(df, id.vars=row)
+  mdf <- reshape2::melt(df, id.vars = row)
   colnames(mdf)[2:3] <- c(col, val) # rename "variable" and "value"
 
   # TODO:
@@ -108,13 +108,13 @@ ggplot_heatmap <- function(xx,
 
   # p <- p + scale_x_discrete(limits = unique(mdf))
   # http://stats.stackexchange.com/questions/5007/how-can-i-change-the-title-of-a-legend-in-ggplot2
-  p <- p + labs(fill=key.title)
+  p <- p + labs(fill = key.title)
 
   # until this bug is fixed: https://github.com/ropensci/plotly/issues/699
   # we are forced to use geom_hline and geom_vline
   if(!is.na(grid_color)) {
-    p <- p + geom_hline(yintercept =c(0:nrow(xx))+.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
-    p <- p + geom_vline(xintercept =c(0:ncol(xx))+.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
+    p <- p + geom_hline(yintercept = c(0:nrow(xx)) + 0.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
+    p <- p + geom_vline(xintercept = c(0:ncol(xx)) + 0.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
 
   }
 
@@ -173,13 +173,11 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   if (is.numeric(segs$col)) segs$col <- factor(segs$col)
 
   ## Need to somehow convert to colors that plotly will understand
-  # colors <- unique(dendextend::get_leaves_branches_col(dend))
-  # if(!is.null(colors)) colors <- sort(colors)
   colors <- sort(unique(segs$col))
-  if (is.numeric(colors)) colors <- gplots::col2hex(grDevices::palette()[seq_along(colors)])
-  # if (is.null(colors)) colors <- "black"
-
-
+  if (is.numeric(colors)) {
+    colors <- gplots::col2hex(grDevices::palette()[seq_along(colors)])
+  }
+  
   lab_max <- nrow(dend_data$labels)
   if (side == "row") lab_max <- lab_max + 0.5
 
@@ -199,7 +197,8 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   ## Have to change x and y depending on which orientation
   if (side == "row") {
     add_plot_lines <- function(p) {
-      p %>% add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend, color = ~col,
+      p %>% add_segments(
+        x = ~y, xend = ~yend, y = ~x, yend = ~xend, color = ~col,
         showlegend = FALSE,
         colors = colors,
         hoverinfo = "x"
@@ -213,7 +212,8 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   }
   else {
     add_plot_lines <- function(p) {
-      p %>% add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend, color = ~col,
+      p %>% add_segments(
+        x = ~x, xend = ~xend, y = ~y, yend = ~yend, color = ~col,
         showlegend = FALSE,
         colors = colors,
         hoverinfo = "y"
@@ -251,9 +251,9 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
 #' @return A ggplot geom_tile object
 #'
 ggplot_side_color_plot <- function(df, palette = NULL,
-  scale_title = paste(type, "side colors"), type = c("column", "row"),
-  text_angle = if (type == "column") 0 else 90, is_colors = FALSE,
-  label_name = type) {
+    scale_title = paste(type, "side colors"), type = c("column", "row"),
+    text_angle = if (type == "column") 0 else 90, is_colors = FALSE,
+    label_name = type) {
 
   if (is.matrix(df)) df <- as.data.frame(df)
   assert_that(is.data.frame(df))
@@ -261,7 +261,7 @@ ggplot_side_color_plot <- function(df, palette = NULL,
   ## Cooerce to character
   df[] <- lapply(df, as.character)
 
-  ## TODO: Find out why names are dropped when ncol(df) == 1
+  ## TODO: Find out why names are dropped when ncol(df) == 1 (Not any more?)
   original_dim <- dim(df)
 
   if (is.null(palette)) palette <- colorspace::rainbow_hcl
@@ -280,39 +280,39 @@ ggplot_side_color_plot <- function(df, palette = NULL,
 
   id_var <- colnames(df)[1]
 
+  common_theme <- theme(
+    panel.background = element_blank(),
+    axis.ticks = element_blank())
+  
+  ## Don't need this hack any more?
+  # if(original_dim[2] > 1) {
+    text_element <- element_text(angle = text_angle)
+  # } else text_element <- element_blank()
+
   if (type == "column") {
     mapping <- aes_string(x = id_var, y = "variable", fill = "value")
-    if(original_dim[2] > 1) {
-      text_element <- element_text(angle = text_angle)
-    } else text_element <- element_blank()
 
-    theme <- theme(
-        panel.background = element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = text_element,
-        axis.ticks = element_blank())
+    specific_theme <- theme(
+      axis.text.x = element_blank(),
+      axis.text.y = text_element
+    )
   } else {
-    if(original_dim[2] > 1) {
-      text_element <- element_text(angle = text_angle)
-    } else text_element <- element_blank()
 
     mapping <- aes_string(x = "variable", y = id_var, fill = "value")
-    theme <- theme(
-        panel.background = element_blank(),
-        axis.text.x = text_element,
-        axis.text.y = element_blank(),
-        axis.ticks = element_blank())
+    specific_theme <- theme(
+      axis.text.x = text_element,
+      axis.text.y = element_blank()
+    )
   }
-
+  theme <- list(common_theme, specific_theme)
+  
   if (is.function(palette)) {
     palette <- setNames(palette(nlevels(df[["value"]])), levels(df[["value"]]))
-  } else if (!all(levels(df[["value"]] %in% names(palette)))) {
+  } else if (!all(levels(factor(df[["value"]])) %in% names(palette))) {
     stop(paste("Not all levels of the", type, "side colors are mapped in the", type, "palette"))
   }
  
-
   g <- ggplot(df, mapping = mapping) +
-    # geom_raster() +
     geom_tile() +
     xlab("") +
     ylab("") +
@@ -322,102 +322,6 @@ ggplot_side_color_plot <- function(df, palette = NULL,
       values = palette[levels(df[["value"]])]) +
     theme
   return(g)
-}
-
-
-
-#' @importFrom stats setNames
-plotly_side_color_plot <- function(df, palette = NULL,
-    scale_title = paste(type, "side colors"), type = c("column", "row"),
-    text_angle = if (type == "column") 0 else 90, is_colors = FALSE,
-    label_name = type, fontsize = 10) {
-
-  type <- match.arg(type)
-
-  data <- df
-  data[] <- lapply(df, as.character)
-  if (type == "column") {
-      data <- t(data)
-  }
-  data <- as.data.frame(data)
-  data_vals <- unlist(data)
-  levels <- unique(data_vals)
-  levels <- setdiff(levels, NA)
-
-  if (is.null(palette)) palette <- colorspace::rainbow_hcl
-  if (is.function(palette)) {
-    palette <- setNames(palette(length(levels)), levels)
-  } else if (!all(levels %in% names(palette))) {
-    stop(paste("Not all levels of the", type, "side colors are mapped in the", type, "palette"))
-  }
-
-  levs2colors <- palette[as.character(levels)]
-
-  levs2nums <- setNames(seq_along(levels), levels)
-
-  df_nums <- data
-  df_nums[] <- lapply(data, function(col) as.numeric(levs2nums[as.character(col)]))
-  df_nums <- as.matrix(df_nums)
-
-  key_title <- paste(type, "annotation")
-
-  text_mat <- data
-  text_mat[] <- lapply(seq_along(text_mat),
-    function(i) {
-      if (type == "row") {
-        paste0(
-          "value: ", data[, i], "<br>",
-          "variable: ", colnames(data)[i], "<br>",
-          label_name, ": ", rownames(data)  
-        )        
-      } else {
-        paste0(
-          "value: ", data[, i], "<br>",
-          label_name, ": ", colnames(data)[i], "<br>",
-          "variable: ", rownames(data)
-        )
-      }
-    }
-  )
-  
-  ## https://stackoverflow.com/questions/42524450/using-discrete-custom-color-in-a-plotly-heatmap
-  p <- plot_ly(z = df_nums, x = 1:ncol(df_nums), y = 1:nrow(df_nums),
-    text = as.matrix(text_mat), hoverinfo = "text",
-    type = "heatmap", showlegend = FALSE, colors = levs2colors, 
-    colorscale = discrete_colorscale(levs2colors),
-    colorbar = list(
-      # Capitalise first letter
-      title = paste(gsub("^(\\w)", "\\U\\1", type, perl = TRUE), "annotation"),
-      tickmode = 'array',
-      tickvals = seq(1.5, length(levels) - 0.5, length.out = length(levels)),
-      ticktext = levels,
-      len = 0.2)) 
-  if (type == "row") {
-    p <- p %>% layout(
-      xaxis = list(
-        tickfont = list(size = fontsize),
-        tickangle = text_angle,
-        tickvals = 1:ncol(data), ticktext = colnames(data),
-        linecolor = "#ffffff",
-        range = c(0.5, ncol(data) + 0.5),
-        showticklabels = TRUE
-      ),
-      yaxis = list(showticklabels = FALSE)
-    )
-  } else {
-    p <- p %>% layout(
-      yaxis = list(
-        tickfont = list(size = fontsize),
-        tickangle = text_angle,
-        tickvals = 1:nrow(data), ticktext = rownames(data),
-        linecolor = "#ffffff",
-        range = c(0.5, nrow(data) + 0.5),
-        showticklabels = TRUE
-      ),
-      xaxis = list(showticklabels = FALSE)
-    )
-  }
-  p
 }
 
 
@@ -434,6 +338,7 @@ predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale,
   cell_values$row <- 1:nrow(cell_values)
   cell_values_m <- reshape2::melt(cell_values, id.vars = "row")
   cell_values_vector <- cell_values_m$value
+
   ## Need to normalise to (0, 1) scale as this is what plotly
   ## uses internally
   if (plot_method == "plotly") {
@@ -474,6 +379,8 @@ predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale,
   )
   cell_font_colors
 }
+
+
 
 
 parse_plotly_color <- function(color) {
@@ -557,3 +464,95 @@ discrete_colorscale <- function(colors) {
     setNames(data.frame(seq, colors), NULL)
 }
 
+#' @importFrom stats setNames
+plotly_side_color_plot <- function(df, palette = NULL,
+    scale_title = paste(type, "side colors"), type = c("column", "row"),
+    text_angle = if (type == "column") 0 else 90, is_colors = FALSE,
+    label_name = type, fontsize = 10) {
+
+  type <- match.arg(type)
+
+  data <- df
+  data[] <- lapply(df, as.character)
+  if (type == "column") {
+      data <- t(data)
+  }
+  data <- as.data.frame(data)
+  data_vals <- unlist(data)
+  levels <- unique(data_vals)
+  levels <- setdiff(levels, NA)
+
+  if (is.null(palette)) palette <- colorspace::rainbow_hcl
+  if (is.function(palette)) {
+    palette <- setNames(palette(length(levels)), levels)
+  } else if (!all(levels %in% names(palette))) {
+    stop(paste("Not all levels of the", type, "side colors are mapped in the", type, "palette"))
+  }
+
+  levs2colors <- palette[as.character(levels)]
+  levs2nums <- setNames(seq_along(levels), levels)
+
+  df_nums <- data
+  df_nums[] <- lapply(data, function(col) as.numeric(levs2nums[as.character(col)]))
+  df_nums <- as.matrix(df_nums)
+
+  key_title <- paste(type, "annotation")
+
+  text_mat <- data
+  text_mat[] <- lapply(seq_along(text_mat),
+    function(i) {
+      if (type == "row") {
+        paste0(
+          "value: ", data[, i], "<br>",
+          "variable: ", colnames(data)[i], "<br>",
+          label_name, ": ", rownames(data)  
+        )        
+      } else {
+        paste0(
+          "value: ", data[, i], "<br>",
+          label_name, ": ", colnames(data)[i], "<br>",
+          "variable: ", rownames(data)
+        )
+      }
+    }
+  )
+  
+  ## https://stackoverflow.com/questions/42524450/using-discrete-custom-color-in-a-plotly-heatmap
+  p <- plot_ly(z = df_nums, x = 1:ncol(df_nums), y = 1:nrow(df_nums),
+    text = as.matrix(text_mat), hoverinfo = "text",
+    type = "heatmap", showlegend = FALSE, colors = levs2colors, 
+    colorscale = discrete_colorscale(levs2colors),
+    colorbar = list(
+      # Capitalise first letter
+      title = paste(gsub("^(\\w)", "\\U\\1", type, perl = TRUE), "annotation"),
+      tickmode = 'array',
+      tickvals = seq(1.5, length(levels) - 0.5, length.out = length(levels)),
+      ticktext = levels,
+      len = 0.2)) 
+  if (type == "row") {
+    p <- p %>% layout(
+      xaxis = list(
+        tickfont = list(size = fontsize),
+        tickangle = text_angle,
+        tickvals = 1:ncol(data), ticktext = colnames(data),
+        linecolor = "#ffffff",
+        range = c(0.5, ncol(data) + 0.5),
+        showticklabels = TRUE
+      ),
+      yaxis = list(showticklabels = FALSE)
+    )
+  } else {
+    p <- p %>% layout(
+      yaxis = list(
+        tickfont = list(size = fontsize),
+        tickangle = text_angle,
+        tickvals = 1:nrow(data), ticktext = rownames(data),
+        linecolor = "#ffffff",
+        range = c(0.5, nrow(data) + 0.5),
+        showticklabels = TRUE
+      ),
+      xaxis = list(showticklabels = FALSE)
+    )
+  }
+  p
+}
