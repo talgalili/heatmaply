@@ -283,21 +283,20 @@ ggplot_side_color_plot <- function(df, palette = NULL,
   common_theme <- theme(
     panel.background = element_blank(),
     axis.ticks = element_blank())
+  
+  ## Don't need this hack any more?
+  # if(original_dim[2] > 1) {
+    text_element <- element_text(angle = text_angle)
+  # } else text_element <- element_blank()
 
   if (type == "column") {
     mapping <- aes_string(x = id_var, y = "variable", fill = "value")
-    if(original_dim[2] > 1) {
-      text_element <- element_text(angle = text_angle)
-    } else text_element <- element_blank()
 
     specific_theme <- theme(
       axis.text.x = element_blank(),
-      axis.text.y = text_element,
+      axis.text.y = text_element
     )
   } else {
-    if(original_dim[2] > 1) {
-      text_element <- element_text(angle = text_angle)
-    } else text_element <- element_blank()
 
     mapping <- aes_string(x = "variable", y = id_var, fill = "value")
     specific_theme <- theme(
