@@ -84,7 +84,7 @@ ggplot_heatmap <- function(xx,
     ordered = TRUE
   )
 
-  mdf <- reshape2::melt(df, id.vars=row)
+  mdf <- reshape2::melt(df, id.vars = row)
   colnames(mdf)[2:3] <- c(col, val) # rename "variable" and "value"
 
   # TODO:
@@ -108,13 +108,13 @@ ggplot_heatmap <- function(xx,
 
   # p <- p + scale_x_discrete(limits = unique(mdf))
   # http://stats.stackexchange.com/questions/5007/how-can-i-change-the-title-of-a-legend-in-ggplot2
-  p <- p + labs(fill=key.title)
+  p <- p + labs(fill = key.title)
 
   # until this bug is fixed: https://github.com/ropensci/plotly/issues/699
   # we are forced to use geom_hline and geom_vline
   if(!is.na(grid_color)) {
-    p <- p + geom_hline(yintercept =c(0:nrow(xx))+.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
-    p <- p + geom_vline(xintercept =c(0:ncol(xx))+.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
+    p <- p + geom_hline(yintercept = c(0:nrow(xx)) + 0.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
+    p <- p + geom_vline(xintercept = c(0:ncol(xx)) + 0.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
 
   }
 
@@ -173,13 +173,11 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   if (is.numeric(segs$col)) segs$col <- factor(segs$col)
 
   ## Need to somehow convert to colors that plotly will understand
-  # colors <- unique(dendextend::get_leaves_branches_col(dend))
-  # if(!is.null(colors)) colors <- sort(colors)
   colors <- sort(unique(segs$col))
-  if (is.numeric(colors)) colors <- gplots::col2hex(grDevices::palette()[seq_along(colors)])
-  # if (is.null(colors)) colors <- "black"
-
-
+  if (is.numeric(colors)) {
+    colors <- gplots::col2hex(grDevices::palette()[seq_along(colors)])
+  }
+  
   lab_max <- nrow(dend_data$labels)
   if (side == "row") lab_max <- lab_max + 0.5
 
@@ -199,7 +197,8 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   ## Have to change x and y depending on which orientation
   if (side == "row") {
     add_plot_lines <- function(p) {
-      p %>% add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend, color = ~col,
+      p %>% add_segments(
+        x = ~y, xend = ~yend, y = ~x, yend = ~xend, color = ~col,
         showlegend = FALSE,
         colors = colors,
         hoverinfo = "x"
@@ -213,7 +212,8 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   }
   else {
     add_plot_lines <- function(p) {
-      p %>% add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend, color = ~col,
+      p %>% add_segments(
+        x = ~x, xend = ~xend, y = ~y, yend = ~yend, color = ~col,
         showlegend = FALSE,
         colors = colors,
         hoverinfo = "y"
@@ -261,7 +261,7 @@ ggplot_side_color_plot <- function(df, palette = NULL,
   ## Cooerce to character
   df[] <- lapply(df, as.character)
 
-  ## TODO: Find out why names are dropped when ncol(df) == 1
+  ## TODO: Find out why names are dropped when ncol(df) == 1 (Not any more?)
   original_dim <- dim(df)
 
   if (is.null(palette)) palette <- colorspace::rainbow_hcl
@@ -379,7 +379,6 @@ predict_colors <- function(p, plot_method) {
   cell_font_colors
 }
 
-
 parse_plotly_color <- function(color) {
   r <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+),\\d+)",
     "\\1", color)
@@ -488,7 +487,6 @@ plotly_side_color_plot <- function(df, palette = NULL,
   }
 
   levs2colors <- palette[as.character(levels)]
-
   levs2nums <- setNames(seq_along(levels), levels)
 
   df_nums <- data
