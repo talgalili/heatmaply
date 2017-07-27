@@ -1,9 +1,13 @@
 heatmaply 0.11.1
-
+================
 NEW FEATURES
 * heatmaply 
 	- `side_color_layers` argument, which allows the user to pass in ggplot functions which will be 
 	   added to the side color plots.
+  - Improved side color plots when `plot_method = "plotly"`
+  - grid_gap works when `plot_method = "plotly"`
+  - `row_side_palette` and `col_side_palette` can now be named vectors of
+    colors.
 
 heatmaply 0.10.1 (2017-05-27)
 ==============================
