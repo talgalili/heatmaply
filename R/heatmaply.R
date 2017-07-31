@@ -202,7 +202,7 @@ is.plotly <- function(x) {
 #'
 #' @param heatmap_layers ggplot object (eg, theme_bw()) to be added to
 #'  the heatmap before conversion to a plotly object.
-#' @param side_color_layers Layers to be added to side color plots, similar to 
+#' @param side_color_layers Layers to be added to side color plots, similar to
 #' 	heatmap_layers.
 #' @param branches_lwd numeric (default is 0.6). The width of the dendrograms' branches.
 #' If NULL then it is ignored. If the "lwd" is already defined in Rowv/Colv then this
@@ -211,9 +211,9 @@ is.plotly <- function(x) {
 #'
 #' @param file HTML file name to save the heatmaply into. Should be a character
 #' string ending with ".html".
-#' For example: heatmaply(x, file = "heatmaply_plot.html").
-#' This should not include a directory, only the name of the file.
-#' You can relocate the file once it is created, or use \link{setwd} first.
+#' For example: heatmaply(x, file = "heatmaply_plot.html") or
+#' dir.create("folder")
+#' heatmaply(x, file = "folder/heatmaply_plot.html")
 #' This is based on \link[htmlwidgets]{saveWidget}.
 #'
 #' @param long_data Data in long format. Replaces x, so both should not be used.
@@ -673,7 +673,13 @@ heatmaply.default <- function(x,
 
                      # TODO: think more on what should be passed in "..."
 
-  if (!missing(file)) hmly %>% saveWidget(file = file, selfcontained = TRUE)
+  if (!missing(file)) {
+    # solution to dealing with the folder:
+    # https://stackoverflow.com/questions/41399795/savewidget-from-htmlwidget-in-r-cannot-save-html-file-in-another-folder
+    tmp_fp <- file
+    tmp_fp <- file.path(normalizePath(dirname(tmp_fp)),basename(tmp_fp))
+    hmly %>% saveWidget(file = tmp_fp, selfcontained = TRUE)
+  }
 
   hmly
 }
@@ -939,7 +945,7 @@ heatmaply.heatmapr <- function(x,
         theme_clear_grid_dends
 
       if (row_dend_left) px <- px + scale_y_reverse()
-      
+
     } else {
       px <- plotly_dend(rows, flip = row_dend_left, side = "row")
     }
@@ -991,7 +997,7 @@ heatmaply.heatmapr <- function(x,
       pr <- ggplot_side_color_plot(side_color_df, type = "row",
         text_angle = column_text_angle,
         palette = row_side_palette,
-        is_colors = !is.null(RowSideColors), 
+        is_colors = !is.null(RowSideColors),
         label_name = label_names[[1]]) + side_color_layers
     } else {
       pr <- plotly_side_color_plot(side_color_df, type = "row",

@@ -249,7 +249,7 @@ that is restricted by the dendrogram structure)}
 \item{heatmap_layers}{ggplot object (eg, theme_bw()) to be added to
 the heatmap before conversion to a plotly object.}
 
-\item{side_color_layers}{Layers to be added to side color plots, similar to 
+\item{side_color_layers}{Layers to be added to side color plots, similar to
 heatmap_layers.}
 
 \item{branches_lwd}{numeric (default is 0.6). The width of the dendrograms' branches.
@@ -258,9 +258,9 @@ parameter is ignored (it is checked using \link[dendextend]{has_edgePar}("lwd"))
 
 \item{file}{HTML file name to save the heatmaply into. Should be a character
 string ending with ".html".
-For example: heatmaply(x, file = "heatmaply_plot.html").
-This should not include a directory, only the name of the file.
-You can relocate the file once it is created, or use \link{setwd} first.
+For example: heatmaply(x, file = "heatmaply_plot.html") or
+dir.create("folder")
+heatmaply(x, file = "folder/heatmaply_plot.html")
 This is based on \link[htmlwidgets]{saveWidget}.}
 
 \item{long_data}{Data in long format. Replaces x, so both should not be used.
