@@ -202,7 +202,8 @@ is.plotly <- function(x) {
 #'
 #' @param heatmap_layers ggplot object (eg, theme_bw()) to be added to
 #'  the heatmap before conversion to a plotly object.
-#'
+#' @param side_color_layers Layers to be added to side color plots, similar to
+#' 	heatmap_layers.
 #' @param branches_lwd numeric (default is 0.6). The width of the dendrograms' branches.
 #' If NULL then it is ignored. If the "lwd" is already defined in Rowv/Colv then this
 #' parameter is ignored (it is checked using \link[dendextend]{has_edgePar}("lwd")).
@@ -210,9 +211,9 @@ is.plotly <- function(x) {
 #'
 #' @param file HTML file name to save the heatmaply into. Should be a character
 #' string ending with ".html".
-#' For example: heatmaply(x, file = "heatmaply_plot.html").
-#' This should not include a directory, only the name of the file.
-#' You can relocate the file once it is created, or use \link{setwd} first.
+#' For example: heatmaply(x, file = "heatmaply_plot.html") or
+#' dir.create("folder")
+#' heatmaply(x, file = "folder/heatmaply_plot.html")
 #' This is based on \link[htmlwidgets]{saveWidget}.
 #'
 #' @param long_data Data in long format. Replaces x, so both should not be used.
@@ -488,6 +489,7 @@ heatmaply.default <- function(x,
                               RowSideColors = NULL,
                               seriate = c("OLO", "mean", "none", "GW"),
                               heatmap_layers = NULL,
+                              side_color_layers = NULL,
                               branches_lwd = 0.6,
                               file,
                               long_data,
@@ -647,6 +649,7 @@ heatmaply.default <- function(x,
                      col_side_colors = col_side_colors,
                      col_side_palette = col_side_palette,
                      heatmap_layers = heatmap_layers,
+                     side_color_layers = side_color_layers,
                      ColSideColors = ColSideColors,
                      RowSideColors = RowSideColors,
                      branches_lwd = branches_lwd,
@@ -670,7 +673,13 @@ heatmaply.default <- function(x,
 
                      # TODO: think more on what should be passed in "..."
 
-  if (!missing(file)) hmly %>% saveWidget(file = file, selfcontained = TRUE)
+  if (!missing(file)) {
+    # solution to dealing with the folder:
+    # https://stackoverflow.com/questions/41399795/savewidget-from-htmlwidget-in-r-cannot-save-html-file-in-another-folder
+    tmp_fp <- file
+    tmp_fp <- file.path(normalizePath(dirname(tmp_fp)),basename(tmp_fp))
+    hmly %>% saveWidget(file = tmp_fp, selfcontained = TRUE)
+  }
 
   hmly
 }
@@ -843,6 +852,7 @@ heatmaply.heatmapr <- function(x,
                                ColSideColors,
                                RowSideColors,
                                heatmap_layers = NULL,
+                               side_color_layers = NULL,
                                branches_lwd = 0.6,
                                label_names = NULL,
                                fontsize_row = 10,
@@ -893,7 +903,7 @@ heatmaply.heatmapr <- function(x,
   theme_clear_grid_dends <- theme(axis.line=element_blank(),axis.text.x=element_blank(),
         axis.text.y=element_blank(),axis.ticks=element_blank(),
         axis.title.x=element_blank(),
-        axis.title.y=element_blank(),legend.position="none",
+        axis.title.y=element_blank(), legend.position="none",
         panel.background=element_blank(),panel.border=element_blank(),panel.grid.major=element_blank(),
         panel.grid.minor=element_blank(),plot.background=element_blank())
   # dendrograms:
@@ -918,7 +928,7 @@ heatmaply.heatmapr <- function(x,
         coord_cartesian(expand = FALSE, xlim = xlims) +
         theme_clear_grid_dends
     } else {
-      suppressWarnings(      py <- plotly_dend(cols, side = "col"))
+      suppressWarnings(py <- plotly_dend(cols, side = "col"))
     }
   }
   if (is.null(rows)) {
@@ -933,7 +943,9 @@ heatmaply.heatmapr <- function(x,
         coord_flip(expand = FALSE, xlim = ylims) +
         theme_bw() +
         theme_clear_grid_dends
+
       if (row_dend_left) px <- px + scale_y_reverse()
+
     } else {
       px <- plotly_dend(rows, flip = row_dend_left, side = "row")
     }
@@ -984,14 +996,18 @@ heatmaply.heatmapr <- function(x,
     if (plot_method == "ggplot") {
       pr <- ggplot_side_color_plot(side_color_df, type = "row",
         text_angle = column_text_angle,
-        palette = row_side_palette, fontsize = fontsize_row,
-        is_colors = !is.null(RowSideColors), label_name = label_names[[1]])
+        palette = row_side_palette, 
+        fontsize = fontsize_col,
+        is_colors = !is.null(RowSideColors), 
+        label_name = label_names[[1]]) + side_color_layers
     } else {
       pr <- plotly_side_color_plot(side_color_df, type = "row",
         text_angle = column_text_angle,
-        palette = row_side_palette, fontsize = fontsize_row,
-        label_name = label_names[[1]])
-    }
+        palette = row_side_palette, 
+        fontsize = fontsize_col,
+        is_colors = !is.null(RowSideColors),
+        label_name = label_names[[1]]) 
+    } 
   }
 
   if (missing(col_side_colors)) {
@@ -1012,31 +1028,39 @@ heatmaply.heatmapr <- function(x,
         text_angle = row_text_angle,
         palette = col_side_palette,
         is_colors = !is.null(ColSideColors), fontsize = fontsize_col,
-        label_name = label_names[[2]]
-      )
+        label_name = label_names[[2]]) + side_color_layers
     } else {
       pc <- plotly_side_color_plot(side_color_df, type = "column",
         text_angle = row_text_angle,
         palette = col_side_palette,
-        palette = row_side_palette, fontsize = fontsize_col,
-        label_name = label_names[[2]]
-      )
+        fontsize = fontsize_col,
+        is_colors = !is.null(ColSideColors),
+        label_name = label_names[[2]])
     }
   }
 
   if (return_ppxpy) {
     return(list(p=p, px=px, py=py, pr=pr, pc=pc))
+  } else {
+  	if (!is.null(pc)) {
+      pc <- ggplotly(pc)
+  		pc <- layout(pc, showlegend = TRUE)
+  	}
+  	if (!is.null(pr)) {
+      pr <- ggplotly(pr)
+  		pr <- layout(pr, showlegend = TRUE)
+  	}
   }
 
   ## plotly:
   # turn p, px, and py to plotly objects if necessary
-  if (!is.plotly(p)) p <- ggplotly(p, dynamicTicks = dynamicTicks) %>% layout(showlegend=FALSE)
+  if (!is.plotly(p)) p <- ggplotly(p, dynamicTicks = dynamicTicks) %>% layout(showlegend=TRUE)
 
 
   if (draw_cellnote) {
     ## Predict cell color luminosity based on colorscale
     if (cellnote_color == "auto") {
-      cellnote_color <- predict_colors(p, plot_method)
+      cellnote_color <- predict_colors(p, plot_method = plot_method)
     }
 
     df <- as.data.frame(x[["cellnote"]])
@@ -1055,11 +1079,11 @@ heatmaply.heatmapr <- function(x,
   }
   if (!is.null(px) && !is.plotly(px)) {
     px <- ggplotly(px, tooltip = "y", dynamicTicks = dynamicTicks) %>%
-      layout(showlegend=FALSE)
+      layout(showlegend = FALSE)
   }
   if (!is.null(py) && !is.plotly(py)) {
     py <- ggplotly(py, tooltip = "y", dynamicTicks = dynamicTicks) %>%
-      layout(showlegend=FALSE)
+      layout(showlegend = FALSE)
   }
 
   # https://plot.ly/r/reference/#Layout_and_layout_style_objects
@@ -1123,7 +1147,7 @@ heatmaply.heatmapr <- function(x,
     titleX = titleX, titleY = titleY, pr = pr, pc = pc, plot_method = plot_method)
   l <- layout(heatmap_subplot,
       margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]),
-      legend = list(y=1, yanchor="top")
+      legend = list(y = 1, yanchor = "top")
     )
 
   # keep only relevant plotly options

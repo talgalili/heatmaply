@@ -33,6 +33,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   row_side_colors, row_side_palette = NULL, col_side_colors,
   col_side_palette = NULL, ColSideColors = NULL, RowSideColors = NULL,
   seriate = c("OLO", "mean", "none", "GW"), heatmap_layers = NULL,
+<<<<<<< HEAD
   branches_lwd = 0.6, file, long_data, plot_method = c("ggplot", "plotly"),
   label_names = c("row", "column", "value"), fontsize_row = 10,
   fontsize_col = 10, cexRow, cexCol, subplot_widths = NULL,
@@ -40,6 +41,16 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   (row_dend_left) "right" else "left", colorbar_yanchor = "bottom",
   colorbar_xpos = if (row_dend_left) -0.1 else 1.1, colorbar_ypos = 0,
   showticklabels = c(TRUE, TRUE), dynamicTicks = FALSE, col)
+=======
+  side_color_layers = NULL, branches_lwd = 0.6, file, long_data,
+  plot_method = c("ggplot", "plotly"), label_names = c("row", "column",
+  "value"), fontsize_row = 10, fontsize_col = 10, cexRow, cexCol,
+  subplot_widths = NULL, subplot_heights = NULL, colorbar_len = 0.3,
+  colorbar_xanchor = if (row_dend_left) "right" else "left",
+  colorbar_yanchor = "bottom", colorbar_xpos = if (row_dend_left) -0.1 else
+  1.1, colorbar_ypos = 0, showticklabels = c(TRUE, TRUE),
+  dynamicTicks = FALSE, col)
+>>>>>>> f685d0c25c6ecc1cd435244a814a0653e658cd9a
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
@@ -54,12 +65,22 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   cellnote_textposition = "middle right", row_side_colors,
   row_side_palette = NULL, col_side_colors, col_side_palette = NULL,
   plot_method = c("ggplot", "plotly"), ColSideColors, RowSideColors,
+<<<<<<< HEAD
   heatmap_layers = NULL, branches_lwd = 0.6, label_names,
   fontsize_row = 10, fontsize_col = 10, subplot_widths = NULL,
   subplot_heights = NULL, colorbar_xanchor = if (row_dend_left) "right" else
   "left", colorbar_yanchor = "bottom", colorbar_xpos = if (row_dend_left)
   -0.1 else 1.1, colorbar_ypos = 0, colorbar_len = 0.3,
   showticklabels = c(TRUE, TRUE), dynamicTicks = FALSE)
+=======
+  heatmap_layers = NULL, side_color_layers = NULL, branches_lwd = 0.6,
+  label_names, fontsize_row = 10, fontsize_col = 10,
+  subplot_widths = NULL, subplot_heights = NULL, colorbar_xanchor = if
+  (row_dend_left) "right" else "left", colorbar_yanchor = "bottom",
+  colorbar_xpos = if (row_dend_left) -0.1 else 1.1, colorbar_ypos = 0,
+  colorbar_len = 0.3, showticklabels = c(TRUE, TRUE),
+  dynamicTicks = FALSE)
+>>>>>>> f685d0c25c6ecc1cd435244a814a0653e658cd9a
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -247,15 +268,18 @@ that is restricted by the dendrogram structure)}
 \item{heatmap_layers}{ggplot object (eg, theme_bw()) to be added to
 the heatmap before conversion to a plotly object.}
 
+\item{side_color_layers}{Layers to be added to side color plots, similar to
+heatmap_layers.}
+
 \item{branches_lwd}{numeric (default is 0.6). The width of the dendrograms' branches.
 If NULL then it is ignored. If the "lwd" is already defined in Rowv/Colv then this
 parameter is ignored (it is checked using \link[dendextend]{has_edgePar}("lwd")).}
 
 \item{file}{HTML file name to save the heatmaply into. Should be a character
 string ending with ".html".
-For example: heatmaply(x, file = "heatmaply_plot.html").
-This should not include a directory, only the name of the file.
-You can relocate the file once it is created, or use \link{setwd} first.
+For example: heatmaply(x, file = "heatmaply_plot.html") or
+dir.create("folder")
+heatmaply(x, file = "folder/heatmaply_plot.html")
 This is based on \link[htmlwidgets]{saveWidget}.}
 
 \item{long_data}{Data in long format. Replaces x, so both should not be used.
