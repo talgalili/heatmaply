@@ -221,7 +221,7 @@ is.plotly <- function(x) {
 #'  column you can simply use a sequence of numbers from 1 to the number of "rows"
 #'  inthe data.
 #'
-#' @param label_names Names for labells of x, y and value/fill mouseover.
+#' @param label_names Names for labels of x, y and value/fill mouseover.
 #' @param fontsize_row,fontsize_col,cexRow,cexCol Font size for row and column labels.
 #' @param subplot_widths,subplot_heights The relative widths and heights of each
 #'  subplot. The length of these vectors will vary depending on the number of
@@ -494,7 +494,7 @@ heatmaply.default <- function(x,
                               file,
                               long_data,
                               plot_method = c("ggplot", "plotly"),
-                              label_names = c("row", "column", "value"),
+                              label_names = NULL,
                               fontsize_row = 10,
                               fontsize_col = 10,
                               cexRow, cexCol,
@@ -704,7 +704,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
       if (is.null(pr)) {
         widths <- c(0.8, 0.2)
       } else {
-        widths <- c(0.7, 0.05, 0.2)
+        widths <- c(0.7, 0.1, 0.2)
       }
     } else {
       if (is.null(pr)) {
@@ -721,7 +721,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
       if (is.null(pc)) {
         heights <- c(0.2, 0.8)
       } else {
-        heights <- c(0.2, 0.05, 0.7)
+        heights <- c(0.2, 0.1, 0.7)
       }
     } else {
       if (is.null(pc)) {
@@ -854,7 +854,7 @@ heatmaply.heatmapr <- function(x,
                                heatmap_layers = NULL,
                                side_color_layers = NULL,
                                branches_lwd = 0.6,
-                               label_names,
+                               label_names = NULL,
                                fontsize_row = 10,
                                fontsize_col = 10,
                                subplot_widths = NULL,
@@ -967,7 +967,7 @@ heatmaply.heatmapr <- function(x,
   } else if (plot_method == "plotly") {
 
     p <- plotly_heatmap(data_mat, limits = limits, colors = colors,
-      key_title = key.title,
+      key_title = key.title, label_names = label_names,
       row_text_angle = row_text_angle, column_text_angle = column_text_angle,
       fontsize_row = fontsize_row, fontsize_col = fontsize_col,
       colorbar_yanchor = colorbar_yanchor, colorbar_xanchor = colorbar_xanchor,
@@ -996,15 +996,18 @@ heatmaply.heatmapr <- function(x,
     if (plot_method == "ggplot") {
       pr <- ggplot_side_color_plot(side_color_df, type = "row",
         text_angle = column_text_angle,
-        palette = row_side_palette,
-        is_colors = !is.null(RowSideColors),
+        palette = row_side_palette, 
+        fontsize = fontsize_col,
+        is_colors = !is.null(RowSideColors), 
         label_name = label_names[[1]]) + side_color_layers
     } else {
       pr <- plotly_side_color_plot(side_color_df, type = "row",
         text_angle = column_text_angle,
-        palette = row_side_palette,
-        label_name = label_names[[1]])
-    }
+        palette = row_side_palette, 
+        fontsize = fontsize_col,
+        is_colors = !is.null(RowSideColors),
+        label_name = label_names[[1]]) 
+    } 
   }
 
   if (missing(col_side_colors)) {
@@ -1024,14 +1027,15 @@ heatmaply.heatmapr <- function(x,
       pc <- ggplot_side_color_plot(side_color_df, type = "column",
         text_angle = row_text_angle,
         palette = col_side_palette,
-        is_colors = !is.null(ColSideColors),
+        is_colors = !is.null(ColSideColors), fontsize = fontsize_col,
         label_name = label_names[[2]]) + side_color_layers
     } else {
       pc <- plotly_side_color_plot(side_color_df, type = "column",
         text_angle = row_text_angle,
         palette = col_side_palette,
-        label_name = label_names[[2]]
-      )
+        fontsize = fontsize_col,
+        is_colors = !is.null(ColSideColors),
+        label_name = label_names[[2]])
     }
   }
 

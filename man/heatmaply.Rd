@@ -34,8 +34,8 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   col_side_palette = NULL, ColSideColors = NULL, RowSideColors = NULL,
   seriate = c("OLO", "mean", "none", "GW"), heatmap_layers = NULL,
   side_color_layers = NULL, branches_lwd = 0.6, file, long_data,
-  plot_method = c("ggplot", "plotly"), label_names = c("row", "column",
-  "value"), fontsize_row = 10, fontsize_col = 10, cexRow, cexCol,
+  plot_method = c("ggplot", "plotly"), label_names = NULL,
+  fontsize_row = 10, fontsize_col = 10, cexRow, cexCol,
   subplot_widths = NULL, subplot_heights = NULL, colorbar_len = 0.3,
   colorbar_xanchor = if (row_dend_left) "right" else "left",
   colorbar_yanchor = "bottom", colorbar_xpos = if (row_dend_left) -0.1 else
@@ -56,7 +56,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   row_side_palette = NULL, col_side_colors, col_side_palette = NULL,
   plot_method = c("ggplot", "plotly"), ColSideColors, RowSideColors,
   heatmap_layers = NULL, side_color_layers = NULL, branches_lwd = 0.6,
-  label_names, fontsize_row = 10, fontsize_col = 10,
+  label_names = NULL, fontsize_row = 10, fontsize_col = 10,
   subplot_widths = NULL, subplot_heights = NULL, colorbar_xanchor = if
   (row_dend_left) "right" else "left", colorbar_yanchor = "bottom",
   colorbar_xpos = if (row_dend_left) -0.1 else 1.1, colorbar_ypos = 0,
@@ -271,7 +271,7 @@ inthe data.}
 \item{plot_method}{Use "ggplot" or "plotly" to choose which library produces heatmap
 and dendrogram plots}
 
-\item{label_names}{Names for labells of x, y and value/fill mouseover.}
+\item{label_names}{Names for labels of x, y and value/fill mouseover.}
 
 \item{fontsize_row, fontsize_col, cexRow, cexCol}{Font size for row and column labels.}
 
