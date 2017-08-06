@@ -274,6 +274,7 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
 #' @param text_angle the angle of the text of the rows/columns.
 #' @param is_colors Use if the values in df are valid colours and should not be mapped
 #'  to a color scheme, and instead should be plotted directly.
+#' @param fontsize Font size (currently unused)
 #' @param label_name Name for the mouseover label, usually "row" or "column"
 #'
 #' @return A ggplot geom_tile object
