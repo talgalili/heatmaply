@@ -86,7 +86,7 @@ ggplot_heatmap <- function(xx,
     ordered = TRUE
   )
 
-  mdf <- reshape2::melt(df, id.vars=row)
+  mdf <- reshape2::melt(df, id.vars = row)
   colnames(mdf)[2:3] <- c(col, val) # rename "variable" and "value"
 
   # TODO:
@@ -110,13 +110,13 @@ ggplot_heatmap <- function(xx,
 
   # p <- p + scale_x_discrete(limits = unique(mdf))
   # http://stats.stackexchange.com/questions/5007/how-can-i-change-the-title-of-a-legend-in-ggplot2
-  p <- p + labs(fill=key.title)
+  p <- p + labs(fill = key.title)
 
   # until this bug is fixed: https://github.com/ropensci/plotly/issues/699
   # we are forced to use geom_hline and geom_vline
   if(!is.na(grid_color)) {
-    p <- p + geom_hline(yintercept =c(0:nrow(xx))+.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
-    p <- p + geom_vline(xintercept =c(0:ncol(xx))+.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
+    p <- p + geom_hline(yintercept = c(0:nrow(xx)) + 0.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
+    p <- p + geom_vline(xintercept = c(0:ncol(xx)) + 0.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
 
   }
 
@@ -201,13 +201,11 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   if (is.numeric(segs$col)) segs$col <- factor(segs$col)
 
   ## Need to somehow convert to colors that plotly will understand
-  # colors <- unique(dendextend::get_leaves_branches_col(dend))
-  # if(!is.null(colors)) colors <- sort(colors)
   colors <- sort(unique(segs$col))
-  if (is.numeric(colors)) colors <- gplots::col2hex(grDevices::palette()[seq_along(colors)])
-  # if (is.null(colors)) colors <- "black"
-
-
+  if (is.numeric(colors)) {
+    colors <- gplots::col2hex(grDevices::palette()[seq_along(colors)])
+  }
+  
   lab_max <- nrow(dend_data$labels)
   if (side == "row") lab_max <- lab_max + 0.5
 
@@ -227,7 +225,8 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   ## Have to change x and y depending on which orientation
   if (side == "row") {
     add_plot_lines <- function(p) {
-      p %>% add_segments(x = ~y, xend = ~yend, y = ~x, yend = ~xend, color = ~col,
+      p %>% add_segments(
+        x = ~y, xend = ~yend, y = ~x, yend = ~xend, color = ~col,
         showlegend = FALSE,
         colors = colors,
         hoverinfo = "x"
@@ -241,7 +240,8 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   }
   else {
     add_plot_lines <- function(p) {
-      p %>% add_segments(x = ~x, xend = ~xend, y = ~y, yend = ~yend, color = ~col,
+      p %>% add_segments(
+        x = ~x, xend = ~xend, y = ~y, yend = ~yend, color = ~col,
         showlegend = FALSE,
         colors = colors,
         hoverinfo = "y"
@@ -279,22 +279,24 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
 #' @return A ggplot geom_tile object
 #'
 ggplot_side_color_plot <- function(df, palette = NULL,
-  scale_title = paste(type, "side colors"), type = c("column", "row"),
-  text_angle = if (type == "column") 0 else 90, is_colors = FALSE, fontsize,
-  label_name = type) {
+    scale_title = paste(type, "side colors"), type = c("column", "row"),
+    text_angle = if (type == "column") 0 else 90, is_colors = FALSE, fontsize,
+    label_name = NULL) {
 
+  type <- match.arg(type)
   if (is.matrix(df)) df <- as.data.frame(df)
   assert_that(is.data.frame(df))
+
+  if (is.null(label_name)) label_name <- type
 
   ## Cooerce to character
   df[] <- lapply(df, as.character)
 
-  ## TODO: Find out why names are dropped when ncol(df) == 1
+  ## TODO: Find out why names are dropped when ncol(df) == 1 (Not any more?)
   original_dim <- dim(df)
 
   if (is.null(palette)) palette <- default_side_colors
 
-  type <- match.arg(type)
   ## Custom label
   if (!missing(label_name)) type <- label_name
   if (type %in% colnames(df))
@@ -308,39 +310,41 @@ ggplot_side_color_plot <- function(df, palette = NULL,
 
   id_var <- colnames(df)[1]
 
+  common_theme <- theme(
+    panel.background = element_blank(),
+    axis.ticks = element_blank())
+  
+  ## Don't need this hack any more?
+  # if(original_dim[2] > 1) {
+    text_element <- element_text(angle = text_angle)
+  # } else text_element <- element_blank()
+
   if (type == "column") {
     mapping <- aes_string(x = id_var, y = "variable", fill = "value")
-    if(original_dim[2] > 1) {
-      text_element <- element_text(angle = text_angle)
-    } else text_element <- element_blank()
 
-    theme <- theme(
-        panel.background = element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = text_element,
-        axis.ticks = element_blank())
+    specific_theme <- theme(
+      axis.text.x = element_blank(),
+      axis.text.y = text_element
+    )
   } else {
-    if(original_dim[2] > 1) {
-      text_element <- element_text(angle = text_angle)
-    } else text_element <- element_blank()
 
     mapping <- aes_string(x = "variable", y = id_var, fill = "value")
-    theme <- theme(
-        panel.background = element_blank(),
-        axis.text.x = text_element,
-        axis.text.y = element_blank(),
-        axis.ticks = element_blank())
+    specific_theme <- theme(
+      axis.text.x = text_element,
+      axis.text.y = element_blank()
+    )
   }
 
+  theme <- list(common_theme, specific_theme)
+  
   if (is.function(palette)) {
     palette <- setNames(palette(nlevels(df[["value"]])), levels(df[["value"]]))
-  } else if (!all(levels(df[["value"]] %in% names(palette)))) {
-    stop(paste("Not all levels of the", type, "side colors are mapped in the", type, "palette"))
+  } else if (!all(levels(factor(df[["value"]])) %in% names(palette))) {
+    stop(paste0("Not all levels of the ", type, 
+      "_side_colors are mapped in the ", type, "_side_palette"))
   }
  
-
   g <- ggplot(df, mapping = mapping) +
-    # geom_raster() +
     geom_tile() +
     xlab("") +
     ylab("") +
@@ -355,30 +359,36 @@ ggplot_side_color_plot <- function(df, palette = NULL,
 
 
 default_side_colors <- function(n) {
-  if (n <= 12) {
-    RColorBrewer::brewer.pal(n, "Paired")
-  } else if (n <= 20) {
-    c(RColorBrewer::brewer.pal(12, "Paired"), 
-      RColorBrewer::brewer.pal(n - 12, "Set2"))
-  } else if (n <= 32) {
-    c(RColorBrewer::brewer.pal(12, "Paired"), 
-      RColorBrewer::brewer.pal(8, "Set2"), 
-      RColorBrewer::brewer.pal(n - 20, "Set3"))
-  } else {
-    colorspace::rainbow_hcl(n)
-  }
+  ## Warning if n < 3 in any case
+  suppressWarnings(
+    if (n <= 12) {
+      RColorBrewer::brewer.pal(n, "Paired")
+    } else if (n <= 20) {
+      c(RColorBrewer::brewer.pal(12, "Paired"), 
+        RColorBrewer::brewer.pal(n - 12, "Set2"))
+    } else if (n <= 32) {
+      c(RColorBrewer::brewer.pal(12, "Paired"), 
+        RColorBrewer::brewer.pal(8, "Set2"), 
+        RColorBrewer::brewer.pal(n - 20, "Set3"))
+    } else {
+      colorspace::rainbow_hcl(n)
+    }
+  )
 }
 
-
 ## Predict luminosity of cells and change text based on that
-predict_colors <- function(p, plot_method) {
+## http://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
+predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale, 
+    cell_values=p$x$data[[1]]$z, plot_method=c("ggplot", "plotly")) {
 
-  ## http://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
-  colorscale_df <- p$x$data[[1]]$colorscale
-  cell_values <- as.data.frame(p$x$data[[1]]$z)
+
+  plot_method <- match.arg(plot_method)
+
+  cell_values <- as.data.frame(cell_values)
   cell_values$row <- 1:nrow(cell_values)
   cell_values_m <- reshape2::melt(cell_values, id.vars = "row")
   cell_values_vector <- cell_values_m$value
+
   ## Need to normalise to (0, 1) scale as this is what plotly
   ## uses internally
   if (plot_method == "plotly") {
@@ -420,13 +430,12 @@ predict_colors <- function(p, plot_method) {
   cell_font_colors
 }
 
-
 parse_plotly_color <- function(color) {
-  r <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+),\\d+)",
+  r <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+)(,\\d+)?)",
     "\\1", color)
-  g <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+),\\d+)",
+  g <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+)(,\\d+)?)",
     "\\2", color)
-  b <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+),\\d+)",
+  b <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+)(,\\d+)?)",
     "\\3", color)
   rgb(r, g, b, maxColorValue = 255)
 }
@@ -502,14 +511,15 @@ discrete_colorscale <- function(colors) {
     setNames(data.frame(seq, colors), NULL)
 }
 
-
 #' @importFrom stats setNames
 plotly_side_color_plot <- function(df, palette = NULL,
     scale_title = paste(type, "side colors"), type = c("column", "row"),
     text_angle = if (type == "column") 0 else 90, is_colors = FALSE,
-    label_name = type, fontsize = 10) {
+    label_name = NULL, fontsize = 10) {
 
   type <- match.arg(type)
+
+  if (is.null(label_name)) label_name <- type
 
   data <- df
   data[] <- lapply(df, as.character)
@@ -518,6 +528,7 @@ plotly_side_color_plot <- function(df, palette = NULL,
   }
   data <- as.data.frame(data)
   data_vals <- unlist(data)
+
   levels <- sort(unique(data_vals))
   levels <- setdiff(levels, NA)
 
@@ -532,7 +543,6 @@ plotly_side_color_plot <- function(df, palette = NULL,
   }
 
   levs2colors <- palette[as.character(levels)]
-
   levs2nums <- setNames(seq_along(levels), levels)
 
   df_nums <- data
