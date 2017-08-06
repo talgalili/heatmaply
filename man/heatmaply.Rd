@@ -34,13 +34,8 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   col_side_palette = NULL, ColSideColors = NULL, RowSideColors = NULL,
   seriate = c("OLO", "mean", "none", "GW"), heatmap_layers = NULL,
   side_color_layers = NULL, branches_lwd = 0.6, file, long_data,
-<<<<<<< HEAD
   plot_method = c("ggplot", "plotly"), label_names = NULL,
   fontsize_row = 10, fontsize_col = 10, cexRow, cexCol,
-=======
-  plot_method = c("ggplot", "plotly"), label_names = c("row", "column",
-  "value"), fontsize_row = 10, fontsize_col = 10, cexRow, cexCol,
->>>>>>> f685d0c25c6ecc1cd435244a814a0653e658cd9a
   subplot_widths = NULL, subplot_heights = NULL, colorbar_len = 0.3,
   colorbar_xanchor = if (row_dend_left) "right" else "left",
   colorbar_yanchor = "bottom", colorbar_xpos = if (row_dend_left) -0.1 else
@@ -61,11 +56,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   row_side_palette = NULL, col_side_colors, col_side_palette = NULL,
   plot_method = c("ggplot", "plotly"), ColSideColors, RowSideColors,
   heatmap_layers = NULL, side_color_layers = NULL, branches_lwd = 0.6,
-<<<<<<< HEAD
   label_names = NULL, fontsize_row = 10, fontsize_col = 10,
-=======
-  label_names, fontsize_row = 10, fontsize_col = 10,
->>>>>>> f685d0c25c6ecc1cd435244a814a0653e658cd9a
   subplot_widths = NULL, subplot_heights = NULL, colorbar_xanchor = if
   (row_dend_left) "right" else "left", colorbar_yanchor = "bottom",
   colorbar_xpos = if (row_dend_left) -0.1 else 1.1, colorbar_ypos = 0,
