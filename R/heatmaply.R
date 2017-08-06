@@ -994,14 +994,16 @@ heatmaply.heatmapr <- function(x,
     ## Just make sure it's character first
     side_color_df[] <- lapply(side_color_df, as.character)
     if (plot_method == "ggplot") {
-      pr <- ggplot_side_color_plot(side_color_df, type = "row",
+      pr <- ggplot_side_color_plot(side_color_df, 
+        type = "row",
         text_angle = column_text_angle,
         palette = row_side_palette, 
         fontsize = fontsize_col,
         is_colors = !is.null(RowSideColors), 
         label_name = label_names[[1]]) + side_color_layers
     } else {
-      pr <- plotly_side_color_plot(side_color_df, type = "row",
+      pr <- plotly_side_color_plot(side_color_df, 
+        type = "row",
         text_angle = column_text_angle,
         palette = row_side_palette, 
         fontsize = fontsize_col,
@@ -1024,13 +1026,16 @@ heatmaply.heatmapr <- function(x,
     ## Just make sure it's character first
     side_color_df[] <- lapply(side_color_df, as.character)
     if (plot_method == "ggplot") {
-      pc <- ggplot_side_color_plot(side_color_df, type = "column",
+      pc <- ggplot_side_color_plot(side_color_df, 
+        type = "column",
         text_angle = row_text_angle,
         palette = col_side_palette,
-        is_colors = !is.null(ColSideColors), fontsize = fontsize_col,
+        is_colors = !is.null(ColSideColors), 
+        fontsize = fontsize_col,
         label_name = label_names[[2]]) + side_color_layers
     } else {
-      pc <- plotly_side_color_plot(side_color_df, type = "column",
+      pc <- plotly_side_color_plot(side_color_df, 
+        type = "column",
         text_angle = row_text_angle,
         palette = col_side_palette,
         fontsize = fontsize_col,

@@ -334,7 +334,6 @@ ggplot_side_color_plot <- function(df, palette = NULL,
       axis.text.y = element_blank()
     )
   }
-
   theme <- list(common_theme, specific_theme)
   
   if (is.function(palette)) {
@@ -429,6 +428,7 @@ predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale,
   )
   cell_font_colors
 }
+
 
 parse_plotly_color <- function(color) {
   r <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+)(,\\d+)?)",
