@@ -71,3 +71,9 @@ test_that("k_colors works", {
 	expect_equal(k_colors(1), "black")
 	expect_equal(k_colors(5), colorspace::rainbow_hcl(5))
 })
+
+test_that("default colors works", {
+    for (i in 1:50) {
+        expect_equal(length(heatmaply:::default_side_colors(i)), i)
+    }
+})
