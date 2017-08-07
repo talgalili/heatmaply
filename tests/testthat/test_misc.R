@@ -18,9 +18,6 @@ test_that("normalize", {
   expect_true(all(dn[[3]] == "c"))
 })
 
-
-
-
 test_that("percentize", {
   a <- seq(0,1, by=0.01)
   expect_equal(percentize(a), unname(unlist(percentize(data.frame(a)))))
