@@ -8,6 +8,7 @@ heatmaply 0.11.0 (2017-07-31)
   - `row_side_palette` and `col_side_palette` can now be named vectors of
     colors.
   - Improved test coverage.
+  - More clear colors for side color plots, using RColorBrewer.
 
 ### BUG FIXES
 * heatmaply
