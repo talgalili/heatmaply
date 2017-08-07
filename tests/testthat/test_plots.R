@@ -77,3 +77,29 @@ test_that("default colors works", {
         expect_equal(length(heatmaply:::default_side_colors(i)), i)
     }
 })
+
+test_that("side colors fail when bad palette", {
+    expect_error(
+        heatmaply:::ggplot_side_color_plot(iris[, 5, drop=FALSE]), 
+        NA)
+    expect_error(
+        heatmaply:::ggplot_side_color_plot(iris[, 5, drop=FALSE],
+            palette = setNames(RColorBrewer::brewer.pal(3, "Set3"), 
+                unique(iris[, 5]))),
+        NA)
+    expect_error(
+        heatmaply:::ggplot_side_color_plot(iris[, 5, drop=FALSE],
+            palette = c("Nope" = "Nope")))
+
+    expect_error(
+        heatmaply:::plotly_side_color_plot(iris[, 5, drop=FALSE]), 
+        NA)
+    expect_error(
+        heatmaply:::plotly_side_color_plot(iris[, 5, drop=FALSE],
+            palette = setNames(RColorBrewer::brewer.pal(3, "Set3"), 
+                unique(iris[, 5]))),
+        NA)
+    expect_error(
+        heatmaply:::plotly_side_color_plot(iris[, 5, drop=FALSE],
+            palette = c("Nope" = "Nope")))
+})
