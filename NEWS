@@ -1,3 +1,9 @@
+heatmaply 0.11.1 (2017-08-30)
+================
+### Bugfixes 
+* heatmaply
+  - `heatmaply.heatmapr()` previously ignored `row_side_colors` and `col_side_colors` when passed to `heatmapr()` (issue #94)
+
 heatmaply 0.11.0 (2017-07-31)
 ================
 
