@@ -644,9 +644,7 @@ heatmaply.default <- function(x,
                      key.title = key.title,
                      return_ppxpy = return_ppxpy,
                      margins = margins,
-                     row_side_colors = row_side_colors,
                      row_side_palette = row_side_palette,
-                     col_side_colors = col_side_colors,
                      col_side_palette = col_side_palette,
                      heatmap_layers = heatmap_layers,
                      side_color_layers = side_color_layers,
@@ -844,9 +842,9 @@ heatmaply.heatmapr <- function(x,
                                draw_cellnote = FALSE,
                                cellnote_color = "auto",
                                cellnote_textposition = "middle right",
-                               row_side_colors,
+                               row_side_colors = x[["row_side_colors"]],
                                row_side_palette = NULL,
-                               col_side_colors,
+                               col_side_colors = x[["col_side_colors"]],
                                col_side_palette = NULL,
                                plot_method = c("ggplot", "plotly"),
                                ColSideColors,
@@ -854,7 +852,7 @@ heatmaply.heatmapr <- function(x,
                                heatmap_layers = NULL,
                                side_color_layers = NULL,
                                branches_lwd = 0.6,
-                               label_names,
+                               label_names = c("row", "column", "value"),
                                fontsize_row = 10,
                                fontsize_col = 10,
                                subplot_widths = NULL,
@@ -982,7 +980,7 @@ heatmaply.heatmapr <- function(x,
 
   # TODO: Add native plotly sidecolor function.
   # TODO: Possibly use function to generate all 3 plots to prevent complex logic here
-  if (missing(row_side_colors)) {
+  if (is.null(row_side_colors)) {
     pr <- NULL
   } else {
     side_color_df <- x[["row_side_colors"]]
@@ -1007,7 +1005,7 @@ heatmaply.heatmapr <- function(x,
     }
   }
 
-  if (missing(col_side_colors)) {
+  if (is.null(col_side_colors)) {
     pc <- NULL
   } else {
     warning("The hover text for col_side_colors is currently not implemented (due to an issue in plotly). We hope this would get resolved in future releases.")
