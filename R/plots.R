@@ -189,6 +189,7 @@ plotly_heatmap <- function(x, limits = range(x),
 
 
 plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
+  if (is.hclust(dend)) dend <- as.dendrogram(dend)
   side <- match.arg(side)
   dend_data <- as.ggdend(dend)
   segs <- dend_data$segments

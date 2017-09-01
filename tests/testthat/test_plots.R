@@ -20,7 +20,7 @@ test_that("plotly_heatmap works", {
 
 test_that("plotly_dend works", {
 	hc <- hclust(dist(iris_plot))
-	p <- heatmaply:::plotly_dend(as.dendrogram(hc))
+	p <- heatmaply:::plotly_dend(hc)
 	expect_is(p, "plotly")
 })
 
@@ -115,4 +115,14 @@ test_that("side colors fail when bad palette", {
     expect_error(
         heatmaply:::plotly_side_color_plot(iris[, 5, drop=FALSE],
             palette = c("Nope" = "Nope")))
+})
+
+test_that("plotly dend uses colors", {
+    dend <- hclust(dist(mtcars))
+    dend <- dendextend::color_branches(dend, k=2)
+    p <- plotly_dend(dend)
+    expect_is(p, "plotly")
+    dend <- dendextend::color_branches(dend, k=2, col=c(1, 2))
+    p <- plotly_dend(dend)
+    expect_is(p, "plotly")
 })
