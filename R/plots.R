@@ -362,14 +362,14 @@ default_side_colors <- function(n) {
   ## Warning if n < 3 in any case
   suppressWarnings(
     if (n <= 12) {
-      RColorBrewer::brewer.pal(n, "Paired")
+      RColorBrewer::brewer.pal(n, "Paired")[seq_len(n)]
     } else if (n <= 20) {
       c(RColorBrewer::brewer.pal(12, "Paired"), 
-        RColorBrewer::brewer.pal(n - 12, "Set2"))
+        RColorBrewer::brewer.pal(n - 12, "Set2"))[seq_len(n)]
     } else if (n <= 32) {
       c(RColorBrewer::brewer.pal(12, "Paired"), 
         RColorBrewer::brewer.pal(8, "Set2"), 
-        RColorBrewer::brewer.pal(n - 20, "Set3"))
+        RColorBrewer::brewer.pal(n - 20, "Set3"))[seq_len(n)]
     } else {
       colorspace::rainbow_hcl(n)
     }
@@ -380,7 +380,6 @@ default_side_colors <- function(n) {
 ## http://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
 predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale, 
     cell_values=p$x$data[[1]]$z, plot_method=c("ggplot", "plotly")) {
-
 
   plot_method <- match.arg(plot_method)
 

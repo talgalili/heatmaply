@@ -131,6 +131,9 @@ for (plot_method in c("ggplot", "plotly")) {
 }
 
 
+
+
+
 context("heatmaply misc")
 
 
