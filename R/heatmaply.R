@@ -203,7 +203,7 @@ is.plotly <- function(x) {
 #' @param heatmap_layers ggplot object (eg, theme_bw()) to be added to
 #'  the heatmap before conversion to a plotly object.
 #' @param side_color_layers Layers to be added to side color plots, similar to
-#' 	heatmap_layers.
+#'  heatmap_layers.
 #' @param branches_lwd numeric (default is 0.6). The width of the dendrograms' branches.
 #' If NULL then it is ignored. If the "lwd" is already defined in Rowv/Colv then this
 #' parameter is ignored (it is checked using \link[dendextend]{has_edgePar}("lwd")).
@@ -957,7 +957,7 @@ heatmaply.heatmapr <- function(x,
                       column_text_angle,
                       scale_fill_gradient_fun,
                       grid_color,
-                      key.title = key.title,
+                      key_title = key.title,
                       layers = heatmap_layers,
                       row_dend_left = row_dend_left,
                       label_names = label_names,
@@ -1036,14 +1036,14 @@ heatmaply.heatmapr <- function(x,
   if (return_ppxpy) {
     return(list(p=p, px=px, py=py, pr=pr, pc=pc))
   } else {
-  	if (!is.null(pc)) {
+    if (!is.null(pc)) {
       pc <- ggplotly(pc)
-  		pc <- layout(pc, showlegend = TRUE)
-  	}
-  	if (!is.null(pr)) {
+      pc <- layout(pc, showlegend = TRUE)
+    }
+    if (!is.null(pr)) {
       pr <- ggplotly(pr)
-  		pr <- layout(pr, showlegend = TRUE)
-  	}
+      pr <- layout(pr, showlegend = TRUE)
+    }
   }
 
   ## plotly:

@@ -7,3 +7,12 @@ after_success:
 
 r_github_packages:
   - hadley/testthat # for skip_if_not_installed
+
+r_github_packages:
+  - hadley/testthat # for skip_if_not_installed
+
+r_github_packages:
+  - jimhester/lintr
+
+after_success:
+  - Rscript -e 'lintr::lint_package()'

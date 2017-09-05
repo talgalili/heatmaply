@@ -55,14 +55,7 @@ NULL
 
 
 
-#
-#
-#
-#
-#
-#
-#
-#
+
 # .onLoad <- function(libname, pkgname){
 #    # Thanks for Romain: http://stackoverflow.com/questions/4369334/first-lib-idiom-in-r-packages
 #
@@ -100,12 +93,15 @@ heatmaplyWelcomeMessage <- function(){
 
    paste0("\n",
          "---------------------\n",
-         "Welcome to heatmaply version ", utils::packageDescription("heatmaply")$Version, "\n",
+         "Welcome to heatmaply version ", 
+         utils::packageDescription("heatmaply")$Version, "\n",
          # "\n",
+
          "Type ?heatmaply for the main documentation.\n",
          "The github page is: https://github.com/talgalili/heatmaply/\n",
          "\n",
-         "Suggestions and bug-reports can be submitted at: https://github.com/talgalili/heatmaply/issues\n",
+         "Suggestions and bug-reports can be submitted at: ",
+         "https://github.com/talgalili/heatmaply/issues\n",
          "Or contact: <tal.galili@gmail.com>\n",
          "\n",
          "\tTo suppress this message use:  ", "suppressPackageStartupMessages(library(heatmaply))\n",
@@ -270,7 +266,9 @@ heatmaplyWelcomeMessage <- function(){
 
 
 
-# when a function is renamed, its document in man must be removed - otherwise it may cause problems with the built check (it will try to run the code in the example, and will fail.)
+# when a function is renamed, its document in man must be removed - 
+# otherwise it may cause problems with the built check (it will try to run the 
+# code in the example, and will fail.)
 # When all is done, run:
 # library(devtools)
 # check()

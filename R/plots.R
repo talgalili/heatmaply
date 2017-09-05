@@ -39,12 +39,13 @@ ggplot_heatmap <- function(xx,
                            row_text_angle = 0,
                            column_text_angle = 45,
                            scale_fill_gradient_fun =
-                             scale_fill_gradientn(colors = viridis(n=256, alpha = 1, begin = 0,
-                                                                   end = 1, option = "viridis"),
-                                                  na.value = "grey50", limits = NULL),
+                             scale_fill_gradientn(
+                              colors = viridis(n = 256, alpha = 1, 
+                                begin = 0, end = 1, option = "viridis"),
+                              na.value = "grey50", limits = NULL),
                            grid_color = NA,
                            grid_size = 0.1,
-                           key.title = NULL,
+                           key_title = NULL,
                            layers,
                            row_dend_left = FALSE,
                            label_names,
@@ -57,8 +58,7 @@ ggplot_heatmap <- function(xx,
                                     panel.border = element_blank(),
                                     panel.background = element_blank())
   # heatmap
-  # xx <- x$matrix$data
-  if(!is.data.frame(xx)) df <- as.data.frame(xx)
+  if (!is.data.frame(xx)) df <- as.data.frame(xx)
 
   if (missing(label_names)) {
     if (is.null(dim_names <- names(dimnames(xx)))) {
@@ -72,7 +72,7 @@ ggplot_heatmap <- function(xx,
   val <- label_names[[3]]
 
   # colnames(df) <- x$matrix$cols
-  if(!is.null(rownames(xx))) {
+  if (!is.null(rownames(xx))) {
     df[[row]] <- rownames(xx)
   } else {
     df[[row]] <- 1:nrow(xx)
@@ -96,38 +96,43 @@ ggplot_heatmap <- function(xx,
     # scale_fill_viridis() +
     coord_cartesian(expand = FALSE) +
     scale_fill_gradient_fun +
-    theme_bw()+ theme_clear_grid_heatmap +
+    theme_bw() + 
+    theme_clear_grid_heatmap +
     theme(axis.text.x = element_text(angle = column_text_angle,
             size = fontsize_col, hjust = 1),
           axis.text.y = element_text(angle = row_text_angle,
             size = fontsize_row, hjust = 1)
           )
 
-  if(!missing(layers)) p <- p + layers
-    ## Passed in to allow users to alter (courtesy of GenVisR)
+  ## Passed in to allow users to alter (courtesy of GenVisR)
+  if (!missing(layers)) p <- p + layers
 
-  # p <- p + scale_x_discrete(limits = unique(mdf))
   # http://stats.stackexchange.com/questions/5007/how-can-i-change-the-title-of-a-legend-in-ggplot2
-  p <- p + labs(fill = key.title)
+  p <- p + labs(fill = key_title)
 
   # until this bug is fixed: https://github.com/ropensci/plotly/issues/699
   # we are forced to use geom_hline and geom_vline
-  if(!is.na(grid_color)) {
-    p <- p + geom_hline(yintercept = c(0:nrow(xx)) + 0.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
-    p <- p + geom_vline(xintercept = c(0:ncol(xx)) + 0.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
+  if (!is.na(grid_color)) {
+    p <- p + geom_hline(yintercept = c(0:nrow(xx)) + 0.5, color = grid_color) 
+    # , size = grid_size # not implemented since it doesn't work with plotly
+    p <- p + geom_vline(xintercept = c(0:ncol(xx)) + 0.5, color = grid_color) 
+    # , size = grid_size # not implemented since it doesn't work with plotly
 
   }
 
-  if(row_dend_left) p <- p + scale_y_discrete(position = "right") # possible as of ggplot 2.1.0 !
+  # possible as of ggplot 2.1.0 !
+  if (row_dend_left) p <- p + scale_y_discrete(position = "right") 
 
   p
 }
 
 
-plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha = 1, begin = 0,
-                                                                  end = 1, option = "viridis"),
-    row_text_angle = 0, column_text_angle = 45, grid.color, grid.size, key.title = NULL,
-    row_dend_left = FALSE, fontsize_row = 10, fontsize_col = 10, colorbar_xanchor = "left",
+plotly_heatmap <- function(x, limits = range(x), 
+    colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option = "viridis"),
+    row_text_angle = 0, column_text_angle = 45, grid.color, grid.size, 
+    row_dend_left = FALSE, 
+    fontsize_row = 10, fontsize_col = 10, 
+    colorbar_xanchor = "left",
     key_title = "", colorbar_yanchor = "bottom", colorbar_xpos = 1.1, colorbar_ypos = 1, colorbar_len = 0.3) {
 
   if (is.function(colors)) colors <- colors(256)
@@ -262,7 +267,7 @@ ggplot_side_color_plot <- function(df, palette = NULL,
   df[] <- lapply(df, as.character)
 
   ## TODO: Find out why names are dropped when ncol(df) == 1 (Not any more?)
-  original_dim <- dim(df)
+  # original_dim <- dim(df)
 
   if (is.null(palette)) palette <- colorspace::rainbow_hcl
 
@@ -272,7 +277,7 @@ ggplot_side_color_plot <- function(df, palette = NULL,
   if (type %in% colnames(df))
     stop("Having", type, "in the colnames of the side_color df will drop data!")
 
-  df[[type]] <- if(!is.null(rownames(df))) rownames(df) else 1:nrow(df)
+  df[[type]] <- if (!is.null(rownames(df))) rownames(df) else 1:nrow(df)
 
   df[[type]] <- factor(df[[type]], levels = df[[type]], ordered = TRUE)
   df <- reshape2::melt(df, id.vars = type)
@@ -285,7 +290,7 @@ ggplot_side_color_plot <- function(df, palette = NULL,
     axis.ticks = element_blank())
   
   ## Don't need this hack any more?
-  # if(original_dim[2] > 1) {
+  # if (original_dim[2] > 1) {
     text_element <- element_text(angle = text_angle)
   # } else text_element <- element_blank()
 
@@ -309,7 +314,8 @@ ggplot_side_color_plot <- function(df, palette = NULL,
   if (is.function(palette)) {
     palette <- setNames(palette(nlevels(df[["value"]])), levels(df[["value"]]))
   } else if (!all(levels(factor(df[["value"]])) %in% names(palette))) {
-    stop(paste("Not all levels of the", type, "side colors are mapped in the", type, "palette"))
+    stop(paste("Not all levels of the", type, "side colors are mapped in the", 
+      type, "palette"))
   }
  
   g <- ggplot(df, mapping = mapping) +
@@ -324,12 +330,10 @@ ggplot_side_color_plot <- function(df, palette = NULL,
   return(g)
 }
 
-
-
 ## Predict luminosity of cells and change text based on that
 ## http://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
-predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale, 
-    cell_values=p$x$data[[1]]$z, plot_method=c("ggplot", "plotly")) {
+predict_colors <- function(p, colorscale_df = p$x$data[[1]]$colorscale,
+    cell_values = p$x$data[[1]]$z, plot_method = c("ggplot", "plotly")) {
 
 
   plot_method <- match.arg(plot_method)
@@ -380,9 +384,6 @@ predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale,
   cell_font_colors
 }
 
-
-
-
 parse_plotly_color <- function(color) {
   r <- gsub("rgb[a]?\\((\\d+),(\\d+),(\\d+)(,\\d+)?)",
     "\\1", color)
@@ -392,8 +393,6 @@ parse_plotly_color <- function(color) {
     "\\3", color)
   rgb(r, g, b, maxColorValue = 255)
 }
-
-
 
 # # Create a plotly colorscale from a list of colors in any format.
 # # Probably not needed currently
@@ -454,9 +453,6 @@ k_colors <- function(k) {
   }
 }
 
-
-
-
 # Create a plotly colorscale from a list of colors in any format.
 discrete_colorscale <- function(colors) {
     colors <- rep(colors, each=100)
@@ -486,7 +482,8 @@ plotly_side_color_plot <- function(df, palette = NULL,
   if (is.function(palette)) {
     palette <- setNames(palette(length(levels)), levels)
   } else if (!all(levels %in% names(palette))) {
-    stop(paste("Not all levels of the", type, "side colors are mapped in the", type, "palette"))
+    stop(paste("Not all levels of the", type, 
+      "side colors are mapped in the", type, "palette"))
   }
 
   levs2colors <- palette[as.character(levels)]
@@ -496,7 +493,7 @@ plotly_side_color_plot <- function(df, palette = NULL,
   df_nums[] <- lapply(data, function(col) as.numeric(levs2nums[as.character(col)]))
   df_nums <- as.matrix(df_nums)
 
-  key_title <- paste(type, "annotation")
+  key_title <- paste(gsub("^(\\w)", "\\U\\1", type, perl = TRUE), "annotation")
 
   text_mat <- data
   text_mat[] <- lapply(seq_along(text_mat),
@@ -520,11 +517,11 @@ plotly_side_color_plot <- function(df, palette = NULL,
   ## https://stackoverflow.com/questions/42524450/using-discrete-custom-color-in-a-plotly-heatmap
   p <- plot_ly(z = df_nums, x = 1:ncol(df_nums), y = 1:nrow(df_nums),
     text = as.matrix(text_mat), hoverinfo = "text",
-    type = "heatmap", showlegend = FALSE, colors = levs2colors, 
+    type = "heatmap", showlegend = FALSE, colors = levs2colors,
     colorscale = discrete_colorscale(levs2colors),
     colorbar = list(
       # Capitalise first letter
-      title = paste(gsub("^(\\w)", "\\U\\1", type, perl = TRUE), "annotation"),
+      title = key_title,
       tickmode = 'array',
       tickvals = seq(1.5, length(levels) - 0.5, length.out = length(levels)),
       ticktext = levels,
