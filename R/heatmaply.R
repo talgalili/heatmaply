@@ -507,7 +507,8 @@ heatmaply.default <- function(x,
                               colorbar_ypos = 0,
                               showticklabels = c(TRUE, TRUE),
                               dynamicTicks = FALSE,
-
+                              grid_size = 0.1,
+                              node_type = "heatmap",
                               col) {
 
   if (!missing(long_data)) {
@@ -666,7 +667,9 @@ heatmaply.default <- function(x,
                      colorbar_xpos = colorbar_xpos,
                      colorbar_ypos = colorbar_ypos,
                      showticklabels = showticklabels,
-                     dynamicTicks = dynamicTicks
+                     dynamicTicks = dynamicTicks,
+                     grid_size = grid_size,
+                     node_type = node_type
                      )
 
                      # TODO: think more on what should be passed in "..."
@@ -863,9 +866,12 @@ heatmaply.heatmapr <- function(x,
                                colorbar_ypos = 0,
                                colorbar_len = 0.3,
                                showticklabels = c(TRUE, TRUE),
-                               dynamicTicks = FALSE
+                               dynamicTicks = FALSE,
+                               node_type = c("scatter", "heatmap"),
+                               grid_size = 0.1
                                ) {
 
+  node_type <- match.arg(node_type)
   plot_method <- match.arg(plot_method)
   cellnote_textposition <- match.arg(cellnote_textposition,
     choices = c("top left", "top center" , "top right", "middle left",
@@ -957,10 +963,12 @@ heatmaply.heatmapr <- function(x,
                       column_text_angle,
                       scale_fill_gradient_fun,
                       grid_color,
+                      grid_size = grid_size,
                       key.title = key.title,
                       layers = heatmap_layers,
                       row_dend_left = row_dend_left,
                       label_names = label_names,
+                      type = node_type,
                       fontsize_row = fontsize_row, fontsize_col = fontsize_col)
   } else if (plot_method == "plotly") {
 

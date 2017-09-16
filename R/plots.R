@@ -50,6 +50,8 @@ ggplot_heatmap <- function(xx,
                            label_names,
                            fontsize_row = 10,
                            fontsize_col = 10,
+                           type = "heatmap",
+                           pointsize = 5,
                            ...) {
   theme_clear_grid_heatmap <- theme(axis.line = element_line(color = "black"),
                                     panel.grid.major = element_blank(),
@@ -87,23 +89,40 @@ ggplot_heatmap <- function(xx,
   mdf <- reshape2::melt(df, id.vars = row)
   colnames(mdf)[2:3] <- c(col, val) # rename "variable" and "value"
 
+
+  if (type == "heatmap") {
+    geom <- "geom_tile" 
+    geom_args <- list(
+      mapping = aes_string(fill=val),
+      color = grid_color, 
+      size = grid_size)
+  } else if (type == "scatter") {
+    geom <- "geom_point"
+    geom_args <- list(
+      mapping = aes_string(color=val),
+      size = grid_size)
+  }
+
   # TODO:
   # http://stackoverflow.com/questions/15921799/draw-lines-around-specific-areas-in-geom-tile
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
   p <- ggplot(mdf, aes_string(x = col, y = row)) +
-    geom_tile(aes_string(fill = val), color = grid_color, size = grid_size) +
-    # scale_linetype_identity() +
-    # scale_fill_viridis() +
+    do.call(geom, geom_args) +
     coord_cartesian(expand = FALSE) +
     scale_fill_gradient_fun +
-    theme_bw()+ theme_clear_grid_heatmap +
+    theme_bw() + 
+    theme_clear_grid_heatmap +
     theme(axis.text.x = element_text(angle = column_text_angle,
             size = fontsize_col, hjust = 1),
           axis.text.y = element_text(angle = row_text_angle,
             size = fontsize_row, hjust = 1)
-          )
+          ) +
+    scale_color_gradientn(colors = viridis(n=256, alpha = 1, begin = 0,
+                                                                   end = 1, option = "viridis"),
+                                                  na.value = "grey50", limits = NULL)
 
-  if(!missing(layers)) p <- p + layers
+  if (type == "scatter") p <- p + coord_cartesian(xlim = c(1, ncol(xx)), ylim = c(1, nrow(xx)))
+  if (!missing(layers)) p <- p + layers
     ## Passed in to allow users to alter (courtesy of GenVisR)
 
   # p <- p + scale_x_discrete(limits = unique(mdf))
@@ -115,7 +134,6 @@ ggplot_heatmap <- function(xx,
   if(!is.na(grid_color)) {
     p <- p + geom_hline(yintercept = c(0:nrow(xx)) + 0.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
     p <- p + geom_vline(xintercept = c(0:ncol(xx)) + 0.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
-
   }
 
   if(row_dend_left) p <- p + scale_y_discrete(position = "right") # possible as of ggplot 2.1.0 !
