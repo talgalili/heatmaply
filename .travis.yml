@@ -2,17 +2,10 @@ language: r
 sudo: required
 warnings_are_errors: true
 
-after_success:
-  - Rscript -e 'library(covr); codecov()'
-
 r_github_packages:
   - hadley/testthat # for skip_if_not_installed
-
-r_github_packages:
-  - hadley/testthat # for skip_if_not_installed
-
-r_github_packages:
   - jimhester/lintr
 
 after_success:
-  - Rscript -e 'lintr::lint_package()'
+  - Rscript -e 'library(covr); codecov()'
+  - Rscript -e 'lintr::lint_package(linters=c("absolute_paths_linter", "assignment_linter", "closed_curly_linter", "commas_linter", "infix_spaces_linter", "line_length_linter", "no_tab_linter", "object_usage_linter", "camel_case_linter", "multiple_dots_linter", "object_length_linter", "open_curly_linter", "spaces_inside_linter", "spaces_left_parentheses_linter"))'
