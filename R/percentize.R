@@ -17,7 +17,9 @@ percentize_predict <- function(x, ecdf_fun = ecdf, ...) {
   }
 
   fun <- function(new_x) {
-    if( any(colnames(new_x) != colnames(x)) ) stop("The column names (or order) of the new x are different than that of the old x. Please fix and try again.")
+    if(any(colnames(new_x) != colnames(x))) 
+      stop(paste0("The column names (or order) of the new x are different",
+        " than that of the old x. Please fix and try again."))
 
     for(i in 1:ncol(x)) {
       ecdf_fun <- ecdf_list[[i]]
@@ -157,7 +159,8 @@ normalize <- function(x, ...) {
 #' @export
 normalize.default <- function(x, ...) {
   ss_no_NA <- !is.na(x)
-  x[ss_no_NA] <- (x[ss_no_NA]-min(x[ss_no_NA]))/(max(x[ss_no_NA])-min(x[ss_no_NA]))
+  x[ss_no_NA] <- (x[ss_no_NA] - min(x[ss_no_NA])) / 
+    (max(x[ss_no_NA]) - min(x[ss_no_NA]))
   x
 }
 
@@ -180,11 +183,3 @@ normalize.matrix <- function(x, ...) {
   x <- as.data.frame(x)
   normalize(x)
 }
-
-
-
-
-
-
-
-
