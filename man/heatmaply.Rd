@@ -305,6 +305,9 @@ should plotly.js dynamically generate axis tick labels?
 Dynamic ticks are useful for updating ticks in response to zoom/pan interactions; however,
 they can not always reproduce labels as they would appear in the static ggplot2 image.}
 
+\item{grid_size}{When node_type is "scatter", this controls point size. When
+node_type is "heatmap", this controls the size of the grid between heatmap cells.}
+
 \item{node_type}{For plot_method = "ggplot", should the heatmap be rendered as
 a x-y scatter plot (node_type = "scatter") or a heatmap (node_type = "heatmap").
 Default is node_type = "heatmap".}
