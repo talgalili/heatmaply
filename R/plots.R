@@ -50,7 +50,7 @@ ggplot_heatmap <- function(xx,
                            label_names,
                            fontsize_row = 10,
                            fontsize_col = 10,
-                           type = "heatmap",
+                           type = c("heatmap", "scatter"),
                            pointsize = 5,
                            ...) {
   theme_clear_grid_heatmap <- theme(axis.line = element_line(color = "black"),

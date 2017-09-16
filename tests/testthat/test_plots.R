@@ -4,8 +4,15 @@ iris_plot <- iris[, -5]
 iris_category <- iris[, 5, drop = FALSE]
 
 test_that("ggplot_heatmap works", {
-	g <- heatmaply:::plotly_heatmap(as.matrix(iris_plot))
-	expect_is(g, "plotly")
+	g <- heatmaply:::ggplot_heatmap(as.matrix(iris_plot))
+	expect_is(g, "ggplot")
+	expect_error(ggplot_build(g), NA)
+	expect_error(ggplotly(g), NA)
+
+	g <- heatmaply:::ggplot_heatmap(as.matrix(iris_plot), node_type = "scatter")
+	expect_is(g, "ggplot")
+	expect_error(ggplot_build(g), NA)
+	expect_error(ggplotly(g), NA)
 })
 
 test_that("plotly_heatmap works", {
@@ -23,10 +30,12 @@ test_that("ggplot_side_color_plot works", {
 	g <- heatmaply:::ggplot_side_color_plot(iris_category, 
 		type = "row")
 	expect_is(g, "ggplot")
+	expect_error(ggplot_build(g), NA)
 	expect_error(ggplotly(g), NA)
 	g <- heatmaply:::ggplot_side_color_plot(iris_category, 
 		type = "column")
 	expect_is(g, "ggplot")
+	expect_error(ggplot_build(g), NA)
 	expect_error(ggplotly(g), NA)
 })
 
@@ -34,17 +43,19 @@ test_that("plotly_side_color_plot works", {
 	p <- heatmaply:::plotly_side_color_plot(iris_category, 
 		type = "row")
 	expect_is(p, "plotly")
-	expect_error(ggplotly(p), NA)
+
 	p <- heatmaply:::plotly_side_color_plot(iris_category, 
 		type = "column")
 	expect_is(p, "plotly")
-	expect_error(ggplotly(p), NA)
 })
 
 test_that("predict_colors works", {
 	expect_error(heatmaply:::predict_colors("#ffffff"))
 	p <- heatmaply:::plotly_heatmap(as.matrix(iris_plot))
 	g <- heatmaply:::ggplot_heatmap(as.matrix(iris_plot))
+	expect_error(ggplot_build(g), NA)
+	expect_error(ggplotly(g), NA)
+
 	expect_error(heatmaply:::predict_colors(p, plot_method = "plotly"), NA)
 	expect_error(
 		heatmaply:::predict_colors(ggplotly(g), plot_method = "ggplot"), 
