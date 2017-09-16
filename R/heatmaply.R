@@ -250,6 +250,9 @@ is.plotly <- function(x) {
 #' Dynamic ticks are useful for updating ticks in response to zoom/pan interactions; however,
 #' they can not always reproduce labels as they would appear in the static ggplot2 image.
 #'
+#' @param node_type For plot_method = "ggplot", should the heatmap be rendered as
+#'  a x-y scatter plot (node_type = "scatter") or a heatmap (node_type = "heatmap").
+#'  Default is node_type = "heatmap".
 #' @export
 #' @examples
 #' \dontrun{
