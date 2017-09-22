@@ -1,13 +1,5 @@
-heatmaply 0.11.1 (2017-08-30)
-================
-### NEW FEATURES
-* heatmaply
-  - Side color plots have better defaults colors, courtesy of RColorBrewer's qualitative color palettes.
-### Bugfixes 
-* heatmaply
-  - `heatmaply.heatmapr()` previously ignored `row_side_colors` and `col_side_colors` when passed to `heatmapr()` (issue #94)
 
-heatmaply 0.11.0 (2017-07-31)
+heatmaply 0.11.0 (2017-09-22)
 ================
 
 ### NEW FEATURES
@@ -17,12 +9,14 @@ heatmaply 0.11.0 (2017-07-31)
   - `row_side_palette` and `col_side_palette` can now be named vectors of
     colors.
   - Improved test coverage.
+  - Side color plots have better defaults colors, courtesy of RColorBrewer's qualitative color palettes.
 
 ### BUG FIXES
 * heatmaply
   - Improved side color plots when `plot_method = "plotly"`, including improved positioning of legends.
   - grid_gap works when `plot_method = "plotly"`
   - file argument will now deal with names that includes folder names before the file name.
+  - `heatmaply.heatmapr()` previously ignored `row_side_colors` and `col_side_colors` when passed to `heatmapr()` (issue #94)
 
 
 
