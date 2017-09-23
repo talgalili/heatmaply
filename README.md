@@ -30,9 +30,9 @@ This package is still under active development. If you have features you would l
 
 A heatmap is a popular graphical method for visualizing high-dimensional data, in which a table of numbers are encoded as a grid of colored cells. The rows and columns of the matrix are ordered to highlight patterns and are often accompanied by dendrograms. Heatmaps are used in many fields for visualizing observations, correlations, missing values patterns, and more.
 
-Interactive heatmaps allow the inspection of specific value by hovering the mouse over a cell, as well as zooming into a region of the heatmap by draging a rectangle around the relevant area.
+Interactive heatmaps allow the inspection of specific value by hovering the mouse over a cell, as well as zooming into a region of the heatmap by dragging a rectangle around the relevant area.
 
-This work is based on the ggplot2 and plotly.js engine. It produces similar heatmaps as d3heatmap (or the static heatmap.2 from gplots), with the advatange of more features such as speed (plotly.js is able to handle larger size matrix), sidebar annotation, and the ability to zoom from the dendrogram.
+This work is based on the ggplot2 and plotly.js engine. It produces similar heatmaps as d3heatmap (or the static heatmap.2 from gplots), with the advantage of more features such as speed (plotly.js is able to handle larger size matrix), sidebar annotation, and the ability to zoom from the dendrogram.
 
 
 ## Installation
