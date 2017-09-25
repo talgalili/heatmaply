@@ -10,6 +10,7 @@ heatmaply 0.11.0 (2017-09-22)
     colors.
   - Improved test coverage.
   - Side color plots have better defaults colors, courtesy of RColorBrewer's qualitative color palettes.
+  - file argument can now work with static file extensions such as png/jpeg/pdf (thanks to the webshot package).
 
 ### BUG FIXES
 * heatmaply
