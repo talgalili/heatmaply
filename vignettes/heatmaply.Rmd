@@ -174,9 +174,10 @@ Reviewing missing values can easily be done using the `is.na10` function. When u
 
 library(heatmaply)
 
-heatmaply(is.na10(airquality), grid_gap = 1,
+heatmaply(is.na10(airquality), grid_gap = 1, 
+          showticklabels = c(T,F),
             k_col =3, k_row = 3,
-            margins = c(55, 30),
+            margins = c(55, 30), 
             colors = c("grey80", "grey20"))
 # Better to use:
 # heatmaply_na(airquality, k_col =3, k_row = 3,
@@ -226,7 +227,7 @@ heatmaply(cor(mtcars), margins = c(40, 40),
 Another example for using colors:
 
 
-```{r}
+```{r, eval = FALSE}
 heatmaply(percentize(mtcars), margins = c(40, 130),
           colors = heat.colors(100))
 ```
@@ -319,7 +320,7 @@ gplots::heatmap.2(x, trace = "none", col = viridis(100), key = FALSE)
 
 With heatmaply, the only difference is the side of the row dendrogram. This is because the `ggplotly` function from plotly does not (yet) handle axes placed in different locations than the default.
 
-```{r}
+```{r, eval = FALSE}
 library(heatmaply)
 heatmaply(x, seriate = "mean")
 ```
@@ -357,7 +358,7 @@ heatmap.2(x, trace = "none", col = viridis(100),
 
 With heatmaply
 
-```{r}
+```{r, eval = FALSE}
 heatmaply(x, seriate = "mean",
           RowSideColors=rc)
 
