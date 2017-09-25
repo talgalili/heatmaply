@@ -4,3 +4,4 @@
 ^CONDUCT\.md$
 TODO\.txt
 vignettes/\.build\.timestamp
+Makefile
