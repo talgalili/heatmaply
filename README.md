@@ -30,9 +30,9 @@ This package is still under active development. If you have features you would l
 
 A heatmap is a popular graphical method for visualizing high-dimensional data, in which a table of numbers are encoded as a grid of colored cells. The rows and columns of the matrix are ordered to highlight patterns and are often accompanied by dendrograms. Heatmaps are used in many fields for visualizing observations, correlations, missing values patterns, and more.
 
-Interactive heatmaps allow the inspection of specific value by hovering the mouse over a cell, as well as zooming into a region of the heatmap by draging a rectangle around the relevant area.
+Interactive heatmaps allow the inspection of specific value by hovering the mouse over a cell, as well as zooming into a region of the heatmap by dragging a rectangle around the relevant area.
 
-This work is based on the ggplot2 and plotly.js engine. It produces similar heatmaps as d3heatmap (or the static heatmap.2 from gplots), with the advatange of more features such as speed (plotly.js is able to handle larger size matrix), sidebar annotation, and the ability to zoom from the dendrogram.
+This work is based on the ggplot2 and plotly.js engine. It produces similar heatmaps as d3heatmap (or the static heatmap.2 from gplots), with the advantage of more features such as speed (plotly.js is able to handle larger size matrix), sidebar annotation, and the ability to zoom from the dendrogram.
 
 
 ## Installation
@@ -79,6 +79,37 @@ heatmaply(mtcars, k_row = 3, k_col = 2)
 ```
 
 **For more (interactive) examples see the [online vignette on CRAN](https://CRAN.R-project.org/package=heatmaply/vignettes/heatmaply.html)**
+
+There are also more complex biological examples of using heatmaply in the R package [heatmaplyExamples](https://github.com/talgalili/heatmaplyExamples) (hosted on github). Here are direct links for available examples:
+
+* [Using heatmaply with gene expression data](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/biological_data.html)
+* [Using heatmaply with gene expression data - preprocessing](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/data_preprocessing.htm)
+* [Using heatmaply with non-centred RNAseq heatmaps (PAM50 genes) ](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/non_centred_heatmaps.html)
+* [Using heatmaply for visualizing glmnet coefficient path](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/glmnet.html)
+* [Using heatmaply with famous data sets](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/heatmaply_examples.html)
+
+
+### Saving your heatmaply into a file
+
+You can save an interactive version of your heatmaply into an HTML file using the following code:
+
+```r
+dir.create("folder")
+library(heatmaply)
+heatmaply(mtcars, file = "folder/heatmaply_plot.html")
+browseURL("folder/heatmaply_plot.html")
+```
+
+Similar code can be used for saving a static file (png/jpeg/pdf)
+
+```r
+dir.create("folder")
+library(heatmaply)
+# Before the first time using this code you may need to first run:
+# webshot::install_phantomjs()
+heatmaply(mtcars, file = "folder/heatmaply_plot.png")
+browseURL("folder/heatmaply_plot.png")
+```
 
 
 

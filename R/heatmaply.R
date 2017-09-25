@@ -209,12 +209,15 @@ is.plotly <- function(x) {
 #' parameter is ignored (it is checked using \link[dendextend]{has_edgePar}("lwd")).
 #'
 #'
-#' @param file HTML file name to save the heatmaply into. Should be a character
-#' string ending with ".html".
+#' @param file name of the file into which to save the heatmaply output.
+#' Should be a character string ending with ".html" for a dynamic output,
+#' or ".png"/".jpeg"/".pdf" for a static output.
+#'
 #' For example: heatmaply(x, file = "heatmaply_plot.html") or
 #' dir.create("folder")
 #' heatmaply(x, file = "folder/heatmaply_plot.html")
-#' This is based on \link[htmlwidgets]{saveWidget}.
+#' This is based on \link[htmlwidgets]{saveWidget}, and \link[webshot]{webshot} for the static files.
+#' For more refined control over the static file output, you should save the heatmaply object using \link[webshot]{webshot}.
 #'
 #' @param long_data Data in long format. Replaces x, so both should not be used.
 #'  Colnames must be c("name", "variable", "value"). If you do not have a names
@@ -299,6 +302,8 @@ is.plotly <- function(x) {
 #'
 #' # We can save heatmaply as an HTML file by using:
 #' heatmaply(iris[,-5], file = "heatmaply_iris.html")
+#' # or a png/pdf/jpeg file using:
+#' heatmaply(iris[,-5], file = "heatmaply_iris.png")
 #'
 #' # If we don't want the HTML to be selfcontained, we can use the following:
 #' library(heatmaply)
@@ -671,12 +676,28 @@ heatmaply.default <- function(x,
 
                      # TODO: think more on what should be passed in "..."
 
+
   if (!missing(file)) {
-    # solution to dealing with the folder:
-    # https://stackoverflow.com/questions/41399795/savewidget-from-htmlwidget-in-r-cannot-save-html-file-in-another-folder
-    tmp_fp <- file
-    tmp_fp <- file.path(normalizePath(dirname(tmp_fp)),basename(tmp_fp))
-    hmly %>% saveWidget(file = tmp_fp, selfcontained = TRUE)
+
+    # tools::file_ext("hithere.png")
+    # tools::file_ext("hithere.html")
+    # tools::file_ext("hithere.html.png")
+    file_extension <- tolower(tools::file_ext(file))
+    if(!(file_extension %in% c("html","pdf", "png", "jpeg"))) {
+      warning("file extension must be one of the following: html/pdf/png/jpeg. Since it was not - your heatmaply was not saved to a file.")
+    } else {
+      if(file_extension == "html") {
+        # solution to dealing with the folder:
+        # https://stackoverflow.com/questions/41399795/savewidget-from-htmlwidget-in-r-cannot-save-html-file-in-another-folder
+        tmp_fp <- file
+        tmp_fp <- file.path(normalizePath(dirname(tmp_fp)),basename(tmp_fp))
+        hmly %>% saveWidget(file = tmp_fp, selfcontained = TRUE)
+      }
+      if(file_extension %in% c("pdf", "png", "jpeg")) {
+        export(hmly, file)
+      }
+    }
+
   }
 
   hmly

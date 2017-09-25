@@ -1,7 +1,7 @@
 
 
-# ggplot_heatmap(as.matrix(mtcars))
-# plotly_heatmap(as.matrix(mtcars))
+# heatmaply:::ggplot_heatmap(as.matrix(mtcars))
+# heatmaply:::plotly_heatmap(as.matrix(mtcars))
 # style(plotly_heatmap(as.matrix(mtcars)), xgap = 5, ygap = 5)
 
 
@@ -206,7 +206,7 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   if (is.numeric(colors)) {
     colors <- gplots::col2hex(grDevices::palette()[seq_along(colors)])
   }
-  
+
   lab_max <- nrow(dend_data$labels)
   if (side == "row") lab_max <- lab_max + 0.5
 
@@ -315,7 +315,7 @@ ggplot_side_color_plot <- function(df, palette = NULL,
   common_theme <- theme(
     panel.background = element_blank(),
     axis.ticks = element_blank())
-  
+
   ## Don't need this hack any more?
   # if(original_dim[2] > 1) {
     text_element <- element_text(angle = text_angle)
@@ -337,14 +337,14 @@ ggplot_side_color_plot <- function(df, palette = NULL,
     )
   }
   theme <- list(common_theme, specific_theme)
-  
+
   if (is.function(palette)) {
     palette <- setNames(palette(nlevels(df[["value"]])), levels(df[["value"]]))
   } else if (!all(levels(factor(df[["value"]])) %in% names(palette))) {
     stop(paste0("Not all levels of the ", type, 
       "_side_colors are mapped in the ", type, "_side_palette"))
   }
- 
+
   g <- ggplot(df, mapping = mapping) +
     geom_tile() +
     xlab("") +
@@ -379,7 +379,7 @@ default_side_colors <- function(n) {
 
 ## Predict luminosity of cells and change text based on that
 ## http://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
-predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale, 
+predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale,
     cell_values=p$x$data[[1]]$z, plot_method=c("ggplot", "plotly")) {
 
   plot_method <- match.arg(plot_method)
@@ -559,8 +559,8 @@ plotly_side_color_plot <- function(df, palette = NULL,
         paste0(
           "value: ", data[, i], "<br>",
           "variable: ", colnames(data)[i], "<br>",
-          label_name, ": ", rownames(data)  
-        )        
+          label_name, ": ", rownames(data)
+        )
       } else {
         paste0(
           "value: ", data[, i], "<br>",
@@ -570,11 +570,11 @@ plotly_side_color_plot <- function(df, palette = NULL,
       }
     }
   )
-  
+
   ## https://stackoverflow.com/questions/42524450/using-discrete-custom-color-in-a-plotly-heatmap
   p <- plot_ly(z = df_nums, x = 1:ncol(df_nums), y = 1:nrow(df_nums),
     text = as.matrix(text_mat), hoverinfo = "text",
-    type = "heatmap", showlegend = FALSE, colors = levs2colors, 
+    type = "heatmap", showlegend = FALSE, colors = levs2colors,
     colorscale = discrete_colorscale(levs2colors),
     colorbar = list(
       # Capitalise first letter
@@ -582,7 +582,7 @@ plotly_side_color_plot <- function(df, palette = NULL,
       tickmode = 'array',
       tickvals = seq(1.5, length(levels) - 0.5, length.out = length(levels)),
       ticktext = levels,
-      len = 0.2)) 
+      len = 0.2))
   if (type == "row") {
     p <- p %>% layout(
       xaxis = list(
