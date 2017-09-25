@@ -89,6 +89,28 @@ There are also more complex biological examples of using heatmaply in the R pack
 * [Using heatmaply with famous data sets](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/heatmaply_examples.html)
 
 
+### Saving your heatmaply into a file
+
+You can save an interactive version of your heatmaply into an HTML file using the following code:
+
+```r
+dir.create("folder")
+library(heatmaply)
+heatmaply(mtcars, file = "folder/heatmaply_plot.html")
+browseURL("folder/heatmaply_plot.html")
+```
+
+Similar code can be used for saving a static file (png/jpeg/pdf)
+
+```r
+dir.create("folder")
+library(heatmaply)
+# Before the first time using this code you may need to first run:
+# webshot::install_phantomjs()
+heatmaply(mtcars, file = "folder/heatmaply_plot.png")
+browseURL("folder/heatmaply_plot.png")
+```
+
 
 
 ## Acknowledgements
