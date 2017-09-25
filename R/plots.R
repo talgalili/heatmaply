@@ -47,7 +47,7 @@ ggplot_heatmap <- function(xx,
                            key.title = NULL,
                            layers,
                            row_dend_left = FALSE,
-                           label_names,
+                           label_names = NULL,
                            fontsize_row = 10,
                            fontsize_col = 10,
                            ...) {
@@ -60,9 +60,11 @@ ggplot_heatmap <- function(xx,
   # xx <- x$matrix$data
   if(!is.data.frame(xx)) df <- as.data.frame(xx)
 
-  if (missing(label_names)) {
+  if (is.null(label_names)) {
     if (is.null(dim_names <- names(dimnames(xx)))) {
       label_names <- c("row", "column", "value")
+    } else {
+      label_names <- dim_names
     }
   } else {
     assert_that(length(label_names) == 3)
@@ -96,7 +98,7 @@ ggplot_heatmap <- function(xx,
     # scale_fill_viridis() +
     coord_cartesian(expand = FALSE) +
     scale_fill_gradient_fun +
-    theme_bw()+ theme_clear_grid_heatmap +
+    theme_bw() + theme_clear_grid_heatmap +
     theme(axis.text.x = element_text(angle = column_text_angle,
             size = fontsize_col, hjust = 1),
           axis.text.y = element_text(angle = row_text_angle,
@@ -124,16 +126,42 @@ ggplot_heatmap <- function(xx,
 }
 
 
-plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha = 1, begin = 0,
-                                                                  end = 1, option = "viridis"),
-    row_text_angle = 0, column_text_angle = 45, grid.color, grid.size, key.title = NULL,
-    row_dend_left = FALSE, fontsize_row = 10, fontsize_col = 10, colorbar_xanchor = "left",
-    key_title = "", colorbar_yanchor = "bottom", colorbar_xpos = 1.1, colorbar_ypos = 1, colorbar_len = 0.3) {
+plotly_heatmap <- function(x, limits = range(x), 
+    colors = viridis(n=256, alpha = 1, begin = 0, end = 1, option = "viridis"),
+    row_text_angle = 0, column_text_angle = 45, grid.color, grid.size, 
+    row_dend_left = FALSE, fontsize_row = 10, fontsize_col = 10, key_title = "",
+    colorbar_xanchor = "left", colorbar_yanchor = "bottom", 
+    label_names = NULL,
+    colorbar_xpos = 1.1, colorbar_ypos = 1, colorbar_len = 0.3) {
 
   if (is.function(colors)) colors <- colors(256)
 
-  p <- plot_ly(z = x, x = 1:ncol(x), y = 1:nrow(x),
-    type = "heatmap", showlegend = FALSE, colors = colors,
+
+  if (is.null(label_names)) {
+    if (is.null(dim_names <- names(dimnames(x)))) {
+      label_names <- c("row", "column", "value")
+    } else {
+      label_names <- dim_names
+    }
+  } else {
+    assert_that(length(label_names) == 3)
+  }
+
+  text_mat <- as.data.frame(x)
+  text_mat[] <- lapply(seq_along(text_mat),
+    function(i) {
+      paste0(
+        label_names[3], ": ", x[, i], "<br>",
+        label_names[2], ": ", colnames(x)[i], "<br>",
+        label_names[1], ": ", rownames(x)  
+      )
+    }
+  )
+  text_mat <- as.matrix(text_mat)
+
+
+  p <- plot_ly(z = x, x = 1:ncol(x), y = 1:nrow(x), text = text_mat,
+    type = "heatmap", showlegend = FALSE, colors = colors, hoverinfo = "text",
     zmin = limits[1], zmax = limits[2]) %>%
       layout(
         xaxis = list(
@@ -161,6 +189,7 @@ plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha =
 
 
 plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
+  if (is.hclust(dend)) dend <- as.dendrogram(dend)
   side <- match.arg(side)
   dend_data <- as.ggdend(dend)
   segs <- dend_data$segments
@@ -246,17 +275,21 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
 #' @param text_angle the angle of the text of the rows/columns.
 #' @param is_colors Use if the values in df are valid colours and should not be mapped
 #'  to a color scheme, and instead should be plotted directly.
+#' @param fontsize Font size (currently unused)
 #' @param label_name Name for the mouseover label, usually "row" or "column"
 #'
 #' @return A ggplot geom_tile object
 #'
 ggplot_side_color_plot <- function(df, palette = NULL,
     scale_title = paste(type, "side colors"), type = c("column", "row"),
-    text_angle = if (type == "column") 0 else 90, is_colors = FALSE,
-    label_name = type) {
+    text_angle = if (type == "column") 0 else 90, is_colors = FALSE, fontsize,
+    label_name = NULL) {
 
+  type <- match.arg(type)
   if (is.matrix(df)) df <- as.data.frame(df)
   assert_that(is.data.frame(df))
+
+  if (is.null(label_name)) label_name <- type
 
   ## Cooerce to character
   df[] <- lapply(df, as.character)
@@ -264,9 +297,8 @@ ggplot_side_color_plot <- function(df, palette = NULL,
   ## TODO: Find out why names are dropped when ncol(df) == 1 (Not any more?)
   original_dim <- dim(df)
 
-  if (is.null(palette)) palette <- colorspace::rainbow_hcl
+  if (is.null(palette)) palette <- default_side_colors
 
-  type <- match.arg(type)
   ## Custom label
   if (!missing(label_name)) type <- label_name
   if (type %in% colnames(df))
@@ -309,7 +341,8 @@ ggplot_side_color_plot <- function(df, palette = NULL,
   if (is.function(palette)) {
     palette <- setNames(palette(nlevels(df[["value"]])), levels(df[["value"]]))
   } else if (!all(levels(factor(df[["value"]])) %in% names(palette))) {
-    stop(paste("Not all levels of the", type, "side colors are mapped in the", type, "palette"))
+    stop(paste0("Not all levels of the ", type, 
+      "_side_colors are mapped in the ", type, "_side_palette"))
   }
 
   g <- ggplot(df, mapping = mapping) +
@@ -326,11 +359,28 @@ ggplot_side_color_plot <- function(df, palette = NULL,
 
 
 
+default_side_colors <- function(n) {
+  ## Warning if n < 3 in any case
+  suppressWarnings(
+    if (n <= 12) {
+      RColorBrewer::brewer.pal(n, "Paired")[seq_len(n)]
+    } else if (n <= 20) {
+      c(RColorBrewer::brewer.pal(12, "Paired"), 
+        RColorBrewer::brewer.pal(n - 12, "Set2"))[seq_len(n)]
+    } else if (n <= 32) {
+      c(RColorBrewer::brewer.pal(12, "Paired"), 
+        RColorBrewer::brewer.pal(8, "Set2"), 
+        RColorBrewer::brewer.pal(n - 20, "Set3"))[seq_len(n)]
+    } else {
+      colorspace::rainbow_hcl(n)
+    }
+  )
+}
+
 ## Predict luminosity of cells and change text based on that
 ## http://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
 predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale,
     cell_values=p$x$data[[1]]$z, plot_method=c("ggplot", "plotly")) {
-
 
   plot_method <- match.arg(plot_method)
 
@@ -379,8 +429,6 @@ predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale,
   )
   cell_font_colors
 }
-
-
 
 
 parse_plotly_color <- function(color) {
@@ -468,9 +516,11 @@ discrete_colorscale <- function(colors) {
 plotly_side_color_plot <- function(df, palette = NULL,
     scale_title = paste(type, "side colors"), type = c("column", "row"),
     text_angle = if (type == "column") 0 else 90, is_colors = FALSE,
-    label_name = type, fontsize = 10) {
+    label_name = NULL, fontsize = 10) {
 
   type <- match.arg(type)
+
+  if (is.null(label_name)) label_name <- type
 
   data <- df
   data[] <- lapply(df, as.character)
@@ -479,14 +529,18 @@ plotly_side_color_plot <- function(df, palette = NULL,
   }
   data <- as.data.frame(data)
   data_vals <- unlist(data)
-  levels <- unique(data_vals)
+
+  levels <- sort(unique(data_vals))
   levels <- setdiff(levels, NA)
 
-  if (is.null(palette)) palette <- colorspace::rainbow_hcl
+  if (is.null(palette)) palette <- default_side_colors
+
   if (is.function(palette)) {
     palette <- setNames(palette(length(levels)), levels)
   } else if (!all(levels %in% names(palette))) {
-    stop(paste("Not all levels of the", type, "side colors are mapped in the", type, "palette"))
+    stop(paste0(
+      "Not all levels of the ", type, 
+      "_side_colors are mapped in the ", type, "_side_palette"))
   }
 
   levs2colors <- palette[as.character(levels)]

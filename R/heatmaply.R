@@ -226,7 +226,7 @@ is.plotly <- function(x) {
 #'  column you can simply use a sequence of numbers from 1 to the number of "rows"
 #'  inthe data.
 #'
-#' @param label_names Names for labells of x, y and value/fill mouseover.
+#' @param label_names Names for labels of x, y and value/fill mouseover.
 #' @param fontsize_row,fontsize_col,cexRow,cexCol Font size for row and column labels.
 #' @param subplot_widths,subplot_heights The relative widths and heights of each
 #'  subplot. The length of these vectors will vary depending on the number of
@@ -505,7 +505,7 @@ heatmaply.default <- function(x,
                               file,
                               long_data,
                               plot_method = c("ggplot", "plotly"),
-                              label_names = c("row", "column", "value"),
+                              label_names = NULL,
                               fontsize_row = 10,
                               fontsize_col = 10,
                               cexRow, cexCol,
@@ -691,135 +691,6 @@ heatmaply.default <- function(x,
 }
 
 
-
-
-
-
-
-
-
-
-heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
-                                          row_dend_left = FALSE, subplot_margin = 0,
-                                          titleX = TRUE, titleY = TRUE,
-                                          widths=NULL, heights=NULL,
-                                          plot_method) {
-
-  if (is.null(widths)) {
-    if (!is.null(px)) {
-      if (is.null(pr)) {
-        widths <- c(0.8, 0.2)
-      } else {
-        widths <- c(0.7, 0.05, 0.2)
-      }
-    } else {
-      if (is.null(pr)) {
-        widths <- 1
-      } else {
-        widths <- c(0.9, 0.1)
-      }
-    }
-    if(row_dend_left) widths <- rev(widths)
-  }
-
-  if (is.null(heights)) {
-    if (!is.null(py)) {
-      if (is.null(pc)) {
-        heights <- c(0.2, 0.8)
-      } else {
-        heights <- c(0.2, 0.05, 0.7)
-      }
-    } else {
-      if (is.null(pc)) {
-        heights <- 1
-      } else {
-        heights <- c(0.1, 0.9)
-      }
-    }
-  }
-
-  # make different plots based on which dendrogram and sidecolors we have
-  row1_list <- list(py, plotly_empty(), plotly_empty())
-  row2_list <- list(pc, plotly_empty(), plotly_empty())
-  row3_list <- list(p, pr, px)
-
-  if (row_dend_left) {
-    row3_list <- rev(row3_list)
-    row2_list <- rev(row2_list)
-    row1_list <- rev(row1_list)
-  }
-  plots <- c(row1_list,
-             row2_list,
-             row3_list)
-
-  column_list <- list(py, pc, p)
-  ind_null_col <- sapply(column_list, is.null)
-  ## number of rows depends on vertically aligned components
-  nrows <- sum(!ind_null_col)
-  ind_remove_col <- rep(ind_null_col, each = length(plots) / 3)
-
-  ind_null_row <- sapply(row3_list, is.null)
-  ind_remove_row <- rep(ind_null_row, length.out = length(plots))
-
-  if (sum(!ind_null_col) != length(heights)) {
-    stop(paste("Number of subplot_heights supplied is not correct; should be",
-      sum(!ind_null_col), "but is", length(heights)))
-  }
-  if (sum(!ind_null_row) != length(widths)) {
-    stop(paste("Number of subplot_widths supplied is not correct; should be",
-      sum(!ind_null_row), "but is", length(widths)))
-  }
-
-  ## Remove all null plots
-  plots <- plots[!(ind_remove_row | ind_remove_col)]
-
-  ## Interim solution before removing warnings in documented way
-  suppressMessages(
-    suppressWarnings(
-      s <- subplot(plots,
-        nrows = nrows,
-        widths = widths,
-        shareX = TRUE, shareY = TRUE,
-        titleX = titleX, titleY = titleY,
-        margin = subplot_margin,
-        heights = heights)
-      )
-  )
-
-  if (plot_method == "plotly") {
-    if (row_dend_left) {
-      num_rows <- sum(!ind_null_row)
-      str <- ifelse(num_rows > 1, num_rows, "")
-      l <- list(
-        anchor = paste0("x", str),
-        side = "right",
-        showticklabels=TRUE
-      )
-      num_cols <- sum(!ind_null_col)
-      if (num_cols == 1) {
-        lay <- function(p) layout(p, yaxis = l)
-      } else if (num_cols == 2) {
-        lay <- function(p) layout(p, yaxis2 = l)
-      } else if (num_cols == 3) {
-        lay <- function(p) layout(p, yaxis3 = l)
-      }
-      s <- lay(s)
-    }
-  }
-
-
-  # s <- subplot(plots,
-  #   nrows = nrows,
-  #   widths = if(row_dend_left) rev(widths) else widths,
-  #   shareX = TRUE, shareY = TRUE,
-  #   titleX = titleX, titleY = titleY,
-  #   margin = subplot_margin,
-  #   heights = heights)
-
-
-  return(s)
-}
-
 #' @export
 #' @rdname heatmaply
 heatmaply.heatmapr <- function(x,
@@ -973,7 +844,7 @@ heatmaply.heatmapr <- function(x,
   } else if (plot_method == "plotly") {
 
     p <- plotly_heatmap(data_mat, limits = limits, colors = colors,
-      key_title = key.title,
+      key_title = key.title, label_names = label_names,
       row_text_angle = row_text_angle, column_text_angle = column_text_angle,
       fontsize_row = fontsize_row, fontsize_col = fontsize_col,
       colorbar_yanchor = colorbar_yanchor, colorbar_xanchor = colorbar_xanchor,
@@ -1000,17 +871,22 @@ heatmaply.heatmapr <- function(x,
     ## Just make sure it's character first
     side_color_df[] <- lapply(side_color_df, as.character)
     if (plot_method == "ggplot") {
-      pr <- ggplot_side_color_plot(side_color_df, type = "row",
+      pr <- ggplot_side_color_plot(side_color_df, 
+        type = "row",
         text_angle = column_text_angle,
-        palette = row_side_palette,
-        is_colors = !is.null(RowSideColors),
+        palette = row_side_palette, 
+        fontsize = fontsize_col,
+        is_colors = !is.null(RowSideColors), 
         label_name = label_names[[1]]) + side_color_layers
     } else {
-      pr <- plotly_side_color_plot(side_color_df, type = "row",
+      pr <- plotly_side_color_plot(side_color_df, 
+        type = "row",
         text_angle = column_text_angle,
-        palette = row_side_palette,
-        label_name = label_names[[1]])
-    }
+        palette = row_side_palette, 
+        fontsize = fontsize_col,
+        is_colors = !is.null(RowSideColors),
+        label_name = label_names[[1]]) 
+    } 
   }
 
   if (is.null(col_side_colors)) {
@@ -1027,17 +903,21 @@ heatmaply.heatmapr <- function(x,
     ## Just make sure it's character first
     side_color_df[] <- lapply(side_color_df, as.character)
     if (plot_method == "ggplot") {
-      pc <- ggplot_side_color_plot(side_color_df, type = "column",
+      pc <- ggplot_side_color_plot(side_color_df, 
+        type = "column",
         text_angle = row_text_angle,
         palette = col_side_palette,
-        is_colors = !is.null(ColSideColors),
+        is_colors = !is.null(ColSideColors), 
+        fontsize = fontsize_col,
         label_name = label_names[[2]]) + side_color_layers
     } else {
-      pc <- plotly_side_color_plot(side_color_df, type = "column",
+      pc <- plotly_side_color_plot(side_color_df, 
+        type = "column",
         text_angle = row_text_angle,
         palette = col_side_palette,
-        label_name = label_names[[2]]
-      )
+        fontsize = fontsize_col,
+        is_colors = !is.null(ColSideColors),
+        label_name = label_names[[2]])
     }
   }
 
@@ -1107,17 +987,16 @@ heatmaply.heatmapr <- function(x,
   # Adjust top based on whether main is empty or not.
   if (is.na(margins[3])) margins[3] <- ifelse(main == "", 0, 30)
 
-
-  min_marg_row <- calc_margin(rownames(data_mat),
-    fontsize = p$x$layout$yaxis$tickfont$size)
+  rn <- c(rownames(data_mat), colnames(x[["col_side_colors"]]))
+  min_marg_row <- calc_margin(rn, fontsize = p$x$layout$yaxis$tickfont$size)
   if (row_dend_left && is.na(margins[4])) {
     margins[4] <- min_marg_row
   } else if (!row_dend_left && is.na(margins[2])) {
     margins[2] <- min_marg_row
   }
   if (is.na(margins[1])) {
-    margins[1] <- calc_margin(colnames(data_mat),
-        fontsize = p$x$layout$yaxis$tickfont$size)
+    cn <- c(colnames(data_mat), colnames(x[["row_side_colors"]]))
+    margins[1] <- calc_margin(cn, fontsize = p$x$layout$yaxis$tickfont$size)
   }
 
   # add a white grid
@@ -1159,6 +1038,136 @@ heatmaply.heatmapr <- function(x,
   l
 
 }
+
+
+
+
+
+
+
+
+
+heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
+                                          row_dend_left = FALSE, subplot_margin = 0,
+                                          titleX = TRUE, titleY = TRUE,
+                                          widths=NULL, heights=NULL,
+                                          plot_method) {
+
+  if (is.null(widths)) {
+    if (!is.null(px)) {
+      if (is.null(pr)) {
+        widths <- c(0.8, 0.2)
+      } else {
+        widths <- c(0.7, 0.1, 0.2)
+      }
+    } else {
+      if (is.null(pr)) {
+        widths <- 1
+      } else {
+        widths <- c(0.9, 0.1)
+      }
+    }
+    if(row_dend_left) widths <- rev(widths)
+  }
+
+  if (is.null(heights)) {
+    if (!is.null(py)) {
+      if (is.null(pc)) {
+        heights <- c(0.2, 0.8)
+      } else {
+        heights <- c(0.2, 0.1, 0.7)
+      }
+    } else {
+      if (is.null(pc)) {
+        heights <- 1
+      } else {
+        heights <- c(0.1, 0.9)
+      }
+    }
+  }
+
+  # make different plots based on which dendrogram and sidecolors we have
+  row1_list <- list(py, plotly_empty(), plotly_empty())
+  row2_list <- list(pc, plotly_empty(), plotly_empty())
+  row3_list <- list(p, pr, px)
+
+  if (row_dend_left) {
+    row3_list <- rev(row3_list)
+    row2_list <- rev(row2_list)
+    row1_list <- rev(row1_list)
+  }
+  plots <- c(row1_list,
+             row2_list,
+             row3_list)
+
+  column_list <- list(py, pc, p)
+  ind_null_col <- sapply(column_list, is.null)
+  ## number of rows depends on vertically aligned components
+  nrows <- sum(!ind_null_col)
+  ind_remove_col <- rep(ind_null_col, each = length(plots) / 3)
+
+  ind_null_row <- sapply(row3_list, is.null)
+  ind_remove_row <- rep(ind_null_row, length.out = length(plots))
+
+  if (sum(!ind_null_col) != length(heights)) {
+    stop(paste("Number of subplot_heights supplied is not correct; should be",
+      sum(!ind_null_col), "but is", length(heights)))
+  }
+  if (sum(!ind_null_row) != length(widths)) {
+    stop(paste("Number of subplot_widths supplied is not correct; should be",
+      sum(!ind_null_row), "but is", length(widths)))
+  }
+
+  ## Remove all null plots
+  plots <- plots[!(ind_remove_row | ind_remove_col)]
+
+  ## Interim solution before removing warnings in documented way
+  suppressMessages(
+    suppressWarnings(
+      s <- subplot(plots,
+        nrows = nrows,
+        widths = widths,
+        shareX = TRUE, shareY = TRUE,
+        titleX = titleX, titleY = titleY,
+        margin = subplot_margin,
+        heights = heights)
+      )
+  )
+
+  if (plot_method == "plotly") {
+    if (row_dend_left) {
+      num_rows <- sum(!ind_null_row)
+      str <- ifelse(num_rows > 1, num_rows, "")
+      l <- list(
+        anchor = paste0("x", str),
+        side = "right",
+        showticklabels=TRUE
+      )
+      num_cols <- sum(!ind_null_col)
+      if (num_cols == 1) {
+        lay <- function(p) layout(p, yaxis = l)
+      } else if (num_cols == 2) {
+        lay <- function(p) layout(p, yaxis2 = l)
+      } else if (num_cols == 3) {
+        lay <- function(p) layout(p, yaxis3 = l)
+      }
+      s <- lay(s)
+    }
+  }
+
+
+  # s <- subplot(plots,
+  #   nrows = nrows,
+  #   widths = if(row_dend_left) rev(widths) else widths,
+  #   shareX = TRUE, shareY = TRUE,
+  #   titleX = titleX, titleY = titleY,
+  #   margin = subplot_margin,
+  #   heights = heights)
+
+
+  return(s)
+}
+
 
 ## TODO: Better/safer estimation of total size, or use monospace.
 calc_margin <- function(labels, fontsize) {
