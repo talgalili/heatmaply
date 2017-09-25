@@ -126,11 +126,11 @@ ggplot_heatmap <- function(xx,
 }
 
 
-plotly_heatmap <- function(x, limits = range(x), 
+plotly_heatmap <- function(x, limits = range(x),
     colors = viridis(n=256, alpha = 1, begin = 0, end = 1, option = "viridis"),
-    row_text_angle = 0, column_text_angle = 45, grid.color, grid.size, 
+    row_text_angle = 0, column_text_angle = 45, grid.color, grid.size,
     row_dend_left = FALSE, fontsize_row = 10, fontsize_col = 10, key_title = "",
-    colorbar_xanchor = "left", colorbar_yanchor = "bottom", 
+    colorbar_xanchor = "left", colorbar_yanchor = "bottom",
     label_names = NULL,
     colorbar_xpos = 1.1, colorbar_ypos = 1, colorbar_len = 0.3) {
 
@@ -153,7 +153,7 @@ plotly_heatmap <- function(x, limits = range(x),
       paste0(
         label_names[3], ": ", x[, i], "<br>",
         label_names[2], ": ", colnames(x)[i], "<br>",
-        label_names[1], ": ", rownames(x)  
+        label_names[1], ": ", rownames(x)
       )
     }
   )
@@ -341,7 +341,7 @@ ggplot_side_color_plot <- function(df, palette = NULL,
   if (is.function(palette)) {
     palette <- setNames(palette(nlevels(df[["value"]])), levels(df[["value"]]))
   } else if (!all(levels(factor(df[["value"]])) %in% names(palette))) {
-    stop(paste0("Not all levels of the ", type, 
+    stop(paste0("Not all levels of the ", type,
       "_side_colors are mapped in the ", type, "_side_palette"))
   }
 
@@ -365,11 +365,11 @@ default_side_colors <- function(n) {
     if (n <= 12) {
       RColorBrewer::brewer.pal(n, "Paired")[seq_len(n)]
     } else if (n <= 20) {
-      c(RColorBrewer::brewer.pal(12, "Paired"), 
+      c(RColorBrewer::brewer.pal(12, "Paired"),
         RColorBrewer::brewer.pal(n - 12, "Set2"))[seq_len(n)]
     } else if (n <= 32) {
-      c(RColorBrewer::brewer.pal(12, "Paired"), 
-        RColorBrewer::brewer.pal(8, "Set2"), 
+      c(RColorBrewer::brewer.pal(12, "Paired"),
+        RColorBrewer::brewer.pal(8, "Set2"),
         RColorBrewer::brewer.pal(n - 20, "Set3"))[seq_len(n)]
     } else {
       colorspace::rainbow_hcl(n)
@@ -539,7 +539,7 @@ plotly_side_color_plot <- function(df, palette = NULL,
     palette <- setNames(palette(length(levels)), levels)
   } else if (!all(levels %in% names(palette))) {
     stop(paste0(
-      "Not all levels of the ", type, 
+      "Not all levels of the ", type,
       "_side_colors are mapped in the ", type, "_side_palette"))
   }
 
@@ -640,7 +640,7 @@ hmly_to_file_1file <- function(hmly, file, ...) {
       hmly %>% htmlwidgets::saveWidget(file = tmp_fp, selfcontained = TRUE)
     }
     if(file_extension %in% c("pdf", "png", "jpeg")) {
-      export(hmly, file)
+      plotly::export(hmly, file)
     }
   }
   invisible(NULL)
