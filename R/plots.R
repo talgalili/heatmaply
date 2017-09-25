@@ -556,3 +556,42 @@ plotly_side_color_plot <- function(df, palette = NULL,
   }
   p
 }
+
+
+
+
+
+
+
+
+
+# TODO: add roxydoc
+
+# This function gets a heatmaply object and a file, and writes that to a file
+# we should later add control over width...
+hmly_to_file_1file <- function(hmly, file, ...) {
+
+  # tools::file_ext("hithere.png")
+  # tools::file_ext("hithere.html")
+  # tools::file_ext("hithere.html.png")
+  file_extension <- tolower(tools::file_ext(file))
+  if(!(file_extension %in% c("html","pdf", "png", "jpeg"))) {
+    warning("file extension must be one of the following: html/pdf/png/jpeg. Since it was not - your heatmaply was not saved to a file.")
+  } else {
+    if(file_extension == "html") {
+      # solution to dealing with the folder:
+      # https://stackoverflow.com/questions/41399795/savewidget-from-htmlwidget-in-r-cannot-save-html-file-in-another-folder
+      tmp_fp <- file
+      tmp_fp <- file.path(normalizePath(dirname(tmp_fp)),basename(tmp_fp))
+      hmly %>% htmlwidgets::saveWidget(file = tmp_fp, selfcontained = TRUE)
+    }
+    if(file_extension %in% c("pdf", "png", "jpeg")) {
+      export(hmly, file)
+    }
+  }
+  invisible(NULL)
+}
+
+hmly_to_file <- Vectorize(hmly_to_file_1file, vectorize.args = "file")
+
+# hmly_to_file(p, c("hm.png", "hm.html"))

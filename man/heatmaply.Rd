@@ -257,15 +257,17 @@ heatmap_layers.}
 If NULL then it is ignored. If the "lwd" is already defined in Rowv/Colv then this
 parameter is ignored (it is checked using \link[dendextend]{has_edgePar}("lwd")).}
 
-\item{file}{name of the file into which to save the heatmaply output.
-Should be a character string ending with ".html" for a dynamic output,
-or ".png"/".jpeg"/".pdf" for a static output.
+\item{file}{name of the file(s) into which to save the heatmaply output.
+Should be a character vector of strings ending with ".html" for a dynamic output,
+or ".png", ".jpeg", ".pdf" for a static output.
 
 For example: heatmaply(x, file = "heatmaply_plot.html") or
 dir.create("folder")
 heatmaply(x, file = "folder/heatmaply_plot.html")
 This is based on \link[htmlwidgets]{saveWidget}, and \link[webshot]{webshot} for the static files.
-For more refined control over the static file output, you should save the heatmaply object using \link[webshot]{webshot}.}
+For more refined control over the static file output, you should save the heatmaply object using \link[webshot]{webshot}.
+
+Another example: heatmaply(x, file = c("heatmaply_plot.html", "heatmaply_plot.png"))}
 
 \item{long_data}{Data in long format. Replaces x, so both should not be used.
 Colnames must be c("name", "variable", "value"). If you do not have a names
@@ -371,6 +373,10 @@ subplot(hm1, hm2, margin = .02, shareY = TRUE)
 heatmaply(iris[,-5], file = "heatmaply_iris.html")
 # or a png/pdf/jpeg file using:
 heatmaply(iris[,-5], file = "heatmaply_iris.png")
+# or just doing it in one go:
+heatmaply(iris[,-5], file = c("heatmaply_iris.html", "heatmaply_iris.png") )
+
+
 
 # If we don't want the HTML to be selfcontained, we can use the following:
 library(heatmaply)
