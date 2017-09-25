@@ -83,7 +83,7 @@ heatmaply(mtcars, k_row = 3, k_col = 2)
 There are also more complex biological examples of using heatmaply in the R package [heatmaplyExamples](https://github.com/talgalili/heatmaplyExamples) (hosted on github). Here are direct links for available examples:
 
 * [Using heatmaply with gene expression data](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/biological_data.html)
-* [Using heatmaply with gene expression data - preprocessing](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/data_preprocessing.htm)
+* [Using heatmaply with gene expression data - preprocessing](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/data_preprocessing.html)
 * [Using heatmaply with non-centred RNAseq heatmaps (PAM50 genes) ](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/non_centred_heatmaps.html)
 * [Using heatmaply for visualizing glmnet coefficient path](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/glmnet.html)
 * [Using heatmaply with famous data sets](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/heatmaply_examples.html)
