@@ -436,6 +436,14 @@ heatmaply(mtcars, file = "folder/heatmaply_plot.png")
 browseURL("folder/heatmaply_plot.png")
 ```
 
+If you only wish to save the file, without plotting it in the console, you can assign the output to a temporatay object name:
+
+```{r, eval = FALSE}
+# This saves the file, but does not plot it in the RStudio viewer
+tmp <- heatmaply(mtcars, file = "folder/heatmaply_plot.png")
+rm(tmp)
+```
+
 
 
 
