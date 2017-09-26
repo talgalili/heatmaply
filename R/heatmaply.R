@@ -255,6 +255,10 @@ is.plotly <- function(x) {
 #' Dynamic ticks are useful for updating ticks in response to zoom/pan interactions; however,
 #' they can not always reproduce labels as they would appear in the static ggplot2 image.
 #'
+#' @param labRow,labCol character vectors with row and column labels to use; these default to rownames(x) or colnames(x), respectively.
+#' if set to NA, they change the value in showticklabels to be FALSE. This is mainly to keep
+#' backward compatibility with gplots::heatmap.2.
+#'
 #' @export
 #' @examples
 #' \dontrun{
@@ -519,6 +523,8 @@ heatmaply.default <- function(x,
                               showticklabels = c(TRUE, TRUE),
                               dynamicTicks = FALSE,
 
+                              labRow, labCol,
+
                               col) {
 
   if (!missing(long_data)) {
@@ -677,7 +683,10 @@ heatmaply.default <- function(x,
                      colorbar_xpos = colorbar_xpos,
                      colorbar_ypos = colorbar_ypos,
                      showticklabels = showticklabels,
-                     dynamicTicks = dynamicTicks
+                     dynamicTicks = dynamicTicks,
+
+                     labRow = labRow, labCol = labCol
+
                      )
 
                      # TODO: think more on what should be passed in "..."
@@ -742,7 +751,9 @@ heatmaply.heatmapr <- function(x,
                                colorbar_ypos = 0,
                                colorbar_len = 0.3,
                                showticklabels = c(TRUE, TRUE),
-                               dynamicTicks = FALSE
+                               dynamicTicks = FALSE,
+
+                               labRow, labCol
                                ) {
 
   plot_method <- match.arg(plot_method)
@@ -771,6 +782,31 @@ heatmaply.heatmapr <- function(x,
   }
   if (!missing(srtRow)) row_text_angle <- srtRow
   if (!missing(srtCol)) column_text_angle <- srtCol
+
+
+  if (!missing(labRow)) {
+    if(all(is.na(labRow))) {
+        showticklabels[2] <- FALSE
+      } else {
+        rownames(x$matrix$data) <- labRow
+        rownames(x$matrix$cellnote) <- labRow
+        rownames(x$cellnote) <- labRow
+        x$matrix$rows <- labRow
+      }
+    }
+  if (!missing(labCol)) {
+    if(all(is.na(labCol))) {
+      showticklabels[2] <- FALSE
+    } else {
+      colnames(x$matrix$data) <- labCol
+      colnames(x$matrix$cellnote) <- labCol
+      colnames(x$cellnote) <- labCol
+      x$matrix$cols <- labCol
+    }
+  }
+
+
+
 
   # x is a heatmapr object.
   # heatmapr <- list(rows = rowDend, cols = colDend, matrix = mtx, image = imgUri,
@@ -871,22 +907,22 @@ heatmaply.heatmapr <- function(x,
     ## Just make sure it's character first
     side_color_df[] <- lapply(side_color_df, as.character)
     if (plot_method == "ggplot") {
-      pr <- ggplot_side_color_plot(side_color_df, 
+      pr <- ggplot_side_color_plot(side_color_df,
         type = "row",
         text_angle = column_text_angle,
-        palette = row_side_palette, 
-        fontsize = fontsize_col,
-        is_colors = !is.null(RowSideColors), 
-        label_name = label_names[[1]]) + side_color_layers
-    } else {
-      pr <- plotly_side_color_plot(side_color_df, 
-        type = "row",
-        text_angle = column_text_angle,
-        palette = row_side_palette, 
+        palette = row_side_palette,
         fontsize = fontsize_col,
         is_colors = !is.null(RowSideColors),
-        label_name = label_names[[1]]) 
-    } 
+        label_name = label_names[[1]]) + side_color_layers
+    } else {
+      pr <- plotly_side_color_plot(side_color_df,
+        type = "row",
+        text_angle = column_text_angle,
+        palette = row_side_palette,
+        fontsize = fontsize_col,
+        is_colors = !is.null(RowSideColors),
+        label_name = label_names[[1]])
+    }
   }
 
   if (is.null(col_side_colors)) {
@@ -903,15 +939,15 @@ heatmaply.heatmapr <- function(x,
     ## Just make sure it's character first
     side_color_df[] <- lapply(side_color_df, as.character)
     if (plot_method == "ggplot") {
-      pc <- ggplot_side_color_plot(side_color_df, 
+      pc <- ggplot_side_color_plot(side_color_df,
         type = "column",
         text_angle = row_text_angle,
         palette = col_side_palette,
-        is_colors = !is.null(ColSideColors), 
+        is_colors = !is.null(ColSideColors),
         fontsize = fontsize_col,
         label_name = label_names[[2]]) + side_color_layers
     } else {
-      pc <- plotly_side_color_plot(side_color_df, 
+      pc <- plotly_side_color_plot(side_color_df,
         type = "column",
         text_angle = row_text_angle,
         palette = col_side_palette,
