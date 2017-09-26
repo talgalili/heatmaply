@@ -796,7 +796,7 @@ heatmaply.heatmapr <- function(x,
     }
   if (!missing(labCol)) {
     if(all(is.na(labCol))) {
-      showticklabels[2] <- FALSE
+      showticklabels[1] <- FALSE
     } else {
       colnames(x$matrix$data) <- labCol
       colnames(x$matrix$cellnote) <- labCol
