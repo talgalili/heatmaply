@@ -19,6 +19,7 @@ heatmaply 0.11.0 (2017-09-25)
   - grid_gap works when `plot_method = "plotly"`
   - file argument will now deal with names that includes folder names before the file name.
   - `heatmaply.heatmapr()` previously ignored `row_side_colors` and `col_side_colors` when passed to `heatmapr()` (issue #94)
+  - Fix the scale of cexRow/cexCol to that of fontsize_row/col
 
 
 
