@@ -1,3 +1,215 @@
+* 2017-09-27(Tal Galili) adding links to reproduction of figures from two nature papers |900a197| 
+|  README.md | 3 ++-
+|  1 file changed, 2 insertions(+), 1 deletion(-)
+
+* 2017-09-27(Tal Galili) data_preprocessing was merged into the biological_data url |d8d84dc| 
+|  README.md | 1 -
+|  1 file changed, 1 deletion(-)
+
+* 2017-09-27(Tal Galili) explicit reference internal functions so to allow test_dir to work |55ec9e1| 
+|  tests/testthat.R            |  4 ++++
+|  tests/testthat/test_plots.R | 34 +++++++++++++++++-----------------
+|  2 files changed, 21 insertions(+), 17 deletions(-)
+
+* 2017-09-27(Tal Galili) multiply cexRow by 10 only if numeric |598a37e| 
+|  R/heatmaply.R | 4 ++--
+|  1 file changed, 2 insertions(+), 2 deletions(-)
+
+* 2017-09-26(Tal Galili) Fix the scale of cexRow/cexCol to that of fontsize_row/col |f46653e| 
+|  NEWS          | 1 +
+|  R/heatmaply.R | 4 ++--
+|  2 files changed, 3 insertions(+), 2 deletions(-)
+
+* 2017-09-26(Tal Galili) fix labCol==NA showticklabels |c97fe1d| 
+|  R/heatmaply.R | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2017-09-26(Tal Galili) added labRow, labCol - to stay backward compatible with gplots::heatmap.2 |a184c51| 
+|  NEWS             |  1 +
+|  R/heatmaply.R    | 60 +++++++++++++++++++++++++++++++++++++++++++-----------
+|  man/heatmaply.Rd |  8 ++++++--
+|  3 files changed, 55 insertions(+), 14 deletions(-)
+
+* 2017-09-26(Tal Galili) remove this annoying bug of Rplot001.jpg from the package |197bafd| 
+|  .Rbuildignore | 1 +
+|  1 file changed, 1 insertion(+)
+
+* 2017-09-26(Tal Galili) adding measless example |b7e6895| 
+|  README.md | 1 +
+|  1 file changed, 1 insertion(+)
+
+* 2017-09-26(Tal Galili) reduce the size of the vignette a bit |9f26081| 
+|  vignettes/heatmaply.Rmd | 11 ++++++-----
+|  1 file changed, 6 insertions(+), 5 deletions(-)
+
+* 2017-09-26(Tal Galili) fix missing l in html |948fe75| 
+|  README.md | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2017-09-26(Tal Galili) Fix: Non-standard file/directory found at top level:   'Makefile' |0b2b4a7| 
+|  .Rbuildignore | 1 +
+|  1 file changed, 1 insertion(+)
+
+* 2017-09-26(Tal Galili) Fix: hmly_to_file_1file: no visible global function definition for 'export' Undefined global functions or variables:   export |f4f9552| 
+|  R/plots.R | 20 ++++++++++----------
+|  1 file changed, 10 insertions(+), 10 deletions(-)
+
+* 2017-09-25(Alanocallaghan) Default colors (#91) |95ebb45| 
+|  .gitignore                         |   1 -
+|  Makefile                           |  13 ++
+|  NEWS                               |   4 +-
+|  R/heatmaply.R                      | 307 ++++++++++++++++++-----------------
+|  R/plots.R                          |  98 ++++++++---
+|  man/ggplot_side_color_plot.Rd      |   4 +-
+|  man/heatmaply.Rd                   |   6 +-
+|  tests/testthat/test_RColorBrewer.R |  37 +++++
+|  tests/testthat/test_heatmaply.R    |   3 +
+|  tests/testthat/test_misc.R         |   7 +
+|  tests/testthat/test_plots.R        |  65 +++++++-
+|  11 files changed, 362 insertions(+), 183 deletions(-)
+
+* 2017-09-25(Tal Galili) file argument is now vectorized, allowing to pass things like: heatmaply(x, file = c("heatmaply_plot.html", "heatmaply_plot.png")) |164514e| 
+|  NEWS             |  4 ++--
+|  R/heatmaply.R    | 33 ++++++++++-----------------------
+|  R/plots.R        | 39 +++++++++++++++++++++++++++++++++++++++
+|  man/heatmaply.Rd | 14 ++++++++++----
+|  4 files changed, 61 insertions(+), 29 deletions(-)
+
+* 2017-09-25(Tal Galili) how not to plot to the viewer, while still saving to file |6af9629| 
+|  vignettes/heatmaply.Rmd | 8 ++++++++
+|  1 file changed, 8 insertions(+)
+
+* 2017-09-25(Tal Galili) Add doc on how to save an heatmaply output |719ca2b| 
+|  README.md               | 22 ++++++++++++++++++++++
+|  vignettes/heatmaply.Rmd | 31 +++++++++++++++++++++++++++++++
+|  2 files changed, 53 insertions(+)
+
+* 2017-09-25(Tal Galili) file argument can now work with static file extensions such as png/jpeg/pdf (thanks to the webshot package). |a404ced| 
+|  DESCRIPTION      |  5 +++--
+|  NEWS             |  1 +
+|  R/heatmaply.R    | 37 +++++++++++++++++++++++++++++--------
+|  man/heatmaply.Rd | 11 ++++++++---
+|  4 files changed, 41 insertions(+), 13 deletions(-)
+
+* 2017-09-25(Tal Galili) Remove redundent files from vignette folder (these have been moved to the heatmaplyExamples package) |bffd69f| 
+|  vignettes/.build.timestamp    |   0
+|  vignettes/biological_data.Rmd |  50 -------------------
+|  vignettes/heatmaply.R         |  30 ------------
+|  vignettes/heatmaply.md        | 106 ----------------------------------------
+|  4 files changed, 186 deletions(-)
+
+* 2017-09-25(Tal Galili) mention the heatmaplyExamples package |7bae2b5| 
+|  README.md | 9 +++++++++
+|  1 file changed, 9 insertions(+)
+
+* 2017-09-24(Tal Galili) minor |df90b90| 
+|  R/plots.R | 24 ++++++++++++------------
+|  1 file changed, 12 insertions(+), 12 deletions(-)
+
+* 2017-09-23(Tal Galili) fix minor typos |ee012ef| 
+|  README.md | 4 ++--
+|  1 file changed, 2 insertions(+), 2 deletions(-)
+
+* 2017-09-22(Tal Galili) update |ea5ff79| 
+|  man/heatmaply.Rd | 17 +++++++++--------
+|  1 file changed, 9 insertions(+), 8 deletions(-)
+
+* 2017-09-22(Tal Galili) consolidate changes in NEWS |49155ce| 
+|  DESCRIPTION |  4 ++--
+|  NEWS        | 12 +++---------
+|  2 files changed, 5 insertions(+), 11 deletions(-)
+
+* 2017-09-01(Alanocallaghan) Update NEWS |3bfc4a1| 
+|  NEWS | 3 +++
+|  1 file changed, 3 insertions(+)
+
+* 2017-08-30(Alanocallaghan) Update NEWS |3b12d6a| 
+|  NEWS | 6 ++++++
+|  1 file changed, 6 insertions(+)
+
+* 2017-08-30(Alan O'Callaghan) Resolve #94 |c8a7729| 
+|  R/heatmaply.R | 12 +++++-------
+|  1 file changed, 5 insertions(+), 7 deletions(-)
+
+* 2017-07-31(Tal Galili) file argument will now deal with names that includes folder names before the file name. |f685d0c| 
+|  NEWS             | 18 ++++++++++++------
+|  R/heatmaply.R    | 20 +++++++++++++-------
+|  man/heatmaply.Rd |  8 ++++----
+|  3 files changed, 29 insertions(+), 17 deletions(-)
+
+* 2017-07-27(Alanocallaghan) Plot tests (#87) |c5ac878| 
+|  NEWS                            |   6 +-
+|  R/heatmaply.R                   |   4 +-
+|  R/plots.R                       |  21 +--
+|  tests/testthat/test_heatmaply.R | 316 +++++++++++++++++++-------------------
+|  tests/testthat/test_heatmapr.R  |  12 +-
+|  tests/testthat/test_misc.R      |  22 +--
+|  tests/testthat/test_plots.R     |  73 +++++++++
+|  7 files changed, 266 insertions(+), 188 deletions(-)
+
+* 2017-07-27(Alanocallaghan) Plotly side color plots (#75) |dab16ba| 
+|  .gitignore                    |   5 +
+|  NAMESPACE                     |   1 +
+|  NEWS                          |   6 +-
+|  R/heatmaply.R                 | 130 +++++---------
+|  R/plots.R                     | 379 +++++++++++++++++++++++++++++-----------
+|  man/col2plotlyrgb.Rd          |  29 ---
+|  man/ggplot_side_color_plot.Rd |  33 ++++
+|  man/heatmaply.Rd              |  40 +++--
+|  man/side_color_plot.Rd        |  33 ----
+|  vignettes/biological_data.Rmd |  50 ++++++
+|  vignettes/heatmaply.Rmd       |   4 +-
+|  11 files changed, 441 insertions(+), 269 deletions(-)
+
+* 2017-07-15(Alanocallaghan) Update NEWS |87ba31c| 
+|  NEWS | 6 ++++++
+|  1 file changed, 6 insertions(+)
+
+* 2017-07-14(Alanocallaghan) Add side_color_layers (#83) |8560869| 
+|  R/heatmaply.R    | 12 +++++++++---
+|  man/heatmaply.Rd | 33 ++++++++++++++++++---------------
+|  2 files changed, 27 insertions(+), 18 deletions(-)
+
+* 2017-06-13(Tal Galili) Added dynamicTicks (so far it breaks the heatmap due to a bug - but in the future this should help have non-overlapping ticks for large matrix) |063fe84| 
+|  R/heatmaply.R    | 20 +++++++++++++++-----
+|  man/heatmaply.Rd | 11 +++++++++--
+|  2 files changed, 24 insertions(+), 7 deletions(-)
+
+* 2017-05-28(Tal Galili) Note on trying to use fastcluster |78dae19| 
+|  vignettes/heatmaply.Rmd | 29 +++++++++++++++++++++++++++++
+|  1 file changed, 29 insertions(+)
+
+* 2017-05-27(Tal Galili) Remove "Remotes" (doesn't pass CRAN) |556a82b| 
+|  DESCRIPTION | 5 ++---
+|  NEWS        | 2 +-
+|  2 files changed, 3 insertions(+), 4 deletions(-)
+
+* 2017-05-26(Tal Galili) Fix "Namespace dependency not required: 'methods'" ? |7ba28aa| 
+|  DESCRIPTION | 1 +
+|  1 file changed, 1 insertion(+)
+
+*   2017-05-26(Tal Galili) Merge branch 'master' of github.com:talgalili/heatmaply |f812c9d
+|\  
+| * 2017-05-26(Alanocallaghan) Update DESCRIPTION |ae73ef7| | 
+| |  DESCRIPTION | 2 +-
+| |  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* | 2017-05-26(Tal Galili) Move a NEWS from bugfix to a feature. |bf3ecdd| | 
+| |  NEWS    | 2 +-
+| |  NEWS.md | 2 +-
+| |  2 files changed, 2 insertions(+), 2 deletions(-)
+
+* | 2017-05-26(Tal Galili) Fix the bild NOTE of missing importFrom: |75f8aea
+|/  |   
+|    NAMESPACE        |  2 ++
+|    R/RColorBrewer.R | 11 +++++++++++
+|    2 files changed, 13 insertions(+)
+
+* 2017-05-26(Tal Galili) Update NEWS files |10576ad| 
+|  ChangeLog | 1623 +++++++++++++++++++++++++++++++++++++++++++++--------------
+|  NEWS.md   |   33 ++
+|  2 files changed, 1279 insertions(+), 377 deletions(-)
+
 * 2017-05-26(Tal Galili) Small type corrections for the vignette. |09c22f7| 
 |  DESCRIPTION             | 2 +-
 |  NEWS                    | 3 ++-

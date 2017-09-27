@@ -1,5 +1,29 @@
 
-heatmaply 0.10.0 (2017-05-26)
+heatmaply 0.11.0 (2017-09-27)
+================
+
+### NEW FEATURES
+* heatmaply
+  - `side_color_layers` argument, which allows the user to pass in ggplot functions which will be
+    added to the side color plots.
+  - `row_side_palette` and `col_side_palette` can now be named vectors of
+    colors.
+  - Improved test coverage.
+  - Side color plots have better defaults colors, courtesy of RColorBrewer's qualitative color palettes.
+  - file argument can now work with static file extensions such as png/jpeg/pdf (thanks to the webshot package). It is also now vectorized, allowing to pass things like: heatmaply(x, file = c("heatmaply_plot.html", "heatmaply_plot.png"))
+  - added labRow, labCol - to stay backward compatible with gplots::heatmap.2
+
+### BUG FIXES
+* heatmaply
+  - Improved side color plots when `plot_method = "plotly"`, including improved positioning of legends.
+  - grid_gap works when `plot_method = "plotly"`
+  - file argument will now deal with names that includes folder names before the file name.
+  - `heatmaply.heatmapr()` previously ignored `row_side_colors` and `col_side_colors` when passed to `heatmapr()` (issue #94)
+  - Fix the scale of cexRow/cexCol to that of fontsize_row/col
+
+
+
+heatmaply 0.10.1 (2017-05-27)
 ==============================
 
 ### NEW FUNCTIONS
