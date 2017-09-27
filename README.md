@@ -87,7 +87,8 @@ There are also more complex biological examples of using heatmaply in the R pack
 * [Using heatmaply for visualizing glmnet coefficient path](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/glmnet.html)
 * [Using heatmaply with famous data sets](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/heatmaply_examples.html)
 * [Using heatmaply with the measles data sets](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/measles.html)
-
+* [Using heatmaply to reproduce Nature (2015) Kotsyfakis et al.](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/reproducing_Nature_2015_Kotsyfakis.html)
+* [Using heatmaply to reproduce Nature (2015) Alfano et al.](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/reproducing_Nature_2015_Alfano.html)
 
 ### Saving your heatmaply into a file
 
