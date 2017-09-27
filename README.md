@@ -83,7 +83,7 @@ heatmaply(mtcars, k_row = 3, k_col = 2)
 There are also more complex biological examples of using heatmaply in the R package [heatmaplyExamples](https://github.com/talgalili/heatmaplyExamples) (hosted on github). Here are direct links for available examples:
 
 
-* [Introduction to heatmaply](https://cran.r-project.org/web/packages/heatmaply/vignettes/heatmaply.html)
+* [Introduction to heatmaply](https://CRAN.R-project.org/package=heatmaply/vignettes/heatmaply.html)
 * General biological examples
   - [Using heatmaply with the measles data set](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/measles.html)
   - [Using heatmaply with famous data sets](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/heatmaply_examples.html)
