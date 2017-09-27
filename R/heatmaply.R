@@ -577,8 +577,8 @@ heatmaply.default <- function(x,
     row_side_colors <- RowSideColors
   }
 
-  if (!missing(cexRow)) fontsize_row <- cexRow*10
-  if (!missing(cexCol)) fontsize_col <- cexCol*10
+  if (!missing(cexRow)) fontsize_row <- if(is.numeric(cexRow)) cexRow*10 else cexRow
+  if (!missing(cexCol)) fontsize_col <- if(is.numeric(cexCol)) cexCol*10 else cexCol
 
   # TODO: maybe create heatmaply.data.frame heatmaply.matrix instead.
   #       But right now I am not sure this would be needed.
