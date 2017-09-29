@@ -18,10 +18,10 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
   row_text_angle = 0, column_text_angle = 45, subplot_margin = 0,
   cellnote = NULL, draw_cellnote = !is.null(cellnote),
-  cellnote_color = "auto", cellnote_textposition = "middle right", Rowv,
-  Colv, distfun = dist, hclustfun = hclust, dist_method = NULL,
-  hclust_method = NULL, distfun_row, hclustfun_row, distfun_col,
-  hclustfun_col, dendrogram = c("both", "row", "column", "none"),
+  cellnote_color = "auto", cellnote_textposition = "middle right",
+  cellnote_size = 12, Rowv, Colv, distfun = dist, hclustfun = hclust,
+  dist_method = NULL, hclust_method = NULL, distfun_row, hclustfun_row,
+  distfun_col, hclustfun_col, dendrogram = c("both", "row", "column", "none"),
   reorderfun = function(d, w) reorder(d, w), k_row = 1, k_col = 1,
   symm = FALSE, revC, scale = c("none", "row", "column"), na.rm = TRUE,
   row_dend_left = FALSE, margins = c(NA, NA, NA, NA), ...,
@@ -52,7 +52,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   ylab = "", main = "", titleX = TRUE, titleY = TRUE,
   hide_colorbar = FALSE, key.title = NULL, return_ppxpy = FALSE,
   draw_cellnote = FALSE, cellnote_color = "auto",
-  cellnote_textposition = "middle right",
+  cellnote_textposition = "middle right", cellnote_size = 12,
   row_side_colors = x[["row_side_colors"]], row_side_palette = NULL,
   col_side_colors = x[["col_side_colors"]], col_side_palette = NULL,
   plot_method = c("ggplot", "plotly"), ColSideColors, RowSideColors,
@@ -112,6 +112,8 @@ cellnote is not supplied, x will be used for cellnote.}
 Default is "middle right". Options are
 "top left", "top center", "top right", "middle left", "middle center",
 "middle right", "bottom left", "bottom center", "bottom right"}
+
+\item{cellnote_size}{The font size (HTML/CSS) of the cellnote. Default is 12.}
 
 \item{Rowv}{determines if and how the row dendrogram should be reordered.
 By default, it is TRUE, which implies dendrogram is computed and reordered

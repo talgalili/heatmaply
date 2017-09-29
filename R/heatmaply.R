@@ -69,7 +69,7 @@ is.plotly <- function(x) {
 #' Default is "middle right". Options are
 #' "top left", "top center", "top right", "middle left", "middle center",
 #' "middle right", "bottom left", "bottom center", "bottom right"
-#'
+#' @param cellnote_size The font size (HTML/CSS) of the cellnote. Default is 12.
 #' @param Rowv determines if and how the row dendrogram should be reordered.
 #' By default, it is TRUE, which implies dendrogram is computed and reordered
 #' based on row means. If NULL or FALSE, then no dendrogram is computed and
@@ -454,6 +454,7 @@ heatmaply.default <- function(x,
                               draw_cellnote = !is.null(cellnote),
                               cellnote_color = "auto",
                               cellnote_textposition = "middle right",
+                              cellnote_size = 12,
 
                               ## dendrogram control
                               Rowv,
@@ -672,6 +673,7 @@ heatmaply.default <- function(x,
                      plot_method = plot_method,
                      draw_cellnote = draw_cellnote,
                      cellnote_textposition = cellnote_textposition,
+                     cellnote_size = cellnote_size,
                      cellnote_color = cellnote_color,
                      fontsize_row = fontsize_row,
                      fontsize_col = fontsize_col,
@@ -730,6 +732,7 @@ heatmaply.heatmapr <- function(x,
                                draw_cellnote = FALSE,
                                cellnote_color = "auto",
                                cellnote_textposition = "middle right",
+                               cellnote_size = 12,
                                row_side_colors = x[["row_side_colors"]],
                                row_side_palette = NULL,
                                col_side_colors = x[["col_side_colors"]],
@@ -992,7 +995,7 @@ heatmaply.heatmapr <- function(x,
     p <- p %>% add_trace(y = mdf$row, x = mdf$variable, text = mdf$value,
         type = "scatter", mode = "text", textposition = cellnote_textposition,
         hoverinfo = "none",
-        textfont = list(color = plotly::toRGB(cellnote_color), size = 12)
+        textfont = list(color = plotly::toRGB(cellnote_color), size = cellnote_size)
       )
   }
   if (!is.null(px) && !is.plotly(px)) {
@@ -1047,10 +1050,16 @@ heatmaply.heatmapr <- function(x,
   if(!all(showticklabels)) {
     if(!is.logical(showticklabels)) stop("showticklabels must be a logical vector of length 2 or 1")
     if(length(showticklabels) == 1) showticklabels <- rep(showticklabels, 2)
-    p <- p %>%
-      layout(xaxis = list(showticklabels = showticklabels[1]),
-             yaxis = list(showticklabels = showticklabels[2]))
-
+    if (!showticklabels[[1]]) {
+      p <- p %>%
+        layout(xaxis = list(showticklabels = FALSE,
+                            ticklen = 0))
+    }
+    if (!showticklabels[[2]]) {
+      p <- p %>%
+        layout(yaxis = list(showticklabels = FALSE,
+                            ticklen = 0))
+    }
       # ggplotly() %>%
       # layout(yaxis = list(tickmode='auto'),
       #        xaxis = list(tickmode='auto'))
