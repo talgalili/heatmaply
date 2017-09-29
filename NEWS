@@ -1,3 +1,6 @@
+heatmaply 0.12.0 (2017-09-29)
+================
+
 
 ### NEW FEATURES
 * heatmaply
@@ -6,6 +9,7 @@
 * heatmaply
   - removing tick labels with `showticklabels` now removes the ticks as
     well as the tick labels.
+
 
 heatmaply 0.11.1 (2017-09-27)
 ================
