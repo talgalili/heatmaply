@@ -1040,7 +1040,7 @@ heatmaply.heatmapr <- function(x,
 
   # add a white grid
   if(grid_gap > 0) {
-    p <- style(p, xgap = grid_gap, ygap = grid_gap)
+    p <- style(p, xgap = grid_gap, ygap = grid_gap, traces = 1)
     # doesn't seem to work.
     # if(!is.null(pr)) pr <- style(pr, xgap = grid_gap)
     # if(!is.null(pc)) pc <- style(pc, ygap = grid_gap)
