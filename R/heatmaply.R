@@ -1047,10 +1047,16 @@ heatmaply.heatmapr <- function(x,
   if(!all(showticklabels)) {
     if(!is.logical(showticklabels)) stop("showticklabels must be a logical vector of length 2 or 1")
     if(length(showticklabels) == 1) showticklabels <- rep(showticklabels, 2)
-    p <- p %>%
-      layout(xaxis = list(showticklabels = showticklabels[1]),
-             yaxis = list(showticklabels = showticklabels[2]))
-
+    if (!showticklabels[[1]]) {
+      p <- p %>%
+        layout(xaxis = list(showticklabels = FALSE,
+                            ticklen = 0))
+    }
+    if (!showticklabels[[2]]) {
+      p <- p %>%
+        layout(yaxis = list(showticklabels = FALSE,
+                            ticklen = 0))
+    }
       # ggplotly() %>%
       # layout(yaxis = list(tickmode='auto'),
       #        xaxis = list(tickmode='auto'))
