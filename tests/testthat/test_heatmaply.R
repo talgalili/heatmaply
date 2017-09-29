@@ -195,5 +195,5 @@ test_that("showticklabels", {
   expect_is(h, "plotly")
   h <- heatmaply(mtcars, showticklabels=c(FALSE, FALSE))
   expect_is(h, "plotly")
-
+  expect_error(heatmaply(mtcars, showticklabels="a"))
 })
