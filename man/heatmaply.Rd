@@ -25,23 +25,23 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   reorderfun = function(d, w) reorder(d, w), k_row = 1, k_col = 1,
   symm = FALSE, revC, scale = c("none", "row", "column"), na.rm = TRUE,
   row_dend_left = FALSE, margins = c(NA, NA, NA, NA), ...,
-  scale_fill_gradient_fun = scale_fill_gradientn(colors = if
-  (is.function(colors)) colors(256) else colors, na.value = na.value, limits =
-  limits), grid_color = NA, grid_gap = 0, srtRow, srtCol, xlab = "",
-  ylab = "", main = "", titleX = TRUE, titleY = TRUE,
-  hide_colorbar = FALSE, key.title = NULL, return_ppxpy = FALSE,
-  row_side_colors, row_side_palette = NULL, col_side_colors,
-  col_side_palette = NULL, ColSideColors = NULL, RowSideColors = NULL,
-  seriate = c("OLO", "mean", "none", "GW"), heatmap_layers = NULL,
-  side_color_layers = NULL, branches_lwd = 0.6, file, long_data,
-  plot_method = c("ggplot", "plotly"), label_names = c("row", "column",
-  "value"), fontsize_row = 10, fontsize_col = 10, cexRow, cexCol,
-  subplot_widths = NULL, subplot_heights = NULL, colorbar_len = 0.3,
-  colorbar_xanchor = if (row_dend_left) "right" else "left",
-  colorbar_yanchor = "bottom", colorbar_xpos = if (row_dend_left) -0.1 else
-  1.1, colorbar_ypos = 0, showticklabels = c(TRUE, TRUE),
-  dynamicTicks = FALSE, grid_size = 0.1, node_type = "heatmap",
-  point_size_mat = NULL, point_size_name = "Point size", col = NULL)
+  scale_fill_gradient_fun = NULL, grid_color = NA, grid_gap = 0, srtRow,
+  srtCol, xlab = "", ylab = "", main = "", titleX = TRUE,
+  titleY = TRUE, hide_colorbar = FALSE, key.title = NULL,
+  return_ppxpy = FALSE, row_side_colors, row_side_palette = NULL,
+  col_side_colors, col_side_palette = NULL, ColSideColors = NULL,
+  RowSideColors = NULL, seriate = c("OLO", "mean", "none", "GW"),
+  heatmap_layers = NULL, side_color_layers = NULL, branches_lwd = 0.6,
+  file, long_data, plot_method = c("ggplot", "plotly"),
+  label_names = c("row", "column", "value"), fontsize_row = 10,
+  fontsize_col = 10, cexRow, cexCol, subplot_widths = NULL,
+  subplot_heights = NULL, colorbar_len = 0.3, colorbar_xanchor = if
+  (row_dend_left) "right" else "left", colorbar_yanchor = "bottom",
+  colorbar_xpos = if (row_dend_left) -0.1 else 1.1, colorbar_ypos = 0,
+  showticklabels = c(TRUE, TRUE), dynamicTicks = FALSE, grid_size = 0.1,
+  node_type = "heatmap", point_size_mat = NULL,
+  point_size_name = "Point size", label_format_fun = function(...)
+  format(..., digits = 4), col = NULL)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
@@ -65,7 +65,8 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   1.1, colorbar_ypos = 0, colorbar_len = 0.3, showticklabels = c(TRUE,
   TRUE), dynamicTicks = FALSE, node_type = c("scatter", "heatmap"),
   grid_size = 0.1, point_size_mat = x[["matrix"]][["point_size_mat"]],
-  point_size_name = "Point size")
+  point_size_name = "Point size", label_format_fun = function(...)
+  format(..., digits = 4))
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -317,6 +318,10 @@ Default is node_type = "heatmap".}
 \item{point_size_mat}{Matrix to map to point size}
 
 \item{point_size_name}{Name of point size mapping (for hovertext/legend)}
+
+\item{label_format_fun}{Function to format hovertext (eg, 
+\code{function(...) round(..., digits=3)} or
+\code{function(...) format(..., digits=3)}}
 }
 \description{
 An object of class heatmapr includes all the needed information

@@ -63,18 +63,18 @@ ggplot_heatmap <- function(xx,
                                     panel.background = element_blank())
 
   
+  if (missing(label_names)) {
+    if (is.null(dim_names <- names(dimnames(x)))) {
+      label_names <- c("row", "column", "value")
+    }
+  } else {
+    assert_that(length(label_names) == 3)
+  }
   melt_df <- function(x, label_names) {
     # heatmap
     # xx <- x$matrix$data
     if(!is.data.frame(x)) df <- as.data.frame(x)
 
-    if (missing(label_names)) {
-      if (is.null(dim_names <- names(dimnames(x)))) {
-        label_names <- c("row", "column", "value")
-      }
-    } else {
-      assert_that(length(label_names) == 3)
-    }
     row <- label_names[[1]]
     col <- label_names[[2]]
     val <- label_names[[3]]
