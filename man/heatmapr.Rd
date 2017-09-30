@@ -126,6 +126,8 @@ Implemented options include:
 "none" (the default order produced by the dendrogram),
 "GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length that is restricted by the dendrogram structure)}
 
+\item{point_size_mat}{A matrix of values which can be mapped to point size}
+
 \item{...}{currently ignored}
 }
 \description{
