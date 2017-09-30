@@ -52,55 +52,113 @@ ggplot_heatmap <- function(xx,
                            fontsize_col = 10,
                            type = c("heatmap", "scatter"),
                            pointsize = 5,
+                           point_size_mat = NULL,
+                           point_size_name = "Point size",
                            ...) {
   theme_clear_grid_heatmap <- theme(axis.line = element_line(color = "black"),
                                     panel.grid.major = element_blank(),
                                     panel.grid.minor = element_blank(),
                                     panel.border = element_blank(),
                                     panel.background = element_blank())
-  # heatmap
-  # xx <- x$matrix$data
-  if(!is.data.frame(xx)) df <- as.data.frame(xx)
 
-  if (missing(label_names)) {
-    if (is.null(dim_names <- names(dimnames(xx)))) {
-      label_names <- c("row", "column", "value")
+  
+  melt_df <- function(x, label_names) {
+    # heatmap
+    # xx <- x$matrix$data
+    if(!is.data.frame(x)) df <- as.data.frame(x)
+
+    if (missing(label_names)) {
+      if (is.null(dim_names <- names(dimnames(x)))) {
+        label_names <- c("row", "column", "value")
+      }
+    } else {
+      assert_that(length(label_names) == 3)
     }
-  } else {
-    assert_that(length(label_names) == 3)
+    row <- label_names[[1]]
+    col <- label_names[[2]]
+    val <- label_names[[3]]
+
+    # colnames(df) <- x$matrix$cols
+    if(!is.null(rownames(x))) {
+      df[[row]] <- rownames(x)
+    } else {
+      df[[row]] <- 1:nrow(x)
+    }
+
+    df[[row]] <- factor(
+      df[[row]],
+      levels = df[[row]],
+      ordered = TRUE
+    )
+
+    mdf <- reshape2::melt(df, id.vars = row)
+    colnames(mdf)[2:3] <- c(col, val) # rename "variable" and "value"
+    mdf
   }
+
+  mdf <- melt_df(xx, label_names)
+  if (!is.null(point_size_mat)) {
+    ps_label_names <- label_names
+    ps_label_names[[3]] <- point_size_name
+    point_size_mat <- melt_df(point_size_mat, ps_label_names)
+    mdf <- cbind(mdf, point_size_mat[point_size_name])
+  }
+  paste_aes <- function(x) {
+    paste0("`", x, "`")
+  }
+
+  # # heatmap
+  # # xx <- x$matrix$data
+  # if(!is.data.frame(xx)) df <- as.data.frame(xx)
+
+  # if (missing(label_names)) {
+  #   if (is.null(dim_names <- names(dimnames(xx)))) {
+  #     label_names <- c("row", "column", "value")
+  #   }
+  # } else {
+  #   assert_that(length(label_names) == 3)
+  # }
+  # row <- label_names[[1]]
+  # col <- label_names[[2]]
+  # val <- label_names[[3]]
+
+  # # colnames(df) <- x$matrix$cols
+  # if(!is.null(rownames(xx))) {
+  #   df[[row]] <- rownames(xx)
+  # } else {
+  #   df[[row]] <- 1:nrow(xx)
+  # }
+
+  # df[[row]] <- factor(
+  #   df[[row]],
+  #   levels = df[[row]],
+  #   ordered = TRUE
+  # )
+
+  # mdf <- reshape2::melt(df, id.vars = row)
+  # colnames(mdf)[2:3] <- c(col, val) # rename "variable" and "value"
+
+
   row <- label_names[[1]]
   col <- label_names[[2]]
   val <- label_names[[3]]
 
-  # colnames(df) <- x$matrix$cols
-  if(!is.null(rownames(xx))) {
-    df[[row]] <- rownames(xx)
-  } else {
-    df[[row]] <- 1:nrow(xx)
-  }
-
-  df[[row]] <- factor(
-    df[[row]],
-    levels = df[[row]],
-    ordered = TRUE
-  )
-
-  mdf <- reshape2::melt(df, id.vars = row)
-  colnames(mdf)[2:3] <- c(col, val) # rename "variable" and "value"
-
-
   if (type == "heatmap") {
     geom <- "geom_tile" 
     geom_args <- list(
-      mapping = aes_string(fill=val),
-      color = grid_color, 
+      mapping = aes_string(fill=paste_aes(val)),
+      color = grid_color,
       size = grid_size)
   } else if (type == "scatter") {
     geom <- "geom_point"
-    geom_args <- list(
-      mapping = aes_string(color=val),
-      size = grid_size)
+    geom_args <- list()
+    if (!is.null(point_size_mat)) {
+      geom_args[["mapping"]] <- aes_string(color = paste_aes(val), 
+        size = paste_aes(point_size_name))
+    } else {
+      geom_args[["size"]] <- grid_size
+      geom_args[["mapping"]] <- aes_string(color = paste_aes(val))
+    }
   }
 
   # TODO:
@@ -116,10 +174,11 @@ ggplot_heatmap <- function(xx,
             size = fontsize_col, hjust = 1),
           axis.text.y = element_text(angle = row_text_angle,
             size = fontsize_row, hjust = 1)
-          ) +
-    scale_color_gradientn(colors = viridis(n=256, alpha = 1, begin = 0,
-                                                                   end = 1, option = "viridis"),
-                                                  na.value = "grey50", limits = NULL)
+          ) 
+    # +
+    # scale_color_gradientn(colors = viridis(n=256, alpha = 1, begin = 0,
+    #                                                                end = 1, option = "viridis"),
+    #                                               na.value = "grey50", limits = NULL)
 
   if (type == "scatter") p <- p + coord_cartesian(xlim = c(1, ncol(xx)), ylim = c(1, nrow(xx)))
   if (!missing(layers)) p <- p + layers
@@ -308,7 +367,7 @@ ggplot_side_color_plot <- function(df, palette = NULL,
   # } else text_element <- element_blank()
 
   if (type == "column") {
-    mapping <- aes_string(x = id_var, y = "variable", fill = "value")
+    mapping <- aes_string(x = paste_aes(id_var), y = "variable", fill = "value")
 
     specific_theme <- theme(
       axis.text.x = element_blank(),
@@ -316,7 +375,7 @@ ggplot_side_color_plot <- function(df, palette = NULL,
     )
   } else {
 
-    mapping <- aes_string(x = "variable", y = id_var, fill = "value")
+    mapping <- aes_string(x = "variable", y = paste_aes(id_var), fill = "value")
     specific_theme <- theme(
       axis.text.x = text_element,
       axis.text.y = element_blank()

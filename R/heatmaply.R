@@ -257,6 +257,9 @@ is.plotly <- function(x) {
 #' @param grid_size When node_type is "scatter", this controls point size. When
 #' node_type is "heatmap", this controls the size of the grid between heatmap cells.
 #' 
+#' @param point_size_mat Matrix to map to point size
+#' @param point_size_name Name of point size mapping (for hovertext/legend)
+#' 
 #' @export
 #' @examples
 #' \dontrun{
@@ -476,9 +479,7 @@ heatmaply.default <- function(x,
                               row_dend_left = FALSE,
                               margins = c(NA, NA, NA, NA),
                               ...,
-                              scale_fill_gradient_fun = scale_fill_gradientn(
-                                colors = if(is.function(colors)) colors(256) else colors,
-                                na.value = na.value, limits = limits),
+                              scale_fill_gradient_fun = NULL,
                               grid_color = NA,
                               grid_gap = 0,
                               srtRow, srtCol,
@@ -516,7 +517,9 @@ heatmaply.default <- function(x,
                               dynamicTicks = FALSE,
                               grid_size = 0.1,
                               node_type = "heatmap",
-                              col) {
+                              point_size_mat = NULL,
+                              point_size_name = "Point size",
+                              col = NULL) {
 
   if (!missing(long_data)) {
     if (!missing(x)) warning("x and long_data should not be used together")
@@ -530,7 +533,19 @@ heatmaply.default <- function(x,
   }
 
   # this is to fix the error: "argument * matches multiple formal arguments"
-  if (!missing(col)) colors <- col
+  if (!is.null(col)) colors <- col
+
+  if (is.null(scale_fill_gradient_fun)) {
+    if (node_type == "heatmap") {
+      scale_fill_gradient_fun <- scale_fill_gradientn(
+        colors = if(is.function(colors)) colors(256) else colors,
+        na.value = na.value, limits = limits)
+    } else {
+      scale_fill_gradient_fun <- scale_color_gradientn(
+        colors = if(is.function(colors)) colors(256) else colors,
+        na.value = na.value, limits = limits)
+    }
+  }
 
   plot_method <- match.arg(plot_method)
 
@@ -607,6 +622,7 @@ heatmaply.default <- function(x,
   hm <- heatmapr(x,
     row_side_colors = row_side_colors,
     col_side_colors = col_side_colors,
+    point_size_mat = point_size_mat,
     seriate = seriate,
 
     cellnote = cellnote,
@@ -676,7 +692,8 @@ heatmaply.default <- function(x,
                      showticklabels = showticklabels,
                      dynamicTicks = dynamicTicks,
                      grid_size = grid_size,
-                     node_type = node_type
+                     node_type = node_type,
+                     point_size_name = point_size_name
                      )
 
                      # TODO: think more on what should be passed in "..."
@@ -875,7 +892,9 @@ heatmaply.heatmapr <- function(x,
                                showticklabels = c(TRUE, TRUE),
                                dynamicTicks = FALSE,
                                node_type = c("scatter", "heatmap"),
-                               grid_size = 0.1
+                               grid_size = 0.1,
+                               point_size_mat = x[["matrix"]][["point_size_mat"]],
+                               point_size_name = "Point size"
                                ) {
 
   node_type <- match.arg(node_type)
@@ -976,7 +995,9 @@ heatmaply.heatmapr <- function(x,
                       row_dend_left = row_dend_left,
                       label_names = label_names,
                       type = node_type,
-                      fontsize_row = fontsize_row, fontsize_col = fontsize_col)
+                      fontsize_row = fontsize_row, fontsize_col = fontsize_col,
+                      point_size_mat = point_size_mat,
+                      point_size_name = point_size_name)
   } else if (plot_method == "plotly") {
 
     p <- plotly_heatmap(data_mat, limits = limits, colors = colors,

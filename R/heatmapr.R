@@ -120,7 +120,7 @@ heatmapr <- function(x,
                       hclustfun = hclust,
                       dist_method = NULL,
                       hclust_method = NULL,
-
+                      
                       distfun_row,
                       hclustfun_row,
                       distfun_col,
@@ -163,9 +163,9 @@ heatmapr <- function(x,
                       row_side_colors,
                       col_side_colors,
                       seriate = c("OLO", "mean", "none", "GW"),
+                      point_size_mat = NULL,
                       ...
 ) {
-
 
   ## update hclust/dist functions?
   ##====================
@@ -358,6 +358,9 @@ heatmapr <- function(x,
   }
   x <- x[rowInd, colInd, drop = FALSE]
   cellnote <- cellnote[rowInd, colInd, drop = FALSE]
+  if (!is.null(point_size_mat)) {
+    point_size_mat <- point_size_mat[rowInd, colInd, drop = FALSE]
+  }
 
   if (!missing(row_side_colors)) {
     if(!(is.data.frame(row_side_colors) | is.matrix(row_side_colors))) {
@@ -437,7 +440,8 @@ heatmapr <- function(x,
               cellnote = cellnote,
               dim = dim(x),
               rows = rownames(x),
-              cols = colnames(x)
+              cols = colnames(x),
+              point_size_mat = point_size_mat
   )
 
 

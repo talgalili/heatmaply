@@ -40,7 +40,8 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   colorbar_xanchor = if (row_dend_left) "right" else "left",
   colorbar_yanchor = "bottom", colorbar_xpos = if (row_dend_left) -0.1 else
   1.1, colorbar_ypos = 0, showticklabels = c(TRUE, TRUE),
-  dynamicTicks = FALSE, grid_size = 0.1, node_type = "heatmap", col)
+  dynamicTicks = FALSE, grid_size = 0.1, node_type = "heatmap",
+  point_size_mat = NULL, point_size_name = "Point size", col = NULL)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
@@ -63,7 +64,8 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   colorbar_yanchor = "bottom", colorbar_xpos = if (row_dend_left) -0.1 else
   1.1, colorbar_ypos = 0, colorbar_len = 0.3, showticklabels = c(TRUE,
   TRUE), dynamicTicks = FALSE, node_type = c("scatter", "heatmap"),
-  grid_size = 0.1)
+  grid_size = 0.1, point_size_mat = x[["matrix"]][["point_size_mat"]],
+  point_size_name = "Point size")
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -311,6 +313,10 @@ node_type is "heatmap", this controls the size of the grid between heatmap cells
 \item{node_type}{For plot_method = "ggplot", should the heatmap be rendered as
 a x-y scatter plot (node_type = "scatter") or a heatmap (node_type = "heatmap").
 Default is node_type = "heatmap".}
+
+\item{point_size_mat}{Matrix to map to point size}
+
+\item{point_size_name}{Name of point size mapping (for hovertext/legend)}
 }
 \description{
 An object of class heatmapr includes all the needed information
