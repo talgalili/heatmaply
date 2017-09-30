@@ -53,6 +53,7 @@ ggplot_heatmap <- function(xx,
                            type = c("heatmap", "scatter"),
                            pointsize = 5,
                            point_size_mat = NULL,
+                           label_format_fun = function(...) format(..., digits = 4),
                            point_size_name = "Point size",
                            ...) {
   theme_clear_grid_heatmap <- theme(axis.line = element_line(color = "black"),
@@ -95,6 +96,7 @@ ggplot_heatmap <- function(xx,
     colnames(mdf)[2:3] <- c(col, val) # rename "variable" and "value"
     mdf
   }
+
 
   mdf <- melt_df(xx, label_names)
   if (!is.null(point_size_mat)) {
@@ -143,6 +145,10 @@ ggplot_heatmap <- function(xx,
   col <- label_names[[2]]
   val <- label_names[[3]]
 
+  mdf[["text"]] <- paste0(row, ": ", mdf[[1]], "<br>",
+    col, ": ", mdf[[2]], "<br>",
+    val, ": ", label_format_fun(mdf[[3]]))
+
   if (type == "heatmap") {
     geom <- "geom_tile" 
     geom_args <- list(
@@ -153,11 +159,14 @@ ggplot_heatmap <- function(xx,
     geom <- "geom_point"
     geom_args <- list()
     if (!is.null(point_size_mat)) {
-      geom_args[["mapping"]] <- aes_string(color = paste_aes(val), 
+      mdf[["text"]] <- paste(mdf[["text"]], "<br>", 
+        point_size_name, ": ", label_format_fun(mdf[[4]]))
+
+      geom_args[["mapping"]] <- aes_string(color = paste_aes(val), text="text",
         size = paste_aes(point_size_name))
     } else {
       geom_args[["size"]] <- grid_size
-      geom_args[["mapping"]] <- aes_string(color = paste_aes(val))
+      geom_args[["mapping"]] <- aes_string(color = paste_aes(val), text="text")
     }
   }
 

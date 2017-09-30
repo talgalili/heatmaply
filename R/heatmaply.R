@@ -259,6 +259,9 @@ is.plotly <- function(x) {
 #' 
 #' @param point_size_mat Matrix to map to point size
 #' @param point_size_name Name of point size mapping (for hovertext/legend)
+#' @param label_format_fun Function to format hovertext (eg, 
+#'    \code{function(...) round(..., digits=3)} or
+#'    \code{function(...) format(..., digits=3)}
 #' 
 #' @export
 #' @examples
@@ -519,6 +522,7 @@ heatmaply.default <- function(x,
                               node_type = "heatmap",
                               point_size_mat = NULL,
                               point_size_name = "Point size",
+                              label_format_fun = function(...) format(..., digits = 4),
                               col = NULL) {
 
   if (!missing(long_data)) {
@@ -693,7 +697,8 @@ heatmaply.default <- function(x,
                      dynamicTicks = dynamicTicks,
                      grid_size = grid_size,
                      node_type = node_type,
-                     point_size_name = point_size_name
+                     point_size_name = point_size_name,
+                     label_format_fun = label_format_fun
                      )
 
                      # TODO: think more on what should be passed in "..."
@@ -894,7 +899,8 @@ heatmaply.heatmapr <- function(x,
                                node_type = c("scatter", "heatmap"),
                                grid_size = 0.1,
                                point_size_mat = x[["matrix"]][["point_size_mat"]],
-                               point_size_name = "Point size"
+                               point_size_name = "Point size",
+                               label_format_fun = function(...) format(..., digits = 4)
                                ) {
 
   node_type <- match.arg(node_type)
@@ -997,7 +1003,8 @@ heatmaply.heatmapr <- function(x,
                       type = node_type,
                       fontsize_row = fontsize_row, fontsize_col = fontsize_col,
                       point_size_mat = point_size_mat,
-                      point_size_name = point_size_name)
+                      point_size_name = point_size_name,
+                      label_format_fun = label_format_fun)
   } else if (plot_method == "plotly") {
 
     p <- plotly_heatmap(data_mat, limits = limits, colors = colors,
@@ -1084,7 +1091,8 @@ heatmaply.heatmapr <- function(x,
 
   ## plotly:
   # turn p, px, and py to plotly objects if necessary
-  if (!is.plotly(p)) p <- ggplotly(p, dynamicTicks = dynamicTicks) %>% layout(showlegend=TRUE)
+  if (!is.plotly(p)) p <- ggplotly(p, dynamicTicks = dynamicTicks, tooltip="text") %>% 
+    layout(showlegend=TRUE)
 
 
   if (draw_cellnote) {
