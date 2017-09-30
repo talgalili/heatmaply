@@ -4,3 +4,5 @@
 ^CONDUCT\.md$
 TODO\.txt
 vignettes/\.build\.timestamp
+Makefile
+Rplot001.jpg

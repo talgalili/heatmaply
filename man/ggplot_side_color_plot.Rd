@@ -6,7 +6,7 @@
 \usage{
 ggplot_side_color_plot(df, palette = NULL, scale_title = paste(type,
   "side colors"), type = c("column", "row"), text_angle = if (type ==
-  "column") 0 else 90, is_colors = FALSE, label_name = type)
+  "column") 0 else 90, is_colors = FALSE, fontsize, label_name = NULL)
 }
 \arguments{
 \item{df}{A "molten" data.frame as produced by (eg) reshape2::melt}
@@ -22,6 +22,8 @@ plot}
 
 \item{is_colors}{Use if the values in df are valid colours and should not be mapped
 to a color scheme, and instead should be plotted directly.}
+
+\item{fontsize}{Font size (currently unused)}
 
 \item{label_name}{Name for the mouseover label, usually "row" or "column"}
 }

@@ -1,7 +1,7 @@
 
 
-# ggplot_heatmap(as.matrix(mtcars))
-# plotly_heatmap(as.matrix(mtcars))
+# heatmaply:::ggplot_heatmap(as.matrix(mtcars))
+# heatmaply:::plotly_heatmap(as.matrix(mtcars))
 # style(plotly_heatmap(as.matrix(mtcars)), xgap = 5, ygap = 5)
 
 
@@ -47,7 +47,7 @@ ggplot_heatmap <- function(xx,
                            key.title = NULL,
                            layers,
                            row_dend_left = FALSE,
-                           label_names,
+                           label_names = NULL,
                            fontsize_row = 10,
                            fontsize_col = 10,
                            type = c("heatmap", "scatter"),
@@ -56,16 +56,19 @@ ggplot_heatmap <- function(xx,
                            label_format_fun = function(...) format(..., digits = 4),
                            point_size_name = "Point size",
                            ...) {
+  
   theme_clear_grid_heatmap <- theme(axis.line = element_line(color = "black"),
                                     panel.grid.major = element_blank(),
                                     panel.grid.minor = element_blank(),
                                     panel.border = element_blank(),
                                     panel.background = element_blank())
 
-  
-  if (missing(label_names)) {
-    if (is.null(dim_names <- names(dimnames(x)))) {
+  type <- match.arg(type)
+  if (is.null(label_names)) {
+    if (is.null(dim_names <- names(dimnames(xx)))) {
       label_names <- c("row", "column", "value")
+    } else {
+      label_names <- dim_names
     }
   } else {
     assert_that(length(label_names) == 3)
@@ -212,16 +215,42 @@ paste_aes <- function(x) {
 }
 
 
-plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha = 1, begin = 0,
-                                                                  end = 1, option = "viridis"),
-    row_text_angle = 0, column_text_angle = 45, grid.color, grid.size, key.title = NULL,
-    row_dend_left = FALSE, fontsize_row = 10, fontsize_col = 10, colorbar_xanchor = "left",
-    key_title = "", colorbar_yanchor = "bottom", colorbar_xpos = 1.1, colorbar_ypos = 1, colorbar_len = 0.3) {
+plotly_heatmap <- function(x, limits = range(x),
+    colors = viridis(n=256, alpha = 1, begin = 0, end = 1, option = "viridis"),
+    row_text_angle = 0, column_text_angle = 45, grid.color, grid.size,
+    row_dend_left = FALSE, fontsize_row = 10, fontsize_col = 10, key_title = "",
+    colorbar_xanchor = "left", colorbar_yanchor = "bottom",
+    label_names = NULL,
+    colorbar_xpos = 1.1, colorbar_ypos = 1, colorbar_len = 0.3) {
 
   if (is.function(colors)) colors <- colors(256)
 
-  p <- plot_ly(z = x, x = 1:ncol(x), y = 1:nrow(x),
-    type = "heatmap", showlegend = FALSE, colors = colors,
+
+  if (is.null(label_names)) {
+    if (is.null(dim_names <- names(dimnames(x)))) {
+      label_names <- c("row", "column", "value")
+    } else {
+      label_names <- dim_names
+    }
+  } else {
+    assert_that(length(label_names) == 3)
+  }
+
+  text_mat <- as.data.frame(x)
+  text_mat[] <- lapply(seq_along(text_mat),
+    function(i) {
+      paste0(
+        label_names[3], ": ", x[, i], "<br>",
+        label_names[2], ": ", colnames(x)[i], "<br>",
+        label_names[1], ": ", rownames(x)
+      )
+    }
+  )
+  text_mat <- as.matrix(text_mat)
+
+
+  p <- plot_ly(z = x, x = 1:ncol(x), y = 1:nrow(x), text = text_mat,
+    type = "heatmap", showlegend = FALSE, colors = colors, hoverinfo = "text",
     zmin = limits[1], zmax = limits[2]) %>%
       layout(
         xaxis = list(
@@ -249,6 +278,7 @@ plotly_heatmap <- function(x, limits = range(x), colors = viridis(n=256, alpha =
 
 
 plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
+  if (is.hclust(dend)) dend <- as.dendrogram(dend)
   side <- match.arg(side)
   dend_data <- as.ggdend(dend)
   segs <- dend_data$segments
@@ -265,7 +295,7 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   if (is.numeric(colors)) {
     colors <- gplots::col2hex(grDevices::palette()[seq_along(colors)])
   }
-  
+
   lab_max <- nrow(dend_data$labels)
   if (side == "row") lab_max <- lab_max + 0.5
 
@@ -334,17 +364,21 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
 #' @param text_angle the angle of the text of the rows/columns.
 #' @param is_colors Use if the values in df are valid colours and should not be mapped
 #'  to a color scheme, and instead should be plotted directly.
+#' @param fontsize Font size (currently unused)
 #' @param label_name Name for the mouseover label, usually "row" or "column"
 #'
 #' @return A ggplot geom_tile object
 #'
 ggplot_side_color_plot <- function(df, palette = NULL,
     scale_title = paste(type, "side colors"), type = c("column", "row"),
-    text_angle = if (type == "column") 0 else 90, is_colors = FALSE,
-    label_name = type) {
+    text_angle = if (type == "column") 0 else 90, is_colors = FALSE, fontsize,
+    label_name = NULL) {
 
+  type <- match.arg(type)
   if (is.matrix(df)) df <- as.data.frame(df)
   assert_that(is.data.frame(df))
+
+  if (is.null(label_name)) label_name <- type
 
   ## Cooerce to character
   df[] <- lapply(df, as.character)
@@ -352,9 +386,8 @@ ggplot_side_color_plot <- function(df, palette = NULL,
   ## TODO: Find out why names are dropped when ncol(df) == 1 (Not any more?)
   original_dim <- dim(df)
 
-  if (is.null(palette)) palette <- colorspace::rainbow_hcl
+  if (is.null(palette)) palette <- default_side_colors
 
-  type <- match.arg(type)
   ## Custom label
   if (!missing(label_name)) type <- label_name
   if (type %in% colnames(df))
@@ -371,7 +404,7 @@ ggplot_side_color_plot <- function(df, palette = NULL,
   common_theme <- theme(
     panel.background = element_blank(),
     axis.ticks = element_blank())
-  
+
   ## Don't need this hack any more?
   # if(original_dim[2] > 1) {
     text_element <- element_text(angle = text_angle)
@@ -393,13 +426,14 @@ ggplot_side_color_plot <- function(df, palette = NULL,
     )
   }
   theme <- list(common_theme, specific_theme)
-  
+
   if (is.function(palette)) {
     palette <- setNames(palette(nlevels(df[["value"]])), levels(df[["value"]]))
   } else if (!all(levels(factor(df[["value"]])) %in% names(palette))) {
-    stop(paste("Not all levels of the", type, "side colors are mapped in the", type, "palette"))
+    stop(paste0("Not all levels of the ", type,
+      "_side_colors are mapped in the ", type, "_side_palette"))
   }
- 
+
   g <- ggplot(df, mapping = mapping) +
     geom_tile() +
     xlab("") +
@@ -414,11 +448,28 @@ ggplot_side_color_plot <- function(df, palette = NULL,
 
 
 
+default_side_colors <- function(n) {
+  ## Warning if n < 3 in any case
+  suppressWarnings(
+    if (n <= 12) {
+      RColorBrewer::brewer.pal(n, "Paired")[seq_len(n)]
+    } else if (n <= 20) {
+      c(RColorBrewer::brewer.pal(12, "Paired"),
+        RColorBrewer::brewer.pal(n - 12, "Set2"))[seq_len(n)]
+    } else if (n <= 32) {
+      c(RColorBrewer::brewer.pal(12, "Paired"),
+        RColorBrewer::brewer.pal(8, "Set2"),
+        RColorBrewer::brewer.pal(n - 20, "Set3"))[seq_len(n)]
+    } else {
+      colorspace::rainbow_hcl(n)
+    }
+  )
+}
+
 ## Predict luminosity of cells and change text based on that
 ## http://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
-predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale, 
+predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale,
     cell_values=p$x$data[[1]]$z, plot_method=c("ggplot", "plotly")) {
-
 
   plot_method <- match.arg(plot_method)
 
@@ -467,8 +518,6 @@ predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale,
   )
   cell_font_colors
 }
-
-
 
 
 parse_plotly_color <- function(color) {
@@ -556,9 +605,11 @@ discrete_colorscale <- function(colors) {
 plotly_side_color_plot <- function(df, palette = NULL,
     scale_title = paste(type, "side colors"), type = c("column", "row"),
     text_angle = if (type == "column") 0 else 90, is_colors = FALSE,
-    label_name = type, fontsize = 10) {
+    label_name = NULL, fontsize = 10) {
 
   type <- match.arg(type)
+
+  if (is.null(label_name)) label_name <- type
 
   data <- df
   data[] <- lapply(df, as.character)
@@ -567,14 +618,18 @@ plotly_side_color_plot <- function(df, palette = NULL,
   }
   data <- as.data.frame(data)
   data_vals <- unlist(data)
-  levels <- unique(data_vals)
+
+  levels <- sort(unique(data_vals))
   levels <- setdiff(levels, NA)
 
-  if (is.null(palette)) palette <- colorspace::rainbow_hcl
+  if (is.null(palette)) palette <- default_side_colors
+
   if (is.function(palette)) {
     palette <- setNames(palette(length(levels)), levels)
   } else if (!all(levels %in% names(palette))) {
-    stop(paste("Not all levels of the", type, "side colors are mapped in the", type, "palette"))
+    stop(paste0(
+      "Not all levels of the ", type,
+      "_side_colors are mapped in the ", type, "_side_palette"))
   }
 
   levs2colors <- palette[as.character(levels)]
@@ -593,8 +648,8 @@ plotly_side_color_plot <- function(df, palette = NULL,
         paste0(
           "value: ", data[, i], "<br>",
           "variable: ", colnames(data)[i], "<br>",
-          label_name, ": ", rownames(data)  
-        )        
+          label_name, ": ", rownames(data)
+        )
       } else {
         paste0(
           "value: ", data[, i], "<br>",
@@ -604,11 +659,11 @@ plotly_side_color_plot <- function(df, palette = NULL,
       }
     }
   )
-  
+
   ## https://stackoverflow.com/questions/42524450/using-discrete-custom-color-in-a-plotly-heatmap
   p <- plot_ly(z = df_nums, x = 1:ncol(df_nums), y = 1:nrow(df_nums),
     text = as.matrix(text_mat), hoverinfo = "text",
-    type = "heatmap", showlegend = FALSE, colors = levs2colors, 
+    type = "heatmap", showlegend = FALSE, colors = levs2colors,
     colorscale = discrete_colorscale(levs2colors),
     colorbar = list(
       # Capitalise first letter
@@ -616,7 +671,7 @@ plotly_side_color_plot <- function(df, palette = NULL,
       tickmode = 'array',
       tickvals = seq(1.5, length(levels) - 0.5, length.out = length(levels)),
       ticktext = levels,
-      len = 0.2)) 
+      len = 0.2))
   if (type == "row") {
     p <- p %>% layout(
       xaxis = list(
@@ -644,3 +699,42 @@ plotly_side_color_plot <- function(df, palette = NULL,
   }
   p
 }
+
+
+
+
+
+
+
+
+
+# TODO: add roxydoc
+
+# This function gets a heatmaply object and a file, and writes that to a file
+# we should later add control over width...
+hmly_to_file_1file <- function(hmly, file, ...) {
+
+  # tools::file_ext("hithere.png")
+  # tools::file_ext("hithere.html")
+  # tools::file_ext("hithere.html.png")
+  file_extension <- tolower(tools::file_ext(file))
+  if(!(file_extension %in% c("html","pdf", "png", "jpeg"))) {
+    warning("file extension must be one of the following: html/pdf/png/jpeg. Since it was not - your heatmaply was not saved to a file.")
+  } else {
+    if(file_extension == "html") {
+      # solution to dealing with the folder:
+      # https://stackoverflow.com/questions/41399795/savewidget-from-htmlwidget-in-r-cannot-save-html-file-in-another-folder
+      tmp_fp <- file
+      tmp_fp <- file.path(normalizePath(dirname(tmp_fp)),basename(tmp_fp))
+      hmly %>% htmlwidgets::saveWidget(file = tmp_fp, selfcontained = TRUE)
+    }
+    if(file_extension %in% c("pdf", "png", "jpeg")) {
+      plotly::export(hmly, file)
+    }
+  }
+  invisible(NULL)
+}
+
+hmly_to_file <- Vectorize(hmly_to_file_1file, vectorize.args = "file")
+
+# hmly_to_file(p, c("hm.png", "hm.html"))

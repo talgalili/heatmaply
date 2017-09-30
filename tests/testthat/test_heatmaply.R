@@ -131,6 +131,9 @@ for (plot_method in c("ggplot", "plotly")) {
 }
 
 
+
+
+
 context("heatmaply misc")
 
 
@@ -185,4 +188,12 @@ test_that("limits", {
 test_that("cellnote", {
   h <- heatmaply(mtcars, draw_cellnote = TRUE)
   expect_is(h, "plotly")
+})
+
+test_that("showticklabels", {
+  h <- heatmaply(mtcars, showticklabels=TRUE)
+  expect_is(h, "plotly")
+  h <- heatmaply(mtcars, showticklabels=c(FALSE, FALSE))
+  expect_is(h, "plotly")
+  expect_error(heatmaply(mtcars, showticklabels="a"))
 })

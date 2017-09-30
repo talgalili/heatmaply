@@ -18,10 +18,10 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
   row_text_angle = 0, column_text_angle = 45, subplot_margin = 0,
   cellnote = NULL, draw_cellnote = !is.null(cellnote),
-  cellnote_color = "auto", cellnote_textposition = "middle right", Rowv,
-  Colv, distfun = dist, hclustfun = hclust, dist_method = NULL,
-  hclust_method = NULL, distfun_row, hclustfun_row, distfun_col,
-  hclustfun_col, dendrogram = c("both", "row", "column", "none"),
+  cellnote_color = "auto", cellnote_textposition = "middle right",
+  cellnote_size = 12, Rowv, Colv, distfun = dist, hclustfun = hclust,
+  dist_method = NULL, hclust_method = NULL, distfun_row, hclustfun_row,
+  distfun_col, hclustfun_col, dendrogram = c("both", "row", "column", "none"),
   reorderfun = function(d, w) reorder(d, w), k_row = 1, k_col = 1,
   symm = FALSE, revC, scale = c("none", "row", "column"), na.rm = TRUE,
   row_dend_left = FALSE, margins = c(NA, NA, NA, NA), ...,
@@ -32,16 +32,16 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   col_side_colors, col_side_palette = NULL, ColSideColors = NULL,
   RowSideColors = NULL, seriate = c("OLO", "mean", "none", "GW"),
   heatmap_layers = NULL, side_color_layers = NULL, branches_lwd = 0.6,
-  file, long_data, plot_method = c("ggplot", "plotly"),
-  label_names = c("row", "column", "value"), fontsize_row = 10,
-  fontsize_col = 10, cexRow, cexCol, subplot_widths = NULL,
-  subplot_heights = NULL, colorbar_len = 0.3, colorbar_xanchor = if
-  (row_dend_left) "right" else "left", colorbar_yanchor = "bottom",
-  colorbar_xpos = if (row_dend_left) -0.1 else 1.1, colorbar_ypos = 0,
-  showticklabels = c(TRUE, TRUE), dynamicTicks = FALSE, grid_size = 0.1,
-  node_type = "heatmap", point_size_mat = NULL,
-  point_size_name = "Point size", label_format_fun = function(...)
-  format(..., digits = 4), col = NULL)
+  file, long_data, plot_method = c("ggplot", "plotly"), label_names = NULL,
+  fontsize_row = 10, fontsize_col = 10, cexRow, cexCol,
+  subplot_widths = NULL, subplot_heights = NULL, colorbar_len = 0.3,
+  colorbar_xanchor = if (row_dend_left) "right" else "left",
+  colorbar_yanchor = "bottom", colorbar_xpos = if (row_dend_left) -0.1 else
+  1.1, colorbar_ypos = 0, showticklabels = c(TRUE, TRUE),
+  dynamicTicks = FALSE, grid_size = 0.1, node_type = "heatmap",
+  point_size_mat = NULL, point_size_name = "Point size",
+  label_format_fun = function(...) format(..., digits = 4), labRow, labCol,
+  col = NULL)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
@@ -53,7 +53,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   ylab = "", main = "", titleX = TRUE, titleY = TRUE,
   hide_colorbar = FALSE, key.title = NULL, return_ppxpy = FALSE,
   draw_cellnote = FALSE, cellnote_color = "auto",
-  cellnote_textposition = "middle right",
+  cellnote_textposition = "middle right", cellnote_size = 12,
   row_side_colors = x[["row_side_colors"]], row_side_palette = NULL,
   col_side_colors = x[["col_side_colors"]], col_side_palette = NULL,
   plot_method = c("ggplot", "plotly"), ColSideColors, RowSideColors,
@@ -66,7 +66,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   TRUE), dynamicTicks = FALSE, node_type = c("scatter", "heatmap"),
   grid_size = 0.1, point_size_mat = x[["matrix"]][["point_size_mat"]],
   point_size_name = "Point size", label_format_fun = function(...)
-  format(..., digits = 4))
+  format(..., digits = 4), labRow, labCol)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -116,6 +116,8 @@ cellnote is not supplied, x will be used for cellnote.}
 Default is "middle right". Options are
 "top left", "top center", "top right", "middle left", "middle center",
 "middle right", "bottom left", "bottom center", "bottom right"}
+
+\item{cellnote_size}{The font size (HTML/CSS) of the cellnote. Default is 12.}
 
 \item{Rowv}{determines if and how the row dendrogram should be reordered.
 By default, it is TRUE, which implies dendrogram is computed and reordered
@@ -261,12 +263,17 @@ heatmap_layers.}
 If NULL then it is ignored. If the "lwd" is already defined in Rowv/Colv then this
 parameter is ignored (it is checked using \link[dendextend]{has_edgePar}("lwd")).}
 
-\item{file}{HTML file name to save the heatmaply into. Should be a character
-string ending with ".html".
+\item{file}{name of the file(s) into which to save the heatmaply output.
+Should be a character vector of strings ending with ".html" for a dynamic output,
+or ".png", ".jpeg", ".pdf" for a static output.
+
 For example: heatmaply(x, file = "heatmaply_plot.html") or
 dir.create("folder")
 heatmaply(x, file = "folder/heatmaply_plot.html")
-This is based on \link[htmlwidgets]{saveWidget}.}
+This is based on \link[htmlwidgets]{saveWidget}, and \link[webshot]{webshot} for the static files.
+For more refined control over the static file output, you should save the heatmaply object using \link[webshot]{webshot}.
+
+Another example: heatmaply(x, file = c("heatmaply_plot.html", "heatmaply_plot.png"))}
 
 \item{long_data}{Data in long format. Replaces x, so both should not be used.
 Colnames must be c("name", "variable", "value"). If you do not have a names
@@ -276,7 +283,7 @@ inthe data.}
 \item{plot_method}{Use "ggplot" or "plotly" to choose which library produces heatmap
 and dendrogram plots}
 
-\item{label_names}{Names for labells of x, y and value/fill mouseover.}
+\item{label_names}{Names for labels of x, y and value/fill mouseover.}
 
 \item{fontsize_row, fontsize_col, cexRow, cexCol}{Font size for row and column labels.}
 
@@ -322,6 +329,10 @@ Default is node_type = "heatmap".}
 \item{label_format_fun}{Function to format hovertext (eg, 
 \code{function(...) round(..., digits=3)} or
 \code{function(...) format(..., digits=3)}}
+
+\item{labRow, labCol}{character vectors with row and column labels to use; these default to rownames(x) or colnames(x), respectively.
+if set to NA, they change the value in showticklabels to be FALSE. This is mainly to keep
+backward compatibility with gplots::heatmap.2.}
 }
 \description{
 An object of class heatmapr includes all the needed information
@@ -385,6 +396,12 @@ subplot(hm1, hm2, margin = .02, shareY = TRUE)
 
 # We can save heatmaply as an HTML file by using:
 heatmaply(iris[,-5], file = "heatmaply_iris.html")
+# or a png/pdf/jpeg file using:
+heatmaply(iris[,-5], file = "heatmaply_iris.png")
+# or just doing it in one go:
+heatmaply(iris[,-5], file = c("heatmaply_iris.html", "heatmaply_iris.png") )
+
+
 
 # If we don't want the HTML to be selfcontained, we can use the following:
 library(heatmaply)

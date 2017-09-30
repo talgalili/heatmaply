@@ -9,5 +9,4 @@ vignettes/.build.timestamp
 GDC*
 MANIFEST.txt
 *.gz
-Makefile
 test2.rda

@@ -69,7 +69,7 @@ is.plotly <- function(x) {
 #' Default is "middle right". Options are
 #' "top left", "top center", "top right", "middle left", "middle center",
 #' "middle right", "bottom left", "bottom center", "bottom right"
-#'
+#' @param cellnote_size The font size (HTML/CSS) of the cellnote. Default is 12.
 #' @param Rowv determines if and how the row dendrogram should be reordered.
 #' By default, it is TRUE, which implies dendrogram is computed and reordered
 #' based on row means. If NULL or FALSE, then no dendrogram is computed and
@@ -209,19 +209,24 @@ is.plotly <- function(x) {
 #' parameter is ignored (it is checked using \link[dendextend]{has_edgePar}("lwd")).
 #'
 #'
-#' @param file HTML file name to save the heatmaply into. Should be a character
-#' string ending with ".html".
+#' @param file name of the file(s) into which to save the heatmaply output.
+#' Should be a character vector of strings ending with ".html" for a dynamic output,
+#' or ".png", ".jpeg", ".pdf" for a static output.
+#'
 #' For example: heatmaply(x, file = "heatmaply_plot.html") or
 #' dir.create("folder")
 #' heatmaply(x, file = "folder/heatmaply_plot.html")
-#' This is based on \link[htmlwidgets]{saveWidget}.
+#' This is based on \link[htmlwidgets]{saveWidget}, and \link[webshot]{webshot} for the static files.
+#' For more refined control over the static file output, you should save the heatmaply object using \link[webshot]{webshot}.
+#'
+#' Another example: heatmaply(x, file = c("heatmaply_plot.html", "heatmaply_plot.png"))
 #'
 #' @param long_data Data in long format. Replaces x, so both should not be used.
 #'  Colnames must be c("name", "variable", "value"). If you do not have a names
 #'  column you can simply use a sequence of numbers from 1 to the number of "rows"
 #'  inthe data.
 #'
-#' @param label_names Names for labells of x, y and value/fill mouseover.
+#' @param label_names Names for labels of x, y and value/fill mouseover.
 #' @param fontsize_row,fontsize_col,cexRow,cexCol Font size for row and column labels.
 #' @param subplot_widths,subplot_heights The relative widths and heights of each
 #'  subplot. The length of these vectors will vary depending on the number of
@@ -263,6 +268,10 @@ is.plotly <- function(x) {
 #'    \code{function(...) round(..., digits=3)} or
 #'    \code{function(...) format(..., digits=3)}
 #' 
+#' @param labRow,labCol character vectors with row and column labels to use; these default to rownames(x) or colnames(x), respectively.
+#' if set to NA, they change the value in showticklabels to be FALSE. This is mainly to keep
+#' backward compatibility with gplots::heatmap.2.
+#'
 #' @export
 #' @examples
 #' \dontrun{
@@ -312,6 +321,12 @@ is.plotly <- function(x) {
 #'
 #' # We can save heatmaply as an HTML file by using:
 #' heatmaply(iris[,-5], file = "heatmaply_iris.html")
+#' # or a png/pdf/jpeg file using:
+#' heatmaply(iris[,-5], file = "heatmaply_iris.png")
+#' # or just doing it in one go:
+#' heatmaply(iris[,-5], file = c("heatmaply_iris.html", "heatmaply_iris.png") )
+#'
+#'
 #'
 #' # If we don't want the HTML to be selfcontained, we can use the following:
 #' library(heatmaply)
@@ -452,6 +467,7 @@ heatmaply.default <- function(x,
                               draw_cellnote = !is.null(cellnote),
                               cellnote_color = "auto",
                               cellnote_textposition = "middle right",
+                              cellnote_size = 12,
 
                               ## dendrogram control
                               Rowv,
@@ -505,7 +521,7 @@ heatmaply.default <- function(x,
                               file,
                               long_data,
                               plot_method = c("ggplot", "plotly"),
-                              label_names = c("row", "column", "value"),
+                              label_names = NULL,
                               fontsize_row = 10,
                               fontsize_col = 10,
                               cexRow, cexCol,
@@ -518,11 +534,13 @@ heatmaply.default <- function(x,
                               colorbar_ypos = 0,
                               showticklabels = c(TRUE, TRUE),
                               dynamicTicks = FALSE,
+
                               grid_size = 0.1,
                               node_type = "heatmap",
                               point_size_mat = NULL,
                               point_size_name = "Point size",
                               label_format_fun = function(...) format(..., digits = 4),
+                              labRow, labCol,
                               col = NULL) {
 
   if (!missing(long_data)) {
@@ -587,8 +605,8 @@ heatmaply.default <- function(x,
     row_side_colors <- RowSideColors
   }
 
-  if (!missing(cexRow)) fontsize_row <- cexRow
-  if (!missing(cexCol)) fontsize_col <- cexCol
+  if (!missing(cexRow)) fontsize_row <- if(is.numeric(cexRow)) cexRow*10 else cexRow
+  if (!missing(cexCol)) fontsize_col <- if(is.numeric(cexCol)) cexCol*10 else cexCol
 
   # TODO: maybe create heatmaply.data.frame heatmaply.matrix instead.
   #       But right now I am not sure this would be needed.
@@ -683,6 +701,7 @@ heatmaply.default <- function(x,
                      plot_method = plot_method,
                      draw_cellnote = draw_cellnote,
                      cellnote_textposition = cellnote_textposition,
+                     cellnote_size = cellnote_size,
                      cellnote_color = cellnote_color,
                      fontsize_row = fontsize_row,
                      fontsize_col = fontsize_col,
@@ -698,22 +717,413 @@ heatmaply.default <- function(x,
                      grid_size = grid_size,
                      node_type = node_type,
                      point_size_name = point_size_name,
-                     label_format_fun = label_format_fun
+                     label_format_fun = label_format_fun,
+                     labRow = labRow, labCol = labCol
                      )
 
                      # TODO: think more on what should be passed in "..."
 
+
   if (!missing(file)) {
-    # solution to dealing with the folder:
-    # https://stackoverflow.com/questions/41399795/savewidget-from-htmlwidget-in-r-cannot-save-html-file-in-another-folder
-    tmp_fp <- file
-    tmp_fp <- file.path(normalizePath(dirname(tmp_fp)),basename(tmp_fp))
-    hmly %>% saveWidget(file = tmp_fp, selfcontained = TRUE)
+    hmly_to_file(hmly, file)
   }
 
   hmly
 }
 
+
+#' @export
+#' @rdname heatmaply
+heatmaply.heatmapr <- function(x,
+                               # elements for scale_fill_gradientn
+                               colors = viridis(n=256, alpha = 1, begin = 0,
+                                                    end = 1, option = "viridis"),
+                               limits = NULL,
+                               na.value = "grey50",
+                               row_text_angle = 0,
+                               column_text_angle = 45,
+                               subplot_margin = 0,
+
+                               row_dend_left = FALSE,
+                               margins = c(NA, NA, NA, NA),
+                               ...,
+                               scale_fill_gradient_fun = scale_fill_gradientn(
+                                 colors = if(is.function(colors)) colors(256) else colors,
+                                 na.value = na.value, limits = limits),
+                               grid_color = NA,
+                               grid_gap = 0,
+                               srtRow, srtCol,
+                               xlab = "", ylab = "",
+                               main = "",
+                               titleX = TRUE, titleY = TRUE,
+                               hide_colorbar = FALSE,
+                               key.title = NULL,
+                               return_ppxpy = FALSE,
+                               draw_cellnote = FALSE,
+                               cellnote_color = "auto",
+                               cellnote_textposition = "middle right",
+                               cellnote_size = 12,
+                               row_side_colors = x[["row_side_colors"]],
+                               row_side_palette = NULL,
+                               col_side_colors = x[["col_side_colors"]],
+                               col_side_palette = NULL,
+                               plot_method = c("ggplot", "plotly"),
+                               ColSideColors,
+                               RowSideColors,
+                               heatmap_layers = NULL,
+                               side_color_layers = NULL,
+                               branches_lwd = 0.6,
+                               label_names = c("row", "column", "value"),
+                               fontsize_row = 10,
+                               fontsize_col = 10,
+                               subplot_widths = NULL,
+                               subplot_heights = NULL,
+                               colorbar_xanchor = if(row_dend_left) "right" else "left",
+                               colorbar_yanchor = "bottom",
+                               colorbar_xpos = if(row_dend_left) -0.1 else 1.1,
+                               colorbar_ypos = 0,
+                               colorbar_len = 0.3,
+                               showticklabels = c(TRUE, TRUE),
+                               dynamicTicks = FALSE,
+                               node_type = c("scatter", "heatmap"),
+                               grid_size = 0.1,
+                               point_size_mat = x[["matrix"]][["point_size_mat"]],
+                               point_size_name = "Point size",
+                               label_format_fun = function(...) format(..., digits = 4),
+                               labRow, labCol
+                               ) {
+
+  node_type <- match.arg(node_type)
+  plot_method <- match.arg(plot_method)
+  cellnote_textposition <- match.arg(cellnote_textposition,
+    choices = c("top left", "top center" , "top right", "middle left",
+      "middle center", "middle right", "bottom left", "bottom center",
+      "bottom right"))
+
+  # informative errors for mis-specified limits
+  if (!is.null(limits)) {
+    if (!is.numeric(limits)) stop("limits must be numeric")
+    if (length(limits) != 2L) stop("limits must be of length 2 (i.e.: two dimensional)")
+
+    r <- range(as.matrix(x$matrix$data), na.rm = TRUE)
+    limits <- sort(limits)
+
+    ## Warn for broken heatmap colors
+    if (limits[1] > r[1]) {
+      limits[1] <- r[1]
+      warning("Lower limit is not <= lowest value in x, min of limits is set to the min of the range (otherwise, colors will be broken!)")
+    }
+    if (limits[2] < r[2]) {
+      limits[2] <- r[2]
+      warning("Upper limit is not >= highest value in x, max of limits is set to the max of the range (otherwise, colors will be broken!)")
+    }
+  }
+  if (!missing(srtRow)) row_text_angle <- srtRow
+  if (!missing(srtCol)) column_text_angle <- srtCol
+
+
+  if (!missing(labRow)) {
+    if(all(is.na(labRow))) {
+        showticklabels[2] <- FALSE
+      } else {
+        rownames(x$matrix$data) <- labRow
+        rownames(x$matrix$cellnote) <- labRow
+        rownames(x$cellnote) <- labRow
+        x$matrix$rows <- labRow
+      }
+    }
+  if (!missing(labCol)) {
+    if(all(is.na(labCol))) {
+      showticklabels[1] <- FALSE
+    } else {
+      colnames(x$matrix$data) <- labCol
+      colnames(x$matrix$cellnote) <- labCol
+      colnames(x$cellnote) <- labCol
+      x$matrix$cols <- labCol
+    }
+  }
+
+
+
+
+  # x is a heatmapr object.
+  # heatmapr <- list(rows = rowDend, cols = colDend, matrix = mtx, image = imgUri,
+  #                  theme = theme, options = options)
+  # x <- heatmapr(mtcars)
+  # source: http://stackoverflow.com/questions/6528180/ggplot2-plot-without-axes-legends-etc
+  theme_clear_grid_dends <- theme(axis.line=element_blank(),axis.text.x=element_blank(),
+        axis.text.y=element_blank(),axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(), legend.position="none",
+        panel.background=element_blank(),panel.border=element_blank(),panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),plot.background=element_blank())
+  # dendrograms:
+  rows <- x$rows
+  cols <- x$cols
+
+  if (!is.null(branches_lwd) && branches_lwd != 1) {
+    if(is.dendrogram(rows) && !has_edgePar(rows, "lwd")) rows <- set(rows, "branches_lwd", branches_lwd)
+    if(is.dendrogram(cols) && !has_edgePar(cols, "lwd")) cols <- set(cols, "branches_lwd", branches_lwd)
+  }
+
+
+
+  # this is using dendextend
+  if (is.null(cols)) {
+    py <- NULL
+  } else {
+    if (plot_method == "ggplot") {
+      col_ggdend <- as.ggdend(cols)
+      xlims <- c(0.5, nrow(col_ggdend$labels) + 0.5)
+      py <- ggplot(cols, labels  = FALSE) + theme_bw() +
+        coord_cartesian(expand = FALSE, xlim = xlims) +
+        theme_clear_grid_dends
+    } else {
+      suppressWarnings(py <- plotly_dend(cols, side = "col"))
+    }
+  }
+  if (is.null(rows)) {
+    px <- NULL
+  } else {
+    if (plot_method == "ggplot") {
+      row_ggdend <- as.ggdend(rows)
+      ylims <- c(0.5, nrow(row_ggdend$labels) + 0.5)
+
+      px <- ggplot(row_ggdend, labels  = FALSE) +
+        # coord_cartesian(expand = FALSE) +
+        coord_flip(expand = FALSE, xlim = ylims) +
+        theme_bw() +
+        theme_clear_grid_dends
+
+      if (row_dend_left) px <- px + scale_y_reverse()
+
+    } else {
+      px <- plotly_dend(rows, flip = row_dend_left, side = "row")
+    }
+  }
+  # create the heatmap
+  data_mat <- x$matrix$data
+
+  if (plot_method == "ggplot") {
+    p <- ggplot_heatmap(data_mat,
+                      row_text_angle,
+                      column_text_angle,
+                      scale_fill_gradient_fun,
+                      grid_color,
+                      grid_size = grid_size,
+                      key.title = key.title,
+                      layers = heatmap_layers,
+                      row_dend_left = row_dend_left,
+                      label_names = label_names,
+                      type = node_type,
+                      fontsize_row = fontsize_row, fontsize_col = fontsize_col,
+                      point_size_mat = point_size_mat,
+                      point_size_name = point_size_name,
+                      label_format_fun = label_format_fun)
+  } else if (plot_method == "plotly") {
+
+    p <- plotly_heatmap(data_mat, limits = limits, colors = colors,
+      key_title = key.title, label_names = label_names,
+      row_text_angle = row_text_angle, column_text_angle = column_text_angle,
+      fontsize_row = fontsize_row, fontsize_col = fontsize_col,
+      colorbar_yanchor = colorbar_yanchor, colorbar_xanchor = colorbar_xanchor,
+      colorbar_xpos = colorbar_xpos, colorbar_ypos = colorbar_ypos,
+      colorbar_len = colorbar_len)
+  }
+
+
+
+
+
+
+  # TODO: Add native plotly sidecolor function.
+  # TODO: Possibly use function to generate all 3 plots to prevent complex logic here
+  if (is.null(row_side_colors)) {
+    pr <- NULL
+  } else {
+    side_color_df <- x[["row_side_colors"]]
+    if (is.matrix(side_color_df)) side_color_df <- as.data.frame(side_color_df)
+    assert_that(
+      nrow(side_color_df) == nrow(data_mat),
+      is.data.frame(side_color_df)
+    )
+    ## Just make sure it's character first
+    side_color_df[] <- lapply(side_color_df, as.character)
+    if (plot_method == "ggplot") {
+      pr <- ggplot_side_color_plot(side_color_df,
+        type = "row",
+        text_angle = column_text_angle,
+        palette = row_side_palette,
+        fontsize = fontsize_col,
+        is_colors = !is.null(RowSideColors),
+        label_name = label_names[[1]]) + side_color_layers
+    } else {
+      pr <- plotly_side_color_plot(side_color_df,
+        type = "row",
+        text_angle = column_text_angle,
+        palette = row_side_palette,
+        fontsize = fontsize_col,
+        is_colors = !is.null(RowSideColors),
+        label_name = label_names[[1]])
+    }
+  }
+
+  if (is.null(col_side_colors)) {
+    pc <- NULL
+  } else {
+    warning("The hover text for col_side_colors is currently not implemented (due to an issue in plotly). We hope this would get resolved in future releases.")
+
+    side_color_df <- x[["col_side_colors"]]
+    if (is.matrix(side_color_df)) side_color_df <- as.data.frame(side_color_df)
+    assert_that(
+      nrow(side_color_df) == ncol(data_mat),
+      is.data.frame(side_color_df)
+    )
+    ## Just make sure it's character first
+    side_color_df[] <- lapply(side_color_df, as.character)
+    if (plot_method == "ggplot") {
+      pc <- ggplot_side_color_plot(side_color_df,
+        type = "column",
+        text_angle = row_text_angle,
+        palette = col_side_palette,
+        is_colors = !is.null(ColSideColors),
+        fontsize = fontsize_col,
+        label_name = label_names[[2]]) + side_color_layers
+    } else {
+      pc <- plotly_side_color_plot(side_color_df,
+        type = "column",
+        text_angle = row_text_angle,
+        palette = col_side_palette,
+        fontsize = fontsize_col,
+        is_colors = !is.null(ColSideColors),
+        label_name = label_names[[2]])
+    }
+  }
+
+  if (return_ppxpy) {
+    return(list(p=p, px=px, py=py, pr=pr, pc=pc))
+  } else {
+  	if (!is.null(pc)) {
+      pc <- ggplotly(pc)
+  		pc <- layout(pc, showlegend = TRUE)
+  	}
+  	if (!is.null(pr)) {
+      pr <- ggplotly(pr)
+  		pr <- layout(pr, showlegend = TRUE)
+  	}
+  }
+
+  ## plotly:
+  # turn p, px, and py to plotly objects if necessary
+  if (!is.plotly(p)) p <- ggplotly(p, dynamicTicks = dynamicTicks, tooltip="text") %>% 
+    layout(showlegend=TRUE)
+
+
+  if (draw_cellnote) {
+    ## Predict cell color luminosity based on colorscale
+    if (cellnote_color == "auto") {
+      cellnote_color <- predict_colors(p, plot_method = plot_method)
+    }
+
+    df <- as.data.frame(x[["cellnote"]])
+    df$row <- 1:nrow(df)
+    mdf <- reshape2::melt(df, id.vars="row")
+    ## TODO: Enforce same dimnames to ensure it's not scrambled?
+    # mdf$variable <- factor(mdf$variable, levels = p$x$layout$xaxis$ticktext)
+    mdf$variable <- as.numeric(as.factor(mdf$variable))
+    mdf$value <- factor(mdf$value)
+
+    p <- p %>% add_trace(y = mdf$row, x = mdf$variable, text = mdf$value,
+        type = "scatter", mode = "text", textposition = cellnote_textposition,
+        hoverinfo = "none",
+        textfont = list(color = plotly::toRGB(cellnote_color), size = cellnote_size)
+      )
+  }
+  if (!is.null(px) && !is.plotly(px)) {
+    px <- ggplotly(px, tooltip = "y", dynamicTicks = dynamicTicks) %>%
+      layout(showlegend = FALSE)
+  }
+  if (!is.null(py) && !is.plotly(py)) {
+    py <- ggplotly(py, tooltip = "y", dynamicTicks = dynamicTicks) %>%
+      layout(showlegend = FALSE)
+  }
+
+  # https://plot.ly/r/reference/#Layout_and_layout_style_objects
+  p <- layout(p,              # all of layout's properties: /r/reference/#layout
+              title = main, # layout's title: /r/reference/#layout-title
+              xaxis = list(           # layout's xaxis is a named list. List of valid keys: /r/reference/#layout-xaxis
+                title = xlab     # xaxis's title: /r/reference/#layout-xaxis-title
+                # showgrid = T        # xaxis's showgrid: /r/reference/#layout-xaxis-showgrid
+              ),
+              yaxis = list(           # layout's yaxis is a named list. List of valid keys: /r/reference/#layout-yaxis
+                title = ylab      # yaxis's title: /r/reference/#layout-yaxis-title
+              ))
+  if (hide_colorbar) {
+    p <- hide_colorbar(p)
+    # px <- hide_colorbar(px)
+    # py <- hide_colorbar(py)
+  }
+
+  # Adjust top based on whether main is empty or not.
+  if (is.na(margins[3])) margins[3] <- ifelse(main == "", 0, 30)
+
+  rn <- c(rownames(data_mat), colnames(x[["col_side_colors"]]))
+  min_marg_row <- calc_margin(rn, fontsize = p$x$layout$yaxis$tickfont$size)
+  if (row_dend_left && is.na(margins[4])) {
+    margins[4] <- min_marg_row
+  } else if (!row_dend_left && is.na(margins[2])) {
+    margins[2] <- min_marg_row
+  }
+  if (is.na(margins[1])) {
+    cn <- c(colnames(data_mat), colnames(x[["row_side_colors"]]))
+    margins[1] <- calc_margin(cn, fontsize = p$x$layout$yaxis$tickfont$size)
+  }
+
+  # add a white grid
+  if(grid_gap > 0) {
+    p <- style(p, xgap = grid_gap, ygap = grid_gap, traces = 1)
+    # doesn't seem to work.
+    # if(!is.null(pr)) pr <- style(pr, xgap = grid_gap)
+    # if(!is.null(pc)) pc <- style(pc, ygap = grid_gap)
+  }
+
+
+  if(!all(showticklabels)) {
+    if(!is.logical(showticklabels)) stop("showticklabels must be a logical vector of length 2 or 1")
+    if(length(showticklabels) == 1) showticklabels <- rep(showticklabels, 2)
+    if (!showticklabels[[1]]) {
+      p <- p %>%
+        layout(xaxis = list(showticklabels = FALSE,
+                            ticklen = 0))
+    }
+    if (!showticklabels[[2]]) {
+      p <- p %>%
+        layout(yaxis = list(showticklabels = FALSE,
+                            ticklen = 0))
+    }
+      # ggplotly() %>%
+      # layout(yaxis = list(tickmode='auto'),
+      #        xaxis = list(tickmode='auto'))
+  }
+
+
+
+  heatmap_subplot <- heatmap_subplot_from_ggplotly(p = p, px = px, py = py,
+    row_dend_left = row_dend_left, subplot_margin = subplot_margin,
+    widths = subplot_widths, heights = subplot_heights,
+    titleX = titleX, titleY = titleY, pr = pr, pc = pc, plot_method = plot_method)
+  l <- layout(heatmap_subplot,
+      margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]),
+      legend = list(y = 1, yanchor = "top")
+    )
+
+  # keep only relevant plotly options
+  l <- config(l, displaylogo = FALSE, collaborate = FALSE,
+        modeBarButtonsToRemove = c("sendDataToCloud", "select2d", "lasso2d","autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian", "sendDataToCloud"))
+
+  l
+
+}
 
 
 
@@ -734,7 +1144,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
       if (is.null(pr)) {
         widths <- c(0.8, 0.2)
       } else {
-        widths <- c(0.7, 0.05, 0.2)
+        widths <- c(0.7, 0.1, 0.2)
       }
     } else {
       if (is.null(pr)) {
@@ -751,7 +1161,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
       if (is.null(pc)) {
         heights <- c(0.2, 0.8)
       } else {
-        heights <- c(0.2, 0.05, 0.7)
+        heights <- c(0.2, 0.1, 0.7)
       }
     } else {
       if (is.null(pc)) {
@@ -844,357 +1254,6 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
   return(s)
 }
 
-#' @export
-#' @rdname heatmaply
-heatmaply.heatmapr <- function(x,
-                               # elements for scale_fill_gradientn
-                               colors = viridis(n=256, alpha = 1, begin = 0,
-                                                    end = 1, option = "viridis"),
-                               limits = NULL,
-                               na.value = "grey50",
-                               row_text_angle = 0,
-                               column_text_angle = 45,
-                               subplot_margin = 0,
-
-                               row_dend_left = FALSE,
-                               margins = c(NA, NA, NA, NA),
-                               ...,
-                               scale_fill_gradient_fun = scale_fill_gradientn(
-                                 colors = if(is.function(colors)) colors(256) else colors,
-                                 na.value = na.value, limits = limits),
-                               grid_color = NA,
-                               grid_gap = 0,
-                               srtRow, srtCol,
-                               xlab = "", ylab = "",
-                               main = "",
-                               titleX = TRUE, titleY = TRUE,
-                               hide_colorbar = FALSE,
-                               key.title = NULL,
-                               return_ppxpy = FALSE,
-                               draw_cellnote = FALSE,
-                               cellnote_color = "auto",
-                               cellnote_textposition = "middle right",
-                               row_side_colors = x[["row_side_colors"]],
-                               row_side_palette = NULL,
-                               col_side_colors = x[["col_side_colors"]],
-                               col_side_palette = NULL,
-                               plot_method = c("ggplot", "plotly"),
-                               ColSideColors,
-                               RowSideColors,
-                               heatmap_layers = NULL,
-                               side_color_layers = NULL,
-                               branches_lwd = 0.6,
-                               label_names = c("row", "column", "value"),
-                               fontsize_row = 10,
-                               fontsize_col = 10,
-                               subplot_widths = NULL,
-                               subplot_heights = NULL,
-                               colorbar_xanchor = if(row_dend_left) "right" else "left",
-                               colorbar_yanchor = "bottom",
-                               colorbar_xpos = if(row_dend_left) -0.1 else 1.1,
-                               colorbar_ypos = 0,
-                               colorbar_len = 0.3,
-                               showticklabels = c(TRUE, TRUE),
-                               dynamicTicks = FALSE,
-                               node_type = c("scatter", "heatmap"),
-                               grid_size = 0.1,
-                               point_size_mat = x[["matrix"]][["point_size_mat"]],
-                               point_size_name = "Point size",
-                               label_format_fun = function(...) format(..., digits = 4)
-                               ) {
-
-  node_type <- match.arg(node_type)
-  plot_method <- match.arg(plot_method)
-  cellnote_textposition <- match.arg(cellnote_textposition,
-    choices = c("top left", "top center" , "top right", "middle left",
-      "middle center", "middle right", "bottom left", "bottom center",
-      "bottom right"))
-
-  # informative errors for mis-specified limits
-  if (!is.null(limits)) {
-    if (!is.numeric(limits)) stop("limits must be numeric")
-    if (length(limits) != 2L) stop("limits must be of length 2 (i.e.: two dimensional)")
-
-    r <- range(as.matrix(x$matrix$data), na.rm = TRUE)
-    limits <- sort(limits)
-
-    ## Warn for broken heatmap colors
-    if (limits[1] > r[1]) {
-      limits[1] <- r[1]
-      warning("Lower limit is not <= lowest value in x, min of limits is set to the min of the range (otherwise, colors will be broken!)")
-    }
-    if (limits[2] < r[2]) {
-      limits[2] <- r[2]
-      warning("Upper limit is not >= highest value in x, max of limits is set to the max of the range (otherwise, colors will be broken!)")
-    }
-  }
-  if (!missing(srtRow)) row_text_angle <- srtRow
-  if (!missing(srtCol)) column_text_angle <- srtCol
-
-  # x is a heatmapr object.
-  # heatmapr <- list(rows = rowDend, cols = colDend, matrix = mtx, image = imgUri,
-  #                  theme = theme, options = options)
-  # x <- heatmapr(mtcars)
-  # source: http://stackoverflow.com/questions/6528180/ggplot2-plot-without-axes-legends-etc
-  theme_clear_grid_dends <- theme(axis.line=element_blank(),axis.text.x=element_blank(),
-        axis.text.y=element_blank(),axis.ticks=element_blank(),
-        axis.title.x=element_blank(),
-        axis.title.y=element_blank(), legend.position="none",
-        panel.background=element_blank(),panel.border=element_blank(),panel.grid.major=element_blank(),
-        panel.grid.minor=element_blank(),plot.background=element_blank())
-  # dendrograms:
-  rows <- x$rows
-  cols <- x$cols
-
-  if (!is.null(branches_lwd) && branches_lwd != 1) {
-    if(is.dendrogram(rows) && !has_edgePar(rows, "lwd")) rows <- set(rows, "branches_lwd", branches_lwd)
-    if(is.dendrogram(cols) && !has_edgePar(cols, "lwd")) cols <- set(cols, "branches_lwd", branches_lwd)
-  }
-
-
-
-  # this is using dendextend
-  if (is.null(cols)) {
-    py <- NULL
-  } else {
-    if (plot_method == "ggplot") {
-      col_ggdend <- as.ggdend(cols)
-      xlims <- c(0.5, nrow(col_ggdend$labels) + 0.5)
-      py <- ggplot(cols, labels  = FALSE) + theme_bw() +
-        coord_cartesian(expand = FALSE, xlim = xlims) +
-        theme_clear_grid_dends
-    } else {
-      suppressWarnings(py <- plotly_dend(cols, side = "col"))
-    }
-  }
-  if (is.null(rows)) {
-    px <- NULL
-  } else {
-    if (plot_method == "ggplot") {
-      row_ggdend <- as.ggdend(rows)
-      ylims <- c(0.5, nrow(row_ggdend$labels) + 0.5)
-
-      px <- ggplot(row_ggdend, labels  = FALSE) +
-        # coord_cartesian(expand = FALSE) +
-        coord_flip(expand = FALSE, xlim = ylims) +
-        theme_bw() +
-        theme_clear_grid_dends
-
-      if (row_dend_left) px <- px + scale_y_reverse()
-
-    } else {
-      px <- plotly_dend(rows, flip = row_dend_left, side = "row")
-    }
-  }
-  # create the heatmap
-  data_mat <- x$matrix$data
-
-  if (plot_method == "ggplot") {
-    p <- ggplot_heatmap(data_mat,
-                      row_text_angle,
-                      column_text_angle,
-                      scale_fill_gradient_fun,
-                      grid_color,
-                      grid_size = grid_size,
-                      key.title = key.title,
-                      layers = heatmap_layers,
-                      row_dend_left = row_dend_left,
-                      label_names = label_names,
-                      type = node_type,
-                      fontsize_row = fontsize_row, fontsize_col = fontsize_col,
-                      point_size_mat = point_size_mat,
-                      point_size_name = point_size_name,
-                      label_format_fun = label_format_fun)
-  } else if (plot_method == "plotly") {
-
-    p <- plotly_heatmap(data_mat, limits = limits, colors = colors,
-      key_title = key.title,
-      row_text_angle = row_text_angle, column_text_angle = column_text_angle,
-      fontsize_row = fontsize_row, fontsize_col = fontsize_col,
-      colorbar_yanchor = colorbar_yanchor, colorbar_xanchor = colorbar_xanchor,
-      colorbar_xpos = colorbar_xpos, colorbar_ypos = colorbar_ypos,
-      colorbar_len = colorbar_len)
-  }
-
-
-
-
-
-
-  # TODO: Add native plotly sidecolor function.
-  # TODO: Possibly use function to generate all 3 plots to prevent complex logic here
-  if (is.null(row_side_colors)) {
-    pr <- NULL
-  } else {
-    side_color_df <- x[["row_side_colors"]]
-    if (is.matrix(side_color_df)) side_color_df <- as.data.frame(side_color_df)
-    assert_that(
-      nrow(side_color_df) == nrow(data_mat),
-      is.data.frame(side_color_df)
-    )
-    ## Just make sure it's character first
-    side_color_df[] <- lapply(side_color_df, as.character)
-    if (plot_method == "ggplot") {
-      pr <- ggplot_side_color_plot(side_color_df, type = "row",
-        text_angle = column_text_angle,
-        palette = row_side_palette,
-        is_colors = !is.null(RowSideColors),
-        label_name = label_names[[1]]) + side_color_layers
-    } else {
-      pr <- plotly_side_color_plot(side_color_df, type = "row",
-        text_angle = column_text_angle,
-        palette = row_side_palette,
-        label_name = label_names[[1]])
-    }
-  }
-
-  if (is.null(col_side_colors)) {
-    pc <- NULL
-  } else {
-    warning("The hover text for col_side_colors is currently not implemented (due to an issue in plotly). We hope this would get resolved in future releases.")
-
-    side_color_df <- x[["col_side_colors"]]
-    if (is.matrix(side_color_df)) side_color_df <- as.data.frame(side_color_df)
-    assert_that(
-      nrow(side_color_df) == ncol(data_mat),
-      is.data.frame(side_color_df)
-    )
-    ## Just make sure it's character first
-    side_color_df[] <- lapply(side_color_df, as.character)
-    if (plot_method == "ggplot") {
-      pc <- ggplot_side_color_plot(side_color_df, type = "column",
-        text_angle = row_text_angle,
-        palette = col_side_palette,
-        is_colors = !is.null(ColSideColors),
-        label_name = label_names[[2]]) + side_color_layers
-    } else {
-      pc <- plotly_side_color_plot(side_color_df, type = "column",
-        text_angle = row_text_angle,
-        palette = col_side_palette,
-        label_name = label_names[[2]]
-      )
-    }
-  }
-
-  if (return_ppxpy) {
-    return(list(p=p, px=px, py=py, pr=pr, pc=pc))
-  } else {
-  	if (!is.null(pc)) {
-      pc <- ggplotly(pc)
-  		pc <- layout(pc, showlegend = TRUE)
-  	}
-  	if (!is.null(pr)) {
-      pr <- ggplotly(pr)
-  		pr <- layout(pr, showlegend = TRUE)
-  	}
-  }
-
-  ## plotly:
-  # turn p, px, and py to plotly objects if necessary
-  if (!is.plotly(p)) p <- ggplotly(p, dynamicTicks = dynamicTicks, tooltip="text") %>% 
-    layout(showlegend=TRUE)
-
-
-  if (draw_cellnote) {
-    ## Predict cell color luminosity based on colorscale
-    if (cellnote_color == "auto") {
-      cellnote_color <- predict_colors(p, plot_method = plot_method)
-    }
-
-    df <- as.data.frame(x[["cellnote"]])
-    df$row <- 1:nrow(df)
-    mdf <- reshape2::melt(df, id.vars="row")
-    ## TODO: Enforce same dimnames to ensure it's not scrambled?
-    # mdf$variable <- factor(mdf$variable, levels = p$x$layout$xaxis$ticktext)
-    mdf$variable <- as.numeric(as.factor(mdf$variable))
-    mdf$value <- factor(mdf$value)
-
-    p <- p %>% add_trace(y = mdf$row, x = mdf$variable, text = mdf$value,
-        type = "scatter", mode = "text", textposition = cellnote_textposition,
-        hoverinfo = "none",
-        textfont = list(color = plotly::toRGB(cellnote_color), size = 12)
-      )
-  }
-  if (!is.null(px) && !is.plotly(px)) {
-    px <- ggplotly(px, tooltip = "y", dynamicTicks = dynamicTicks) %>%
-      layout(showlegend = FALSE)
-  }
-  if (!is.null(py) && !is.plotly(py)) {
-    py <- ggplotly(py, tooltip = "y", dynamicTicks = dynamicTicks) %>%
-      layout(showlegend = FALSE)
-  }
-
-  # https://plot.ly/r/reference/#Layout_and_layout_style_objects
-  p <- layout(p,              # all of layout's properties: /r/reference/#layout
-              title = main, # layout's title: /r/reference/#layout-title
-              xaxis = list(           # layout's xaxis is a named list. List of valid keys: /r/reference/#layout-xaxis
-                title = xlab     # xaxis's title: /r/reference/#layout-xaxis-title
-                # showgrid = T        # xaxis's showgrid: /r/reference/#layout-xaxis-showgrid
-              ),
-              yaxis = list(           # layout's yaxis is a named list. List of valid keys: /r/reference/#layout-yaxis
-                title = ylab      # yaxis's title: /r/reference/#layout-yaxis-title
-              ))
-  if (hide_colorbar) {
-    p <- hide_colorbar(p)
-    # px <- hide_colorbar(px)
-    # py <- hide_colorbar(py)
-  }
-
-  # Adjust top based on whether main is empty or not.
-  if (is.na(margins[3])) margins[3] <- ifelse(main == "", 0, 30)
-
-
-  min_marg_row <- calc_margin(rownames(data_mat),
-    fontsize = p$x$layout$yaxis$tickfont$size)
-  if (row_dend_left && is.na(margins[4])) {
-    margins[4] <- min_marg_row
-  } else if (!row_dend_left && is.na(margins[2])) {
-    margins[2] <- min_marg_row
-  }
-  if (is.na(margins[1])) {
-    margins[1] <- calc_margin(colnames(data_mat),
-        fontsize = p$x$layout$yaxis$tickfont$size)
-  }
-
-  # add a white grid
-  if(grid_gap > 0) {
-    p <- style(p, xgap = grid_gap, ygap = grid_gap)
-    # doesn't seem to work.
-    # if(!is.null(pr)) pr <- style(pr, xgap = grid_gap)
-    # if(!is.null(pc)) pc <- style(pc, ygap = grid_gap)
-  }
-
-
-  if(!all(showticklabels)) {
-    if(!is.logical(showticklabels)) stop("showticklabels must be a logical vector of length 2 or 1")
-    if(length(showticklabels) == 1) showticklabels <- rep(showticklabels, 2)
-    p <- p %>%
-      layout(xaxis = list(showticklabels = showticklabels[1]),
-             yaxis = list(showticklabels = showticklabels[2]))
-
-      # ggplotly() %>%
-      # layout(yaxis = list(tickmode='auto'),
-      #        xaxis = list(tickmode='auto'))
-  }
-
-
-
-  heatmap_subplot <- heatmap_subplot_from_ggplotly(p = p, px = px, py = py,
-    row_dend_left = row_dend_left, subplot_margin = subplot_margin,
-    widths = subplot_widths, heights = subplot_heights,
-    titleX = titleX, titleY = titleY, pr = pr, pc = pc, plot_method = plot_method)
-  l <- layout(heatmap_subplot,
-      margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]),
-      legend = list(y = 1, yanchor = "top")
-    )
-
-  # keep only relevant plotly options
-  l <- config(l, displaylogo = FALSE, collaborate = FALSE,
-        modeBarButtonsToRemove = c("sendDataToCloud", "select2d", "lasso2d","autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian", "sendDataToCloud"))
-
-  l
-
-}
 
 ## TODO: Better/safer estimation of total size, or use monospace.
 calc_margin <- function(labels, fontsize) {

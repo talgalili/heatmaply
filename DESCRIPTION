@@ -1,8 +1,8 @@
 Package: heatmaply
 Type: Package
 Title: Interactive Cluster Heat Maps Using 'plotly'
-Version: 0.10.1
-Date: 2017-05-27
+Version: 0.12.0
+Date: 2017-09-29
 Authors@R: c(person("Tal", "Galili", role = c("aut", "cre", "cph"), email =
     "tal.galili@gmail.com", comment = "https://www.r-statistics.com"),
     person("Jonathan", "Sidi", email = "yonis@metrumrg.com", comment = "https://github.com/yonicd",role = "ctb"),
@@ -26,7 +26,7 @@ Description: Create interactive cluster 'heatmaps' that can be saved as a stand-
     'heatmap'.
 Depends:
     R (>= 3.0.0),
-    plotly (>= 4.6.0),
+    plotly (>= 4.7.1),
     viridis
 Imports:
     ggplot2 (>= 2.2.0),
@@ -42,6 +42,7 @@ Imports:
     colorspace,
     RColorBrewer,
     htmlwidgets,
+    webshot,
     gplots,
     assertthat
 Suggests:

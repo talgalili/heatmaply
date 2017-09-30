@@ -174,9 +174,10 @@ Reviewing missing values can easily be done using the `is.na10` function. When u
 
 library(heatmaply)
 
-heatmaply(is.na10(airquality), grid_gap = 1,
+heatmaply(is.na10(airquality), grid_gap = 1, 
+          showticklabels = c(T,F),
             k_col =3, k_row = 3,
-            margins = c(55, 30),
+            margins = c(55, 30), 
             colors = c("grey80", "grey20"))
 # Better to use:
 # heatmaply_na(airquality, k_col =3, k_row = 3,
@@ -226,7 +227,7 @@ heatmaply(cor(mtcars), margins = c(40, 40),
 Another example for using colors:
 
 
-```{r}
+```{r, eval = FALSE}
 heatmaply(percentize(mtcars), margins = c(40, 130),
           colors = heat.colors(100))
 ```
@@ -319,7 +320,7 @@ gplots::heatmap.2(x, trace = "none", col = viridis(100), key = FALSE)
 
 With heatmaply, the only difference is the side of the row dendrogram. This is because the `ggplotly` function from plotly does not (yet) handle axes placed in different locations than the default.
 
-```{r}
+```{r, eval = FALSE}
 library(heatmaply)
 heatmaply(x, seriate = "mean")
 ```
@@ -357,7 +358,7 @@ heatmap.2(x, trace = "none", col = viridis(100),
 
 With heatmaply
 
-```{r}
+```{r, eval = FALSE}
 heatmaply(x, seriate = "mean",
           RowSideColors=rc)
 
@@ -405,6 +406,45 @@ We considred using the fastcluster package for clustering, but the time gain was
 
 
 ```
+
+
+
+
+
+
+Saving your heatmaply into a file
+====================
+
+
+You can save an interactive version of your heatmaply into an HTML file using the following code:
+
+```{r, eval = FALSE}
+dir.create("folder")
+library(heatmaply)
+heatmaply(mtcars, file = "folder/heatmaply_plot.html")
+browseURL("folder/heatmaply_plot.html")
+```
+
+
+Similar code can be used for saving a static file (png/jpeg/pdf)
+
+```{r, eval = FALSE}
+dir.create("folder")
+library(heatmaply)
+# Before the first time using this code you may need to first run:
+# webshot::install_phantomjs()
+heatmaply(mtcars, file = "folder/heatmaply_plot.png")
+browseURL("folder/heatmaply_plot.png")
+```
+
+If you only wish to save the file, without plotting it in the console, you can assign the output to a temporatay object name:
+
+```{r, eval = FALSE}
+# This saves the file, but does not plot it in the RStudio viewer
+tmp <- heatmaply(mtcars, file = "folder/heatmaply_plot.png")
+rm(tmp)
+```
+
 
 
 
