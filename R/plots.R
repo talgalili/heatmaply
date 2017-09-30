@@ -105,9 +105,7 @@ ggplot_heatmap <- function(xx,
     point_size_mat <- melt_df(point_size_mat, ps_label_names)
     mdf <- cbind(mdf, point_size_mat[point_size_name])
   }
-  paste_aes <- function(x) {
-    paste0("`", x, "`")
-  }
+
 
   # # heatmap
   # # xx <- x$matrix$data
@@ -207,6 +205,10 @@ ggplot_heatmap <- function(xx,
   if(row_dend_left) p <- p + scale_y_discrete(position = "right") # possible as of ggplot 2.1.0 !
 
   p
+}
+
+paste_aes <- function(x) {
+  paste0("`", x, "`")
 }
 
 
