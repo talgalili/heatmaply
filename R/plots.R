@@ -60,7 +60,7 @@ ggplot_heatmap <- function(xx,
   # xx <- x$matrix$data
 
   df <- xx
-  if(!is.data.frame(df)) df <- as.data.frame(df)
+  if(!is.data.frame(df)) df <- as.data.frame(df, check.rows = FALSE)
 
   if (is.null(label_names)) {
     if (is.null(dim_names <- names(dimnames(df)))) {
@@ -77,7 +77,7 @@ ggplot_heatmap <- function(xx,
 
   # colnames(df) <- x$matrix$cols
   if(!is.null(rownames(df))) {
-    df[[row]] <- rownames(df)
+    df[[row]] <- make.unique(rownames(df), "_")
   } else {
     df[[row]] <- 1:nrow(df)
   }
@@ -87,6 +87,7 @@ ggplot_heatmap <- function(xx,
     levels = df[[row]],
     ordered = TRUE
   )
+
 
   mdf <- reshape2::melt(df, id.vars = row)
   colnames(mdf)[2:3] <- c(col, val) # rename "variable" and "value"
