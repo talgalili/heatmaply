@@ -58,7 +58,9 @@ ggplot_heatmap <- function(xx,
                                     panel.background = element_blank())
   # heatmap
   # xx <- x$matrix$data
-  if(!is.data.frame(xx)) df <- as.data.frame(xx)
+
+  df <- xx
+  if(!is.data.frame(df)) df <- as.data.frame(df)
 
   if (is.null(label_names)) {
     if (is.null(dim_names <- names(dimnames(xx)))) {
