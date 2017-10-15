@@ -63,7 +63,7 @@ ggplot_heatmap <- function(xx,
   if(!is.data.frame(df)) df <- as.data.frame(df)
 
   if (is.null(label_names)) {
-    if (is.null(dim_names <- names(dimnames(xx)))) {
+    if (is.null(dim_names <- names(dimnames(df)))) {
       label_names <- c("row", "column", "value")
     } else {
       label_names <- dim_names
@@ -76,10 +76,10 @@ ggplot_heatmap <- function(xx,
   val <- label_names[[3]]
 
   # colnames(df) <- x$matrix$cols
-  if(!is.null(rownames(xx))) {
-    df[[row]] <- rownames(xx)
+  if(!is.null(rownames(df))) {
+    df[[row]] <- rownames(df)
   } else {
-    df[[row]] <- 1:nrow(xx)
+    df[[row]] <- 1:nrow(df)
   }
 
   df[[row]] <- factor(
