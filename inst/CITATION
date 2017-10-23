@@ -8,8 +8,7 @@ citEntry(
    year = 2017,
    doi = "10.1093/bioinformatics/btx657",
    URL = "http://dx.doi.org/10.1093/bioinformatics/btx657",
-   eprint = "https://academic.oup.com/bioinformatics/article-pdf/doi/10.1093/bioinformatics/btx657/21358327/btx657.pdf}
-",
+   eprint = "https://academic.oup.com/bioinformatics/article-pdf/doi/10.1093/bioinformatics/btx657/21358327/btx657.pdf",
    textVersion = "Tal Galili, Alan O'Callaghan, Jonathan Sidi, Carson Sievert; heatmaply: an R package for creating interactive cluster heatmaps for online publishing, Bioinformatics, , btx657, https://doi.org/10.1093/bioinformatics/btx657"
 )
 
