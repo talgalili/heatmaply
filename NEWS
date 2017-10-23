@@ -1,10 +1,11 @@
-heatmaply 0.12.0 (2017-10-15)
+heatmaply 0.12.0 (2017-10-24)
 ================
 
 
 ### NEW FEATURES
 * heatmaply
   - Add `cellnote_size` argument, controlling the font size of the cellnote.
+
 ### BUG FIXES
 * heatmaply
   - removing tick labels with `showticklabels` now removes the ticks as
@@ -12,6 +13,11 @@ heatmaply 0.12.0 (2017-10-15)
   - Prevent grid_gap warning (#105)
 * ggplot_heatmap
   - now handles data.frame input
+
+### NOTES
+
+* Added citation to the bioinformatics article! (http://dx.doi.org/10.1093/bioinformatics/btx657)
+
 
 
 heatmaply 0.11.1 (2017-09-27)
