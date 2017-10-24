@@ -44,7 +44,8 @@ Imports:
     htmlwidgets,
     webshot,
     gplots,
-    assertthat
+    assertthat,
+    tidyselect
 Suggests:
     knitr,
     covr,
