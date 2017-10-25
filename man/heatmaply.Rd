@@ -330,6 +330,7 @@ heatmaply_cor is a wrapper for `heatmaply` which comes with defaults that are be
 for correlation matrixes. Specifically, the limits are set from -1 to 1, and the color palette is \link{RdBu}.
 }
 \examples{
+
 \dontrun{
 
 # mtcars

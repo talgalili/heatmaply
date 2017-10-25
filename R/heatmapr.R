@@ -107,9 +107,12 @@
 #' \link{heatmap}, \link[gplots]{heatmap.2},  \link[d3heatmap]{d3heatmap}
 #'
 #' @examples
+#'
+#' \dontrun{
 #' library(heatmaply)
 #' hm <- heatmapr(mtcars, scale = "column", colors = "Blues")
 #' heatmaply(hm)
+#' }
 #'
 heatmapr <- function(x,
 

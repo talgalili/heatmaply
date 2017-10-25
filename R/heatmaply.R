@@ -261,6 +261,7 @@ is.plotly <- function(x) {
 #'
 #' @export
 #' @examples
+#'
 #' \dontrun{
 #'
 #' # mtcars
