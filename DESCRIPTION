@@ -44,11 +44,11 @@ Imports:
     htmlwidgets,
     webshot,
     gplots,
-    assertthat,
-    tidyselect
+    assertthat
 Suggests:
     knitr,
     covr,
+    tidyselect,
     rmarkdown,
     testthat
 VignetteBuilder: knitr
