@@ -621,7 +621,7 @@ plotly_side_color_plot <- function(df, palette = NULL,
 
 #' @import webshot
 # just so to have an excuse for why webshot is in import (the real reason is that plotly has it as suggests while it is used there by plotly::export)
-webshot <- webshot::webshot
+# webshot <- webshot::webshot
 
 
 
