@@ -38,30 +38,30 @@ for (plot_method in c("ggplot", "plotly")) {
 
 
     test_that("heatmaply mtcars (rscols, row dend)", {
-      h <- heatmaply(mtcars, dendrogram = "none", 
-        row_side_colors = mtcars[, 1:2], 
+      h <- heatmaply(mtcars, dendrogram = "none",
+        row_side_colors = mtcars[, 1:2],
         row_dend_left = bool,
         plot_method = plot_method)
       expect_is(h, "plotly")
     })
 
     test_that("heatmaply mtcars (rscols, row dend)", {
-      h <- heatmaply(mtcars, dendrogram = "col", 
-        row_side_colors = mtcars[, 1:2], 
+      h <- heatmaply(mtcars, dendrogram = "col",
+        row_side_colors = mtcars[, 1:2],
         row_dend_left = bool,
         plot_method = plot_method)
       expect_is(h, "plotly")
     })
 
     test_that("heatmaply mtcars (rscols, no dends)", {
-      h <- heatmaply(mtcars, dendrogram = "none", 
+      h <- heatmaply(mtcars, dendrogram = "none",
         row_side_colors = mtcars[, 1:2], row_dend_left = bool,
         plot_method = plot_method)
       expect_is(h, "plotly")
     })
 
     test_that("heatmaply mtcars (cscols, both dend)", {
-      expect_warning(h <- heatmaply(mtcars, 
+      expect_warning(h <- heatmaply(mtcars,
         col_side_colors = data.frame(t(mtcars[1:2, ])),
         row_dend_left = bool,
         plot_method = plot_method))
@@ -157,7 +157,7 @@ test_that("heatmaply on matrix, and cexRow/Col", {
 
 
 test_that("grid_color and hide_colorbar", {
-  h <- heatmaply(mtcars, grid_color = "black", hide_colorbar = TRUE)
+  h <- heatmaply(mtcars[1:5,1:5], grid_color = "black", hide_colorbar = TRUE)
   expect_is(h, "plotly")
 })
 
