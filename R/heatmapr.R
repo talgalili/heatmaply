@@ -226,6 +226,18 @@ heatmapr <- function(x,
     }
   }
 
+  ## Scale the data?
+  ##====================
+  scale <- match.arg(scale)
+
+  if(scale == "row") {
+    x <- sweep(x, 1, rowMeans(x, na.rm = na.rm))
+    x <- sweep(x, 1, apply(x, 1, sd, na.rm = na.rm), "/")
+  }
+  else if(scale == "column") {
+    x <- sweep(x, 2, colMeans(x, na.rm = na.rm))
+    x <- sweep(x, 2, apply(x, 2, sd, na.rm = na.rm), "/")
+  }
 
   ## Dendrograms for Row/Column
   ##=======================
@@ -403,19 +415,6 @@ heatmapr <- function(x,
 
   rowDend <- if(is.dendrogram(Rowv)) Rowv else NULL
   colDend <- if(is.dendrogram(Colv)) Colv else NULL
-
-  ## Scale the data?
-  ##====================
-  scale <- match.arg(scale)
-
-  if(scale == "row") {
-    x <- sweep(x, 1, rowMeans(x, na.rm = na.rm))
-    x <- sweep(x, 1, apply(x, 1, sd, na.rm = na.rm), "/")
-  }
-  else if(scale == "column") {
-    x <- sweep(x, 2, colMeans(x, na.rm = na.rm))
-    x <- sweep(x, 2, apply(x, 2, sd, na.rm = na.rm), "/")
-  }
 
 
   ## cellnote
