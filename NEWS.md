@@ -1,5 +1,39 @@
+heatmaply 0.12.2 (2017-10-28)
+================
 
-heatmaply 0.11.0 (2017-09-27)
+### BUG FIXES
+* heatmaply
+  - Scale before clustering #112 (fixes: Allow the dendrogram to use scaled data #111 )
+
+
+
+
+
+
+
+heatmaply 0.12.1 (2017-10-25)
+================
+
+
+### NEW FEATURES
+* heatmaply
+  - Add `cellnote_size` argument, controlling the font size of the cellnote.
+
+### BUG FIXES
+* heatmaply
+  - removing tick labels with `showticklabels` now removes the ticks as
+    well as the tick labels.
+  - Prevent grid_gap warning (#105)
+* ggplot_heatmap
+  - now handles data.frame input
+
+### NOTES
+
+* Added citation to the bioinformatics article! (http://dx.doi.org/10.1093/bioinformatics/btx657)
+
+
+
+heatmaply 0.11.1 (2017-09-27)
 ================
 
 ### NEW FEATURES

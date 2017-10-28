@@ -1,3 +1,16 @@
+heatmaply 0.12.2 (2017-10-28)
+================
+
+### BUG FIXES
+* heatmaply
+  - Scale before clustering #112 (fixes: Allow the dendrogram to use scaled data #111 )
+
+
+
+
+
+
+
 heatmaply 0.12.1 (2017-10-25)
 ================
 
