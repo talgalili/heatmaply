@@ -102,6 +102,8 @@ heatmaplyWelcomeMessage <- function(){
          "---------------------\n",
          "Welcome to heatmaply version ", utils::packageDescription("heatmaply")$Version, "\n",
          # "\n",
+         "Type citation('heatmaply') for how to cite the package.\n",
+         "\n",
          "Type ?heatmaply for the main documentation.\n",
          "The github page is: https://github.com/talgalili/heatmaply/\n",
          "\n",
