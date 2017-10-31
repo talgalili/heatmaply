@@ -197,3 +197,11 @@ test_that("showticklabels", {
   expect_is(h, "plotly")
   expect_warning(expect_error(heatmaply(mtcars, showticklabels="a")))
 })
+
+test_that("file argument works", {
+  lapply(c("png", "jpeg", "pdf", "html"), function(type) {
+    file <- paste0("tmp.", type)
+    heatmaply(mtcars, file=file)
+    expect_true(file.exists(file))
+  })
+})
