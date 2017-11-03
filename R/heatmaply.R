@@ -526,6 +526,8 @@ heatmaply.default <- function(x,
 
                               labRow, labCol,
 
+                              webGL = FALSE,
+
                               col) {
 
   if (!missing(long_data)) {
@@ -687,7 +689,9 @@ heatmaply.default <- function(x,
                      showticklabels = showticklabels,
                      dynamicTicks = dynamicTicks,
 
-                     labRow = labRow, labCol = labCol
+                     labRow = labRow, labCol = labCol,
+
+                     webGL = webGL
 
                      )
 
@@ -756,7 +760,8 @@ heatmaply.heatmapr <- function(x,
                                showticklabels = c(TRUE, TRUE),
                                dynamicTicks = FALSE,
 
-                               labRow, labCol
+                               labRow, labCol,
+                               webGL
                                ) {
 
   plot_method <- match.arg(plot_method)
@@ -890,9 +895,6 @@ heatmaply.heatmapr <- function(x,
       colorbar_xpos = colorbar_xpos, colorbar_ypos = colorbar_ypos,
       colorbar_len = colorbar_len)
   }
-
-
-
 
 
 
@@ -1070,7 +1072,9 @@ heatmaply.heatmapr <- function(x,
   heatmap_subplot <- heatmap_subplot_from_ggplotly(p = p, px = px, py = py,
     row_dend_left = row_dend_left, subplot_margin = subplot_margin,
     widths = subplot_widths, heights = subplot_heights,
-    titleX = titleX, titleY = titleY, pr = pr, pc = pc, plot_method = plot_method)
+    titleX = titleX, titleY = titleY, pr = pr, pc = pc, 
+    plot_method = plot_method,
+    webGL = webGL)
   l <- layout(heatmap_subplot,
       margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]),
       legend = list(y = 1, yanchor = "top")
@@ -1096,7 +1100,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
                                           row_dend_left = FALSE, subplot_margin = 0,
                                           titleX = TRUE, titleY = TRUE,
                                           widths=NULL, heights=NULL,
-                                          plot_method) {
+                                          plot_method, webGL=FALSE) {
 
   if (is.null(widths)) {
     if (!is.null(px)) {
@@ -1165,7 +1169,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
 
   ## Remove all null plots
   plots <- plots[!(ind_remove_row | ind_remove_col)]
-
+  if (webGL) plots[] <- lapply(plots, toWebGL)
   ## Interim solution before removing warnings in documented way
   suppressMessages(
     suppressWarnings(
