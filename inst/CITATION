@@ -1,4 +1,4 @@
-citHeader("The methods within the code package can be cited as:")
+citHeader("The methods within the package can be cited as:")
 
 citEntry(
    entry="article",

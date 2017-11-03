@@ -619,6 +619,10 @@ plotly_side_color_plot <- function(df, palette = NULL,
 
 
 
+#' @import webshot
+NULL
+# just so to have an excuse for why webshot is in import (the real reason is that plotly has it as suggests while it is used there by plotly::export)
+# webshot <- webshot::webshot
 
 
 
@@ -626,28 +630,58 @@ plotly_side_color_plot <- function(df, palette = NULL,
 
 # This function gets a heatmaply object and a file, and writes that to a file
 # we should later add control over width...
-hmly_to_file_1file <- function(hmly, file, ...) {
+hmly_to_file_1file <- function(hmly, file, width = NULL, height = NULL, ...) {
 
   # tools::file_ext("hithere.png")
   # tools::file_ext("hithere.html")
   # tools::file_ext("hithere.html.png")
   file_extension <- tolower(tools::file_ext(file))
   if(!(file_extension %in% c("html","pdf", "png", "jpeg"))) {
-    warning("file extension must be one of the following: html/pdf/png/jpeg. Since it was not - your heatmaply was not saved to a file.")
+    stop(paste(
+      "file extension must be one of the following:",
+      "\"html\", \"pdf\", \"png\", or \"jpeg\".",
+      "Since it was not, your heatmaply was not saved to a file."))
   } else {
     if(file_extension == "html") {
       # solution to dealing with the folder:
       # https://stackoverflow.com/questions/41399795/savewidget-from-htmlwidget-in-r-cannot-save-html-file-in-another-folder
       tmp_fp <- file
-      tmp_fp <- file.path(normalizePath(dirname(tmp_fp)),basename(tmp_fp))
+      tmp_fp <- file.path(normalizePath(dirname(tmp_fp)), basename(tmp_fp))
       hmly %>% htmlwidgets::saveWidget(file = tmp_fp, selfcontained = TRUE)
     }
     if(file_extension %in% c("pdf", "png", "jpeg")) {
-      plotly::export(hmly, file)
+      if (is.null(width)) {
+        width <- size_default(file_extension, "width")
+      }
+      if (is.null(height)) {
+        height <- size_default(file_extension, "height") 
+      }
+      plotly::export(hmly, 
+        file = file,
+        vwidth = width, 
+        vheight = height,
+        cliprect="viewport")
     }
   }
-  invisible(NULL)
+  invisible(hmly)
 }
+
+size_default <- function(file_extension, direction=c("width", "height")) {
+  direction <- match.arg(direction)
+  ## webshot uses viewport size in pixels to control file size, so
+  ## all sizes in pixels
+  # switch(direction, 
+  #   "width" = if (file_extension %in% bitmap_types) 800 else 8,
+  #   "height" = if (file_extension %in% bitmap_types) 500 else 5
+  # )
+  switch(direction, 
+    "width" = 800,
+    "height" = 500
+  )
+}
+
+
+bitmap_types <- c("png", "jpeg")
 
 hmly_to_file <- Vectorize(hmly_to_file_1file, vectorize.args = "file")
 
