@@ -102,6 +102,8 @@ heatmaplyWelcomeMessage <- function(){
          "---------------------\n",
          "Welcome to heatmaply version ", utils::packageDescription("heatmaply")$Version, "\n",
          # "\n",
+         "Type citation('heatmaply') for how to cite the package.\n",
+         "\n",
          "Type ?heatmaply for the main documentation.\n",
          "The github page is: https://github.com/talgalili/heatmaply/\n",
          "\n",
@@ -277,7 +279,7 @@ heatmaplyWelcomeMessage <- function(){
 # browseURL(tempdir())
 ### http://www.rstudio.com/ide/docs/packages/build_options
 #
-# check(build_args="--no-build-vignettes --no-manual", args = "--no-examples --no-build-vignettes --no-manual",  cran = FALSE, cleanup = FALSE)
+# devtools::check(build_args="--no-build-vignettes --no-manual", args = "--no-examples --no-build-vignettes --no-manual",  cran = FALSE, cleanup = FALSE)
 # check(build_args="--no-build-vignettes --no-manual", args = "--no-build-vignettes --no-manual",  cran = FALSE, cleanup = FALSE)
 # check(build_args="--no-build-vignettes ", args = "--no-build-vignettes",  cran = FALSE, cleanup = FALSE)
 # devtools::check(args="--as-cran")

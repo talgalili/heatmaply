@@ -137,9 +137,12 @@ heatmap elements from the graphical rendaring of the object, which could be done
 using plotly (but potentially also with other graphical devices).
 }
 \examples{
+
+\dontrun{
 library(heatmaply)
 hm <- heatmapr(mtcars, scale = "column", colors = "Blues")
 heatmaply(hm)
+}
 
 }
 \seealso{

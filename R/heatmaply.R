@@ -221,6 +221,8 @@ is.plotly <- function(x) {
 #'
 #' Another example: heatmaply(x, file = c("heatmaply_plot.html", "heatmaply_plot.png"))
 #'
+#' @param width,height The width and height of the image saved. Default is
+#' which uses 800 x 500 pixels.
 #' @param long_data Data in long format. Replaces x, so both should not be used.
 #'  Colnames must be c("name", "variable", "value"). If you do not have a names
 #'  column you can simply use a sequence of numbers from 1 to the number of "rows"
@@ -274,6 +276,7 @@ is.plotly <- function(x) {
 #'
 #' @export
 #' @examples
+#'
 #' \dontrun{
 #'
 #' # mtcars
@@ -519,6 +522,8 @@ heatmaply.default <- function(x,
                               side_color_layers = NULL,
                               branches_lwd = 0.6,
                               file,
+                              width = NULL,
+                              height = NULL,
                               long_data,
                               plot_method = c("ggplot", "plotly"),
                               label_names = NULL,
@@ -534,7 +539,6 @@ heatmaply.default <- function(x,
                               colorbar_ypos = 0,
                               showticklabels = c(TRUE, TRUE),
                               dynamicTicks = FALSE,
-
                               grid_size = 0.1,
                               node_type = "heatmap",
                               point_size_mat = NULL,
@@ -725,7 +729,7 @@ heatmaply.default <- function(x,
 
 
   if (!missing(file)) {
-    hmly_to_file(hmly, file)
+    hmly_to_file(hmly = hmly, file = file, width = width, height = height)
   }
 
   hmly

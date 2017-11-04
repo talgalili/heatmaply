@@ -1,3 +1,107 @@
+=======
+* 2017-10-27(Alanocallaghan) Scale before clustering (#112) |949424b| 
+|  R/heatmapr.R | 25 ++++++++++++-------------
+|  1 file changed, 12 insertions(+), 13 deletions(-)
+
+* 2017-10-26(Tal Galili) typo |75002b2| 
+|  inst/CITATION | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2017-10-26(Tal Galili) hopefully fix missing import warnings |6f011e7| 
+|  DESCRIPTION | 4 ++--
+|  R/zzz.R     | 2 +-
+|  2 files changed, 3 insertions(+), 3 deletions(-)
+
+* 2017-10-26(Tal Galili) Fixed '::' or ':::' import not declared from: 'jsonlite' |07c5959| 
+|  R/plots.R | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2017-10-25(Tal Galili) misc |f2d0fe0| 
+|  tests/testthat/test_heatmaply.R | 14 +++++++-------
+|  1 file changed, 7 insertions(+), 7 deletions(-)
+
+* 2017-10-25(Tal Galili) hopefully solve webshot being in imports without being called for. |7a167fb| 
+|  NAMESPACE | 1 +
+|  R/plots.R | 3 +++
+|  2 files changed, 4 insertions(+)
+
+* 2017-10-25(Tal Galili) make heatmapr example not run |c93e1ef| 
+|  DESCRIPTION      | 4 ++--
+|  NEWS             | 2 +-
+|  R/heatmaply.R    | 1 +
+|  R/heatmapr.R     | 3 +++
+|  man/heatmaply.Rd | 1 +
+|  man/heatmapr.Rd  | 3 +++
+|  6 files changed, 11 insertions(+), 3 deletions(-)
+
+* 2017-10-24(Alan O'Callaghan) Add tidyselect |a680b2a| 
+|  DESCRIPTION | 3 ++-
+|  1 file changed, 2 insertions(+), 1 deletion(-)
+
+* 2017-10-24(Alan O'Callaghan) Expect warning too |2e38c95| 
+|  tests/testthat/test_heatmaply.R | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2017-10-24(Tal Galili) Fix Problems when formatting CITATION entries:   <connection>:4: unexpected '}' |a12ac04| 
+|  inst/CITATION | 3 +--
+|  1 file changed, 1 insertion(+), 2 deletions(-)
+
+* 2017-10-24(Tal Galili) Added citation to the bioinformatics article! (http://dx.doi.org/10.1093/bioinformatics/btx657) |f79b2bf| 
+|  DESCRIPTION   |  2 +-
+|  NEWS          |  8 +++++++-
+|  inst/CITATION | 20 ++++++++++++++++++++
+|  3 files changed, 28 insertions(+), 2 deletions(-)
+
+* 2017-10-15(Tal Galili) partially deal with #109 |b80b1e0| 
+|  R/plots.R | 5 +++--
+|  1 file changed, 3 insertions(+), 2 deletions(-)
+
+* 2017-10-15(Tal Galili) ggplot_heatmap  - changing xx to df in various places. This function probably needs some refactoring. |c7f3055| 
+|  R/plots.R | 8 ++++----
+|  1 file changed, 4 insertions(+), 4 deletions(-)
+
+* 2017-10-15(Tal Galili) ggplot_heatmap - now handles data.frame input |0b87ce5| 
+|  NEWS      | 5 +++--
+|  R/plots.R | 4 +++-
+|  2 files changed, 6 insertions(+), 3 deletions(-)
+
+* 2017-10-07(Tal Galili) Prevent grid_gap warning (#105) |9506080| 
+|  NEWS | 2 ++
+|  1 file changed, 2 insertions(+)
+
+* 2017-09-29(Alanocallaghan) Prevent grid_gap warning (#105) |928676d| 
+|  R/heatmaply.R | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2017-09-29(Tal Galili) update date/version |d324d57| 
+|  DESCRIPTION | 4 ++--
+|  NEWS        | 4 ++++
+|  2 files changed, 6 insertions(+), 2 deletions(-)
+
+* 2017-09-29(Alanocallaghan) Cellnote size, tick labels (#104) |50bea34| 
+|  NEWS                            |  8 ++++++++
+|  R/heatmaply.R                   | 21 +++++++++++++++------
+|  man/heatmaply.Rd                | 12 +++++++-----
+|  tests/testthat/test_heatmaply.R |  8 ++++++++
+|  4 files changed, 38 insertions(+), 11 deletions(-)
+
+* 2017-09-27(Tal Galili) fix canonical url |8b115fe| 
+|  DESCRIPTION | 2 +-
+|  NEWS        | 2 +-
+|  README.md   | 2 +-
+|  3 files changed, 3 insertions(+), 3 deletions(-)
+
+* 2017-09-27(Tal Galili) update URLs for the examples |2566b50| 
+|  README.md | 23 ++++++++++++++++-------
+|  1 file changed, 16 insertions(+), 7 deletions(-)
+
+* 2017-09-27(Tal Galili) update NEWS |2eff0a6| 
+|  ChangeLog   | 212 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+|  DESCRIPTION |   2 +-
+|  NEWS        |   2 +-
+|  NEWS.md     |  26 ++++++-
+|  4 files changed, 239 insertions(+), 3 deletions(-)
+
 * 2017-09-27(Tal Galili) adding links to reproduction of figures from two nature papers |900a197| 
 |  README.md | 3 ++-
 |  1 file changed, 2 insertions(+), 1 deletion(-)
