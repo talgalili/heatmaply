@@ -128,7 +128,10 @@ square matrix, Colv = "Rowv" means that columns should be treated
 identically to the rows.}
 
 \item{distfun}{function used to compute the distance (dissimilarity)
-between both rows and columns. Defaults to dist.}
+between both rows and columns. Defaults to dist.
+The options "pearson", "spearman" and "kendall" can be used to 
+use correlation-based clustering, which uses \code{as.dist(1 - cor(t(x)))}
+as the distance metric (using the specified correlation method).}
 
 \item{hclustfun}{function used to compute the hierarchical clustering
 when Rowv or Colv are not dendrograms. Defaults to hclust.}

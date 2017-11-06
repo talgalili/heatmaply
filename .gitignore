@@ -11,3 +11,4 @@ MANIFEST.txt
 *.gz
 test2.rda
 tests/testthat/tmp.*
+tmp*

@@ -82,6 +82,9 @@ is.plotly <- function(x) {
 #' identically to the rows.
 #' @param distfun function used to compute the distance (dissimilarity)
 #' between both rows and columns. Defaults to dist.
+#' The options "pearson", "spearman" and "kendall" can be used to 
+#' use correlation-based clustering, which uses \code{as.dist(1 - cor(t(x)))}
+#' as the distance metric (using the specified correlation method).
 #' @param hclustfun function used to compute the hierarchical clustering
 #' when Rowv or Colv are not dendrograms. Defaults to hclust.
 #'
@@ -534,7 +537,9 @@ heatmaply.default <- function(x,
                               col) {
 
   if (!missing(long_data)) {
-    if (!missing(x)) warning("x and long_data should not be used together")
+    if (!missing(x)) {
+        warning("x and long_data should not be used together")
+    }
     assert_that(
       ncol(long_data) == 3,
       all(colnames(long_data) == c("name", "variable", "value"))
@@ -559,17 +564,13 @@ heatmaply.default <- function(x,
   }
 
 
-  if(is.logical(dendrogram)) {
+  if (is.logical(dendrogram)) {
     # Using if and not ifelse to make sure the output is a "scalar".
-    dendrogram <- if(dendrogram) "both" else "none"
+    dendrogram <- if (dendrogram) "both" else "none"
     # if(T) "both" else "none"
     # if(F) "both" else "none"
   }
   dendrogram <- match.arg(dendrogram)
-
-
-
-
 
   if (!(is.data.frame(x) | is.matrix(x))) stop("x must be either a data.frame or a matrix.")
 
