@@ -1,4 +1,4 @@
-.PHONY: test vignettes
+.PHONY: test
 
 document:
 	R --slave --no-save -e 'library("devtools"); document()'
