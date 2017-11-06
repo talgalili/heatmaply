@@ -654,13 +654,18 @@ hmly_to_file_1file <- function(hmly, file, width = NULL, height = NULL, ...) {
         width <- size_default(file_extension, "width")
       }
       if (is.null(height)) {
-        height <- size_default(file_extension, "height") 
+        height <- size_default(file_extension, "height")
       }
-      plotly::export(hmly, 
+      plotly::export(hmly,
         file = file,
-        vwidth = width, 
+        vwidth = width,
         vheight = height,
         cliprect="viewport")
+
+      if(file_extension == "pdf") {
+        warning("Due to a bug in the webshot package (which is used by plotly and heatmaply to create the pdf), the pdf is created with a white space around the plot. Until this bug is resolved you can manually trim the pdf using online tools such as: https://www.sejda.com/crop-pdf")
+      }
+
     }
   }
   invisible(hmly)
@@ -670,11 +675,11 @@ size_default <- function(file_extension, direction=c("width", "height")) {
   direction <- match.arg(direction)
   ## webshot uses viewport size in pixels to control file size, so
   ## all sizes in pixels
-  # switch(direction, 
+  # switch(direction,
   #   "width" = if (file_extension %in% bitmap_types) 800 else 8,
   #   "height" = if (file_extension %in% bitmap_types) 500 else 5
   # )
-  switch(direction, 
+  switch(direction,
     "width" = 800,
     "height" = 500
   )
