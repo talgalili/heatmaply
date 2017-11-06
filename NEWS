@@ -4,6 +4,11 @@ heatmaply 0.13.0 (2017-11-05)
 ### NEW FEATURES
 * heatmaply
   - Add File size arguments (#114) - width / height
+  - Allows use of Pearson, Spearman or Kendall correlation
+    coefficient as a distance measure, by specifying
+    `distfun="pearson"`, `distfun="spearman"` or `distfun="kendall"`.
+    This corresponds to the use of `distfun=function(x) as.dist(1 - cor(x)))`.
+
 
 
 ### BUG FIXES
