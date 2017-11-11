@@ -1,4 +1,4 @@
-heatmaply 0.13.0 (2017-11-05)
+heatmaply 0.13.0 (2017-11-11)
 ================
 
 ### NEW FEATURES
@@ -14,6 +14,7 @@ heatmaply 0.13.0 (2017-11-05)
 ### BUG FIXES
 * heatmaply
   - Scale before clustering #112 (fixes: Allow the dendrogram to use scaled data #111 )
+  - stops heatmaply from crashing when using RGui (#121)
 
 
 
