@@ -987,7 +987,13 @@ heatmaply.heatmapr <- function(x,
       .Platform$GUI == "Rgui" #if running on MAC OS, this would likely be "AQUA"
     }
 
-    if(is.Rgui()) print(p) # solves R crashes - not sure why...
+    if(is.Rgui()) {
+      # browser()
+      # print(p) # solves R crashes - not sure why...
+      dev.new() # it seems we need just some device to be open...
+    }
+
+
     p <- ggplotly(p, dynamicTicks = dynamicTicks) %>% layout(showlegend=TRUE)
   }
 
