@@ -419,6 +419,11 @@ predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale,
   cell_values_vector <- as.character(cell_values_vector)
   ind <- match(cell_values_vector, colorscale_df[, 1])
   cell_colors <- unlist(colorscale_df[ind, 2])
+
+  # apply colors only to non-NA cells
+  # In the future, it might be worth using na.color
+  cell_colors[is.na(cell_colors)] <- "#ffffff" # make the default white for NA values
+
   cell_colors_rgb <- colorspace::hex2RGB(cell_colors)
   cell_font_colors <- sapply(
     seq_len(nrow(cell_colors_rgb@coords)),
