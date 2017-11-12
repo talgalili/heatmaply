@@ -12,8 +12,8 @@
 * [Introduction](#introduction)
 * [Installation](#installation)
 * [Usage](#usage)
-* [Acknowledgements](#Acknowledgements)
-* [How to cite the `heatmaply` package](#How to cite the `heatmaply` package)
+* [Acknowledgements](#acknowledgements)
+* [How to cite the heatmaply package](#how-to-cite-the-heatmaply-package)
 * [Contact](#contact)
 
 
@@ -35,6 +35,18 @@ This work is based on the ggplot2 and plotly.js engine. It produces similar heat
 ### Please submit features requests
 
 This package is still under active development. If you have features you would like to have added, please submit your suggestions (and bug-reports) at: <https://github.com/talgalili/heatmaply/issues>
+
+
+### Latest news
+
+You can see the most recent changes to the package in the [NEWS.md file](https://github.com/talgalili/heatmaply/blob/master/NEWS.md)
+
+
+
+### Code of conduct
+
+Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+
 
 
 ## Installation
@@ -137,7 +149,7 @@ The work on heatmaply was done by Tal Galili, Alan O'Callaghan, and Jonathan Sid
 
 
 
-## How to cite the `heatmaply` package
+## How to cite the heatmaply package
 
 The methods within the package can be cited as:
 
@@ -170,17 +182,4 @@ You are welcome to:
 * submit suggestions and bug-reports at: <https://github.com/talgalili/heatmaply/issues>
 * send a pull request on: <https://github.com/talgalili/heatmaply/>
 * compose a friendly e-mail to: <tal.galili@gmail.com>
-
-
-## Latest news
-
-You can see the most recent changes to the package in the [NEWS.md file](https://github.com/talgalili/heatmaply/blob/master/NEWS.md)
-
-
-
-
-
-## Code of conduct
-
-Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
 
