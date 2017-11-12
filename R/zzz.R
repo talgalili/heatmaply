@@ -43,10 +43,14 @@
 #' @importFrom stats as.dendrogram dendrapply dist hclust is.leaf order.dendrogram reorder sd
 #' @importFrom seriation seriate get_order
 #' @importFrom dendextend set is.dendrogram is.hclust seriate_dendrogram rotate color_branches find_k as.ggdend
-#' @importFrom stats ecdf na.omit
+#' @importFrom stats ecdf na.omit as.dist cor
 #' @importFrom htmlwidgets saveWidget
 #' @importFrom plotly plot_ly add_segments
 #' @importFrom assertthat assert_that
+#' @importFrom grDevices dev.new
+#' @importFrom assertthat assert_that
+
+#'
 NULL
 
 

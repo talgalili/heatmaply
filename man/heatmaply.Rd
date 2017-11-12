@@ -129,7 +129,7 @@ identically to the rows.}
 
 \item{distfun}{function used to compute the distance (dissimilarity)
 between both rows and columns. Defaults to dist.
-The options "pearson", "spearman" and "kendall" can be used to 
+The options "pearson", "spearman" and "kendall" can be used to
 use correlation-based clustering, which uses \code{as.dist(1 - cor(t(x)))}
 as the distance metric (using the specified correlation method).}
 
