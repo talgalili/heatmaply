@@ -771,6 +771,19 @@ heatmaply.heatmapr <- function(x,
       "middle center", "middle right", "bottom left", "bottom center",
       "bottom right"))
 
+
+  is.Rgui <- function(...) {
+    .Platform$GUI == "Rgui" #if running on MAC OS, this would likely be "AQUA"
+  }
+
+  if(is.Rgui()) {
+    # browser()
+    # print(p) # solves R crashes - not sure why...
+    dev.new() # it seems we need just some device to be open...
+  }
+
+
+
   # informative errors for mis-specified limits
   if (!is.null(limits)) {
     if (!is.numeric(limits)) stop("limits must be numeric")
@@ -982,18 +995,6 @@ heatmaply.heatmapr <- function(x,
   ## plotly:
   # turn p, px, and py to plotly objects if necessary
   if (!is.plotly(p)) {
-
-    is.Rgui <- function(...) {
-      .Platform$GUI == "Rgui" #if running on MAC OS, this would likely be "AQUA"
-    }
-
-    if(is.Rgui()) {
-      # browser()
-      # print(p) # solves R crashes - not sure why...
-      dev.new() # it seems we need just some device to be open...
-    }
-
-
     p <- ggplotly(p, dynamicTicks = dynamicTicks) %>% layout(showlegend=TRUE)
   }
 
