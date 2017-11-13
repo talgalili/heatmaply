@@ -184,6 +184,8 @@ is.plotly <- function(x) {
 #'    row/column side colors in the style of heatmap.2/heatmap.3.
 #'    col_side_colors should be "wide", ie be the same dimensions
 #'    as the column side colors it will produce.
+#'    When a data.frame is provided, the column names are used as the label names for each of the newely added row_side_colors.
+#'    When a vector is provided it is coerced into a data.frame and the name of the side color will be just row_side_colors.
 #'
 #' @param row_side_palette,col_side_palette Color palette functions to be
 #'    used for row_side_colors and col_side_colors respectively.
