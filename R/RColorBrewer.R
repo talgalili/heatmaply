@@ -255,14 +255,13 @@ YlOrRd <- grDevices::colorRampPalette(RColorBrewer::brewer.pal(9, "YlOrRd"))
 # install.packages("Rgnuplot")
 # Rgnuplot:::GpdivergingColormap
 
-GpdivergingColormap <- function (s, rgb1, rgb2, outColorspace = "sRGB")
-{
+GpdivergingColormap <- function(s, rgb1, rgb2, outColorspace = "sRGB") {
   LabToMsh <- function(Lab) {
     L <- Lab@coords[1]
     a <- Lab@coords[2]
     b <- Lab@coords[3]
     M <- sqrt(L * L + a * a + b * b)
-    s <- (M > 0.001) * acos(L/M)
+    s <- (M > 0.001) * acos(L / M)
     h <- (s > 0.001) * atan2(b, a)
     c(M, s, h)
   }
@@ -282,22 +281,26 @@ GpdivergingColormap <- function (s, rgb1, rgb2, outColorspace = "sRGB")
     x
   }
   AdjustHue <- function(msh, unsatM) {
-    if (msh[1] >= unsatM - 0.1)
+    if (msh[1] >= unsatM - 0.1) {
       h <- msh[3]
-    else {
-      hueSpin <- (msh[2] * sqrt(unsatM^2 - msh[1]^2)/(msh[1] *
-                                                        sin(msh[2])))
-      if (msh[3] > -0.3 * pi)
+    } else {
+      hueSpin <- (msh[2] * sqrt(unsatM ^ 2 - msh[1] ^ 2) / (msh[1] *
+        sin(msh[2])))
+      if (msh[3] > -0.3 * pi) {
         h <- msh[3] + hueSpin
-      else h <- msh[3] - hueSpin
+      } else {
+        h <- msh[3] - hueSpin
+      }
     }
     h
   }
   divergingMap1val <- function(s, rgb1, rgb2, outColorspace = "sRGB") {
     msh1 <- LabToMsh(as(rgb1, "LAB"))
     msh2 <- LabToMsh(as(rgb2, "LAB"))
-    if (msh1[2] > 0.05 & msh2[2] > 0.05 & AngleDiff(msh1[3],
-                                                    msh2[3]) > pi/3) {
+    if (msh1[2] > 0.05 & msh2[2] > 0.05 & AngleDiff(
+      msh1[3],
+      msh2[3]
+    ) > pi / 3) {
       Mmid <- max(88, msh1[1], msh2[1])
       if (s < 0.5) {
         msh2[1] <- Mmid
@@ -312,10 +315,11 @@ GpdivergingColormap <- function (s, rgb1, rgb2, outColorspace = "sRGB")
         s <- 2 * s - 1
       }
     }
-    if ((msh1[2] < 0.05) & (msh2[2] > 0.05))
+    if ((msh1[2] < 0.05) & (msh2[2] > 0.05)) {
       msh1[3] <- AdjustHue(msh2, msh1[1])
-    else if ((msh2[2] < 0.05) & (msh1[2] > 0.05))
+    } else if ((msh2[2] < 0.05) & (msh1[2] > 0.05)) {
       msh2[3] <- AdjustHue(msh1, msh2[1])
+    }
     mshTmp <- msh1
     mshTmp[1] <- (1 - s) * msh1[1] + s * msh2[1]
     mshTmp[2] <- (1 - s) * msh1[2] + s * msh2[2]
@@ -323,8 +327,10 @@ GpdivergingColormap <- function (s, rgb1, rgb2, outColorspace = "sRGB")
     as(MshToLab(mshTmp), outColorspace)
   }
   dvmap <- matrix(0, length(s), 3)
-  for (n in 1:length(s)) dvmap[n, ] <- divergingMap1val(s[n],
-                                                        rgb1, rgb2, outColorspace)@coords
+  for (n in 1:length(s)) dvmap[n, ] <- divergingMap1val(
+      s[n],
+      rgb1, rgb2, outColorspace
+    )@coords
   dvmap
 }
 
@@ -332,13 +338,15 @@ GpdivergingColormap <- function (s, rgb1, rgb2, outColorspace = "sRGB")
 
 #' @export
 #' @rdname RColorBrewer_colors
-cool_warm  <- function(n) {
-  colormap <- GpdivergingColormap(seq(0,1,length.out=n),
-                                  rgb1 = colorspace::sRGB( 0.230, 0.299, 0.754),
-                                  rgb2 = colorspace::sRGB( 0.706, 0.016, 0.150),
-                                  outColorspace = "sRGB")
-  colormap[colormap>1] <- 1 # sometimes values are slightly larger than 1
-  colormap <- grDevices::rgb(colormap[,1], colormap[,2], colormap[,3])
+cool_warm <- function(n) {
+  colormap <- GpdivergingColormap(
+    seq(0, 1, length.out = n),
+    rgb1 = colorspace::sRGB(0.230, 0.299, 0.754),
+    rgb2 = colorspace::sRGB(0.706, 0.016, 0.150),
+    outColorspace = "sRGB"
+  )
+  colormap[colormap > 1] <- 1 # sometimes values are slightly larger than 1
+  colormap <- grDevices::rgb(colormap[, 1], colormap[, 2], colormap[, 3])
   colormap
 }
 
@@ -353,4 +361,3 @@ cool_warm  <- function(n) {
 # library(heatmaply)
 # img(rev(RdBu(500)), "RdBu")
 #
-

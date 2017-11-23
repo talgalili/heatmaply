@@ -8,22 +8,22 @@ percentize_predict <- function(x, ecdf_fun = ecdf, ...) {
   # ecdf_fun <- kCDF_fun # ecdf
 
   ecdf_list <- list()
-  for(i in 1:ncol(x)) {
-    ecdf_list[[i]] <- if(ss_numeric[i]) {
-      ecdf_fun(na.omit(x[,i]))
+  for (i in 1:ncol(x)) {
+    ecdf_list[[i]] <- if (ss_numeric[i]) {
+      ecdf_fun(na.omit(x[, i]))
     } else {
       NA
     }
   }
 
   fun <- function(new_x) {
-    if( any(colnames(new_x) != colnames(x)) ) stop("The column names (or order) of the new x are different than that of the old x. Please fix and try again.")
+    if (any(colnames(new_x) != colnames(x))) stop("The column names (or order) of the new x are different than that of the old x. Please fix and try again.")
 
-    for(i in 1:ncol(x)) {
+    for (i in 1:ncol(x)) {
       ecdf_fun <- ecdf_list[[i]]
-      if(! (is.vector(ecdf_fun) && is.na(ecdf_fun))  ) {
-        ss_no_NA <- !is.na(new_x[,i])
-        new_x[ss_no_NA,i] <- ecdf_fun(new_x[ss_no_NA,i])
+      if (!(is.vector(ecdf_fun) && is.na(ecdf_fun))) {
+        ss_no_NA <- !is.na(new_x[, i])
+        new_x[ss_no_NA, i] <- ecdf_fun(new_x[ss_no_NA, i])
       }
     }
 
@@ -157,14 +157,13 @@ normalize <- function(x, ...) {
 #' @export
 normalize.default <- function(x, ...) {
   ss_no_NA <- !is.na(x)
-  x[ss_no_NA] <- (x[ss_no_NA]-min(x[ss_no_NA]))/(max(x[ss_no_NA])-min(x[ss_no_NA]))
+  x[ss_no_NA] <- (x[ss_no_NA] - min(x[ss_no_NA])) / (max(x[ss_no_NA]) - min(x[ss_no_NA]))
   x
 }
 
 
 #' @export
 normalize.data.frame <- function(x, ...) {
-
   ss_numeric <- sapply(x, is.numeric)
   normalize
 
@@ -180,11 +179,3 @@ normalize.matrix <- function(x, ...) {
   x <- as.data.frame(x)
   normalize(x)
 }
-
-
-
-
-
-
-
-

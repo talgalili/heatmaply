@@ -1,3 +1,95 @@
+* 2017-11-13(Tal Galili) Give information in the help file about issue #125 |6dc7510| 
+|  R/heatmaply.R    | 2 ++
+|  man/heatmaply.Rd | 4 +++-
+|  2 files changed, 5 insertions(+), 1 deletion(-)
+
+* 2017-11-13(Tal Galili) Fix #121 also when row_side_colors is supplied |243e623| 
+|  R/heatmaply.R | 25 +++++++++++++------------
+|  1 file changed, 13 insertions(+), 12 deletions(-)
+
+* 2017-11-13(Tal Galili) Fix |890722c| 
+|  NAMESPACE        | 3 +++
+|  R/zzz.R          | 6 +++++-
+|  man/heatmaply.Rd | 2 +-
+|  3 files changed, 9 insertions(+), 2 deletions(-)
+
+* 2017-11-13(Tal Galili) true or TRUE? |d5d0fed| 
+|  DESCRIPTION | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2017-11-13(Tal Galili) fix links and move text a bit |023d2c5| 
+|  README.md | 31 +++++++++++++++----------------
+|  1 file changed, 15 insertions(+), 16 deletions(-)
+
+* 2017-11-13(Tal Galili) modify welcome message a bit (remove the how to suppress) |afb035b| 
+|  R/zzz.R | 14 +++++++-------
+|  1 file changed, 7 insertions(+), 7 deletions(-)
+
+* 2017-11-13(Tal Galili) Add "How to cite " |8d4ae87| 
+|  README.md | 37 +++++++++++++++++++++++++++++++++----
+|  1 file changed, 33 insertions(+), 4 deletions(-)
+
+* 2017-11-11(Tal Galili) fix #123 - draw_cellnote = TRUE fails for matrix with NA |e4348be| 
+|  NEWS      | 2 ++
+|  R/plots.R | 5 +++++
+|  2 files changed, 7 insertions(+)
+
+* 2017-11-11(Tal Galili) another solution to #121 |6786bd7| 
+|  R/heatmaply.R | 8 +++++++-
+|  1 file changed, 7 insertions(+), 1 deletion(-)
+
+* 2017-11-11(Tal Galili) set a temporary is.Rgui |4ed7332| 
+|  R/heatmaply.R | 5 +++++
+|  1 file changed, 5 insertions(+)
+
+* 2017-11-11(Tal Galili) Solves #121 (but I don't know why...) |3b1d392| 
+|  DESCRIPTION   | 2 +-
+|  NEWS          | 3 ++-
+|  R/heatmaply.R | 7 +++++--
+|  3 files changed, 8 insertions(+), 4 deletions(-)
+
+* 2017-11-06(Alanocallaghan) Add correlation note |34f1539| 
+|  NEWS | 5 +++++
+|  1 file changed, 5 insertions(+)
+
+* 2017-11-06(Alanocallaghan) Correlation distfuns (#119) |2669010| 
+|  .gitignore                           |   1 +
+|  R/distfuns.R                         |   8 +++
+|  R/heatmaply.R                        |  15 ++--
+|  R/heatmapr.R                         |  18 ++---
+|  man/heatmaply.Rd                     |   5 +-
+|  tests/testthat/test_heatmaply.R      |  74 --------------------
+|  tests/testthat/test_heatmaply_misc.R | 123 +++++++++++++++++++++++++++++++++
+|  7 files changed, 154 insertions(+), 90 deletions(-)
+
+* 2017-11-05(Tal Galili) Meantion in NEWS: Add File size arguments (#114) - width / height |b933802| 
+|  DESCRIPTION | 4 ++--
+|  NEWS        | 8 +++++++-
+|  2 files changed, 9 insertions(+), 3 deletions(-)
+
+* 2017-11-05(Tal Galili) Added a warning for when using pdf (while providing a suggested hack for the meantime) |3934b22| 
+|  R/plots.R | 15 ++++++++++-----
+|  1 file changed, 10 insertions(+), 5 deletions(-)
+
+* 2017-10-31(Alanocallaghan) File size arguments (#114) |f97966e| 
+|  .gitignore                      |  1 +
+|  R/heatmaply.R                   |  6 +++++-
+|  R/plots.R                       | 41 ++++++++++++++++++++++++++++++++++-----
+|  man/heatmaply.Rd                | 17 +++++++++-------
+|  tests/testthat/test_heatmaply.R |  8 ++++++++
+|  5 files changed, 60 insertions(+), 13 deletions(-)
+
+* 2017-10-30(Tal Galili) update welcome message to include information on how to cite the package. |328ab64| 
+|  R/zzz.R | 2 ++
+|  1 file changed, 2 insertions(+)
+
+* 2017-10-28(Tal Galili) move version to 0.12.2 |a6b0e8f| 
+|  ChangeLog   | 103 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+|  DESCRIPTION |   4 +--
+|  NEWS        |  13 ++++++++
+|  NEWS.md     |  36 +++++++++++++++++++-
+|  4 files changed, 153 insertions(+), 3 deletions(-)
+
 * 2017-10-27(Alanocallaghan) Scale before clustering (#112) |949424b| 
 |  R/heatmapr.R | 25 ++++++++++++-------------
 |  1 file changed, 12 insertions(+), 13 deletions(-)

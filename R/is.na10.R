@@ -52,6 +52,3 @@ is.na10 <- function(x, ...) {
   # return
   x_na
 }
-
-
-
