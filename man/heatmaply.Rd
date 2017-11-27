@@ -183,7 +183,12 @@ This is useful for cor matrix.}
 in either the row direction or the column direction, or none. The default is
 "none".}
 
-\item{na.rm}{logical indicating whether NA's should be removed.}
+\item{na.rm}{logical (default is TRUE) indicating whether NA's should be removed when scaling
+(i.e.: when using rowMeans/colMeans). Generally it should always be kept as TRUE, and is included
+here mainly to stay backward compatible with gplots::heatmap.2.
+This argument does not effect the presence of NA valus in the matrix itself.
+For removing rows/columns with NAs you should pre-process your matrix using na.omit
+(or some form of imputation).}
 
 \item{row_dend_left}{logical (default is FALSE). Should the row dendrogram be
 plotted on the left side of the heatmap. If false then it will be plotted on
