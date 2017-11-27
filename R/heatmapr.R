@@ -11,8 +11,8 @@
 #' Creates a heatmapr object
 #'
 #' An object of class heatmapr includes all the needed information
-#' for producing a heatmap. The goal is to seperate the pre-processing of the
-#' heatmap elements from the graphical rendaring of the object, which could be done
+#' for producing a heatmap. The goal is to separate the pre-processing of the
+#' heatmap elements from the graphical rendering of the object, which could be done
 #' using plotly (but potentially also with other graphical devices).
 #'
 #' @param x A numeric matrix
@@ -93,10 +93,10 @@
 #'
 #' @param seriate character indicating the method of matrix sorting (default: "OLO").
 #' Implemented options include:
-#' "OLO" (Optimal leaf ordering, optimzes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
+#' "OLO" (Optimal leaf ordering, optimizes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
 #' "mean" (sorts the matrix based on the reorderfun using marginal means of the matrix. This is the default used by \link[gplots]{heatmap.2}),
 #' "none" (the default order produced by the dendrogram),
-#' "GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length that is restricted by the dendrogram structure)
+#' "GW" (Gruvaeus and Wainer heuristic to optimize the Hamiltonian path length that is restricted by the dendrogram structure)
 #'
 #' @param ... currently ignored
 #'

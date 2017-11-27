@@ -10,7 +10,7 @@ is.plotly(x)
 \item{x}{an object to check}
 }
 \value{
-TRUE if the object ingerits "plotly" as a class.
+TRUE if the object inherits "plotly" as a class.
 }
 \description{
 Helpful for the plot_method in link{heatmaply}.

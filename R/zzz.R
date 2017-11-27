@@ -273,6 +273,7 @@ heatmaplyWelcomeMessage <- function() {
 # remotes::install_github("krlmlr/styler")
 # styler::style_pkg()
 
+# devtools::spell_check()
 
 
 
@@ -280,6 +281,7 @@ heatmaplyWelcomeMessage <- function() {
 # Search [^\x00-\x7F]+
 # with notepad++ with regex, in order to find non-ascii values.
 # Source: http://stackoverflow.com/questions/20889996/notepad-how-to-remove-all-non-ascii-characters-with-regex
+
 
 
 
