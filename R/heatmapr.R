@@ -97,6 +97,7 @@
 #' "none" (the default order produced by the dendrogram),
 #' "GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length that is restricted by the dendrogram structure)
 #' @param point_size_mat A matrix of values which can be mapped to point size
+#' @param custom_hovertext Custom hovertext matrix
 #' @param ... currently ignored
 #'
 #' @export
@@ -167,6 +168,7 @@ heatmapr <- function(x,
                       col_side_colors,
                       seriate = c("OLO", "mean", "none", "GW"),
                       point_size_mat = NULL,
+                      custom_hovertext = NULL,
                       ...
 ) {
 
@@ -373,6 +375,9 @@ heatmapr <- function(x,
   }
   x <- x[rowInd, colInd, drop = FALSE]
   cellnote <- cellnote[rowInd, colInd, drop = FALSE]
+  if (!is.null(custom_hovertext)) {
+    custom_hovertext <- custom_hovertext[rowInd, colInd, drop = FALSE]
+  }
   if (!is.null(point_size_mat)) {
     point_size_mat <- point_size_mat[rowInd, colInd, drop = FALSE]
   }
@@ -443,7 +448,8 @@ heatmapr <- function(x,
               dim = dim(x),
               rows = rownames(x),
               cols = colnames(x),
-              point_size_mat = point_size_mat
+              point_size_mat = point_size_mat,
+              custom_hovertext = custom_hovertext
   )
 
 

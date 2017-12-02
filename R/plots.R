@@ -55,6 +55,7 @@ ggplot_heatmap <- function(xx,
                            point_size_mat = NULL,
                            label_format_fun = function(...) format(..., digits = 4),
                            point_size_name = "Point size",
+                           custom_hovertext = NULL,
                            ...) {
   
   theme_clear_grid_heatmap <- theme(axis.line = element_line(color = "black"),
@@ -123,9 +124,13 @@ ggplot_heatmap <- function(xx,
     val, ": ", label_format_fun(mdf[[3]]))
 
   if (type == "heatmap") {
-    geom <- "geom_tile" 
+    geom <- "geom_tile"
+    aes_args <- list(fill=paste_aes(val))
+    if (!is.null(custom_hovertext)) {
+      aes_args[["text"]] <- "text"
+    }
     geom_args <- list(
-      mapping = aes_string(fill=paste_aes(val)),
+      # mapping = aes_string(fill=paste_aes(val)),
       color = grid_color,
       size = grid_size)
   } else if (type == "scatter") {
@@ -135,14 +140,24 @@ ggplot_heatmap <- function(xx,
       mdf[["text"]] <- paste(mdf[["text"]], "<br>", 
         point_size_name, ": ", label_format_fun(mdf[[4]]))
 
-      geom_args[["mapping"]] <- aes_string(color = paste_aes(val), 
-        text="text",
+      aes_args <- list(color = paste_aes(val), 
+        text = "text",
         size = paste_aes(point_size_name))
+
+      # geom_args[["mapping"]] <- aes_string(color = paste_aes(val), 
+      #   text = "text",
+      #   size = paste_aes(point_size_name))
     } else {
       geom_args[["size"]] <- grid_size
       geom_args[["mapping"]] <- aes_string(color = paste_aes(val), text="text")
     }
   }
+  if (!is.null(custom_hovertext)) {
+    mdf[["text"]] <- paste0(mdf[["text"]], "<br>", custom_hovertext)
+  }
+
+  geom_args[["mapping"]] <- do.call(aes_string, aes_args)
+
 
   # TODO:
   # http://stackoverflow.com/questions/15921799/draw-lines-around-specific-areas-in-geom-tile
@@ -196,6 +211,7 @@ plotly_heatmap <- function(x, limits = range(x),
     row_dend_left = FALSE, fontsize_row = 10, fontsize_col = 10, key_title = "",
     colorbar_xanchor = "left", colorbar_yanchor = "bottom",
     label_names = NULL,
+    custom_hovertext = NULL,
     colorbar_xpos = 1.1, colorbar_ypos = 1, colorbar_len = 0.3) {
 
   if (is.function(colors)) colors <- colors(256)
@@ -221,7 +237,11 @@ plotly_heatmap <- function(x, limits = range(x),
       )
     }
   )
-  text_mat <- as.matrix(text_mat)
+  if (is.null(custom_hovertext)) {
+    text_mat <- as.matrix(text_mat)
+  } else {
+    text_mat <- custom_hovertext
+  }
 
 
   p <- plot_ly(z = x, x = 1:ncol(x), y = 1:nrow(x), text = text_mat,

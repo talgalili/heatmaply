@@ -40,8 +40,8 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   -0.1 else 1.1, colorbar_ypos = 0, showticklabels = c(TRUE, TRUE),
   dynamicTicks = FALSE, grid_size = 0.1, node_type = "heatmap",
   point_size_mat = NULL, point_size_name = "Point size",
-  label_format_fun = function(...) format(..., digits = 4), labRow, labCol,
-  col = NULL)
+  label_format_fun = function(...) format(..., digits = 4),
+  custom_hovertext = NULL, labRow, labCol, col = NULL)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
@@ -65,6 +65,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   1.1, colorbar_ypos = 0, colorbar_len = 0.3, showticklabels = c(TRUE,
   TRUE), dynamicTicks = FALSE, node_type = c("scatter", "heatmap"),
   grid_size = 0.1, point_size_mat = x[["matrix"]][["point_size_mat"]],
+  custom_hovertext = x[["matrix"]][["custom_hovertext"]],
   point_size_name = "Point size", label_format_fun = function(...)
   format(..., digits = 4), labRow, labCol)
 }
@@ -332,6 +333,8 @@ Default is node_type = "heatmap".}
 \item{label_format_fun}{Function to format hovertext (eg, 
 \code{function(...) round(..., digits=3)} or
 \code{function(...) format(..., digits=3)}}
+
+\item{custom_hovertext}{}
 
 \item{labRow, labCol}{character vectors with row and column labels to use; these default to rownames(x) or colnames(x), respectively.
 if set to NA, they change the value in showticklabels to be FALSE. This is mainly to keep

@@ -269,6 +269,7 @@ is.plotly <- function(x) {
 #' @param label_format_fun Function to format hovertext (eg, 
 #'    \code{function(...) round(..., digits=3)} or
 #'    \code{function(...) format(..., digits=3)}
+#' @param custom_hovertext
 #' 
 #' @param labRow,labCol character vectors with row and column labels to use; these default to rownames(x) or colnames(x), respectively.
 #' if set to NA, they change the value in showticklabels to be FALSE. This is mainly to keep
@@ -544,6 +545,7 @@ heatmaply.default <- function(x,
                               point_size_mat = NULL,
                               point_size_name = "Point size",
                               label_format_fun = function(...) format(..., digits = 4),
+                              custom_hovertext = NULL,
                               labRow, labCol,
                               col = NULL) {
 
@@ -556,6 +558,9 @@ heatmaply.default <- function(x,
     x <- reshape2::dcast(long_data, name ~ variable)
     rownames(x) <- x$name
     x$name <- NULL
+  }
+  if (!is.null(custom_hovertext)) {
+    assert_that(all(dim(custom_hovertext) == dim(x)))
   }
 
   # this is to fix the error: "argument * matches multiple formal arguments"
@@ -649,6 +654,7 @@ heatmaply.default <- function(x,
     row_side_colors = row_side_colors,
     col_side_colors = col_side_colors,
     point_size_mat = point_size_mat,
+    custom_hovertext = custom_hovertext,
     seriate = seriate,
 
     cellnote = cellnote,
@@ -792,6 +798,7 @@ heatmaply.heatmapr <- function(x,
                                node_type = c("scatter", "heatmap"),
                                grid_size = 0.1,
                                point_size_mat = x[["matrix"]][["point_size_mat"]],
+                               custom_hovertext = x[["matrix"]][["custom_hovertext"]],
                                point_size_name = "Point size",
                                label_format_fun = function(...) format(..., digits = 4),
                                labRow, labCol
@@ -922,6 +929,7 @@ heatmaply.heatmapr <- function(x,
                       type = node_type,
                       fontsize_row = fontsize_row, fontsize_col = fontsize_col,
                       point_size_mat = point_size_mat,
+                      custom_hovertext = custom_hovertext,
                       point_size_name = point_size_name,
                       label_format_fun = label_format_fun)
   } else if (plot_method == "plotly") {
@@ -932,6 +940,7 @@ heatmaply.heatmapr <- function(x,
       fontsize_row = fontsize_row, fontsize_col = fontsize_col,
       colorbar_yanchor = colorbar_yanchor, colorbar_xanchor = colorbar_xanchor,
       colorbar_xpos = colorbar_xpos, colorbar_ypos = colorbar_ypos,
+      custom_hovertext = custom_hovertext,
       colorbar_len = colorbar_len)
   }
 
