@@ -1,17 +1,18 @@
 # prepare the heatmapr object.
 
 `%||%` <- function(a, b) {
-  if (!is.null(a))
+  if (!is.null(a)) {
     a
-  else
+  } else {
     b
+  }
 }
 
 #' Creates a heatmapr object
 #'
 #' An object of class heatmapr includes all the needed information
-#' for producing a heatmap. The goal is to seperate the pre-processing of the
-#' heatmap elements from the graphical rendaring of the object, which could be done
+#' for producing a heatmap. The goal is to separate the pre-processing of the
+#' heatmap elements from the graphical rendering of the object, which could be done
 #' using plotly (but potentially also with other graphical devices).
 #'
 #' @param x A numeric matrix
@@ -92,7 +93,7 @@
 #'
 #' @param seriate character indicating the method of matrix sorting (default: "OLO").
 #' Implemented options include:
-#' "OLO" (Optimal leaf ordering, optimzes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
+#' "OLO" (Optimal leaf ordering, optimizes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
 #' "mean" (sorts the matrix based on the reorderfun using marginal means of the matrix. This is the default used by \link[gplots]{heatmap.2}),
 #' "none" (the default order produced by the dendrogram),
 #' "GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length that is restricted by the dendrogram structure)
@@ -116,7 +117,6 @@
 #' }
 #'
 heatmapr <- function(x,
-
                       ## dendrogram control
                       Rowv,
                       Colv,
@@ -173,30 +173,36 @@ heatmapr <- function(x,
 ) {
 
   ## update hclust/dist functions?
-  ##====================
-  if(!is.null(dist_method)) {
+  ## ====================
+  distfun <- match.fun(distfun)
+  if (!is.null(dist_method)) {
     distfun_old <- distfun
-    distfun <- function(x) {distfun_old(x, method = dist_method)}
+    distfun <- function(x) {
+      distfun_old(x, method = dist_method)
+    }
   }
-  if(!is.null(hclust_method)) {
+  if (!is.null(hclust_method)) {
     hclustfun_old <- hclustfun
-    hclustfun <- function(x) {hclustfun_old(x, method = hclust_method)}
+    hclustfun <- function(x) {
+      hclustfun_old(x, method = hclust_method)
+    }
   }
 
 
-  if(missing(distfun_row)) distfun_row <- distfun
-  if(missing(hclustfun_row)) hclustfun_row <- hclustfun
-  if(missing(distfun_col)) distfun_col <- distfun
-  if(missing(hclustfun_col)) hclustfun_col <- hclustfun
+  if (missing(distfun_row)) distfun_row <- distfun
+  if (missing(hclustfun_row)) hclustfun_row <- hclustfun
+  if (missing(distfun_col)) distfun_col <- distfun
+  if (missing(hclustfun_col)) hclustfun_col <- hclustfun
 
-
+  distfun_row <- match.fun(distfun_row)
+  distfun_col <- match.fun(distfun_col)
 
   ## x is a matrix!
-  ##====================
-  if(!is.matrix(x)) {
+  ## ====================
+  if (!is.matrix(x)) {
     x <- as.matrix(x)
   }
-  if(!is.matrix(x)) stop("x must be a matrix")
+  if (!is.matrix(x)) stop("x must be a matrix")
 
 
   seriate <- match.arg(seriate)
@@ -209,19 +215,19 @@ heatmapr <- function(x,
 
 
   ## Labels for Row/Column
-  ##======================
+  ## ======================
   rownames(x) <- labRow %||% as.character(1:nrow(x))
   colnames(x) <- labCol %||% as.character(1:ncol(x))
 
-  if(!missing(cexRow)) {
-    if(is.numeric(cexRow)) {
+  if (!missing(cexRow)) {
+    if (is.numeric(cexRow)) {
       xaxis_font_size <- cexRow * 14
     } else {
       warning("cexRow is not numeric. It is ignored")
     }
   }
-  if(!missing(cexCol)) {
-    if(is.numeric(cexCol)) {
+  if (!missing(cexCol)) {
+    if (is.numeric(cexCol)) {
       yaxis_font_size <- cexCol * 14
     } else {
       warning("cexCol is not numeric. It is ignored")
@@ -229,20 +235,20 @@ heatmapr <- function(x,
   }
 
   ## Scale the data?
-  ##====================
+  ## ====================
   scale <- match.arg(scale)
 
-  if(scale == "row") {
+  if (scale == "row") {
     x <- sweep(x, 1, rowMeans(x, na.rm = na.rm))
     x <- sweep(x, 1, apply(x, 1, sd, na.rm = na.rm), "/")
   }
-  else if(scale == "column") {
+  else if (scale == "column") {
     x <- sweep(x, 2, colMeans(x, na.rm = na.rm))
     x <- sweep(x, 2, apply(x, 2, sd, na.rm = na.rm), "/")
   }
 
   ## Dendrograms for Row/Column
-  ##=======================
+  ## =======================
   dendrogram <- match.arg(dendrogram)
 
   # Use dendrogram argument to set defaults for Rowv/Colv
@@ -259,27 +265,23 @@ heatmapr <- function(x,
 
   if (isTRUE(Rowv)) {
     Rowv <- switch(seriate,
-                     "mean" = rowMeans(x, na.rm = na.rm),
-                     "none" = 1:nrow(x),
-                     "OLO" = {
-                                dist_x <- distfun_row(x) # dist is on the rows by default
-                                hc_x <- hclustfun_row(dist_x)
-                                dend_x <- as.dendrogram(hc_x)
-                                dend_x2 <- seriate_dendrogram(dend_x, dist_x, method = "OLO")
-                                dend_x2
-                             },
-                      "GW" = {
-                        dist_x <- distfun_row(x) # dist is on the rows by default
-                        hc_x <- hclustfun_row(dist_x)
-                        dend_x <- as.dendrogram(hc_x)
-                        dend_x2 <- seriate_dendrogram(dend_x, dist_x, method = "GW")
-                        dend_x2
-                      }
-
-                   )
-
-
-
+      "mean" = rowMeans(x, na.rm = na.rm),
+      "none" = 1:nrow(x),
+      "OLO" = {
+        dist_x <- distfun_row(x) # dist is on the rows by default
+        hc_x <- hclustfun_row(dist_x)
+        dend_x <- as.dendrogram(hc_x)
+        dend_x2 <- seriate_dendrogram(dend_x, dist_x, method = "OLO")
+        dend_x2
+      },
+      "GW" = {
+        dist_x <- distfun_row(x) # dist is on the rows by default
+        hc_x <- hclustfun_row(dist_x)
+        dend_x <- as.dendrogram(hc_x)
+        dend_x2 <- seriate_dendrogram(dend_x, dist_x, method = "GW")
+        dend_x2
+      }
+    )
   }
   if (is.numeric(Rowv)) {
     Rowv <- reorderfun(as.dendrogram(hclustfun_row(distfun_row(x))), Rowv)
@@ -291,11 +293,13 @@ heatmapr <- function(x,
   if (is.dendrogram(Rowv)) {
     # Rowv <- rev(Rowv)
     rowInd <- order.dendrogram(Rowv)
-    if(nr != length(rowInd))
+    if (nr != length(rowInd)) {
       stop("Row dendrogram is the wrong size")
+    }
   } else {
-    if (!is.null(Rowv) && !is.na(Rowv) && !identical(Rowv, FALSE))
+    if (!is.null(Rowv) && !is.na(Rowv) && !identical(Rowv, FALSE)) {
       warning("Invalid value for Rowv, ignoring")
+    }
     Rowv <- NULL
     rowInd <- 1:nr
   }
@@ -309,26 +313,25 @@ heatmapr <- function(x,
     Colv <- Rowv
   }
   if (isTRUE(Colv)) {
-    Colv <-  switch(seriate,
-                    "mean" = colMeans(x, na.rm = na.rm),
-                    "none" = 1:ncol(x),
-                    "OLO" = {
-                      dist_x <- distfun_col(t(x)) # dist is on the rows by default
-                      hc_x <- hclustfun_col(dist_x)
-                      o <- seriate(dist_x, method = "OLO", control = list(hclust = hc_x) )
-                      dend_x <- as.dendrogram(hc_x)
-                      dend_x2 <- rotate(dend_x, order = rev(labels(dist_x)[get_order(o)]))
-                      dend_x2
-                    },
-                    "GW" = {
-                      dist_x <- distfun_col(t(x)) # dist is on the rows by default
-                      hc_x <- hclustfun_col(dist_x)
-                      o <- seriate(dist_x, method = "GW", control = list(hclust = hc_x) )
-                      dend_x <- as.dendrogram(hc_x)
-                      dend_x2 <- rotate(dend_x, order = rev(labels(dist_x)[get_order(o)]))
-                      dend_x2
-                    }
-
+    Colv <- switch(seriate,
+      "mean" = colMeans(x, na.rm = na.rm),
+      "none" = 1:ncol(x),
+      "OLO" = {
+        dist_x <- distfun_col(t(x)) # dist is on the rows by default
+        hc_x <- hclustfun_col(dist_x)
+        o <- seriate(dist_x, method = "OLO", control = list(hclust = hc_x))
+        dend_x <- as.dendrogram(hc_x)
+        dend_x2 <- rotate(dend_x, order = rev(labels(dist_x)[get_order(o)]))
+        dend_x2
+      },
+      "GW" = {
+        dist_x <- distfun_col(t(x)) # dist is on the rows by default
+        hc_x <- hclustfun_col(dist_x)
+        o <- seriate(dist_x, method = "GW", control = list(hclust = hc_x))
+        dend_x <- as.dendrogram(hc_x)
+        dend_x2 <- rotate(dend_x, order = rev(labels(dist_x)[get_order(o)]))
+        dend_x2
+      }
     )
   }
   if (is.numeric(Colv)) {
@@ -340,11 +343,13 @@ heatmapr <- function(x,
   if (is.dendrogram(Colv)) {
     Colv <- rev(Colv)
     colInd <- order.dendrogram(Colv)
-    if (nc != length(colInd))
+    if (nc != length(colInd)) {
       stop("Col dendrogram is the wrong size")
+    }
   } else {
-    if (!is.null(Colv) && !is.na(Colv) && !identical(Colv, FALSE))
+    if (!is.null(Colv) && !is.na(Colv) && !identical(Colv, FALSE)) {
       warning("Invalid value for Colv, ignoring")
+    }
     Colv <- NULL
     colInd <- 1:nc
   }
@@ -352,23 +357,23 @@ heatmapr <- function(x,
 
   # TODO:  We may wish to change the defaults a bit in the future
   ## revC
-  ##=======================
-  if(missing(revC)) {
+  ## =======================
+  if (missing(revC)) {
     if (symm) {
       revC <- TRUE
-    } else if(is.dendrogram(Colv) & is.dendrogram(Rowv) & identical(Rowv, rev(Colv))) {
+    } else if (is.dendrogram(Colv) & is.dendrogram(Rowv) & identical(Rowv, rev(Colv))) {
       revC <- TRUE
     } else {
       revC <- FALSE
     }
   }
-  if(revC) {
+  if (revC) {
     Colv <- rev(Colv)
     colInd <- rev(colInd)
   }
 
   ## reorder x (and others)
-  ##=======================
+  ## =======================
   if (is.null(cellnote)) cellnote <- x
   if (is.numeric(cellnote)) {
     cellnote <- round(cellnote, digits = digits)
@@ -383,14 +388,14 @@ heatmapr <- function(x,
   }
 
   if (!missing(row_side_colors)) {
-    if(!(is.data.frame(row_side_colors) | is.matrix(row_side_colors))) {
+    if (!(is.data.frame(row_side_colors) | is.matrix(row_side_colors))) {
       row_side_colors <- data.frame("row_side_colors" = row_side_colors)
     }
     assert_that(nrow(row_side_colors) == nrow(x))
     row_side_colors <- row_side_colors[rowInd, , drop = FALSE]
   }
   if (!missing(col_side_colors)) {
-    if( !(is.data.frame(col_side_colors) | is.matrix(col_side_colors)) ) {
+    if (!(is.data.frame(col_side_colors) | is.matrix(col_side_colors))) {
       col_side_colors <- data.frame(col_side_colors)
       colnames(col_side_colors) <- "col_side_colors"
     }
@@ -399,38 +404,46 @@ heatmapr <- function(x,
   }
 
   ## Dendrograms - Update the labels and change to dendToTree
-  ##=======================
+  ## =======================
 
   # color branches?
-  #----------------
+  # ----------------
   # Due to the internal working of dendextend, in order to use it we first need
   # to populate the dendextend::dendextend_options() space:
   # if(!missing(k_row) | !missing(k_col))  # Setting k_row and k_col to 1 by default
   dendextend::assign_dendextend_options()
 
-  if(is.dendrogram(Rowv)) {
-    if(is.na(k_row)) k_row <- find_k(Rowv)$k
+  if (is.dendrogram(Rowv)) {
+    if (is.na(k_row)) k_row <- find_k(Rowv)$k
 
-    if(k_row > 1) Rowv <- color_branches(Rowv, k = k_row,
-                            col = k_colors(k_row))
+    if (k_row > 1) {
+      Rowv <- color_branches(
+        Rowv, k = k_row,
+        col = k_colors(k_row)
+      )
+    }
   }
-  if(is.dendrogram(Colv)) {
-    if(is.na(k_col)) k_col <- find_k(Colv)$k
+  if (is.dendrogram(Colv)) {
+    if (is.na(k_col)) k_col <- find_k(Colv)$k
 
-    if(k_col > 1) Colv <- color_branches(Colv, k = k_col,
-                            col = k_colors(k_col))
+    if (k_col > 1) {
+      Colv <- color_branches(
+        Colv, k = k_col,
+        col = k_colors(k_col)
+      )
+    }
   }
 
-  rowDend <- if(is.dendrogram(Rowv)) Rowv else NULL
-  colDend <- if(is.dendrogram(Colv)) Colv else NULL
+  rowDend <- if (is.dendrogram(Rowv)) Rowv else NULL
+  colDend <- if (is.dendrogram(Colv)) Colv else NULL
 
 
   ## cellnote
-  ##====================
+  ## ====================
   # Check that cellnote is o.k.:
   if (!is.null(cellnote)) {
     if (is.null(dim(cellnote))) {
-      if (length(cellnote) != nr*nc) {
+      if (length(cellnote) != nr * nc) {
         stop("Incorrect number of cellnote values")
       }
       dim(cellnote) <- dim(x)
@@ -449,8 +462,7 @@ heatmapr <- function(x,
               rows = rownames(x),
               cols = colnames(x),
               point_size_mat = point_size_mat,
-              custom_hovertext = custom_hovertext
-  )
+              custom_hovertext = custom_hovertext)
 
 
   if (is.factor(x)) {
@@ -485,8 +497,10 @@ heatmapr <- function(x,
     c(options, list(xclust_height = 0))
   }
 
-  heatmapr <- list(rows = rowDend, cols = colDend, matrix = mtx,
-                  theme = theme, options = options, cellnote = cellnote)
+  heatmapr <- list(
+    rows = rowDend, cols = colDend, matrix = mtx,
+    theme = theme, options = options, cellnote = cellnote
+  )
 
   if (!missing(row_side_colors)) heatmapr[["row_side_colors"]] <- row_side_colors
   if (!missing(col_side_colors)) heatmapr[["col_side_colors"]] <- col_side_colors
@@ -505,6 +519,5 @@ heatmapr <- function(x,
 #' @param x an object.
 #' @return logical - is the object of class heatmapr.
 is.heatmapr <- function(x) {
-  inherits(x,"heatmapr")
+  inherits(x, "heatmapr")
 }
-

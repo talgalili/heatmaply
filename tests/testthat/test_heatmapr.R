@@ -10,7 +10,7 @@ test_that("cellnote", {
 
 
 test_that("Rowv, Colv", {
-	hmapr <- heatmapr(mtcars, Colv = 1:ncol(mtcars), Rowv = 1:ncol(mtcars))
+  hmapr <- heatmapr(mtcars, Colv = 1:ncol(mtcars), Rowv = 1:ncol(mtcars))
   expect_true(is.heatmapr(hmapr))
 })
 
@@ -19,6 +19,6 @@ test_that("symm, revc", {
 })
 
 test_that("scale", {
-  expect_is(h1 <- heatmapr(cor(mtcars), scale = "row", symm=TRUE), "heatmapr")
-  expect_is(h2 <- heatmapr(cor(mtcars), scale = "col", symm=TRUE), "heatmapr")
+  expect_is(h1 <- heatmapr(cor(mtcars), scale = "row", symm = TRUE), "heatmapr")
+  expect_is(h2 <- heatmapr(cor(mtcars), scale = "col", symm = TRUE), "heatmapr")
 })
