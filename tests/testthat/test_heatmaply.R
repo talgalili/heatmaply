@@ -239,8 +239,20 @@ test_that("file argument works", {
   })
 })
 test_that("node argument works", {
-  c <- Hmisc::rcorr(as.matrix(mtcars))
-  h <- heatmaply(c$r, node_type="scatter", 
+  c <- cor(as.matrix(mtcars))
+
+  # https://stackoverflow.com/questions/23053849/creating-correlation-matrix-p-values
+  col_combinations <- expand.grid(names(mtcars), names(mtcars))
+  cor_test_wrapper <- function(col_name1, col_name2, data_frame) {
+      cor.test(data_frame[[col_name1]], data_frame[[col_name2]])$p.value
+  }
+  p_vals = mapply(cor_test_wrapper, 
+                    col_name1 = col_combinations[[1]], 
+                    col_name2 = col_combinations[[2]], 
+                    MoreArgs = list(data_frame = mtcars))
+
+  p <- matrix(p_vals, ncol = ncol(mtcars))
+  h <- heatmaply(c, node_type="scatter", 
     point_size_name="p", 
-    point_size_mat=-log10(c$P))
+    point_size_mat=-log10(p))
 })
