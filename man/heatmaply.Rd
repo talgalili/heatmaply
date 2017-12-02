@@ -344,7 +344,9 @@ Default is node_type = "heatmap".}
 \code{function(...) round(..., digits=3)} or
 \code{function(...) format(..., digits=3)}}
 
-\item{custom_hovertext}{}
+\item{custom_hovertext}{Custom hovertext matrix (the same dimensions as the input).
+If plot_method is "plotly" then just this text is displayed; if plot_method
+if "ggplot" then it is appended to the existing text.}
 
 \item{labRow, labCol}{character vectors with row and column labels to use; these default to rownames(x) or colnames(x), respectively.
 if set to NA, they change the value in showticklabels to be FALSE. This is mainly to keep

@@ -279,7 +279,9 @@ is.plotly <- function(x) {
 #' @param label_format_fun Function to format hovertext (eg, 
 #'    \code{function(...) round(..., digits=3)} or
 #'    \code{function(...) format(..., digits=3)}
-#' @param custom_hovertext
+#' @param custom_hovertext Custom hovertext matrix (the same dimensions as the input).
+#' If plot_method is "plotly" then just this text is displayed; if plot_method
+#' if "ggplot" then it is appended to the existing text.
 #' 
 #' @param labRow,labCol character vectors with row and column labels to use; these default to rownames(x) or colnames(x), respectively.
 #' if set to NA, they change the value in showticklabels to be FALSE. This is mainly to keep
