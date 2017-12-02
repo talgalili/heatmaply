@@ -748,7 +748,6 @@ heatmaply.default <- function(x,
 
                      # TODO: think more on what should be passed in "..."
 
-  # TODO: think more on what should be passed in "..."
 
 
   if (!missing(file)) {

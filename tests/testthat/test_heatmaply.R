@@ -159,8 +159,6 @@ for (plot_method in c("ggplot", "plotly")) {
     })
   }
 }
-<<<<<<< HEAD
-
 
 
 
@@ -232,7 +230,11 @@ test_that("showticklabels", {
 test_that("file argument works", {
   lapply(c("png", "jpeg", "pdf", "html"), function(type) {
     file <- paste0("tmp.", type)
-    heatmaply(mtcars, file=file)
+    if (type == "pdf") {
+      expect_warning(heatmaply(mtcars, file=file))
+    } else {
+      heatmaply(mtcars, file=file)
+    }
     expect_true(file.exists(file))
   })
 })
@@ -242,5 +244,3 @@ test_that("node argument works", {
     point_size_name="p", 
     point_size_mat=-log10(c$P))
 })
-=======
->>>>>>> ba5298c685797e7048d61bfbfad6b2f4250e511e

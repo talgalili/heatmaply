@@ -75,12 +75,6 @@ ggplot_heatmap <- function(xx,
 
   df <- xx
   if (!is.data.frame(df)) df <- as.data.frame(df, check.rows = FALSE)
-  # colnames(df) <- x$matrix$cols
-  if (!is.null(rownames(df))) {
-    df[[row]] <- make.unique(rownames(df), "_")
-  } else {
-    df[[row]] <- 1:nrow(df)
-  }
 
   if (is.null(label_names)) {
     if (is.null(dim_names <- names(dimnames(df)))) {
@@ -101,10 +95,10 @@ ggplot_heatmap <- function(xx,
     val <- label_names[[3]]
 
     # colnames(df) <- x$matrix$cols
-    if(!is.null(rownames(x))) {
-      df[[row]] <- rownames(x)
+    if (!is.null(rownames(df))) {
+      df[[row]] <- make.unique(rownames(df), "_")
     } else {
-      df[[row]] <- 1:nrow(x)
+      df[[row]] <- 1:nrow(df)
     }
 
     df[[row]] <- factor(
@@ -184,7 +178,6 @@ ggplot_heatmap <- function(xx,
           axis.text.y = element_text(angle = row_text_angle,
             size = fontsize_row, hjust = 1)
           ) 
-
   if (type == "scatter") {
     p <- p + 
       coord_cartesian(xlim = c(1, ncol(xx)), ylim = c(1, nrow(xx)))
@@ -527,6 +520,7 @@ predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale,
 
   # apply colors only to non-NA cells
   # In the future, it might be worth using na.color
+  cell_colors <- as.character(cell_colors)
   cell_colors[is.na(cell_colors)] <- "#ffffff" # make the default white for NA values
 
   cell_colors_rgb <- colorspace::hex2RGB(cell_colors)
