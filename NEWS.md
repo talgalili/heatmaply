@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> ba5298c685797e7048d61bfbfad6b2f4250e511e
 heatmaply 0.13.1 (2017-11-23)
 ================
 
@@ -25,6 +30,11 @@ heatmaply 0.13.0 (2017-11-11)
   - Scale before clustering #112 (fixes: Allow the dendrogram to use scaled data #111 )
   - stops heatmaply from crashing when using RGui (#121)
   - draw_cellnote = TRUE fails for matrix with NA (#123)
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> ba5298c685797e7048d61bfbfad6b2f4250e511e
 
 
 
@@ -33,6 +43,7 @@ heatmaply 0.13.0 (2017-11-11)
 
 
 
+>>>>>>> ba5298c685797e7048d61bfbfad6b2f4250e511e
 
 heatmaply 0.12.1 (2017-10-25)
 ================
@@ -55,9 +66,6 @@ heatmaply 0.12.1 (2017-10-25)
 * Added citation to the bioinformatics article! (http://dx.doi.org/10.1093/bioinformatics/btx657)
 
 
-
-heatmaply 0.11.1 (2017-09-27)
-================
 
 ### NEW FEATURES
 * heatmaply

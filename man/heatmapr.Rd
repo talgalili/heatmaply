@@ -17,7 +17,8 @@ heatmapr(x, Rowv, Colv, distfun = dist, hclustfun = hclust,
   height = NULL, xaxis_height = 80, yaxis_width = 120,
   xaxis_font_size = NULL, yaxis_font_size = NULL, brush_color = "#0000FF",
   show_grid = TRUE, anim_duration = 500, row_side_colors, col_side_colors,
-  seriate = c("OLO", "mean", "none", "GW"), ...)
+  seriate = c("OLO", "mean", "none", "GW"), point_size_mat = NULL,
+  custom_hovertext = NULL, ...)
 }
 \arguments{
 \item{x}{A numeric matrix
@@ -124,7 +125,11 @@ Implemented options include:
 "OLO" (Optimal leaf ordering, optimizes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
 "mean" (sorts the matrix based on the reorderfun using marginal means of the matrix. This is the default used by \link[gplots]{heatmap.2}),
 "none" (the default order produced by the dendrogram),
-"GW" (Gruvaeus and Wainer heuristic to optimize the Hamiltonian path length that is restricted by the dendrogram structure)}
+"GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length that is restricted by the dendrogram structure)}
+
+\item{point_size_mat}{A matrix of values which can be mapped to point size}
+
+\item{custom_hovertext}{Custom hovertext matrix}
 
 \item{...}{currently ignored}
 }

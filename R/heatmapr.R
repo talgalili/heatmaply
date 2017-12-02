@@ -96,8 +96,9 @@
 #' "OLO" (Optimal leaf ordering, optimizes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
 #' "mean" (sorts the matrix based on the reorderfun using marginal means of the matrix. This is the default used by \link[gplots]{heatmap.2}),
 #' "none" (the default order produced by the dendrogram),
-#' "GW" (Gruvaeus and Wainer heuristic to optimize the Hamiltonian path length that is restricted by the dendrogram structure)
-#'
+#' "GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length that is restricted by the dendrogram structure)
+#' @param point_size_mat A matrix of values which can be mapped to point size
+#' @param custom_hovertext Custom hovertext matrix
 #' @param ... currently ignored
 #'
 #' @export
@@ -116,59 +117,60 @@
 #' }
 #'
 heatmapr <- function(x,
+                      ## dendrogram control
+                      Rowv,
+                      Colv,
+                      distfun = dist,
+                      hclustfun = hclust,
+                      dist_method = NULL,
+                      hclust_method = NULL,
+                      
+                      distfun_row,
+                      hclustfun_row,
+                      distfun_col,
+                      hclustfun_col,
 
-                     ## dendrogram control
-                     Rowv,
-                     Colv,
-                     distfun = dist,
-                     hclustfun = hclust,
-                     dist_method = NULL,
-                     hclust_method = NULL,
+                      dendrogram = c("both", "row", "column", "none"),
+                      reorderfun = function(d, w) reorder(d, w),
 
-                     distfun_row,
-                     hclustfun_row,
-                     distfun_col,
-                     hclustfun_col,
+                      k_row = 1,
+                      k_col = 1,
 
-                     dendrogram = c("both", "row", "column", "none"),
-                     reorderfun = function(d, w) reorder(d, w),
+                      symm = FALSE,
+                      revC,
 
-                     k_row = 1,
-                     k_col = 1,
+                      ## data scaling
+                      scale = c("none", "row", "column"),
+                      na.rm = TRUE,
 
-                     symm = FALSE,
-                     revC,
+                      labRow = rownames(x),
+                      labCol = colnames(x),
 
-                     ## data scaling
-                     scale = c("none", "row", "column"),
-                     na.rm = TRUE,
+                      cexRow,
+                      cexCol,
 
-                     labRow = rownames(x),
-                     labCol = colnames(x),
+                      ## value formatting
+                      digits = 3L,
+                      cellnote = NULL,
 
-                     cexRow,
-                     cexCol,
-
-                     ## value formatting
-                     digits = 3L,
-                     cellnote = NULL,
-
-                     ## TODO: decide later which names/conventions to keep
-                     theme = NULL,
-                     colors = "RdYlBu",
-                     width = NULL, height = NULL,
-                     xaxis_height = 80,
-                     yaxis_width = 120,
-                     xaxis_font_size = NULL,
-                     yaxis_font_size = NULL,
-                     brush_color = "#0000FF",
-                     show_grid = TRUE,
-                     anim_duration = 500,
-                     row_side_colors,
-                     col_side_colors,
-                     seriate = c("OLO", "mean", "none", "GW"),
-                     ...) {
-
+                      ##TODO: decide later which names/conventions to keep
+                      theme = NULL,
+                      colors = "RdYlBu",
+                      width = NULL, height = NULL,
+                      xaxis_height = 80,
+                      yaxis_width = 120,
+                      xaxis_font_size = NULL,
+                      yaxis_font_size = NULL,
+                      brush_color = "#0000FF",
+                      show_grid = TRUE,
+                      anim_duration = 500,
+                      row_side_colors,
+                      col_side_colors,
+                      seriate = c("OLO", "mean", "none", "GW"),
+                      point_size_mat = NULL,
+                      custom_hovertext = NULL,
+                      ...
+) {
 
   ## update hclust/dist functions?
   ## ====================
@@ -378,6 +380,12 @@ heatmapr <- function(x,
   }
   x <- x[rowInd, colInd, drop = FALSE]
   cellnote <- cellnote[rowInd, colInd, drop = FALSE]
+  if (!is.null(custom_hovertext)) {
+    custom_hovertext <- custom_hovertext[rowInd, colInd, drop = FALSE]
+  }
+  if (!is.null(point_size_mat)) {
+    point_size_mat <- point_size_mat[rowInd, colInd, drop = FALSE]
+  }
 
   if (!missing(row_side_colors)) {
     if (!(is.data.frame(row_side_colors) | is.matrix(row_side_colors))) {
@@ -446,15 +454,15 @@ heatmapr <- function(x,
   }
 
   ## Final touches before exporting the object
-  ## =======================
+  ##=======================
 
-  mtx <- list(
-    data = as.matrix(x),
-    cellnote = cellnote,
-    dim = dim(x),
-    rows = rownames(x),
-    cols = colnames(x)
-  )
+  mtx <- list(data = as.matrix(x),
+              cellnote = cellnote,
+              dim = dim(x),
+              rows = rownames(x),
+              cols = colnames(x),
+              point_size_mat = point_size_mat,
+              custom_hovertext = custom_hovertext)
 
 
   if (is.factor(x)) {

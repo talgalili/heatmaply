@@ -267,6 +267,22 @@ is.plotly <- function(x) {
 #' Dynamic ticks are useful for updating ticks in response to zoom/pan interactions; however,
 #' they can not always reproduce labels as they would appear in the static ggplot2 image.
 #'
+#' @param node_type For plot_method = "ggplot", should the heatmap be rendered as
+#'  a x-y scatter plot (node_type = "scatter") or a heatmap (node_type = "heatmap").
+#'  Default is node_type = "heatmap".
+#' 
+#' @param grid_size When node_type is "scatter", this controls point size. When
+#' node_type is "heatmap", this controls the size of the grid between heatmap cells.
+#' 
+#' @param point_size_mat Matrix to map to point size
+#' @param point_size_name Name of point size mapping (for hovertext/legend)
+#' @param label_format_fun Function to format hovertext (eg, 
+#'    \code{function(...) round(..., digits=3)} or
+#'    \code{function(...) format(..., digits=3)}
+#' @param custom_hovertext Custom hovertext matrix (the same dimensions as the input).
+#' If plot_method is "plotly" then just this text is displayed; if plot_method
+#' if "ggplot" then it is appended to the existing text.
+#' 
 #' @param labRow,labCol character vectors with row and column labels to use; these default to rownames(x) or colnames(x), respectively.
 #' if set to NA, they change the value in showticklabels to be FALSE. This is mainly to keep
 #' backward compatibility with gplots::heatmap.2.
@@ -504,10 +520,7 @@ heatmaply.default <- function(x,
                               row_dend_left = FALSE,
                               margins = c(NA, NA, NA, NA),
                               ...,
-                              scale_fill_gradient_fun = scale_fill_gradientn(
-                                colors = if (is.function(colors)) colors(256) else colors,
-                                na.value = na.value, limits = limits
-                              ),
+                              scale_fill_gradient_fun = NULL,
                               grid_color = NA,
                               grid_gap = 0,
                               srtRow, srtCol,
@@ -545,10 +558,15 @@ heatmaply.default <- function(x,
                               colorbar_ypos = 0,
                               showticklabels = c(TRUE, TRUE),
                               dynamicTicks = FALSE,
-
+                              grid_size = 0.1,
+                              node_type = "heatmap",
+                              point_size_mat = NULL,
+                              point_size_name = "Point size",
+                              label_format_fun = function(...) format(..., digits = 4),
+                              custom_hovertext = NULL,
                               labRow, labCol,
+                              col = NULL) {
 
-                              col) {
   if (!missing(long_data)) {
     if (!missing(x)) {
       warning("x and long_data should not be used together")
@@ -561,9 +579,24 @@ heatmaply.default <- function(x,
     rownames(x) <- x$name
     x$name <- NULL
   }
+  if (!is.null(custom_hovertext)) {
+    assert_that(all(dim(custom_hovertext) == dim(x)))
+  }
 
   # this is to fix the error: "argument * matches multiple formal arguments"
-  if (!missing(col)) colors <- col
+  if (!is.null(col)) colors <- col
+
+  if (is.null(scale_fill_gradient_fun)) {
+    if (node_type == "heatmap") {
+      scale_fill_gradient_fun <- scale_fill_gradientn(
+        colors = if(is.function(colors)) colors(256) else colors,
+        na.value = na.value, limits = limits)
+    } else {
+      scale_fill_gradient_fun <- scale_color_gradientn(
+        colors = if(is.function(colors)) colors(256) else colors,
+        na.value = na.value, limits = limits)
+    }
+  }
 
   plot_method <- match.arg(plot_method)
 
@@ -637,6 +670,8 @@ heatmaply.default <- function(x,
     x,
     row_side_colors = row_side_colors,
     col_side_colors = col_side_colors,
+    point_size_mat = point_size_mat,
+    custom_hovertext = custom_hovertext,
     seriate = seriate,
 
     cellnote = cellnote,
@@ -667,52 +702,54 @@ heatmaply.default <- function(x,
     scale = scale,
     na.rm = na.rm,
 
-    ...
-  )
-  hmly <- heatmaply.heatmapr(
-    hm, colors = colors, limits = limits,
-    scale_fill_gradient_fun = scale_fill_gradient_fun,
-    grid_color = grid_color,
-    grid_gap = grid_gap,
-    row_text_angle = row_text_angle,
-    column_text_angle = column_text_angle,
-    subplot_margin = subplot_margin,
-    row_dend_left = row_dend_left,
-    xlab = xlab, ylab = ylab, main = main,
-    titleX = titleX, titleY = titleY,
-    hide_colorbar = hide_colorbar,
-    key.title = key.title,
-    return_ppxpy = return_ppxpy,
-    margins = margins,
-    row_side_palette = row_side_palette,
-    col_side_palette = col_side_palette,
-    heatmap_layers = heatmap_layers,
-    side_color_layers = side_color_layers,
-    ColSideColors = ColSideColors,
-    RowSideColors = RowSideColors,
-    branches_lwd = branches_lwd,
-    label_names = label_names,
-    plot_method = plot_method,
-    draw_cellnote = draw_cellnote,
-    cellnote_textposition = cellnote_textposition,
-    cellnote_size = cellnote_size,
-    cellnote_color = cellnote_color,
-    fontsize_row = fontsize_row,
-    fontsize_col = fontsize_col,
-    subplot_widths = subplot_widths,
-    subplot_heights = subplot_heights,
-    colorbar_len = colorbar_len,
-    colorbar_xanchor = colorbar_xanchor,
-    colorbar_yanchor = colorbar_yanchor,
-    colorbar_xpos = colorbar_xpos,
-    colorbar_ypos = colorbar_ypos,
-    showticklabels = showticklabels,
-    dynamicTicks = dynamicTicks,
+    ...)
+  hmly <- heatmaply.heatmapr(hm, colors = colors, limits = limits,
+                     scale_fill_gradient_fun = scale_fill_gradient_fun,
+                     grid_color = grid_color,
+                     grid_gap = grid_gap,
+                     row_text_angle = row_text_angle,
+                     column_text_angle = column_text_angle,
+                     subplot_margin = subplot_margin,
+                     row_dend_left = row_dend_left,
+                     xlab = xlab, ylab = ylab, main = main,
+                     titleX = titleX, titleY = titleY,
+                     hide_colorbar = hide_colorbar,
+                     key.title = key.title,
+                     return_ppxpy = return_ppxpy,
+                     margins = margins,
+                     row_side_palette = row_side_palette,
+                     col_side_palette = col_side_palette,
+                     heatmap_layers = heatmap_layers,
+                     side_color_layers = side_color_layers,
+                     ColSideColors = ColSideColors,
+                     RowSideColors = RowSideColors,
+                     branches_lwd = branches_lwd,
+                     label_names = label_names,
+                     plot_method = plot_method,
+                     draw_cellnote = draw_cellnote,
+                     cellnote_textposition = cellnote_textposition,
+                     cellnote_size = cellnote_size,
+                     cellnote_color = cellnote_color,
+                     fontsize_row = fontsize_row,
+                     fontsize_col = fontsize_col,
+                     subplot_widths = subplot_widths,
+                     subplot_heights = subplot_heights,
+                     colorbar_len = colorbar_len,
+                     colorbar_xanchor = colorbar_xanchor,
+                     colorbar_yanchor = colorbar_yanchor,
+                     colorbar_xpos = colorbar_xpos,
+                     colorbar_ypos = colorbar_ypos,
+                     showticklabels = showticklabels,
+                     dynamicTicks = dynamicTicks,
+                     grid_size = grid_size,
+                     node_type = node_type,
+                     point_size_name = point_size_name,
+                     label_format_fun = label_format_fun,
+                     labRow = labRow, labCol = labCol
+                     )
 
-    labRow = labRow, labCol = labCol
-  )
+                     # TODO: think more on what should be passed in "..."
 
-  # TODO: think more on what should be passed in "..."
 
 
   if (!missing(file)) {
@@ -779,8 +816,16 @@ heatmaply.heatmapr <- function(x,
                                colorbar_len = 0.3,
                                showticklabels = c(TRUE, TRUE),
                                dynamicTicks = FALSE,
+                               node_type = c("scatter", "heatmap"),
+                               grid_size = 0.1,
+                               point_size_mat = x[["matrix"]][["point_size_mat"]],
+                               custom_hovertext = x[["matrix"]][["custom_hovertext"]],
+                               point_size_name = "Point size",
+                               label_format_fun = function(...) format(..., digits = 4),
+                               labRow, labCol
+                               ) {
 
-                               labRow, labCol) {
+  node_type <- match.arg(node_type)
   plot_method <- match.arg(plot_method)
   cellnote_textposition <- match.arg(
     cellnote_textposition,
@@ -910,18 +955,22 @@ heatmaply.heatmapr <- function(x,
   data_mat <- x$matrix$data
 
   if (plot_method == "ggplot") {
-    p <- ggplot_heatmap(
-      data_mat,
-      row_text_angle,
-      column_text_angle,
-      scale_fill_gradient_fun,
-      grid_color,
-      key.title = key.title,
-      layers = heatmap_layers,
-      row_dend_left = row_dend_left,
-      label_names = label_names,
-      fontsize_row = fontsize_row, fontsize_col = fontsize_col
-    )
+    p <- ggplot_heatmap(data_mat,
+                      row_text_angle,
+                      column_text_angle,
+                      scale_fill_gradient_fun,
+                      grid_color,
+                      grid_size = grid_size,
+                      key.title = key.title,
+                      layers = heatmap_layers,
+                      row_dend_left = row_dend_left,
+                      label_names = label_names,
+                      type = node_type,
+                      fontsize_row = fontsize_row, fontsize_col = fontsize_col,
+                      point_size_mat = point_size_mat,
+                      custom_hovertext = custom_hovertext,
+                      point_size_name = point_size_name,
+                      label_format_fun = label_format_fun)
   } else if (plot_method == "plotly") {
     p <- plotly_heatmap(
       data_mat, limits = limits, colors = colors,
@@ -930,8 +979,8 @@ heatmaply.heatmapr <- function(x,
       fontsize_row = fontsize_row, fontsize_col = fontsize_col,
       colorbar_yanchor = colorbar_yanchor, colorbar_xanchor = colorbar_xanchor,
       colorbar_xpos = colorbar_xpos, colorbar_ypos = colorbar_ypos,
-      colorbar_len = colorbar_len
-    )
+      custom_hovertext = custom_hovertext,
+      colorbar_len = colorbar_len)
   }
 
 
@@ -1026,9 +1075,8 @@ heatmaply.heatmapr <- function(x,
 
   ## plotly:
   # turn p, px, and py to plotly objects if necessary
-  if (!is.plotly(p)) {
-    p <- ggplotly(p, dynamicTicks = dynamicTicks) %>% layout(showlegend = TRUE)
-  }
+  if (!is.plotly(p)) p <- ggplotly(p, dynamicTicks = dynamicTicks, tooltip="text") %>% 
+    layout(showlegend=TRUE)
 
 
   if (draw_cellnote) {
