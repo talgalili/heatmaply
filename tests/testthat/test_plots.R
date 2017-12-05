@@ -63,6 +63,7 @@ test_that("plotly_side_color_plot works", {
     type = "column"
   )
   expect_is(p, "plotly")
+  expect_error(plotly_build(p), NA)
 })
 
 test_that("predict_colors works", {

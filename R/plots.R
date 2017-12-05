@@ -59,6 +59,7 @@ ggplot_heatmap <- function(xx,
                            point_size_mat = NULL,
                            label_format_fun = function(...) format(..., digits = 4),
                            point_size_name = "Point size",
+                           custom_hovertext = NULL,
                            ...) {
   theme_clear_grid_heatmap <- theme(
     axis.line = element_line(color = "black"),
@@ -128,11 +129,12 @@ ggplot_heatmap <- function(xx,
     col, ": ", mdf[[2]], "<br>",
     val, ": ", label_format_fun(mdf[[3]])
   )
-
+  
   if (type == "heatmap") {
     geom <- "geom_tile"
+    aes_args <- list(fill = paste_aes(val))
     geom_args <- list(
-      mapping = aes_string(fill = paste_aes(val)),
+      # mapping = aes_string(fill = paste_aes(val)),
       color = grid_color,
       size = grid_size
     )
@@ -144,18 +146,29 @@ ggplot_heatmap <- function(xx,
         mdf[["text"]], "<br>",
         point_size_name, ": ", label_format_fun(mdf[[4]])
       )
+      aes_args <- list(color = paste_aes(val), text = "text", size = paste_aes(point_size_name))
 
-      geom_args[["mapping"]] <- aes_string(
-        color = paste_aes(val),
-        text = "text",
-        size = paste_aes(point_size_name)
-      )
+      # geom_args[["mapping"]] <- aes_string(
+      #   color = paste_aes(val),
+      #   text = "text",
+      #   size = paste_aes(point_size_name)
+      # )
     } else {
       geom_args[["size"]] <- grid_size
-      geom_args[["mapping"]] <- aes_string(color = paste_aes(val), text = "text")
+      aes_args <- list(color = paste_aes(val), text = "text")
+      # geom_args[["mapping"]] <- aes_string(color = paste_aes(val), text = "text")
     }
+  } 
+  if (!is.null(custom_hovertext)) {
+    mdf[["text"]] <- paste0(mdf[["text"]], "<br>", custom_hovertext)
+    aes_args[["text"]] <- "text"
   }
+  geom_args[["mapping"]] <- do.call(aes_string, aes_args)
 
+
+  if (!is.null(custom_hovertext)) {
+    geom_args[["text"]] <- "text"
+  }
   # TODO:
   # http://stackoverflow.com/questions/15921799/draw-lines-around-specific-areas-in-geom-tile
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
@@ -182,10 +195,10 @@ ggplot_heatmap <- function(xx,
   } else {
     p <- p + coord_cartesian(expand = FALSE)
   }
+  ## Passed in to allow users to alter (courtesy of GenVisR)
   if (!missing(layers)) {
     p <- p + layers
   }
-  ## Passed in to allow users to alter (courtesy of GenVisR)
 
   # p <- p + scale_x_discrete(limits = unique(mdf))
   # http://stats.stackexchange.com/questions/5007/how-can-i-change-the-title-of-a-legend-in-ggplot2
@@ -213,7 +226,8 @@ plotly_heatmap <- function(x, limits = range(x),
                            row_dend_left = FALSE, fontsize_row = 10, fontsize_col = 10, key_title = "",
                            colorbar_xanchor = "left", colorbar_yanchor = "bottom",
                            label_names = NULL,
-                           colorbar_xpos = 1.1, colorbar_ypos = 1, colorbar_len = 0.3) {
+                           colorbar_xpos = 1.1, colorbar_ypos = 1, colorbar_len = 0.3,
+                           custom_hovertext = NULL) {
   if (is.function(colors)) colors <- colors(256)
 
 
@@ -239,7 +253,9 @@ plotly_heatmap <- function(x, limits = range(x),
     }
   )
   text_mat <- as.matrix(text_mat)
-
+  if (!is.null(custom_hovertext)) {
+    text_mat <- paste(text_mat, custom_hovertext, sep = "<br>")
+  }
 
   p <- plot_ly(
     z = x, x = 1:ncol(x), y = 1:nrow(x), text = text_mat,
@@ -510,6 +526,12 @@ predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale,
   cell_values_vector <- as.character(cell_values_vector)
   ind <- match(cell_values_vector, colorscale_df[, 1])
   cell_colors <- unlist(colorscale_df[ind, 2])
+
+  # apply colors only to non-NA cells
+  # In the future, it might be worth using na.color
+  cell_colors <- as.character(cell_colors)
+  cell_colors[is.na(cell_colors)] <- "#ffffff" # make the default white for NA values
+
   cell_colors_rgb <- colorspace::hex2RGB(cell_colors)
   cell_font_colors <- sapply(
     seq_len(nrow(cell_colors_rgb@coords)),
@@ -764,6 +786,10 @@ hmly_to_file_1file <- function(hmly, file, width = NULL, height = NULL, ...) {
         vheight = height,
         cliprect = "viewport"
       )
+
+      if (file_extension == "pdf") {
+        warning("Due to a bug in the webshot package (which is used by plotly and heatmaply to create the pdf), the pdf is created with a white space around the plot. Until this bug is resolved you can manually trim the pdf using online tools such as: https://www.sejda.com/crop-pdf")
+      }
     }
   }
   invisible(hmly)

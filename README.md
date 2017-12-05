@@ -12,13 +12,10 @@
 * [Introduction](#introduction)
 * [Installation](#installation)
 * [Usage](#usage)
-* [Acknowledgements](#Acknowledgements)
+* [Acknowledgements](#acknowledgements)
+* [How to cite the heatmaply package](#how-to-cite-the-heatmaply-package)
 * [Contact](#contact)
 
-
-## Please submit features requests
-
-This package is still under active development. If you have features you would like to have added, please submit your suggestions (and bug-reports) at: <https://github.com/talgalili/heatmaply/issues>
 
 ## Screenshot demo
 
@@ -33,6 +30,23 @@ A heatmap is a popular graphical method for visualizing high-dimensional data, i
 Interactive heatmaps allow the inspection of specific value by hovering the mouse over a cell, as well as zooming into a region of the heatmap by dragging a rectangle around the relevant area.
 
 This work is based on the ggplot2 and plotly.js engine. It produces similar heatmaps as d3heatmap (or the static heatmap.2 from gplots), with the advantage of more features such as speed (plotly.js is able to handle larger size matrix), sidebar annotation, and the ability to zoom from the dendrogram.
+
+
+### Please submit features requests
+
+This package is still under active development. If you have features you would like to have added, please submit your suggestions (and bug-reports) at: <https://github.com/talgalili/heatmaply/issues>
+
+
+### Latest news
+
+You can see the most recent changes to the package in the [NEWS.md file](https://github.com/talgalili/heatmaply/blob/master/NEWS.md)
+
+
+
+### Code of conduct
+
+Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+
 
 
 ## Installation
@@ -134,6 +148,33 @@ The work on heatmaply was done by Tal Galili, Alan O'Callaghan, and Jonathan Sid
 **Funding**: This work was supported in part by the European Union Seventh Framework Programme (FP7/2007-2013) under grant agreement no. 604102 (Human Brain Project).  
 
 
+
+## How to cite the heatmaply package
+
+The methods within the package can be cited as:
+
+    Tal Galili, Alan O'Callaghan, Jonathan Sidi, Carson Sievert; heatmaply: an R package for creating
+    interactive cluster heatmaps for online publishing, Bioinformatics, , btx657,
+    https://doi.org/10.1093/bioinformatics/btx657
+
+A BibTeX entry for LaTeX users is
+
+    @Article{,
+      author = {{Galili} and {Tal} and {O'Callaghan} and {Alan} and {Sidi} and {Jonathan} and {Sievert} and {Carson}},
+      title = {heatmaply: an R package for creating interactive cluster heatmaps for online publishing},
+      journal = {Bioinformatics},
+      year = {2017},
+      doi = {10.1093/bioinformatics/btx657},
+      url = {http://dx.doi.org/10.1093/bioinformatics/btx657},
+      eprint = {https://academic.oup.com/bioinformatics/article-pdf/doi/10.1093/bioinformatics/btx657/21358327/btx657.pdf},
+    }
+
+This free open-source software implements academic research by the authors and co-workers. If you use
+it, please support the project by citing the appropriate journal articles.
+
+
+
+
 ## Contact
 
 You are welcome to:
@@ -141,17 +182,4 @@ You are welcome to:
 * submit suggestions and bug-reports at: <https://github.com/talgalili/heatmaply/issues>
 * send a pull request on: <https://github.com/talgalili/heatmaply/>
 * compose a friendly e-mail to: <tal.galili@gmail.com>
-
-
-## Latest news
-
-You can see the most recent changes to the package in the [NEWS.md file](https://github.com/talgalili/heatmaply/blob/master/NEWS.md)
-
-
-
-
-
-## Code of conduct
-
-Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
 

@@ -15,7 +15,7 @@
 #' @seealso \link{is.na}, the grid_gap parameter in \link{heatmaply}.
 #' @return
 #' Returns a numeric (instead of a logical) variable/matrix of 1 (missing) or 0 (not missing) values (hence the name is.na10)
-#' while still presering the attributes resulted from running \link{is.na}.
+#' while still preserving the attributes resulted from running \link{is.na}.
 #'
 #' These are useful for funnelling into a heatmap (see the examples).
 #'

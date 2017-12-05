@@ -15,7 +15,7 @@
 #' @param x an object to check
 #'
 #' @return
-#' TRUE if the object ingerits "plotly" as a class.
+#' TRUE if the object inherits "plotly" as a class.
 #'
 is.plotly <- function(x) {
   inherits(x, "plotly")
@@ -30,8 +30,8 @@ is.plotly <- function(x) {
 #'
 #' @description
 #' An object of class heatmapr includes all the needed information
-#' for producing a heatmap. The goal is to seperate the pre-processing of the
-#' heatmap elements from the graphical rendaring of the object, which could be done
+#' for producing a heatmap. The goal is to separate the pre-processing of the
+#' heatmap elements from the graphical rendering of the object, which could be done
 #'
 #' (Please submit an issue on github if you have a feature that you wish to have added)
 #'
@@ -82,6 +82,9 @@ is.plotly <- function(x) {
 #' identically to the rows.
 #' @param distfun function used to compute the distance (dissimilarity)
 #' between both rows and columns. Defaults to dist.
+#' The options "pearson", "spearman" and "kendall" can be used to
+#' use correlation-based clustering, which uses \code{as.dist(1 - cor(t(x)))}
+#' as the distance metric (using the specified correlation method).
 #' @param hclustfun function used to compute the hierarchical clustering
 #' when Rowv or Colv are not dendrograms. Defaults to hclust.
 #'
@@ -124,7 +127,12 @@ is.plotly <- function(x) {
 #' @param scale character indicating if the values should be centered and scaled
 #' in either the row direction or the column direction, or none. The default is
 #' "none".
-#' @param na.rm logical indicating whether NA's should be removed.
+#' @param na.rm logical (default is TRUE) indicating whether NA's should be removed when scaling
+#' (i.e.: when using rowMeans/colMeans). Generally it should always be kept as TRUE, and is included
+#' here mainly to stay backward compatible with gplots::heatmap.2.
+#' This argument does not effect the presence of NA values in the matrix itself.
+#' For removing rows/columns with NAs you should pre-process your matrix using na.omit
+#' (or some form of imputation).
 #'
 #' @param row_dend_left logical (default is FALSE). Should the row dendrogram be
 #' plotted on the left side of the heatmap. If false then it will be plotted on
@@ -181,6 +189,8 @@ is.plotly <- function(x) {
 #'    row/column side colors in the style of heatmap.2/heatmap.3.
 #'    col_side_colors should be "wide", ie be the same dimensions
 #'    as the column side colors it will produce.
+#'    When a data.frame is provided, the column names are used as the label names for each of the newly added row_side_colors.
+#'    When a vector is provided it is coerced into a data.frame and the name of the side color will be just row_side_colors.
 #'
 #' @param row_side_palette,col_side_palette Color palette functions to be
 #'    used for row_side_colors and col_side_colors respectively.
@@ -192,12 +202,12 @@ is.plotly <- function(x) {
 #' and dendrogram plots
 #' @param seriate character indicating the method of matrix sorting (default: "OLO").
 #' Implemented options include:
-#' "OLO" (Optimal leaf ordering, optimzes the Hamiltonian path length that is
+#' "OLO" (Optimal leaf ordering, optimizes the Hamiltonian path length that is
 #' restricted by the dendrogram structure - works in O(n^4) )
 #' "mean" (sorts the matrix based on the reorderfun using marginal means of
 #' the matrix. This is the default used by \link[gplots]{heatmap.2}),
 #' "none" (the default order produced by the dendrogram),
-#' "GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length
+#' "GW" (Gruvaeus and Wainer heuristic to optimize the Hamiltonian path length
 #' that is restricted by the dendrogram structure)
 #'
 #' @param heatmap_layers ggplot object (eg, theme_bw()) to be added to
@@ -226,7 +236,7 @@ is.plotly <- function(x) {
 #' @param long_data Data in long format. Replaces x, so both should not be used.
 #'  Colnames must be c("name", "variable", "value"). If you do not have a names
 #'  column you can simply use a sequence of numbers from 1 to the number of "rows"
-#'  inthe data.
+#'  in the data.
 #'
 #' @param label_names Names for labels of x, y and value/fill mouseover.
 #' @param fontsize_row,fontsize_col,cexRow,cexCol Font size for row and column labels.
@@ -244,7 +254,7 @@ is.plotly <- function(x) {
 #' @param colorbar_xpos,colorbar_ypos The x and y co-ordinates (in proportion of the plot window)
 #' of the colorbar/color legend. See \code{\link[plotly]{colorbar}} for more details.
 #'
-#' @param showticklabels A logical vector of length two (defalt is TRUE).
+#' @param showticklabels A logical vector of length two (default is TRUE).
 #' If FALSE, then the ticks are removed from the sides of the plot. The first location refers to
 #' the x axis and the second to the y axis. If only one value is supplied (TRUE/FALSE) then it is
 #' replicated to get to length 2. When using this parameter, it might be worth also adjusting
@@ -252,7 +262,7 @@ is.plotly <- function(x) {
 #' This option should be used when working with medium to large matrix size as it
 #' makes the heatmap much faster (and the hover still works).
 #'
-#' @param dynamicTicks (defalut: FALSE). passed to \link[plotly]{ggplotly}:
+#' @param dynamicTicks (default: FALSE). passed to \link[plotly]{ggplotly}:
 #' should plotly.js dynamically generate axis tick labels?
 #' Dynamic ticks are useful for updating ticks in response to zoom/pan interactions; however,
 #' they can not always reproduce labels as they would appear in the static ggplot2 image.
@@ -418,7 +428,7 @@ heatmaply <- function(x, ...) {
 #' @description
 #' heatmaply_na is a wrapper for `heatmaply` which comes with defaults that are better
 #' for exploring missing value (NA) patterns. Specifically, the grid_gap is set to 1, and the
-#' colors include two shades of grey. It also calculates the \link{is.na10} autmoatically.
+#' colors include two shades of grey. It also calculates the \link{is.na10} automatically.
 #' @rdname heatmaply
 #' @examples
 #' \dontrun{
@@ -551,9 +561,12 @@ heatmaply.default <- function(x,
                               point_size_name = "Point size",
                               label_format_fun = function(...) format(..., digits = 4),
                               labRow, labCol,
+                              custom_hovertext = NULL,
                               col = NULL) {
   if (!missing(long_data)) {
-    if (!missing(x)) warning("x and long_data should not be used together")
+    if (!missing(x)) {
+      warning("x and long_data should not be used together")
+    }
     assert_that(
       ncol(long_data) == 3,
       all(colnames(long_data) == c("name", "variable", "value"))
@@ -599,10 +612,6 @@ heatmaply.default <- function(x,
     # if(F) "both" else "none"
   }
   dendrogram <- match.arg(dendrogram)
-
-
-
-
 
   if (!(is.data.frame(x) | is.matrix(x))) stop("x must be either a data.frame or a matrix.")
 
@@ -686,6 +695,7 @@ heatmaply.default <- function(x,
     ## data scaling
     scale = scale,
     na.rm = na.rm,
+    custom_hovertext = custom_hovertext,
 
     ...
   )
@@ -807,6 +817,7 @@ heatmaply.heatmapr <- function(x,
                                point_size_mat = x[["matrix"]][["point_size_mat"]],
                                point_size_name = "Point size",
                                label_format_fun = function(...) format(..., digits = 4),
+                               custom_hovertext = x[["matrix"]][["custom_hovertext"]],
                                labRow, labCol) {
   node_type <- match.arg(node_type)
   plot_method <- match.arg(plot_method)
@@ -818,6 +829,17 @@ heatmaply.heatmapr <- function(x,
       "bottom right"
     )
   )
+
+  is.Rgui <- function(...) {
+    .Platform$GUI == "Rgui" # if running on MAC OS, this would likely be "AQUA"
+  }
+
+  if (is.Rgui()) {
+    # browser()
+    # print(p) # solves R crashes - not sure why...
+    dev.new() # it seems we need just some device to be open...
+  }
+
 
   # informative errors for mis-specified limits
   if (!is.null(limits)) {
@@ -940,7 +962,8 @@ heatmaply.heatmapr <- function(x,
       fontsize_row = fontsize_row, fontsize_col = fontsize_col,
       point_size_mat = point_size_mat,
       point_size_name = point_size_name,
-      label_format_fun = label_format_fun
+      label_format_fun = label_format_fun,
+      custom_hovertext = custom_hovertext
     )
   } else if (plot_method == "plotly") {
     p <- plotly_heatmap(
@@ -950,7 +973,8 @@ heatmaply.heatmapr <- function(x,
       fontsize_row = fontsize_row, fontsize_col = fontsize_col,
       colorbar_yanchor = colorbar_yanchor, colorbar_xanchor = colorbar_xanchor,
       colorbar_xpos = colorbar_xpos, colorbar_ypos = colorbar_ypos,
-      colorbar_len = colorbar_len
+      colorbar_len = colorbar_len,
+      custom_hovertext = custom_hovertext
     )
   }
 
@@ -1069,7 +1093,7 @@ heatmaply.heatmapr <- function(x,
     p <- p %>% add_trace(
       y = mdf$row, x = mdf$variable, text = mdf$value,
       type = "scatter", mode = "text", textposition = cellnote_textposition,
-      hoverinfo = "none",
+      hoverinfo = "none", showlegend = FALSE,
       textfont = list(color = plotly::toRGB(cellnote_color), size = cellnote_size)
     )
   }

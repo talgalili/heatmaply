@@ -11,8 +11,8 @@
 #' Creates a heatmapr object
 #'
 #' An object of class heatmapr includes all the needed information
-#' for producing a heatmap. The goal is to seperate the pre-processing of the
-#' heatmap elements from the graphical rendaring of the object, which could be done
+#' for producing a heatmap. The goal is to separate the pre-processing of the
+#' heatmap elements from the graphical rendering of the object, which could be done
 #' using plotly (but potentially also with other graphical devices).
 #'
 #' @param x A numeric matrix
@@ -93,7 +93,7 @@
 #'
 #' @param seriate character indicating the method of matrix sorting (default: "OLO").
 #' Implemented options include:
-#' "OLO" (Optimal leaf ordering, optimzes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
+#' "OLO" (Optimal leaf ordering, optimizes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
 #' "mean" (sorts the matrix based on the reorderfun using marginal means of the matrix. This is the default used by \link[gplots]{heatmap.2}),
 #' "none" (the default order produced by the dendrogram),
 #' "GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length that is restricted by the dendrogram structure)
@@ -168,10 +168,12 @@ heatmapr <- function(x,
                      col_side_colors,
                      seriate = c("OLO", "mean", "none", "GW"),
                      point_size_mat = NULL,
+                     custom_hovertext = NULL,
                      ...) {
 
   ## update hclust/dist functions?
   ## ====================
+  distfun <- match.fun(distfun)
   if (!is.null(dist_method)) {
     distfun_old <- distfun
     distfun <- function(x) {
@@ -191,7 +193,8 @@ heatmapr <- function(x,
   if (missing(distfun_col)) distfun_col <- distfun
   if (missing(hclustfun_col)) hclustfun_col <- hclustfun
 
-
+  distfun_row <- match.fun(distfun_row)
+  distfun_col <- match.fun(distfun_col)
 
   ## x is a matrix!
   ## ====================
@@ -379,7 +382,9 @@ heatmapr <- function(x,
   if (!is.null(point_size_mat)) {
     point_size_mat <- point_size_mat[rowInd, colInd, drop = FALSE]
   }
-
+  if (!is.null(custom_hovertext)) {
+    custom_hovertext <- custom_hovertext[rowInd, colInd, drop = FALSE]
+  }
   if (!missing(row_side_colors)) {
     if (!(is.data.frame(row_side_colors) | is.matrix(row_side_colors))) {
       row_side_colors <- data.frame("row_side_colors" = row_side_colors)
@@ -455,7 +460,8 @@ heatmapr <- function(x,
     dim = dim(x),
     rows = rownames(x),
     cols = colnames(x),
-    point_size_mat = point_size_mat
+    point_size_mat = point_size_mat,
+    custom_hovertext = custom_hovertext
   )
 
 

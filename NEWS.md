@@ -1,3 +1,41 @@
+<<<<<<< HEAD
+=======
+heatmaply 0.13.1 (2017-11-23)
+================
+
+### NOTES
+
+* USing stylr to improve the readability of the R code.
+
+
+
+heatmaply 0.13.0 (2017-11-11)
+================
+
+### NEW FEATURES
+* heatmaply
+  - Add File size arguments (#114) - width / height
+  - Allows use of Pearson, Spearman or Kendall correlation
+    coefficient as a distance measure, by specifying
+    `distfun="pearson"`, `distfun="spearman"` or `distfun="kendall"`.
+    This corresponds to the use of `distfun=function(x) as.dist(1 - cor(x)))`.
+
+
+
+### BUG FIXES
+* heatmaply
+  - Scale before clustering #112 (fixes: Allow the dendrogram to use scaled data #111 )
+  - stops heatmaply from crashing when using RGui (#121)
+  - draw_cellnote = TRUE fails for matrix with NA (#123)
+
+
+
+
+
+
+
+
+>>>>>>> ba5298c685797e7048d61bfbfad6b2f4250e511e
 
 heatmaply 0.12.1 (2017-10-25)
 ================
