@@ -1,130 +1,160 @@
 for (plot_method in c("ggplot", "plotly")) {
   for (bool in c(TRUE, FALSE)) {
-
     context(paste0(plot_method, ", row_dend_left=", bool))
 
     test_that("heatmaply mtcars (both dend)", {
-      h <- heatmaply(mtcars, row_dend_left = bool,
-        plot_method = plot_method)
+      h <- heatmaply(
+        mtcars, row_dend_left = bool,
+        plot_method = plot_method
+      )
       expect_is(h, "plotly")
-
     })
 
     test_that("heatmaply mtcars (no dend)", {
-      h <- heatmaply(mtcars, dendrogram = "none", row_dend_left = bool,
-        plot_method = plot_method)
+      h <- heatmaply(
+        mtcars, dendrogram = "none", row_dend_left = bool,
+        plot_method = plot_method
+      )
       expect_is(h, "plotly")
     })
 
     test_that("heatmaply mtcars (coldend only)", {
-      h <- heatmaply(mtcars, dendrogram = "col", row_dend_left = bool,
-        plot_method = plot_method)
+      h <- heatmaply(
+        mtcars, dendrogram = "col", row_dend_left = bool,
+        plot_method = plot_method
+      )
       expect_is(h, "plotly")
     })
 
     test_that("heatmaply mtcars (rowdend only)", {
-      h <- heatmaply(mtcars, dendrogram = "row", row_dend_left = bool,
-        plot_method = plot_method)
+      h <- heatmaply(
+        mtcars, dendrogram = "row", row_dend_left = bool,
+        plot_method = plot_method
+      )
       expect_is(h, "plotly")
     })
 
 
     test_that("heatmaply mtcars (rscols, both dend)", {
-      h <- heatmaply(mtcars,
+      h <- heatmaply(
+        mtcars,
         row_side_colors = mtcars[, 1:2], row_dend_left = bool,
-        plot_method = plot_method)
+        plot_method = plot_method
+      )
       expect_is(h, "plotly")
     })
 
 
     test_that("heatmaply mtcars (rscols, row dend)", {
-      h <- heatmaply(mtcars, dendrogram = "none",
+      h <- heatmaply(
+        mtcars, dendrogram = "none",
         row_side_colors = mtcars[, 1:2],
         row_dend_left = bool,
-        plot_method = plot_method)
+        plot_method = plot_method
+      )
       expect_is(h, "plotly")
     })
 
     test_that("heatmaply mtcars (rscols, row dend)", {
-      h <- heatmaply(mtcars, dendrogram = "col",
+      h <- heatmaply(
+        mtcars, dendrogram = "col",
         row_side_colors = mtcars[, 1:2],
         row_dend_left = bool,
-        plot_method = plot_method)
+        plot_method = plot_method
+      )
       expect_is(h, "plotly")
     })
 
     test_that("heatmaply mtcars (rscols, no dends)", {
-      h <- heatmaply(mtcars, dendrogram = "none",
+      h <- heatmaply(
+        mtcars, dendrogram = "none",
         row_side_colors = mtcars[, 1:2], row_dend_left = bool,
-        plot_method = plot_method)
+        plot_method = plot_method
+      )
       expect_is(h, "plotly")
     })
 
     test_that("heatmaply mtcars (cscols, both dend)", {
-      expect_warning(h <- heatmaply(mtcars,
+      expect_warning(h <- heatmaply(
+        mtcars,
         col_side_colors = data.frame(t(mtcars[1:2, ])),
         row_dend_left = bool,
-        plot_method = plot_method))
+        plot_method = plot_method
+      ))
       expect_is(h, "plotly")
     })
 
     test_that("heatmaply mtcars (cscols, col dend)", {
-      expect_warning(h <- heatmaply(mtcars, dendrogram = "col",
+      expect_warning(h <- heatmaply(
+        mtcars, dendrogram = "col",
         col_side_colors = data.frame(t(mtcars[1:2, ])),
         row_dend_left = bool,
-        plot_method = plot_method))
+        plot_method = plot_method
+      ))
       expect_is(h, "plotly")
     })
 
     test_that("heatmaply mtcars (cscols, row dend)", {
-      expect_warning(h <- heatmaply(mtcars, dendrogram = "row",
+      expect_warning(h <- heatmaply(
+        mtcars, dendrogram = "row",
         col_side_colors = data.frame(t(mtcars[1:2, ])),
         row_dend_left = bool,
-        plot_method = plot_method))
+        plot_method = plot_method
+      ))
       expect_is(h, "plotly")
     })
 
     test_that("heatmaply mtcars (cscols, no dend)", {
-      expect_warning(h <- heatmaply(mtcars, dendrogram = "none",
+      expect_warning(h <- heatmaply(
+        mtcars, dendrogram = "none",
         col_side_colors = data.frame(t(mtcars[1:2, ])),
         row_dend_left = bool,
-        plot_method = plot_method))
+        plot_method = plot_method
+      ))
       expect_is(h, "plotly")
     })
 
     test_that("heatmaply mtcars (rcscols, both dend)", {
-      expect_warning(h <- heatmaply(mtcars,
+      expect_warning(h <- heatmaply(
+        mtcars,
         row_side_colors = mtcars[, 1:2],
         col_side_colors = data.frame(t(mtcars[1:2, ])),
         row_dend_left = bool,
-        plot_method = plot_method))
+        plot_method = plot_method
+      ))
       expect_is(h, "plotly")
     })
 
     test_that("heatmaply mtcars (rcscols, col dend)", {
-      expect_warning(h <- heatmaply(mtcars, dendrogram = "col",
+      expect_warning(h <- heatmaply(
+        mtcars, dendrogram = "col",
         row_side_colors = mtcars[, 1:2],
         col_side_colors = data.frame(t(mtcars[1:2, ])),
         row_dend_left = bool,
-        plot_method = plot_method))
+        plot_method = plot_method
+      ))
       expect_is(h, "plotly")
     })
 
     test_that("heatmaply mtcars (rcscols, row dend)", {
-      expect_warning(h <- heatmaply(mtcars, dendrogram = "row",
+      expect_warning(h <- heatmaply(
+        mtcars, dendrogram = "row",
         row_side_colors = mtcars[, 1:2],
         col_side_colors = data.frame(t(mtcars[1:2, ])),
         row_dend_left = bool,
-        plot_method = plot_method))
+        plot_method = plot_method
+      ))
       expect_is(h, "plotly")
     })
 
     test_that("heatmaply mtcars (rcscols, no dend)", {
-      expect_warning(h <- heatmaply(mtcars, dendrogram = "none",
+      expect_warning(h <- heatmaply(
+        mtcars, dendrogram = "none",
         row_side_colors = mtcars[, 1:2],
         col_side_colors = data.frame(t(mtcars[1:2, ])),
         row_dend_left = bool,
-        plot_method = plot_method))
+        plot_method = plot_method
+      ))
       expect_is(h, "plotly")
     })
   }
@@ -157,7 +187,7 @@ test_that("heatmaply on matrix, and cexRow/Col", {
 
 
 test_that("grid_color and hide_colorbar", {
-  h <- heatmaply(mtcars[1:5,1:5], grid_color = "black", hide_colorbar = TRUE)
+  h <- heatmaply(mtcars[1:5, 1:5], grid_color = "black", hide_colorbar = TRUE)
   expect_is(h, "plotly")
 })
 
@@ -191,23 +221,25 @@ test_that("cellnote", {
 })
 
 test_that("showticklabels", {
-  h <- heatmaply(mtcars, showticklabels=TRUE)
+  h <- heatmaply(mtcars, showticklabels = TRUE)
   expect_is(h, "plotly")
-  h <- heatmaply(mtcars, showticklabels=c(FALSE, FALSE))
+  h <- heatmaply(mtcars, showticklabels = c(FALSE, FALSE))
   expect_is(h, "plotly")
-  expect_warning(expect_error(heatmaply(mtcars, showticklabels="a")))
+  expect_warning(expect_error(heatmaply(mtcars, showticklabels = "a")))
 })
 
 test_that("file argument works", {
   lapply(c("png", "jpeg", "pdf", "html"), function(type) {
     file <- paste0("tmp.", type)
-    heatmaply(mtcars, file=file)
+    heatmaply(mtcars, file = file)
     expect_true(file.exists(file))
   })
 })
 test_that("node argument works", {
   c <- Hmisc::rcorr(as.matrix(mtcars))
-  h <- heatmaply(c$r, node_type="scatter", 
-    point_size_name="p", 
-    point_size_mat=-log10(c$P))
+  h <- heatmaply(
+    c$r, node_type = "scatter",
+    point_size_name = "p",
+    point_size_mat = -log10(c$P)
+  )
 })

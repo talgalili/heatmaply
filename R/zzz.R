@@ -88,31 +88,32 @@ NULL
 # # menus are added and removed as needed: !!
 #
 
-.onAttach <- function(lib, pkg,...){
-   packageStartupMessage(heatmaplyWelcomeMessage())
+.onAttach <- function(lib, pkg, ...) {
+  packageStartupMessage(heatmaplyWelcomeMessage())
 }
 
 #
 #
 
-heatmaplyWelcomeMessage <- function(){
-   # library(utils)
+heatmaplyWelcomeMessage <- function() {
+  # library(utils)
 
-   paste0("\n",
-         "---------------------\n",
-         "Welcome to heatmaply version ", utils::packageDescription("heatmaply")$Version, "\n",
-         # "\n",
-         "Type citation('heatmaply') for how to cite the package.\n",
-         "\n",
-         "Type ?heatmaply for the main documentation.\n",
-         "The github page is: https://github.com/talgalili/heatmaply/\n",
-         "\n",
-         "Suggestions and bug-reports can be submitted at: https://github.com/talgalili/heatmaply/issues\n",
-         "Or contact: <tal.galili@gmail.com>\n",
-         "\n",
-         "\tTo suppress this message use:  ", "suppressPackageStartupMessages(library(heatmaply))\n",
-         "---------------------\n"
-   )
+  paste0(
+    "\n",
+    "---------------------\n",
+    "Welcome to heatmaply version ", utils::packageDescription("heatmaply")$Version, "\n",
+    # "\n",
+    "Type citation('heatmaply') for how to cite the package.\n",
+    "\n",
+    "Type ?heatmaply for the main documentation.\n",
+    "The github page is: https://github.com/talgalili/heatmaply/\n",
+    "\n",
+    "Suggestions and bug-reports can be submitted at: https://github.com/talgalili/heatmaply/issues\n",
+    "Or contact: <tal.galili@gmail.com>\n",
+    "\n",
+    "\tTo suppress this message use:  ", "suppressPackageStartupMessages(library(heatmaply))\n",
+    "---------------------\n"
+  )
 }
 
 
@@ -292,5 +293,3 @@ heatmaplyWelcomeMessage <- function(){
 # devtools::build_win(version="R-release")
 # devtools::build_win(version="R-devel")
 # release()
-
-
