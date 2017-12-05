@@ -96,8 +96,8 @@
 #' "OLO" (Optimal leaf ordering, optimizes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
 #' "mean" (sorts the matrix based on the reorderfun using marginal means of the matrix. This is the default used by \link[gplots]{heatmap.2}),
 #' "none" (the default order produced by the dendrogram),
-#' "GW" (Gruvaeus and Wainer heuristic to optimize the Hamiltonian path length that is restricted by the dendrogram structure)
-#'
+#' "GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length that is restricted by the dendrogram structure)
+#' @param point_size_mat A matrix of values which can be mapped to point size
 #' @param ... currently ignored
 #'
 #' @export
@@ -167,8 +167,9 @@ heatmapr <- function(x,
                      row_side_colors,
                      col_side_colors,
                      seriate = c("OLO", "mean", "none", "GW"),
+                     point_size_mat = NULL,
+                     custom_hovertext = NULL,
                      ...) {
-
 
   ## update hclust/dist functions?
   ## ====================
@@ -378,7 +379,12 @@ heatmapr <- function(x,
   }
   x <- x[rowInd, colInd, drop = FALSE]
   cellnote <- cellnote[rowInd, colInd, drop = FALSE]
-
+  if (!is.null(point_size_mat)) {
+    point_size_mat <- point_size_mat[rowInd, colInd, drop = FALSE]
+  }
+  if (!is.null(custom_hovertext)) {
+    custom_hovertext <- custom_hovertext[rowInd, colInd, drop = FALSE]
+  }
   if (!missing(row_side_colors)) {
     if (!(is.data.frame(row_side_colors) | is.matrix(row_side_colors))) {
       row_side_colors <- data.frame("row_side_colors" = row_side_colors)
@@ -453,7 +459,9 @@ heatmapr <- function(x,
     cellnote = cellnote,
     dim = dim(x),
     rows = rownames(x),
-    cols = colnames(x)
+    cols = colnames(x),
+    point_size_mat = point_size_mat,
+    custom_hovertext = custom_hovertext
   )
 
 

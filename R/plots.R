@@ -54,6 +54,12 @@ ggplot_heatmap <- function(xx,
                            label_names = NULL,
                            fontsize_row = 10,
                            fontsize_col = 10,
+                           type = c("heatmap", "scatter"),
+                           pointsize = 5,
+                           point_size_mat = NULL,
+                           label_format_fun = function(...) format(..., digits = 4),
+                           point_size_name = "Point size",
+                           custom_hovertext = NULL,
                            ...) {
   theme_clear_grid_heatmap <- theme(
     axis.line = element_line(color = "black"),
@@ -62,6 +68,8 @@ ggplot_heatmap <- function(xx,
     panel.border = element_blank(),
     panel.background = element_blank()
   )
+
+  type <- match.arg(type)
   # heatmap
   # xx <- x$matrix$data
 
@@ -77,37 +85,99 @@ ggplot_heatmap <- function(xx,
   } else {
     assert_that(length(label_names) == 3)
   }
+  melt_df <- function(x, label_names) {
+    # heatmap
+    # xx <- x$matrix$data
+    if (!is.data.frame(x)) df <- as.data.frame(x)
+
+    row <- label_names[[1]]
+    col <- label_names[[2]]
+    val <- label_names[[3]]
+
+    # colnames(df) <- x$matrix$cols
+    if (!is.null(rownames(x))) {
+      df[[row]] <- rownames(x)
+    } else {
+      df[[row]] <- 1:nrow(x)
+    }
+
+    df[[row]] <- factor(
+      df[[row]],
+      levels = df[[row]],
+      ordered = TRUE
+    )
+
+    mdf <- reshape2::melt(df, id.vars = row)
+    colnames(mdf)[2:3] <- c(col, val) # rename "variable" and "value"
+    mdf
+  }
+
+
+  mdf <- melt_df(xx, label_names)
+  if (!is.null(point_size_mat)) {
+    ps_label_names <- label_names
+    ps_label_names[[3]] <- point_size_name
+    point_size_mat <- melt_df(point_size_mat, ps_label_names)
+    mdf <- cbind(mdf, point_size_mat[point_size_name])
+  }
   row <- label_names[[1]]
   col <- label_names[[2]]
   val <- label_names[[3]]
 
-  # colnames(df) <- x$matrix$cols
-  if (!is.null(rownames(df))) {
-    df[[row]] <- make.unique(rownames(df), "_")
-  } else {
-    df[[row]] <- 1:nrow(df)
-  }
-
-  df[[row]] <- factor(
-    df[[row]],
-    levels = df[[row]],
-    ordered = TRUE
+  mdf[["text"]] <- paste0(
+    row, ": ", mdf[[1]], "<br>",
+    col, ": ", mdf[[2]], "<br>",
+    val, ": ", label_format_fun(mdf[[3]])
   )
+  
+  if (type == "heatmap") {
+    geom <- "geom_tile"
+    aes_args <- list(fill = paste_aes(val))
+    geom_args <- list(
+      # mapping = aes_string(fill = paste_aes(val)),
+      color = grid_color,
+      size = grid_size
+    )
+  } else if (type == "scatter") {
+    geom <- "geom_point"
+    geom_args <- list()
+    if (!is.null(point_size_mat)) {
+      mdf[["text"]] <- paste(
+        mdf[["text"]], "<br>",
+        point_size_name, ": ", label_format_fun(mdf[[4]])
+      )
+      aes_args <- list(color = paste_aes(val), text = "text", size = paste_aes(point_size_name))
+
+      # geom_args[["mapping"]] <- aes_string(
+      #   color = paste_aes(val),
+      #   text = "text",
+      #   size = paste_aes(point_size_name)
+      # )
+    } else {
+      geom_args[["size"]] <- grid_size
+      aes_args <- list(color = paste_aes(val), text = "text")
+      # geom_args[["mapping"]] <- aes_string(color = paste_aes(val), text = "text")
+    }
+  } 
+  if (!is.null(custom_hovertext)) {
+    mdf[["text"]] <- paste0(mdf[["text"]], "<br>", custom_hovertext)
+    aes_args[["text"]] <- "text"
+  }
+  geom_args[["mapping"]] <- do.call(aes_string, aes_args)
 
 
-  mdf <- reshape2::melt(df, id.vars = row)
-  colnames(mdf)[2:3] <- c(col, val) # rename "variable" and "value"
-
+  if (!is.null(custom_hovertext)) {
+    geom_args[["text"]] <- "text"
+  }
   # TODO:
   # http://stackoverflow.com/questions/15921799/draw-lines-around-specific-areas-in-geom-tile
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
   p <- ggplot(mdf, aes_string(x = col, y = row)) +
-    geom_tile(aes_string(fill = val), color = grid_color, size = grid_size) +
-    # scale_linetype_identity() +
-    # scale_fill_viridis() +
-    coord_cartesian(expand = FALSE) +
+    ## Using the text aes produces a warning... Not ideal!
+    suppressWarnings(do.call(geom, geom_args)) +
     scale_fill_gradient_fun +
-    theme_bw() + theme_clear_grid_heatmap +
+    theme_bw() +
+    theme_clear_grid_heatmap +
     theme(
       axis.text.x = element_text(
         angle = column_text_angle,
@@ -119,8 +189,16 @@ ggplot_heatmap <- function(xx,
       )
     )
 
-  if (!missing(layers)) p <- p + layers
+  if (type == "scatter") {
+    p <- p +
+      coord_cartesian(xlim = c(1, ncol(xx)), ylim = c(1, nrow(xx)))
+  } else {
+    p <- p + coord_cartesian(expand = FALSE)
+  }
   ## Passed in to allow users to alter (courtesy of GenVisR)
+  if (!missing(layers)) {
+    p <- p + layers
+  }
 
   # p <- p + scale_x_discrete(limits = unique(mdf))
   # http://stats.stackexchange.com/questions/5007/how-can-i-change-the-title-of-a-legend-in-ggplot2
@@ -138,6 +216,9 @@ ggplot_heatmap <- function(xx,
   p
 }
 
+paste_aes <- function(x) {
+  paste0("`", x, "`")
+}
 
 plotly_heatmap <- function(x, limits = range(x),
                            colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option = "viridis"),
@@ -145,7 +226,8 @@ plotly_heatmap <- function(x, limits = range(x),
                            row_dend_left = FALSE, fontsize_row = 10, fontsize_col = 10, key_title = "",
                            colorbar_xanchor = "left", colorbar_yanchor = "bottom",
                            label_names = NULL,
-                           colorbar_xpos = 1.1, colorbar_ypos = 1, colorbar_len = 0.3) {
+                           colorbar_xpos = 1.1, colorbar_ypos = 1, colorbar_len = 0.3,
+                           custom_hovertext = NULL) {
   if (is.function(colors)) colors <- colors(256)
 
 
@@ -171,7 +253,9 @@ plotly_heatmap <- function(x, limits = range(x),
     }
   )
   text_mat <- as.matrix(text_mat)
-
+  if (!is.null(custom_hovertext)) {
+    text_mat <- paste(text_mat, custom_hovertext, sep = "<br>")
+  }
 
   p <- plot_ly(
     z = x, x = 1:ncol(x), y = 1:nrow(x), text = text_mat,
@@ -342,14 +426,14 @@ ggplot_side_color_plot <- function(df, palette = NULL,
   # } else text_element <- element_blank()
 
   if (type == "column") {
-    mapping <- aes_string(x = id_var, y = "variable", fill = "value")
+    mapping <- aes_string(x = paste_aes(id_var), y = "variable", fill = "value")
 
     specific_theme <- theme(
       axis.text.x = element_blank(),
       axis.text.y = text_element
     )
   } else {
-    mapping <- aes_string(x = "variable", y = id_var, fill = "value")
+    mapping <- aes_string(x = "variable", y = paste_aes(id_var), fill = "value")
     specific_theme <- theme(
       axis.text.x = text_element,
       axis.text.y = element_blank()
@@ -445,6 +529,7 @@ predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale,
 
   # apply colors only to non-NA cells
   # In the future, it might be worth using na.color
+  cell_colors <- as.character(cell_colors)
   cell_colors[is.na(cell_colors)] <- "#ffffff" # make the default white for NA values
 
   cell_colors_rgb <- colorspace::hex2RGB(cell_colors)
@@ -656,7 +741,6 @@ plotly_side_color_plot <- function(df, palette = NULL,
 
 
 
-
 #' @import webshot
 NULL
 # just so to have an excuse for why webshot is in import (the real reason is that plotly has it as suggests while it is used there by plotly::export)
@@ -729,5 +813,3 @@ size_default <- function(file_extension, direction=c("width", "height")) {
 bitmap_types <- c("png", "jpeg")
 
 hmly_to_file <- Vectorize(hmly_to_file_1file, vectorize.args = "file")
-
-# hmly_to_file(p, c("hm.png", "hm.html"))
