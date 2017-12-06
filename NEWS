@@ -9,8 +9,6 @@ heatmaply 0.14.0 (2017-12-02)
   - Add `point_size_mat` argument, which is mapped to point size when
     `node_type="scatter"`. Also adds `point_size_name` argument, which is the 
     name of this parameter in the heatmap hovertext.
-  - Add `cellnote_size` argument, controlling the font size of the cellnote.
-
 
 
 
@@ -54,10 +52,10 @@ heatmaply 0.12.1 (2017-10-25)
 * heatmaply
   - removing tick labels with `showticklabels` now removes the ticks as
     well as the tick labels.
-
-
-=======
   - Prevent grid_gap warning (#105)
+  - Add `cellnote_size` argument, controlling the font size of the cellnote.
+
+
 * ggplot_heatmap
   - now handles data.frame input
 

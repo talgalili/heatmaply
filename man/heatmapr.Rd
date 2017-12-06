@@ -17,7 +17,8 @@ heatmapr(x, Rowv, Colv, distfun = dist, hclustfun = hclust,
   height = NULL, xaxis_height = 80, yaxis_width = 120,
   xaxis_font_size = NULL, yaxis_font_size = NULL, brush_color = "#0000FF",
   show_grid = TRUE, anim_duration = 500, row_side_colors, col_side_colors,
-  seriate = c("OLO", "mean", "none", "GW"), point_size_mat = NULL, ...)
+  seriate = c("OLO", "mean", "none", "GW"), point_size_mat = NULL,
+  custom_hovertext = NULL, ...)
 }
 \arguments{
 \item{x}{A numeric matrix

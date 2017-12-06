@@ -96,7 +96,7 @@
 #' "OLO" (Optimal leaf ordering, optimizes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
 #' "mean" (sorts the matrix based on the reorderfun using marginal means of the matrix. This is the default used by \link[gplots]{heatmap.2}),
 #' "none" (the default order produced by the dendrogram),
-#' "GW" (Gruvaeus and Wainer heuristic to optimze the Hamiltonian path length that is restricted by the dendrogram structure)
+#' "GW" (Gruvaeus and Wainer heuristic to optimize the Hamiltonian path length that is restricted by the dendrogram structure)
 #' @param point_size_mat A matrix of values which can be mapped to point size
 #' @param ... currently ignored
 #'
