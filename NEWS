@@ -1,3 +1,17 @@
+heatmaply 0.14.0 (2017-12-02)
+================
+### NEW FEATURES
+* heatmaply
+  - Add `custom_hovertext` argument, adding custom hovertext option
+  - Add `label_format_fun` argument, which formats text before adding to hovertext
+  - Add `node_type argument, which allows users to plot the heatmap with 
+    discs rather than squares. See also the `point_size_mat` argument.
+  - Add `point_size_mat` argument, which is mapped to point size when
+    `node_type="scatter"`. Also adds `point_size_name` argument, which is the 
+    name of this parameter in the heatmap hovertext.
+
+
+
 heatmaply 0.13.1 (2017-11-27)
 ================
 
@@ -32,22 +46,16 @@ heatmaply 0.13.0 (2017-11-11)
 
 
 
-
-
-
 heatmaply 0.12.1 (2017-10-25)
 ================
-
-
-### NEW FEATURES
-* heatmaply
-  - Add `cellnote_size` argument, controlling the font size of the cellnote.
-
 ### BUG FIXES
 * heatmaply
   - removing tick labels with `showticklabels` now removes the ticks as
     well as the tick labels.
   - Prevent grid_gap warning (#105)
+  - Add `cellnote_size` argument, controlling the font size of the cellnote.
+
+
 * ggplot_heatmap
   - now handles data.frame input
 

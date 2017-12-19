@@ -1,8 +1,17 @@
-
-
-
 context("heatmaply misc")
 
+test_that("node argument works", {
+  rrapply <- function(A, FUN, ...) mapply(function(a, B) lapply(B, 
+           function(x) FUN(a, x, ...)), a = A, MoreArgs = list(B = A))
+  cor.tests <- rrapply(mtcars, cor.test) # a matrix of cor.tests
+  p <- apply(cor.tests, 1:2, function(x) x[[1]]$p.value) # and it's there
+  r <- cor(mtcars)
+  h <- heatmaply(
+    r, node_type = "scatter",
+    point_size_name = "p",
+    point_size_mat = -log10(p)
+  )
+})
 
 test_that("non-numerics moved to row_side_colors", {
   mtcars[, ncol(mtcars) + 1] <- "a"
@@ -122,4 +131,12 @@ test_that("grid_gap works", {
 test_that("subplot_* needs to be correct", {
   expect_error(heatmaply(mtcars, subplot_heights = rep(1, 10)))
   expect_error(heatmaply(mtcars, subplot_widths = rep(1, 10)))
+})
+
+test_that("custom_hovertext works", {
+  mat <- as.matrix(mtcars)
+  suppressWarnings(mat[] <- letters)
+  for (plot_method in c("plotly", "ggplot")) {
+    expect_error(heatmaply(mtcars, plot_method = plot_method, custom_hovertext = mat), NA)
+  }
 })

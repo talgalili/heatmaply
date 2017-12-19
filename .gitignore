@@ -12,3 +12,4 @@ MANIFEST.txt
 test2.rda
 tests/testthat/tmp.*
 tmp*
+\.\.Rcheck

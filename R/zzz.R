@@ -99,6 +99,7 @@ NULL
 #
 #
 
+
 heatmaplyWelcomeMessage <- function() {
   # library(utils)
 
@@ -119,7 +120,6 @@ heatmaplyWelcomeMessage <- function() {
     "======================\n"
   )
 }
-
 
 
 
