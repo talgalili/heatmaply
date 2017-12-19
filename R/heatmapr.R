@@ -98,6 +98,7 @@
 #' "none" (the default order produced by the dendrogram),
 #' "GW" (Gruvaeus and Wainer heuristic to optimize the Hamiltonian path length that is restricted by the dendrogram structure)
 #' @param point_size_mat A matrix of values which can be mapped to point size
+#' @param custom_hovertext Custom hovertext matrix (the same dimensions as the input).
 #' @param ... currently ignored
 #'
 #' @export

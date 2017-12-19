@@ -129,6 +129,8 @@ Implemented options include:
 
 \item{point_size_mat}{A matrix of values which can be mapped to point size}
 
+\item{custom_hovertext}{Custom hovertext matrix (the same dimensions as the input).}
+
 \item{...}{currently ignored}
 }
 \description{

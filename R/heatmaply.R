@@ -276,6 +276,9 @@ is.plotly <- function(x) {
 #'
 #' @param point_size_mat Matrix to map to point size
 #' @param point_size_name Name of point size mapping (for hovertext/legend)
+#' @param custom_hovertext Custom hovertext matrix (the same dimensions as the input).
+#' If plot_method is "plotly" then just this text is displayed; if plot_method
+#' if "ggplot" then it is appended to the existing text.
 #' @param label_format_fun Function to format hovertext (eg,
 #'    \code{function(...) round(..., digits=3)} or
 #'    \code{function(...) format(..., digits=3)}
