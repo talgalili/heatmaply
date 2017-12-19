@@ -85,33 +85,6 @@ ggplot_heatmap <- function(xx,
   } else {
     assert_that(length(label_names) == 3)
   }
-  melt_df <- function(x, label_names) {
-    # heatmap
-    # xx <- x$matrix$data
-    if (!is.data.frame(x)) df <- as.data.frame(x)
-
-    row <- label_names[[1]]
-    col <- label_names[[2]]
-    val <- label_names[[3]]
-
-    # colnames(df) <- x$matrix$cols
-    if (!is.null(rownames(x))) {
-      df[[row]] <- rownames(x)
-    } else {
-      df[[row]] <- 1:nrow(x)
-    }
-
-    df[[row]] <- factor(
-      df[[row]],
-      levels = df[[row]],
-      ordered = TRUE
-    )
-
-    mdf <- reshape2::melt(df, id.vars = row)
-    colnames(mdf)[2:3] <- c(col, val) # rename "variable" and "value"
-    mdf
-  }
-
 
   mdf <- melt_df(xx, label_names)
   if (!is.null(point_size_mat)) {
@@ -214,6 +187,33 @@ ggplot_heatmap <- function(xx,
   if (row_dend_left) p <- p + scale_y_discrete(position = "right") # possible as of ggplot 2.1.0 !
 
   p
+}
+
+melt_df <- function(x, label_names) {
+  # heatmap
+  # xx <- x$matrix$data
+  if (!is.data.frame(x)) df <- as.data.frame(x)
+
+  row <- label_names[[1]]
+  col <- label_names[[2]]
+  val <- label_names[[3]]
+
+  # colnames(df) <- x$matrix$cols
+  if (!is.null(rownames(x))) {
+    df[[row]] <- rownames(x)
+  } else {
+    df[[row]] <- 1:nrow(x)
+  }
+
+  df[[row]] <- factor(
+    df[[row]],
+    levels = df[[row]],
+    ordered = TRUE
+  )
+
+  mdf <- reshape2::melt(df, id.vars = row)
+  colnames(mdf)[2:3] <- c(col, val) # rename "variable" and "value"
+  mdf
 }
 
 paste_aes <- function(x) {
