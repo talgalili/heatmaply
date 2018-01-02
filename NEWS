@@ -1,3 +1,10 @@
+heatmaply 0.14.1 (2018-01-02)
+================
+### BUGFIXES
+* heatmaply
+  - Fixed a bug where column/row annotation 
+    legend labels would overlap when only two levels were present.
+
 heatmaply 0.14.0 (2017-12-02)
 ================
 ### NEW FEATURES
