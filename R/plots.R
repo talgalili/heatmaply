@@ -102,7 +102,7 @@ ggplot_heatmap <- function(xx,
     col, ": ", mdf[[2]], "<br>",
     val, ": ", label_format_fun(mdf[[3]])
   )
-  
+
   if (type == "heatmap") {
     geom <- "geom_tile"
     aes_args <- list(fill = paste_aes(val))
@@ -131,7 +131,7 @@ ggplot_heatmap <- function(xx,
       aes_args <- list(color = paste_aes(val), text = "text")
       # geom_args[["mapping"]] <- aes_string(color = paste_aes(val), text = "text")
     }
-  } 
+  }
   if (!is.null(custom_hovertext)) {
     mdf[["text"]] <- paste0(mdf[["text"]], "<br>", custom_hovertext)
     aes_args[["text"]] <- "text"
@@ -644,15 +644,15 @@ plotly_side_color_plot <- function(df, palette = NULL,
   if (is.null(label_name)) label_name <- type
 
   data <- df
-  data[] <- lapply(df, as.character)
-  if (type == "column") {
-    data <- t(data)
-  }
-  data <- as.data.frame(data)
+  data[] <- lapply(df, factor)
+  # if (type == "column") {
+  #   data <- t(data)
+  # }
+  data <- as.data.frame(data, stringsAsFactors=TRUE)
+  data[] <- lapply(data, factor)
   data_vals <- unlist(data)
-
-  levels <- sort(unique(data_vals))
-  levels <- setdiff(levels, NA)
+  levels <- levels(data_vals)
+  levels <- levels[!is.na(levels)]
 
   if (is.null(palette)) palette <- default_side_colors
 
@@ -671,7 +671,9 @@ plotly_side_color_plot <- function(df, palette = NULL,
   df_nums <- data
   df_nums[] <- lapply(data, function(col) as.numeric(levs2nums[as.character(col)]))
   df_nums <- as.matrix(df_nums)
-
+  if (type == "column") {
+    df_nums <- t(df_nums)
+  }
   key_title <- paste(type, "annotation")
 
   text_mat <- data
@@ -707,7 +709,7 @@ plotly_side_color_plot <- function(df, palette = NULL,
       title = paste(gsub("^(\\w)", "\\U\\1", type, perl = TRUE), "annotation"),
       tickmode = "array",
         ## Issue #137
-      tickvals = seq(1 + offset, 
+      tickvals = seq(1 + offset,
         length(levels) - offset,
         length.out = length(levels)),
       ticktext = levels,
@@ -719,9 +721,9 @@ plotly_side_color_plot <- function(df, palette = NULL,
       xaxis = list(
         tickfont = list(size = fontsize),
         tickangle = text_angle,
-        tickvals = 1:ncol(data), ticktext = colnames(data),
+        tickvals = 1:ncol(df_nums), ticktext = colnames(df_nums),
         linecolor = "#ffffff",
-        range = c(0.5, ncol(data) + 0.5),
+        range = c(0.5, ncol(df_nums) + 0.5),
         showticklabels = TRUE
       ),
       yaxis = list(showticklabels = FALSE)
@@ -731,9 +733,9 @@ plotly_side_color_plot <- function(df, palette = NULL,
       yaxis = list(
         tickfont = list(size = fontsize),
         tickangle = text_angle,
-        tickvals = 1:nrow(data), ticktext = rownames(data),
+        tickvals = 1:nrow(df_nums), ticktext = rownames(df_nums),
         linecolor = "#ffffff",
-        range = c(0.5, nrow(data) + 0.5),
+        range = c(0.5, nrow(df_nums) + 0.5),
         showticklabels = TRUE
       ),
       xaxis = list(showticklabels = FALSE)

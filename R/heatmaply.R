@@ -1033,8 +1033,6 @@ heatmaply.heatmapr <- function(x,
       nrow(side_color_df) == ncol(data_mat),
       is.data.frame(side_color_df)
     )
-    ## Just make sure it's character first
-    side_color_df[] <- lapply(side_color_df, as.character)
     if (plot_method == "ggplot") {
       pc <- ggplot_side_color_plot(
         side_color_df,
