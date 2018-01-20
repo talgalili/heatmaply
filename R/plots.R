@@ -648,7 +648,7 @@ plotly_side_color_plot <- function(df, palette = NULL,
   # if (type == "column") {
   #   data <- t(data)
   # }
-  data <- as.data.frame(data, stringsAsFactors=TRUE)
+  data <- as.data.frame(data, stringsAsFactors = TRUE)
   data[] <- lapply(data, factor)
   data_vals <- unlist(data)
   levels <- levels(data_vals)
@@ -708,10 +708,12 @@ plotly_side_color_plot <- function(df, palette = NULL,
       # Capitalise first letter
       title = paste(gsub("^(\\w)", "\\U\\1", type, perl = TRUE), "annotation"),
       tickmode = "array",
-        ## Issue #137
-      tickvals = seq(1 + offset,
+      ## Issue #137
+      tickvals = seq(
+        1 + offset,
         length(levels) - offset,
-        length.out = length(levels)),
+        length.out = length(levels)
+      ),
       ticktext = levels,
       len = 0.2
     )

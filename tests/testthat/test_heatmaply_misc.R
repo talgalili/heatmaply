@@ -1,8 +1,10 @@
 context("heatmaply misc")
 
 test_that("node argument works", {
-  rrapply <- function(A, FUN, ...) mapply(function(a, B) lapply(B, 
-           function(x) FUN(a, x, ...)), a = A, MoreArgs = list(B = A))
+  rrapply <- function(A, FUN, ...) mapply(function(a, B) lapply(
+        B,
+        function(x) FUN(a, x, ...)
+      ), a = A, MoreArgs = list(B = A))
   cor.tests <- rrapply(mtcars, cor.test) # a matrix of cor.tests
   p <- apply(cor.tests, 1:2, function(x) x[[1]]$p.value) # and it's there
   r <- cor(mtcars)
