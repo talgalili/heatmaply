@@ -1,26 +1,23 @@
-heatmaply 0.14.0 (2017-12-02)
+heatmaply 0.14.0 (2018-01-20)
 ================
-### BUGFIXES
-* heatmaply
-  - Fixed a bug where column/row annotation 
-    legend labels would overlap when only two levels were present.
+
 ### NEW FEATURES
 * heatmaply
   - Add `custom_hovertext` argument, adding custom hovertext option
-  - Add `label_format_fun` argument, which formats text before adding to 
+  - Add `label_format_fun` argument, which formats text before adding to
     hovertext
-  - Row and column annotation legends are now ordered according to factor 
+  - Row and column annotation legends are now ordered according to factor
     levels, or by default, are sorted (the previous default behaviour).
-  - Add `node_type argument, which allows users to plot the heatmap with 
+  - Add `node_type argument, which allows users to plot the heatmap with
     discs rather than squares. See also the `point_size_mat` argument.
   - Add `point_size_mat` argument, which is mapped to point size when
-    `node_type="scatter"`. Also adds `point_size_name` argument, which is the 
+    `node_type="scatter"`. Also adds `point_size_name` argument, which is the
     name of this parameter in the heatmap hovertext.
 
-
-
-heatmaply 0.13.1 (2017-11-27)
-================
+### BUGFIXES
+* heatmaply
+  - Fixed a bug where column/row annotation
+    legend labels would overlap when only two levels were present.
 
 ### NOTES
 

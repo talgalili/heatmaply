@@ -1,3 +1,82 @@
+* 2018-01-20(Tal Galili) update NEWS |f69c4b4| 
+|  NEWS | 16 ++++++----------
+|  1 file changed, 6 insertions(+), 10 deletions(-)
+
+* 2018-01-14(Alanocallaghan) Allow ordering of side colors via levels (#139) |80c2f33| 
+|  DESCRIPTION   |  2 +-
+|  NEWS          | 10 +++++-----
+|  R/heatmaply.R |  2 --
+|  R/plots.R     | 34 ++++++++++++++++++----------------
+|  4 files changed, 24 insertions(+), 24 deletions(-)
+
+* 2018-01-02(Alan O'Callaghan) Fix legend issue |d50b63d| 
+|  DESCRIPTION | 4 ++--
+|  NEWS        | 7 +++++++
+|  R/plots.R   | 7 ++++++-
+|  3 files changed, 15 insertions(+), 3 deletions(-)
+
+* 2017-12-19(Alanocallaghan) Scatter (#133) |6bbc377| 
+|  .gitignore                           |   1 +
+|  DESCRIPTION                          |   4 +-
+|  NEWS                                 |  26 ++++---
+|  NEWS.md                              |   6 +-
+|  R/heatmaply.R                        |  80 ++++++++++++++++----
+|  R/heatmapr.R                         |  17 ++++-
+|  R/plots.R                            | 134 ++++++++++++++++++++++++++-------
+|  R/zzz.R                              |   2 +-
+|  man/heatmaply.Rd                     |  52 +++++++++----
+|  man/heatmapr.Rd                      |   7 +-
+|  tests/testthat.R                     |   1 -
+|  tests/testthat/test_heatmaply_misc.R |  23 +++++-
+|  tests/testthat/test_plots.R          |  24 ++++--
+|  13 files changed, 290 insertions(+), 87 deletions(-)
+
+* 2017-11-27(Tal Galili) some spellchecking using devtools::spell_check() |ba5298c| 
+|  DESCRIPTION      |  2 +-
+|  NEWS             |  3 ++-
+|  R/heatmaply.R    | 22 +++++++++++-----------
+|  R/heatmapr.R     |  8 ++++----
+|  R/is.na10.R      |  2 +-
+|  R/zzz.R          |  2 ++
+|  man/heatmaply.Rd | 20 ++++++++++----------
+|  man/heatmapr.Rd  |  8 ++++----
+|  man/is.na10.Rd   |  2 +-
+|  man/is.plotly.Rd |  2 +-
+|  10 files changed, 37 insertions(+), 34 deletions(-)
+
+* 2017-11-27(Tal Galili) better explenation on what the na.rm argument does. |425731f| 
+|  R/heatmaply.R    | 7 ++++++-
+|  man/heatmaply.Rd | 7 ++++++-
+|  2 files changed, 12 insertions(+), 2 deletions(-)
+
+*   2017-11-27(Tal Galili) Merge pull request #130 from washcycle/patch-1 |86dca9b
+|\  
+| * 2017-11-27(Matt) Update heatmaply.R |e9212c4
+|/  |   
+|    R/heatmaply.R | 2 +-
+|    1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2017-11-23(Tal Galili) USing stylr to improve the readability of the R code. (AFAICS it doesn't break anything) |26deb1d| 
+|  ChangeLog                            |  92 ++++++++
+|  DESCRIPTION                          |   4 +-
+|  NEWS                                 |   9 +
+|  NEWS.md                              |  25 ++-
+|  R/RColorBrewer.R                     |  53 +++--
+|  R/distfuns.R                         |   3 +-
+|  R/heatmaply.R                        | 397 ++++++++++++++++++---------------
+|  R/heatmapr.R                         | 307 +++++++++++++------------
+|  R/is.na10.R                          |   3 -
+|  R/percentize.R                       |  27 +--
+|  R/plots.R                            | 271 ++++++++++++----------
+|  R/zzz.R                              |  49 ++--
+|  tests/testthat/test_RColorBrewer.R   |  58 ++---
+|  tests/testthat/test_heatmaply.R      | 100 ++++++---
+|  tests/testthat/test_heatmaply_misc.R |  42 ++--
+|  tests/testthat/test_heatmapr.R       |   6 +-
+|  tests/testthat/test_misc.R           |  10 +-
+|  tests/testthat/test_plots.R          | 206 +++++++++--------
+|  18 files changed, 966 insertions(+), 696 deletions(-)
+
 * 2017-11-13(Tal Galili) Give information in the help file about issue #125 |6dc7510| 
 |  R/heatmaply.R    | 2 ++
 |  man/heatmaply.Rd | 4 +++-
