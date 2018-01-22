@@ -697,7 +697,8 @@ plotly_side_color_plot <- function(df, palette = NULL,
   )
 
   ## Ensure tickvals are in right position when n = 2
-  offset <- (1 / length(levels)) / 2
+  offset <- ((length(levels) - 1) / length(levels)) / 2
+
   ## https://stackoverflow.com/questions/42524450/using-discrete-custom-color-in-a-plotly-heatmap
   p <- plot_ly(
     z = df_nums, x = 1:ncol(df_nums), y = 1:nrow(df_nums),
@@ -715,6 +716,7 @@ plotly_side_color_plot <- function(df, palette = NULL,
         length.out = length(levels)
       ),
       ticktext = levels,
+      # tickvals = seq(1, length(levels), length.out = 30),
       len = 0.2
     )
   )
