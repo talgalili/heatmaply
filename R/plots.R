@@ -716,7 +716,6 @@ plotly_side_color_plot <- function(df, palette = NULL,
         length.out = length(levels)
       ),
       ticktext = levels,
-      # tickvals = seq(1, length(levels), length.out = 30),
       len = 0.2
     )
   )
