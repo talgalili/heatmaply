@@ -455,6 +455,10 @@ heatmapr <- function(x,
   ## Final touches before exporting the object
   ## =======================
 
+  if(!is.matrix(custom_hovertext)) {
+    custom_hovertext <- as.matrix(custom_hovertext)
+  }
+
   mtx <- list(
     data = as.matrix(x),
     cellnote = cellnote,
