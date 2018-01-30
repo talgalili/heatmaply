@@ -80,8 +80,9 @@ and will give it a value cexCol*14}
 
 \item{digits}{integer indicating the number of decimal places to be used by \link{round} for 'label'.}
 
-\item{cellnote}{(optional) matrix of the same dimensions as \code{x} that has the human-readable version of each value, for displaying to the user on hover. If \code{NULL}, then \code{x} will be coerced using \code{\link{as.character}}.
-If missing, it will use \code{x}, after rounding it based on the \code{digits} parameter.}
+\item{cellnote}{(optional) matrix of the same dimensions as \code{x}
+that has the human-readable version of each value,
+for displaying on top of the heatmap cells.}
 
 \item{theme}{A custom CSS theme to use. Currently the only valid values are
 \code{""} and \code{"dark"}. \code{"dark"} is primarily intended for

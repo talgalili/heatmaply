@@ -105,7 +105,7 @@ the columns. (this is called srtCol in \link[gplots]{heatmap.2})}
  the third is used as the top margin, and the fourth is used as the bottom margin.
  If a single value is provided, it will be used as all four margins.}
 
-\item{cellnote}{Mouseover values for the data. Useful if applying scaling.}
+\item{cellnote}{Values to be shown as annotations atop the heatmap cells.}
 
 \item{draw_cellnote}{Should the cellnote annotations be drawn? Defaults is FALSE,
 if cellnote is not supplied, TRUE if cellnote is supplied. If TRUE and

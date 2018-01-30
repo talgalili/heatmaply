@@ -105,7 +105,7 @@ ggplot_heatmap <- function(xx,
 
   if (type == "heatmap") {
     geom <- "geom_tile"
-    aes_args <- list(fill = paste_aes(val))
+    aes_args <- list(fill = paste_aes(val), text = "text")
     geom_args <- list(
       # mapping = aes_string(fill = paste_aes(val)),
       color = grid_color,
@@ -119,7 +119,9 @@ ggplot_heatmap <- function(xx,
         mdf[["text"]], "<br>",
         point_size_name, ": ", label_format_fun(mdf[[4]])
       )
-      aes_args <- list(color = paste_aes(val), text = "text", size = paste_aes(point_size_name))
+      aes_args <- list(color = paste_aes(val),
+        text = "text",
+        size = paste_aes(point_size_name))
 
       # geom_args[["mapping"]] <- aes_string(
       #   color = paste_aes(val),
@@ -128,20 +130,16 @@ ggplot_heatmap <- function(xx,
       # )
     } else {
       geom_args[["size"]] <- grid_size
-      aes_args <- list(color = paste_aes(val), text = "text")
+      aes_args <- list(color = paste_aes(val),
+        text = "text")
       # geom_args[["mapping"]] <- aes_string(color = paste_aes(val), text = "text")
     }
   }
   if (!is.null(custom_hovertext)) {
     mdf[["text"]] <- paste0(mdf[["text"]], "<br>", custom_hovertext)
-    aes_args[["text"]] <- "text"
   }
   geom_args[["mapping"]] <- do.call(aes_string, aes_args)
 
-
-  if (!is.null(custom_hovertext)) {
-    geom_args[["text"]] <- "text"
-  }
   # TODO:
   # http://stackoverflow.com/questions/15921799/draw-lines-around-specific-areas-in-geom-tile
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html

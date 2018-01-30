@@ -60,7 +60,7 @@ is.plotly <- function(x) {
 #'  the third is used as the top margin, and the fourth is used as the bottom margin.
 #'  If a single value is provided, it will be used as all four margins.
 #'
-#' @param cellnote Mouseover values for the data. Useful if applying scaling.
+#' @param cellnote Values to be shown as annotations atop the heatmap cells.
 #' @param draw_cellnote Should the cellnote annotations be drawn? Defaults is FALSE,
 #' if cellnote is not supplied, TRUE if cellnote is supplied. If TRUE and
 #' cellnote is not supplied, x will be used for cellnote.
@@ -838,7 +838,6 @@ heatmaply.heatmapr <- function(x,
   }
 
   if (is.Rgui()) {
-    # browser()
     # print(p) # solves R crashes - not sure why...
     dev.new() # it seems we need just some device to be open...
   }
@@ -1076,7 +1075,6 @@ heatmaply.heatmapr <- function(x,
       layout(showlegend = TRUE)
   }
 
-
   if (draw_cellnote) {
     ## Predict cell color luminosity based on colorscale
     if (cellnote_color == "auto") {
@@ -1170,8 +1168,6 @@ heatmaply.heatmapr <- function(x,
     # layout(yaxis = list(tickmode='auto'),
     #        xaxis = list(tickmode='auto'))
   }
-
-
 
   heatmap_subplot <- heatmap_subplot_from_ggplotly(
     p = p, px = px, py = py,
