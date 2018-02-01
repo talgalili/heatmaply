@@ -1,6 +1,36 @@
-* 2018-01-20(Tal Galili) update NEWS |f69c4b4| 
-|  NEWS | 16 ++++++----------
-|  1 file changed, 6 insertions(+), 10 deletions(-)
+* 2018-01-30(Alan O'Callaghan) Update docs and resolve #150 |89977b6| 
+|  R/heatmaply.R    |  6 +-----
+|  R/heatmapr.R     |  5 +++--
+|  R/plots.R        | 14 ++++++--------
+|  man/heatmaply.Rd |  2 +-
+|  man/heatmapr.Rd  |  5 +++--
+|  5 files changed, 14 insertions(+), 18 deletions(-)
+
+* 2018-01-30(Tal Galili) the code now also works for when custom hover is NULL (default... ) |aaa1be1| 
+|  R/heatmapr.R | 5 +++--
+|  1 file changed, 3 insertions(+), 2 deletions(-)
+
+* 2018-01-29(Tal Galili) If `custom_hovertext` is not a matrix - it is turned into a matrix (important if inserting a data.frame). Fix issue #151 |3aedbd8| 
+|  DESCRIPTION  | 4 ++--
+|  NEWS         | 9 +++++++++
+|  R/heatmapr.R | 4 ++++
+|  3 files changed, 15 insertions(+), 2 deletions(-)
+
+* 2018-01-22(Alanocallaghan) Improve tick placement for side color plot colorbars (#143) |15ab8ca| 
+|  R/plots.R | 3 ++-
+|  1 file changed, 2 insertions(+), 1 deletion(-)
+
+* 2018-01-20(Tal Galili) styler |e7bbd7c| 
+|  R/plots.R                            | 10 ++++++----
+|  tests/testthat/test_heatmaply_misc.R |  6 ++++--
+|  2 files changed, 10 insertions(+), 6 deletions(-)
+
+* 2018-01-20(Tal Galili) update docs |4d49e07| 
+|  ChangeLog   | 79 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+|  DESCRIPTION |  2 +-
+|  NEWS        | 23 ++++++++---------
+|  NEWS.md     | 39 +++++++++++++++++++----------
+|  4 files changed, 116 insertions(+), 27 deletions(-)
 
 * 2018-01-14(Alanocallaghan) Allow ordering of side colors via levels (#139) |80c2f33| 
 |  DESCRIPTION   |  2 +-

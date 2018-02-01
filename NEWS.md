@@ -1,3 +1,13 @@
+heatmaply 0.14.1 (2018-02-01)
+================
+
+### BUGFIXES
+* heatmaply
+  - hover text didn't show.
+  - If `custom_hovertext` is not a matrix - it is turned into a matrix (important if inserting a data.frame). Fix issue #151
+
+
+
 heatmaply 0.14.0 (2018-01-20)
 ================
 
