@@ -190,7 +190,7 @@ ggplot_heatmap <- function(xx,
 melt_df <- function(x, label_names) {
   # heatmap
   # xx <- x$matrix$data
-  if (!is.data.frame(x)) df <- as.data.frame(x)
+  df <- as.data.frame(x)
 
   row <- label_names[[1]]
   col <- label_names[[2]]
