@@ -64,7 +64,7 @@ To install the latest ("cutting-edge") GitHub version run:
 # good packages to install for this to work smoothly:
 
 install.packages(c("Rcpp","ggplot2","munsell","htmltools","DBI","assertthat",
-"gridExtra",'devtools',"fpc","TSP","registry","gclus","gplots","RColorBrewer",
+"gridExtra","digest","fpc","TSP","registry","gclus","gplots","RColorBrewer",
 "stringr","labeling","yaml"))
 
 # You'll need devtools
