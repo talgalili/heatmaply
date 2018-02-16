@@ -3,8 +3,8 @@ heatmaply 0.14.2 (2018-02-16)
 
 ### BUGFIXES
 * heatmaply
+  - Minor bugfixes relating to the use of the `node_size_mat` argument.
   - handle cases with row/col names are not all unique. fix #155
-
 
 
 heatmaply 0.14.1 (2018-02-01)

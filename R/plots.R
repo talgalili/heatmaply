@@ -143,7 +143,7 @@ ggplot_heatmap <- function(xx,
   # TODO:
   # http://stackoverflow.com/questions/15921799/draw-lines-around-specific-areas-in-geom-tile
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
-  p <- ggplot(mdf, aes_string(x = col, y = row)) +
+  p <- ggplot(mdf, aes_string(x = paste_aes(col), y = paste_aes(row))) +
     ## Using the text aes produces a warning... Not ideal!
     suppressWarnings(do.call(geom, geom_args)) +
     scale_fill_gradient_fun +
@@ -190,7 +190,7 @@ ggplot_heatmap <- function(xx,
 melt_df <- function(x, label_names) {
   # heatmap
   # xx <- x$matrix$data
-  if (!is.data.frame(x)) df <- as.data.frame(x)
+  df <- as.data.frame(x)
 
   row <- label_names[[1]]
   col <- label_names[[2]]
