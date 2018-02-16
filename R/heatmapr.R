@@ -8,6 +8,26 @@
   }
 }
 
+
+
+# Check if all values in vector x are unique
+all_unique <- function(x, ...) {
+  length(x) == length(unique(x))
+}
+
+fix_not_all_unique <- function(x, ...) {
+  if(all_unique(x)) {
+    return(x)
+  } else {
+    warning("Not all the values are unique - manually added prefix numbers")
+    return(paste0(seq_along(x), "_", x))
+  }
+}
+
+
+
+
+
 #' Creates a heatmapr object
 #'
 #' An object of class heatmapr includes all the needed information
@@ -219,6 +239,11 @@ heatmapr <- function(x,
   ## ======================
   rownames(x) <- labRow %||% as.character(1:nrow(x))
   colnames(x) <- labCol %||% as.character(1:ncol(x))
+
+
+  # fix a case where the row/col names are non unique (this assume the users does NOT supply a dendrogram)
+  rownames(x) <- fix_not_all_unique(rownames(x))
+  colnames(x) <- fix_not_all_unique(colnames(x))
 
   if (!missing(cexRow)) {
     if (is.numeric(cexRow)) {
