@@ -224,10 +224,12 @@ is.plotly <- function(x) {
 #' or ".png", ".jpeg", ".pdf" for a static output.
 #'
 #' For example: heatmaply(x, file = "heatmaply_plot.html") or
-#' dir.create("folder")
+#' dir.create("folder");
 #' heatmaply(x, file = "folder/heatmaply_plot.html")
+#'
 #' This is based on \link[htmlwidgets]{saveWidget}, and \link[webshot]{webshot} for the static files.
-#' For more refined control over the static file output, you should save the heatmaply object using \link[webshot]{webshot}.
+#' For more refined control over the static file output, you should save the heatmaply object using \link[plotly]{export} and pass the
+#' arguments you want based on the ones in \link[webshot]{webshot}.
 #'
 #' Another example: heatmaply(x, file = c("heatmaply_plot.html", "heatmaply_plot.png"))
 #'
