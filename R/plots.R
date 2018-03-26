@@ -675,7 +675,7 @@ plotly_side_color_plot <- function(df, palette = NULL,
   if (ncol(df) == 1) {
     key_title <- colnames(df)  
   } else {
-    key_title <- paste(type, "annotation")
+    key_title <- paste(gsub("^(\\w)", "\\U\\1", type, perl = TRUE), "annotation")
   }
 
   text_mat <- data
@@ -709,7 +709,7 @@ plotly_side_color_plot <- function(df, palette = NULL,
     colorscale = discrete_colorscale(levs2colors),
     colorbar = list(
       # Capitalise first letter
-      title = paste(gsub("^(\\w)", "\\U\\1", type, perl = TRUE), "annotation"),
+      title = key_title,
       tickmode = "array",
       ## Issue #137
       tickvals = seq(
