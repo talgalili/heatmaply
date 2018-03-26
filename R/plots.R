@@ -672,7 +672,11 @@ plotly_side_color_plot <- function(df, palette = NULL,
   if (type == "column") {
     df_nums <- t(df_nums)
   }
-  key_title <- paste(type, "annotation")
+  if (ncol(df) == 1) {
+    key_title <- colnames(df)  
+  } else {
+    key_title <- paste(type, "annotation")
+  }
 
   text_mat <- data
   text_mat[] <- lapply(
