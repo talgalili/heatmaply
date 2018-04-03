@@ -585,15 +585,11 @@ heatmaply.default <- function(x,
   if (!missing(labRow)) {
     if (all(is.na(labRow))) {
       showticklabels[2] <- FALSE
-    } else {
-      rownames(x) <- labRow
     }
   }
   if (!missing(labCol)) {
     if (all(is.na(labCol))) {
       showticklabels[1] <- FALSE
-    } else {
-      colnames(x) <- labCol
     }
   }
 
@@ -717,6 +713,8 @@ heatmaply.default <- function(x,
     scale = scale,
     na.rm = na.rm,
     custom_hovertext = custom_hovertext,
+    labRow = labRow,
+    labCol = labCol,
 
     ...
   )
@@ -762,8 +760,7 @@ heatmaply.default <- function(x,
     grid_size = grid_size,
     node_type = node_type,
     point_size_name = point_size_name,
-    label_format_fun = label_format_fun,
-    labRow = labRow, labCol = labCol
+    label_format_fun = label_format_fun
   )
 
   # TODO: think more on what should be passed in "..."
