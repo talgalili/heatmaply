@@ -285,7 +285,8 @@ is.plotly <- function(x) {
 #'    \code{function(...) round(..., digits=3)} or
 #'    \code{function(...) format(..., digits=3)}
 #'
-#' @param labRow,labCol character vectors with row and column labels to use; these default to rownames(x) or colnames(x), respectively.
+#' @param labRow,labCol character vectors with row and column labels to use;
+#' these default to rownames(x) or colnames(x), respectively.
 #' if set to NA, they change the value in showticklabels to be FALSE. This is mainly to keep
 #' backward compatibility with gplots::heatmap.2.
 #'
@@ -581,6 +582,21 @@ heatmaply.default <- function(x,
     x$name <- NULL
   }
 
+  if (!missing(labRow)) {
+    if (all(is.na(labRow))) {
+      showticklabels[2] <- FALSE
+    } else {
+      rownames(x) <- labRow
+    }
+  }
+  if (!missing(labCol)) {
+    if (all(is.na(labCol))) {
+      showticklabels[1] <- FALSE
+    } else {
+      colnames(x) <- labCol
+    }
+  }
+
   # this is to fix the error: "argument * matches multiple formal arguments"
   if (!is.null(col)) colors <- col
 
@@ -822,8 +838,7 @@ heatmaply.heatmapr <- function(x,
                                point_size_mat = x[["matrix"]][["point_size_mat"]],
                                point_size_name = "Point size",
                                label_format_fun = function(...) format(..., digits = 4),
-                               custom_hovertext = x[["matrix"]][["custom_hovertext"]],
-                               labRow, labCol) {
+                               custom_hovertext = x[["matrix"]][["custom_hovertext"]]) {
   node_type <- match.arg(node_type)
   plot_method <- match.arg(plot_method)
   cellnote_textposition <- match.arg(
@@ -865,29 +880,6 @@ heatmaply.heatmapr <- function(x,
   }
   if (!missing(srtRow)) row_text_angle <- srtRow
   if (!missing(srtCol)) column_text_angle <- srtCol
-
-
-  if (!missing(labRow)) {
-    if (all(is.na(labRow))) {
-      showticklabels[2] <- FALSE
-    } else {
-      rownames(x$matrix$data) <- labRow
-      rownames(x$matrix$cellnote) <- labRow
-      rownames(x$cellnote) <- labRow
-      x$matrix$rows <- labRow
-    }
-  }
-  if (!missing(labCol)) {
-    if (all(is.na(labCol))) {
-      showticklabels[1] <- FALSE
-    } else {
-      colnames(x$matrix$data) <- labCol
-      colnames(x$matrix$cellnote) <- labCol
-      colnames(x$cellnote) <- labCol
-      x$matrix$cols <- labCol
-    }
-  }
-
 
 
 
