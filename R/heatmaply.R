@@ -566,7 +566,7 @@ heatmaply.default <- function(x,
                               point_size_mat = NULL,
                               point_size_name = "Point size",
                               label_format_fun = function(...) format(..., digits = 4),
-                              labRow, labCol,
+                              labRow = NULL, labCol = NULL,
                               custom_hovertext = NULL,
                               col = NULL) {
   if (!missing(long_data)) {
