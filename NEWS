@@ -3,6 +3,9 @@ heatmaply 0.14.3 (2018-xx-xx)
 ## NEW FEATURES
 * heatmaply
   - Side colour plot legends will now have the title of the column when there is only one column used.
+## BUGFIXES
+* heatmaply
+  - heatmaply would scramble rownames when manually supplied via labrow or labcol
 
 heatmaply 0.14.2 (2018-02-16)
 ================
