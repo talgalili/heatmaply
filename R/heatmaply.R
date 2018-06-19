@@ -1092,6 +1092,7 @@ heatmaply.heatmapr <- function(x,
     mdf$value <- factor(mdf$value)
 
     p <- p %>% add_trace(
+      inherit = FALSE,
       y = mdf$row, x = mdf$variable, text = mdf$value,
       type = "scatter", mode = "text", textposition = cellnote_textposition,
       hoverinfo = "none", showlegend = FALSE,
