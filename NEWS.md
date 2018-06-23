@@ -1,4 +1,4 @@
-heatmaply 0.15.0 (2018-05-02)
+heatmaply 0.15.0 (2018-06-23)
 ===============
 
 ## NEW FEATURES
@@ -9,6 +9,7 @@ heatmaply 0.15.0 (2018-05-02)
   - heatmaply would scramble rownames when manually supplied via labrow or labcol
   - Minor bugfixes relating to the use of the `node_size_mat` argument.
   - handle cases with row/col names are not all unique. fix #155
+  - resolve some test errors.
 
 
 heatmaply 0.14.1 (2018-02-01)
