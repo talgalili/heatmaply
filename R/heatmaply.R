@@ -285,7 +285,8 @@ is.plotly <- function(x) {
 #'    \code{function(...) round(..., digits=3)} or
 #'    \code{function(...) format(..., digits=3)}
 #'
-#' @param labRow,labCol character vectors with row and column labels to use; these default to rownames(x) or colnames(x), respectively.
+#' @param labRow,labCol character vectors with row and column labels to use;
+#' these default to rownames(x) or colnames(x), respectively.
 #' if set to NA, they change the value in showticklabels to be FALSE. This is mainly to keep
 #' backward compatibility with gplots::heatmap.2.
 #'
@@ -565,7 +566,7 @@ heatmaply.default <- function(x,
                               point_size_mat = NULL,
                               point_size_name = "Point size",
                               label_format_fun = function(...) format(..., digits = 4),
-                              labRow, labCol,
+                              labRow = NULL, labCol = NULL,
                               custom_hovertext = NULL,
                               col = NULL) {
   if (!missing(long_data)) {
@@ -579,6 +580,17 @@ heatmaply.default <- function(x,
     x <- reshape2::dcast(long_data, name ~ variable)
     rownames(x) <- x$name
     x$name <- NULL
+  }
+
+  if (!missing(labRow)) {
+    if (all(is.na(labRow))) {
+      showticklabels[2] <- FALSE
+    }
+  }
+  if (!missing(labCol)) {
+    if (all(is.na(labCol))) {
+      showticklabels[1] <- FALSE
+    }
   }
 
   # this is to fix the error: "argument * matches multiple formal arguments"
@@ -701,6 +713,8 @@ heatmaply.default <- function(x,
     scale = scale,
     na.rm = na.rm,
     custom_hovertext = custom_hovertext,
+    labRow = labRow,
+    labCol = labCol,
 
     ...
   )
@@ -746,8 +760,7 @@ heatmaply.default <- function(x,
     grid_size = grid_size,
     node_type = node_type,
     point_size_name = point_size_name,
-    label_format_fun = label_format_fun,
-    labRow = labRow, labCol = labCol
+    label_format_fun = label_format_fun
   )
 
   # TODO: think more on what should be passed in "..."
@@ -822,8 +835,7 @@ heatmaply.heatmapr <- function(x,
                                point_size_mat = x[["matrix"]][["point_size_mat"]],
                                point_size_name = "Point size",
                                label_format_fun = function(...) format(..., digits = 4),
-                               custom_hovertext = x[["matrix"]][["custom_hovertext"]],
-                               labRow, labCol) {
+                               custom_hovertext = x[["matrix"]][["custom_hovertext"]]) {
   node_type <- match.arg(node_type)
   plot_method <- match.arg(plot_method)
   cellnote_textposition <- match.arg(
@@ -865,29 +877,6 @@ heatmaply.heatmapr <- function(x,
   }
   if (!missing(srtRow)) row_text_angle <- srtRow
   if (!missing(srtCol)) column_text_angle <- srtCol
-
-
-  if (!missing(labRow)) {
-    if (all(is.na(labRow))) {
-      showticklabels[2] <- FALSE
-    } else {
-      rownames(x$matrix$data) <- labRow
-      rownames(x$matrix$cellnote) <- labRow
-      rownames(x$cellnote) <- labRow
-      x$matrix$rows <- labRow
-    }
-  }
-  if (!missing(labCol)) {
-    if (all(is.na(labCol))) {
-      showticklabels[1] <- FALSE
-    } else {
-      colnames(x$matrix$data) <- labCol
-      colnames(x$matrix$cellnote) <- labCol
-      colnames(x$cellnote) <- labCol
-      x$matrix$cols <- labCol
-    }
-  }
-
 
 
 
@@ -1092,10 +1081,22 @@ heatmaply.heatmapr <- function(x,
     mdf$value <- factor(mdf$value)
 
     p <- p %>% add_trace(
+#<<<<<<< hotfix
+#      inherit = FALSE,
+#      y = mdf$row, x = mdf$variable, text = mdf$value,
+#      type = "scatter", mode = "text", textposition = cellnote_textposition,
+#      hoverinfo = "none", showlegend = FALSE,
+#=======
+      data = mdf,
+      x = ~ variable,
+      y = ~ row,
+      text = ~ value,
       inherit = FALSE,
-      y = mdf$row, x = mdf$variable, text = mdf$value,
-      type = "scatter", mode = "text", textposition = cellnote_textposition,
-      hoverinfo = "none", showlegend = FALSE,
+      type = "scatter",
+      mode = "text",
+      textposition = cellnote_textposition,
+      hoverinfo = "none",
+      showlegend = FALSE,
       textfont = list(color = plotly::toRGB(cellnote_color), size = cellnote_size)
     )
   }

@@ -1,9 +1,23 @@
+heatmaply 0.15.0 (2018-06-23)
+===============
+
+## NEW FEATURES
+* heatmaply
+  - Side colour plot legends will now have the title of the column when there is only one column used.
+## BUGFIXES
+* heatmaply
+  - heatmaply would scramble rownames when manually supplied via labrow or labcol
+  - Minor bugfixes relating to the use of the `node_size_mat` argument.
+  - handle cases with row/col names are not all unique. fix #155
+  - resolve some test errors.
+
+
 heatmaply 0.14.1 (2018-02-01)
 ================
 
 ### BUGFIXES
 * heatmaply
-  - hover text didn't show.
+  - hover text didn't show sometimes.
   - If `custom_hovertext` is not a matrix - it is turned into a matrix (important if inserting a data.frame). Fix issue #151
 
 
