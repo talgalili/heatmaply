@@ -566,7 +566,7 @@ heatmaply.default <- function(x,
                               point_size_mat = NULL,
                               point_size_name = "Point size",
                               label_format_fun = function(...) format(..., digits = 4),
-                              labRow = rownames(x), labCol = colnames(x),
+                              labRow = NULL, labCol = NULL,
                               custom_hovertext = NULL,
                               col = NULL) {
   if (!missing(long_data)) {
@@ -582,16 +582,6 @@ heatmaply.default <- function(x,
     x$name <- NULL
   }
 
-  if (!is.null(labRow)) {
-    if (all(is.na(labRow))) {
-      showticklabels[2] <- FALSE
-    }
-  }
-  if (!is.null(labCol)) {
-    if (all(is.na(labCol))) {
-      showticklabels[1] <- FALSE
-    }
-  }
 
   # this is to fix the error: "argument * matches multiple formal arguments"
   if (!is.null(col)) colors <- col
@@ -655,7 +645,9 @@ heatmaply.default <- function(x,
   }
 
   # We must have some numeric values to be able to make a heatmap
-  if (!any(ss_c_numeric)) stop("heatmaply only works for data.frame/matrix which includes some numeric columns.")
+  if (!any(ss_c_numeric)) {
+    stop("heatmaply only works for data.frame/matrix which includes some numeric columns.")
+  }
 
   # If we have non-numeric columns, we should move them to row_side_colors
   # TODO: add a parameter to control removing of non-numeric columns without moving them to row_side_colors
@@ -666,6 +658,21 @@ heatmaply.default <- function(x,
       data.frame(row_side_colors, x[, !ss_c_numeric, drop = FALSE])
     }
     x <- x[, ss_c_numeric]
+  }
+
+  if (!is.null(labRow)) {
+    if (all(is.na(labRow))) {
+      showticklabels[2] <- FALSE
+    }
+  } else {
+    labRow <- rownames(x)
+  }
+  if (!is.null(labCol)) {
+    if (all(is.na(labCol))) {
+      showticklabels[1] <- FALSE
+    }
+  } else {
+    labCol <- colnames(x)
   }
 
   # help dendrogram work again:
