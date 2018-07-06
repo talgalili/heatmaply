@@ -40,8 +40,9 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   -0.1 else 1.1, colorbar_ypos = 0, showticklabels = c(TRUE, TRUE),
   dynamicTicks = FALSE, grid_size = 0.1, node_type = "heatmap",
   point_size_mat = NULL, point_size_name = "Point size",
-  label_format_fun = function(...) format(..., digits = 4), labRow = NULL,
-  labCol = NULL, custom_hovertext = NULL, col = NULL)
+  label_format_fun = function(...) format(..., digits = 4),
+  labRow = rownames(x), labCol = colnames(x), custom_hovertext = NULL,
+  col = NULL)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
