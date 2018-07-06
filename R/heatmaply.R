@@ -718,8 +718,10 @@ heatmaply.default <- function(x,
 
     ...
   )
-  hmly <- heatmaply.heatmapr(
-    hm, colors = colors, limits = limits,
+  hmly <- heatmaply(
+    hm,
+    colors = colors,
+    limits = limits,
     scale_fill_gradient_fun = scale_fill_gradient_fun,
     grid_color = grid_color,
     grid_gap = grid_gap,
@@ -727,8 +729,11 @@ heatmaply.default <- function(x,
     column_text_angle = column_text_angle,
     subplot_margin = subplot_margin,
     row_dend_left = row_dend_left,
-    xlab = xlab, ylab = ylab, main = main,
-    titleX = titleX, titleY = titleY,
+    xlab = xlab,
+    ylab = ylab,
+    main = main,
+    titleX = titleX,
+    titleY = titleY,
     hide_colorbar = hide_colorbar,
     key.title = key.title,
     return_ppxpy = return_ppxpy,
@@ -960,12 +965,19 @@ heatmaply.heatmapr <- function(x,
     )
   } else if (plot_method == "plotly") {
     p <- plotly_heatmap(
-      data_mat, limits = limits, colors = colors,
-      key_title = key.title, label_names = label_names,
-      row_text_angle = row_text_angle, column_text_angle = column_text_angle,
-      fontsize_row = fontsize_row, fontsize_col = fontsize_col,
-      colorbar_yanchor = colorbar_yanchor, colorbar_xanchor = colorbar_xanchor,
-      colorbar_xpos = colorbar_xpos, colorbar_ypos = colorbar_ypos,
+      data_mat,
+      limits = limits,
+      colors = colors,
+      key_title = key.title,
+      label_names = label_names,
+      row_text_angle = row_text_angle,
+      column_text_angle = column_text_angle,
+      fontsize_row = fontsize_row,
+      fontsize_col = fontsize_col,
+      colorbar_yanchor = colorbar_yanchor,
+      colorbar_xanchor = colorbar_xanchor,
+      colorbar_xpos = colorbar_xpos,
+      colorbar_ypos = colorbar_ypos,
       colorbar_len = colorbar_len,
       custom_hovertext = custom_hovertext
     )
@@ -1081,12 +1093,6 @@ heatmaply.heatmapr <- function(x,
     mdf$value <- factor(mdf$value)
 
     p <- p %>% add_trace(
-#<<<<<<< hotfix
-#      inherit = FALSE,
-#      y = mdf$row, x = mdf$variable, text = mdf$value,
-#      type = "scatter", mode = "text", textposition = cellnote_textposition,
-#      hoverinfo = "none", showlegend = FALSE,
-#=======
       data = mdf,
       x = ~ variable,
       y = ~ row,
@@ -1097,7 +1103,9 @@ heatmaply.heatmapr <- function(x,
       textposition = cellnote_textposition,
       hoverinfo = "none",
       showlegend = FALSE,
-      textfont = list(color = plotly::toRGB(cellnote_color), size = cellnote_size)
+      textfont = list(
+        color = plotly::toRGB(cellnote_color),
+        size = cellnote_size)
     )
   }
   if (!is.null(px) && !is.plotly(px)) {
