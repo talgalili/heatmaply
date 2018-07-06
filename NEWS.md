@@ -1,3 +1,11 @@
+heatmaply 0.15.1 (2018-07-06)
+===============
+
+## BUGFIXES
+* heatmaply
+  - labels did not show (only numbers)
+
+
 heatmaply 0.15.0 (2018-06-23)
 ===============
 
