@@ -40,8 +40,8 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   -0.1 else 1.1, colorbar_ypos = 0, showticklabels = c(TRUE, TRUE),
   dynamicTicks = FALSE, grid_size = 0.1, node_type = "heatmap",
   point_size_mat = NULL, point_size_name = "Point size",
-  label_format_fun = function(...) format(..., digits = 4), labRow, labCol,
-  custom_hovertext = NULL, col = NULL)
+  label_format_fun = function(...) format(..., digits = 4), labRow = NULL,
+  labCol = NULL, custom_hovertext = NULL, col = NULL)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1, begin =
   0, end = 1, option = "viridis"), limits = NULL, na.value = "grey50",
@@ -67,7 +67,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   grid_size = 0.1, point_size_mat = x[["matrix"]][["point_size_mat"]],
   point_size_name = "Point size", label_format_fun = function(...)
   format(..., digits = 4),
-  custom_hovertext = x[["matrix"]][["custom_hovertext"]], labRow, labCol)
+  custom_hovertext = x[["matrix"]][["custom_hovertext"]])
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -346,7 +346,8 @@ Default is node_type = "heatmap".}
 \code{function(...) round(..., digits=3)} or
 \code{function(...) format(..., digits=3)}}
 
-\item{labRow, labCol}{character vectors with row and column labels to use; these default to rownames(x) or colnames(x), respectively.
+\item{labRow, labCol}{character vectors with row and column labels to use;
+these default to rownames(x) or colnames(x), respectively.
 if set to NA, they change the value in showticklabels to be FALSE. This is mainly to keep
 backward compatibility with gplots::heatmap.2.}
 

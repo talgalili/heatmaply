@@ -13,7 +13,7 @@ test_that("node argument works", {
     point_size_name = "p",
     point_size_mat = -log10(p)
   )
-  heatmaply(mtcars, node_type = "scatter", point_size_mat = mtcars)
+  expect_is(heatmaply(mtcars, node_type = "scatter", point_size_mat = mtcars), "plotly")
 })
 
 test_that("non-numerics moved to row_side_colors", {

@@ -1,3 +1,99 @@
+* 2018-07-06(Alan O'Callaghan) Fix label bug |2cfc90c| 
+|  R/heatmaply.R | 48 ++++++++++++++++++++----------------------------
+|  1 file changed, 20 insertions(+), 28 deletions(-)
+
+* 2018-07-06(Alan O'Callaghan) Formatting |7767111| 
+|  R/heatmaply.R | 42 +++++++++++++++++++++++++-----------------
+|  1 file changed, 25 insertions(+), 17 deletions(-)
+
+*   2018-06-23(Tal Galili) Merge pull request #177 from talgalili/hotfix |fbc62df
+|\  
+| *   2018-06-23(Tal Galili) Merge branch 'master' into hotfix |55dcce4
+| |\  
+| |/  
+|/|   
+* | 2018-06-23(Tal Galili) version 0.15.0 |a161ba1| | 
+| |  ChangeLog   | 9 +++++++++
+| |  DESCRIPTION | 2 +-
+| |  NEWS        | 3 ++-
+| |  NEWS.md     | 3 ++-
+| |  4 files changed, 14 insertions(+), 3 deletions(-)
+
+* | 2018-05-03(Alan O'Callaghan) Resolve new plotly issue w/cellnote |163dbad| | 
+| |  R/heatmaply.R | 13 ++++++++++---
+| |  1 file changed, 10 insertions(+), 3 deletions(-)
+
+* | 2018-05-02(Tal Galili) update |a557dec| | 
+| |  ChangeLog | 59 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+| |  NEWS.md   | 15 ++++++++++++++-
+| |  2 files changed, 73 insertions(+), 1 deletion(-)
+
+* | 2018-05-02(Tal Galili) heatmaply 0.15.0 - release candidate |bffe871| | 
+| |  DESCRIPTION | 4 ++--
+| |  NEWS        | 9 ++-------
+| |  2 files changed, 4 insertions(+), 9 deletions(-)
+
+* | 2018-04-17(Alanocallaghan) Bugfix for labCol and labRow (#169) |1e36560| | 
+| |  NEWS             |  3 +++
+| |  R/heatmaply.R    | 47 ++++++++++++++++++-----------------------------
+| |  man/heatmaply.Rd |  9 +++++----
+| |  3 files changed, 26 insertions(+), 33 deletions(-)
+
+* | 2018-03-26(Alanocallaghan) Just use colname if ncol is 1 (#166) |d31b9a8| | 
+| |  NEWS      | 6 ++++++
+| |  R/plots.R | 8 ++++++--
+| |  2 files changed, 12 insertions(+), 2 deletions(-)
+
+| * 2018-06-19(Alan O'Callaghan) Fix plotly error |d41d27b
+|/  |   
+|    DESCRIPTION                          | 2 +-
+|    R/heatmaply.R                        | 1 +
+|    tests/testthat/test_heatmaply_misc.R | 2 +-
+|    3 files changed, 3 insertions(+), 2 deletions(-)
+
+* 2018-03-22(Tal Galili) Fix #165  - update doc. |3bff281| 
+|  DESCRIPTION      | 4 ++--
+|  R/heatmaply.R    | 6 ++++--
+|  man/heatmaply.Rd | 6 ++++--
+|  3 files changed, 10 insertions(+), 6 deletions(-)
+
+*   2018-02-16(Tal Galili) merge conflicts |c2ca32f
+|\  
+| * 2018-02-15(Alan O'Callaghan) Edit news |4329063| | 
+| |  NEWS | 6 ++++++
+| |  1 file changed, 6 insertions(+)
+
+| * 2018-02-15(Alan O'Callaghan) Ensure paste_aes is used for x and y |556a478| | 
+| |  R/plots.R | 2 +-
+| |  1 file changed, 1 insertion(+), 1 deletion(-)
+
+| * 2018-02-13(Alan O'Callaghan) Bugfix node size when point size mat is a dataframe |d97c812| | 
+| |  R/plots.R                            | 2 +-
+| |  tests/testthat/test_heatmaply_misc.R | 1 +
+| |  2 files changed, 2 insertions(+), 1 deletion(-)
+
+| * 2018-02-13(Dan) Fix typo on README.md showing how to install dev prereqs (#154) |5675849| | 
+| |  README.md | 6 +++---
+| |  1 file changed, 3 insertions(+), 3 deletions(-)
+
+* | 2018-02-16(Tal Galili) handle cases with row/col names are not all unique. fix #155 |01347bc
+|/  |   
+|    DESCRIPTION  |  4 ++--
+|    NEWS         |  9 +++++++++
+|    R/heatmapr.R | 25 +++++++++++++++++++++++++
+|    3 files changed, 36 insertions(+), 2 deletions(-)
+
+* 2018-02-01(Tal Galili) sometimes? |f761441| 
+|  NEWS | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2018-02-01(Tal Galili) V0.14.1 update date and logs |e3b54f2| 
+|  ChangeLog   | 36 +++++++++++++++++++++++++++++++++---
+|  DESCRIPTION |  2 +-
+|  NEWS        |  3 ++-
+|  NEWS.md     | 10 ++++++++++
+|  4 files changed, 46 insertions(+), 5 deletions(-)
+
 * 2018-01-30(Alan O'Callaghan) Update docs and resolve #150 |89977b6| 
 |  R/heatmaply.R    |  6 +-----
 |  R/heatmapr.R     |  5 +++--
