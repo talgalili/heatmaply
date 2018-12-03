@@ -791,17 +791,12 @@ hmly_to_file_1file <- function(hmly, file, width = NULL, height = NULL, ...) {
       if (is.null(height)) {
         height <- size_default(file_extension, "height")
       }
-      plotly::export(
+      plotly::orca(
         hmly,
         file = file,
-        vwidth = width,
-        vheight = height,
-        cliprect = "viewport"
+        width = width,
+        height = height
       )
-
-      if (file_extension == "pdf") {
-        warning("Due to a bug in the webshot package (which is used by plotly and heatmaply to create the pdf), the pdf is created with a white space around the plot. Until this bug is resolved you can manually trim the pdf using online tools such as: https://www.sejda.com/crop-pdf")
-      }
     }
   }
   invisible(hmly)
