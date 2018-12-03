@@ -1,3 +1,10 @@
+heatmaply 0.15.3 (2018-12-03)
+===============
+
+## NOTES
+* heatmaply
+  - Use `plotly::orca` for saving to file, rather than `plotly::export`
+
 heatmaply 0.15.2 (2018-07-06)
 ===============
 
