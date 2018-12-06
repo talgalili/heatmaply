@@ -791,15 +791,36 @@ hmly_to_file_1file <- function(hmly, file, width = NULL, height = NULL, ...) {
       if (is.null(height)) {
         height <- size_default(file_extension, "height")
       }
-      plotly::orca(
-        hmly,
-        file = file,
-        width = width,
-        height = height
+      tryCatch(
+        export_orca(hmly, file, width, height),
+        error = function(e) {
+          warning <- paste("plotly::orca failed:\n", e)
+          warning(warning)
+          export(hmly, file, width, height)
+        }
       )
     }
   }
   invisible(hmly)
+}
+
+export_orca <- function(x, file, width, height) {
+  plotly::orca(
+    x,
+    file = file,
+    width = width,
+    height = height
+  )
+}
+
+export <- function(x, file, width, height) {
+  plotly::export(
+    x,
+    file = file,
+    vwidth = width,
+    vheight = height,
+    cliprect = "viewport" 
+  ) 
 }
 
 size_default <- function(file_extension, direction=c("width", "height")) {
