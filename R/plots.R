@@ -400,7 +400,6 @@ ggplot_side_color_plot <- function(df, palette = NULL,
   if (is.null(palette)) palette <- default_side_colors
 
   ## Custom label
-  if (!missing(label_name)) type <- label_name
   if (type %in% colnames(df)) {
     stop("Having", type, "in the colnames of the side_color df will drop data!")
   }
@@ -673,7 +672,7 @@ plotly_side_color_plot <- function(df, palette = NULL,
     df_nums <- t(df_nums)
   }
   if (ncol(df) == 1) {
-    key_title <- colnames(df)  
+    key_title <- colnames(df)
   } else {
     key_title <- paste(gsub("^(\\w)", "\\U\\1", type, perl = TRUE), "annotation")
   }
@@ -819,8 +818,8 @@ export <- function(x, file, width, height) {
     file = file,
     vwidth = width,
     vheight = height,
-    cliprect = "viewport" 
-  ) 
+    cliprect = "viewport"
+  )
 }
 
 size_default <- function(file_extension, direction=c("width", "height")) {
