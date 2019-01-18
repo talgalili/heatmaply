@@ -313,7 +313,7 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   ## Need to somehow convert to colors that plotly will understand
   colors <- sort(unique(segs$col))
   if (is.numeric(colors)) {
-    colors <- gplots::col2hex(grDevices::palette()[seq_along(colors)])
+    colors <- col2hex(grDevices::palette()[seq_along(colors)])
   }
 
   lab_max <- nrow(dend_data$labels)
@@ -865,3 +865,11 @@ size_default <- function(file_extension, direction=c("width", "height")) {
 bitmap_types <- c("png", "jpeg")
 
 hmly_to_file <- Vectorize(hmly_to_file_1file, vectorize.args = "file")
+
+## Copied from gplots
+col2hex <- function(col) {
+    colMat <- col2rgb(col)
+    rgb(red = colMat[1, ] / 255, 
+        green = colMat[2, ] / 255, 
+        blue = colMat[3, ] / 255)
+}

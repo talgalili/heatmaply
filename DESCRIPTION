@@ -43,11 +43,11 @@ Imports:
     RColorBrewer,
     htmlwidgets,
     webshot,
-    gplots,
     assertthat
 Suggests:
     knitr,
     covr,
+    gplots,
     tidyselect,
     rmarkdown,
     testthat
