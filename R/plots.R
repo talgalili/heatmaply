@@ -61,6 +61,7 @@ ggplot_heatmap <- function(xx,
                            point_size_name = "Point size",
                            custom_hovertext = NULL,
                            ...) {
+
   theme_clear_grid_heatmap <- theme(
     axis.line = element_line(color = "black"),
     panel.grid.major = element_blank(),
@@ -220,14 +221,23 @@ paste_aes <- function(x) {
 
 plotly_heatmap <- function(x, limits = range(x),
                            colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option = "viridis"),
-                           row_text_angle = 0, column_text_angle = 45, grid.color, grid.size,
-                           row_dend_left = FALSE, fontsize_row = 10, fontsize_col = 10, key_title = "",
-                           colorbar_xanchor = "left", colorbar_yanchor = "bottom",
+                           row_text_angle = 0, 
+                           column_text_angle = 45, 
+                           grid.color, 
+                           grid.size,
+                           row_dend_left = FALSE, 
+                           fontsize_row = 10,
+                           fontsize_col = 10, 
+                           key_title = "",
+                           colorbar_xanchor = "left", 
+                           colorbar_yanchor = "bottom",
                            label_names = NULL,
-                           colorbar_xpos = 1.1, colorbar_ypos = 1, colorbar_len = 0.3,
+                           colorbar_xpos = 1.1, 
+                           colorbar_ypos = 1, 
+                           colorbar_len = 0.3,
                            custom_hovertext = NULL) {
-  if (is.function(colors)) colors <- colors(256)
 
+  if (is.function(colors)) colors <- colors(256)
 
   if (is.null(label_names)) {
     if (is.null(dim_names <- names(dimnames(x)))) {
@@ -382,9 +392,13 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
 #' @return A ggplot geom_tile object
 #'
 ggplot_side_color_plot <- function(df, palette = NULL,
-                                   scale_title = paste(type, "side colors"), type = c("column", "row"),
-                                   text_angle = if (type == "column") 0 else 90, is_colors = FALSE, fontsize,
+                                   scale_title = paste(type, "side colors"), 
+                                   type = c("column", "row"),
+                                   text_angle = if (type == "column") 0 else 90, 
+                                   is_colors = FALSE, 
+                                   fontsize,
                                    label_name = NULL) {
+
   type <- match.arg(type)
   if (is.matrix(df)) df <- as.data.frame(df)
   assert_that(is.data.frame(df))
@@ -486,8 +500,11 @@ default_side_colors <- function(n) {
 
 ## Predict luminosity of cells and change text based on that
 ## http://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
-predict_colors <- function(p, colorscale_df=p$x$data[[1]]$colorscale,
-                           cell_values=p$x$data[[1]]$z, plot_method=c("ggplot", "plotly")) {
+predict_colors <- function(p, 
+                           colorscale_df = p$x$data[[1]]$colorscale,
+                           cell_values = p$x$data[[1]]$z, 
+                           plot_method = c("ggplot", "plotly")) {
+
   plot_method <- match.arg(plot_method)
 
   cell_values <- as.data.frame(cell_values)
@@ -632,10 +649,15 @@ discrete_colorscale <- function(colors) {
 }
 
 #' @importFrom stats setNames
-plotly_side_color_plot <- function(df, palette = NULL,
-                                   scale_title = paste(type, "side colors"), type = c("column", "row"),
-                                   text_angle = if (type == "column") 0 else 90, is_colors = FALSE,
-                                   label_name = NULL, fontsize = 10) {
+plotly_side_color_plot <- function(df, 
+                                   palette = NULL,
+                                   scale_title = paste(type, "side colors"), 
+                                   type = c("column", "row"),
+                                   text_angle = if (type == "column") 0 else 90, 
+                                   is_colors = FALSE,
+                                   label_name = NULL, 
+                                   fontsize = 10) {
+
   type <- match.arg(type)
 
   if (is.null(label_name)) label_name <- type
@@ -655,11 +677,14 @@ plotly_side_color_plot <- function(df, palette = NULL,
 
   if (is.function(palette)) {
     palette <- setNames(palette(length(levels)), levels)
-  } else if (!all(levels %in% names(palette))) {
-    stop(paste0(
-      "Not all levels of the ", type,
-      "_side_colors are mapped in the ", type, "_side_palette"
-    ))
+  } else {
+    palette <- setNames(col2hex(palette), names(palette))
+    if (!all(levels %in% names(palette))) {
+      stop(paste0(
+        "Not all levels of the ", type,
+        "_side_colors are mapped in the ", type, "_side_palette"
+      ))
+    }
   }
 
   levs2colors <- palette[as.character(levels)]

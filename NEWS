@@ -1,9 +1,11 @@
-heatmaply 0.15.3 (2018-12-03)
+heatmaply 0.15.3 (2019-01-18)
 ===============
 
 ## BUGFIXES
 * heatmaply
   - Supplying label_names could cause incorrect orientation of side colors
+  - Using plot_method="plotly" could cause incorrect interpretation of colour 
+    strings.
 ## NOTES
 * heatmaply
   - Use `plotly::orca` for saving to file, rather than `plotly::export`
