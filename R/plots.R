@@ -297,18 +297,28 @@ plotly_heatmap <- function(x, limits = range(x),
 }
 
 
-plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
-  if (is.hclust(dend)) dend <- as.dendrogram(dend)
+plotly_dend <- function(dend, 
+                        side = c("row", "col"), 
+                        flip = FALSE,
+                        dend_hoverinfo = TRUE) {
+
+  if (is.hclust(dend)) {
+    dend <- as.dendrogram(dend)
+  }
+
   side <- match.arg(side)
   dend_data <- as.ggdend(dend)
   segs <- dend_data$segments
+
   ## Have to get colors back from dendrogram otherwise plotly will make some up
   if (is.null(segs$col) || all(is.na(segs$col))) {
     segs$col <- rep(1, length(segs$col))
   }
   segs$col[is.na(segs$col)] <- "black" # default value for NA is "black"
 
-  if (is.numeric(segs$col)) segs$col <- factor(segs$col)
+  if (is.numeric(segs$col)) {
+    segs$col <- factor(segs$col)
+  }
 
   ## Need to somehow convert to colors that plotly will understand
   colors <- sort(unique(segs$col))
@@ -317,7 +327,9 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
   }
 
   lab_max <- nrow(dend_data$labels)
-  if (side == "row") lab_max <- lab_max + 0.5
+  if (side == "row") {
+    lab_max <- lab_max + 0.5
+  }
 
   axis1 <- list(
     title = "",
@@ -340,7 +352,7 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
           x = ~y, xend = ~yend, y = ~x, yend = ~xend, color = ~col,
           showlegend = FALSE,
           colors = colors,
-          hoverinfo = "x"
+          hoverinfo = if (dend_hoverinfo) "x" else "none"
         ) %>%
         layout(
           hovermode = "closest",
@@ -356,7 +368,7 @@ plotly_dend <- function(dend, side = c("row", "col"), flip = FALSE) {
           x = ~x, xend = ~xend, y = ~y, yend = ~yend, color = ~col,
           showlegend = FALSE,
           colors = colors,
-          hoverinfo = "y"
+          hoverinfo = if (dend_hoverinfo) "y" else "none"
         ) %>%
         layout(
           hovermode = "closest",
