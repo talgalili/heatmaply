@@ -289,6 +289,8 @@ is.plotly <- function(x) {
 #' these default to rownames(x) or colnames(x), respectively.
 #' if set to NA, they change the value in showticklabels to be FALSE. This is mainly to keep
 #' backward compatibility with gplots::heatmap.2.
+#' @param dend_hoverinfo Boolean value which controls whether mouseover text 
+#' is shown for the row and column dendrograms.
 #'
 #' @export
 #' @examples
@@ -568,7 +570,8 @@ heatmaply.default <- function(x,
                               label_format_fun = function(...) format(..., digits = 4),
                               labRow = NULL, labCol = NULL,
                               custom_hovertext = NULL,
-                              col = NULL) {
+                              col = NULL,
+                              dend_hoverinfo = TRUE) {
   if (!missing(long_data)) {
     if (!missing(x)) {
       warning("x and long_data should not be used together")
@@ -722,11 +725,11 @@ heatmaply.default <- function(x,
     custom_hovertext = custom_hovertext,
     labRow = labRow,
     labCol = labCol,
-
     ...
   )
-  hmly <- heatmaply.heatmapr(
-    hm, colors = colors, limits = limits,
+  hmly <- heatmaply(
+    hm, 
+    colors = colors, limits = limits,
     scale_fill_gradient_fun = scale_fill_gradient_fun,
     grid_color = grid_color,
     grid_gap = grid_gap,
@@ -767,7 +770,8 @@ heatmaply.default <- function(x,
     grid_size = grid_size,
     node_type = node_type,
     point_size_name = point_size_name,
-    label_format_fun = label_format_fun
+    label_format_fun = label_format_fun,
+    dend_hoverinfo = dend_hoverinfo
   )
 
   # TODO: think more on what should be passed in "..."
@@ -842,7 +846,8 @@ heatmaply.heatmapr <- function(x,
                                point_size_mat = x[["matrix"]][["point_size_mat"]],
                                point_size_name = "Point size",
                                label_format_fun = function(...) format(..., digits = 4),
-                               custom_hovertext = x[["matrix"]][["custom_hovertext"]]) {
+                               custom_hovertext = x[["matrix"]][["custom_hovertext"]],
+                               dend_hoverinfo = TRUE) {
   node_type <- match.arg(node_type)
   plot_method <- match.arg(plot_method)
   cellnote_textposition <- match.arg(
@@ -893,20 +898,30 @@ heatmaply.heatmapr <- function(x,
   # x <- heatmapr(mtcars)
   # source: http://stackoverflow.com/questions/6528180/ggplot2-plot-without-axes-legends-etc
   theme_clear_grid_dends <- theme(
-    axis.line = element_blank(), axis.text.x = element_blank(),
-    axis.text.y = element_blank(), axis.ticks = element_blank(),
+    axis.line = element_blank(), 
+    axis.text.x = element_blank(),
+    axis.text.y = element_blank(), 
+    axis.ticks = element_blank(),
     axis.title.x = element_blank(),
-    axis.title.y = element_blank(), legend.position = "none",
-    panel.background = element_blank(), panel.border = element_blank(), panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(), plot.background = element_blank()
+    axis.title.y = element_blank(), 
+    legend.position = "none",
+    panel.background = element_blank(), 
+    panel.border = element_blank(), 
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(), 
+    plot.background = element_blank()
   )
   # dendrograms:
   rows <- x$rows
   cols <- x$cols
 
   if (!is.null(branches_lwd) && branches_lwd != 1) {
-    if (is.dendrogram(rows) && !has_edgePar(rows, "lwd")) rows <- set(rows, "branches_lwd", branches_lwd)
-    if (is.dendrogram(cols) && !has_edgePar(cols, "lwd")) cols <- set(cols, "branches_lwd", branches_lwd)
+    if (is.dendrogram(rows) && !has_edgePar(rows, "lwd")) {
+      rows <- set(rows, "branches_lwd", branches_lwd)
+    }
+    if (is.dendrogram(cols) && !has_edgePar(cols, "lwd")) {
+      cols <- set(cols, "branches_lwd", branches_lwd)
+    }
   }
 
 
@@ -918,11 +933,14 @@ heatmaply.heatmapr <- function(x,
     if (plot_method == "ggplot") {
       col_ggdend <- as.ggdend(cols)
       xlims <- c(0.5, nrow(col_ggdend$labels) + 0.5)
-      py <- ggplot(cols, labels = FALSE) + theme_bw() +
+      py <- ggplot(cols, labels = FALSE) + 
+        theme_bw() +
         coord_cartesian(expand = FALSE, xlim = xlims) +
         theme_clear_grid_dends
     } else {
-      suppressWarnings(py <- plotly_dend(cols, side = "col"))
+      py <- plotly_dend(cols, 
+                        side = "col", 
+                        dend_hoverinfo = dend_hoverinfo)
     }
   }
   if (is.null(rows)) {
@@ -933,14 +951,18 @@ heatmaply.heatmapr <- function(x,
       ylims <- c(0.5, nrow(row_ggdend$labels) + 0.5)
 
       px <- ggplot(row_ggdend, labels = FALSE) +
-        # coord_cartesian(expand = FALSE) +
-        coord_flip(expand = FALSE, xlim = ylims) +
         theme_bw() +
+        coord_flip(expand = FALSE, xlim = ylims) +
         theme_clear_grid_dends
 
-      if (row_dend_left) px <- px + scale_y_reverse()
+      if (row_dend_left) {
+        px <- px + scale_y_reverse()
+      }
     } else {
-      px <- plotly_dend(rows, flip = row_dend_left, side = "row")
+      px <- plotly_dend(rows, 
+                        flip = row_dend_left, 
+                        side = "row",
+                        dend_hoverinfo = dend_hoverinfo)
     }
   }
   # create the heatmap
@@ -967,8 +989,11 @@ heatmaply.heatmapr <- function(x,
     )
   } else if (plot_method == "plotly") {
     p <- plotly_heatmap(
-      data_mat, limits = limits, colors = colors,
-      key_title = key.title, label_names = label_names,
+      data_mat, 
+      limits = limits, 
+      colors = colors,
+      key_title = key.title, 
+      label_names = label_names,
       row_text_angle = row_text_angle, column_text_angle = column_text_angle,
       fontsize_row = fontsize_row, fontsize_col = fontsize_col,
       colorbar_yanchor = colorbar_yanchor, colorbar_xanchor = colorbar_xanchor,
@@ -1088,12 +1113,6 @@ heatmaply.heatmapr <- function(x,
     mdf$value <- factor(mdf$value)
 
     p <- p %>% add_trace(
-#<<<<<<< hotfix
-#      inherit = FALSE,
-#      y = mdf$row, x = mdf$variable, text = mdf$value,
-#      type = "scatter", mode = "text", textposition = cellnote_textposition,
-#      hoverinfo = "none", showlegend = FALSE,
-#=======
       data = mdf,
       x = ~ variable,
       y = ~ row,
@@ -1107,12 +1126,17 @@ heatmaply.heatmapr <- function(x,
       textfont = list(color = plotly::toRGB(cellnote_color), size = cellnote_size)
     )
   }
+
   if (!is.null(px) && !is.plotly(px)) {
-    px <- ggplotly(px, tooltip = "y", dynamicTicks = dynamicTicks) %>%
+    px <- ggplotly(px, 
+                   tooltip = if (dend_hoverinfo) "y" else "none", 
+                   dynamicTicks = dynamicTicks) %>%
       layout(showlegend = FALSE)
   }
   if (!is.null(py) && !is.plotly(py)) {
-    py <- ggplotly(py, tooltip = "y", dynamicTicks = dynamicTicks) %>%
+    py <- ggplotly(py, 
+                   tooltip = if (dend_hoverinfo) "y" else "none", 
+                   dynamicTicks = dynamicTicks) %>%
       layout(showlegend = FALSE)
   }
 

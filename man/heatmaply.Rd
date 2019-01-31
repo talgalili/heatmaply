@@ -44,7 +44,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   point_size_mat = NULL, point_size_name = "Point size",
   label_format_fun = function(...) format(..., digits = 4),
   labRow = NULL, labCol = NULL, custom_hovertext = NULL,
-  col = NULL)
+  col = NULL, dend_hoverinfo = TRUE)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1,
   begin = 0, end = 1, option = "viridis"), limits = NULL,
@@ -71,7 +71,8 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   point_size_mat = x[["matrix"]][["point_size_mat"]],
   point_size_name = "Point size", label_format_fun = function(...)
   format(..., digits = 4),
-  custom_hovertext = x[["matrix"]][["custom_hovertext"]])
+  custom_hovertext = x[["matrix"]][["custom_hovertext"]],
+  dend_hoverinfo = TRUE)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -358,6 +359,9 @@ backward compatibility with gplots::heatmap.2.}
 \item{custom_hovertext}{Custom hovertext matrix (the same dimensions as the input).
 If plot_method is "plotly" then just this text is displayed; if plot_method
 if "ggplot" then it is appended to the existing text.}
+
+\item{dend_hoverinfo}{Boolean value which controls whether mouseover text 
+is shown for the row and column dendrograms.}
 }
 \description{
 An object of class heatmapr includes all the needed information
