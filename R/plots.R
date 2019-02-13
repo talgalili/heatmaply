@@ -219,7 +219,8 @@ paste_aes <- function(x) {
   paste0("`", x, "`")
 }
 
-plotly_heatmap <- function(x, limits = range(x),
+plotly_heatmap <- function(x,
+                           limits = range(x),
                            colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option = "viridis"),
                            row_text_angle = 0, 
                            column_text_angle = 45, 
