@@ -263,9 +263,8 @@ plotly_heatmap <- function(x,
   )
   text_mat <- as.matrix(text_mat)
   if (!is.null(custom_hovertext)) {
-    text_mat <- paste(text_mat, custom_hovertext, sep = "<br>")
+    text_mat[] <- paste(text_mat, custom_hovertext, sep = "<br>")
   }
-
   p <- plot_ly(
     z = x, x = 1:ncol(x), y = 1:nrow(x), text = text_mat,
     type = "heatmap", showlegend = FALSE, colors = colors, hoverinfo = "text",
