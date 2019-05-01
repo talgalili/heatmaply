@@ -879,6 +879,7 @@ bitmap_types <- c("png", "jpeg")
 hmly_to_file <- Vectorize(hmly_to_file_1file, vectorize.args = "file")
 
 ## Copied from gplots
+#' @importFrom grDevices col2rgb
 col2hex <- function(col) {
     colMat <- col2rgb(col)
     rgb(red = colMat[1, ] / 255, 
