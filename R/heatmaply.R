@@ -1218,7 +1218,7 @@ heatmaply.heatmapr <- function(x,
 
   # keep only relevant plotly options
   l <- config(
-    l, displaylogo = FALSE, collaborate = FALSE,
+    l, displaylogo = FALSE,
     modeBarButtonsToRemove = c("sendDataToCloud", "select2d", "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian", "sendDataToCloud")
   )
 

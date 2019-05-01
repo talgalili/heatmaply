@@ -4,6 +4,7 @@ heatmaply 0.15.4 (2019-04-11)
 ## BUGFIXES
 * heatmaply
   - custom_hovertext did not work when plot_method="plotly"
+  - Remove collaborate option internally (would cause warnings to be issued)
 
 heatmaply 0.15.3 (2019-01-18)
 ===============
