@@ -9,7 +9,7 @@ test_that("normalize", {
   a <- seq(0, 1, by = 0.01)
   expect_equal(normalize(a), a)
   b <- 1:1000000
-  expect_true(all(normalize(b) <= 1 && all(normalize(b) >= 0)))
+  expect_true(all(normalize(b) <= 1) && all(normalize(b) >= 0))
 
   d <- data.frame(a = a[1:101], b = b[1:101], c = "c")
   dn <- normalize(d)
