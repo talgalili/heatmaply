@@ -9,15 +9,14 @@ The interface was designed based on \link{heatmap}, \link[gplots]{heatmap.2}, an
 \usage{
 heatmapr(x, Rowv, Colv, distfun = dist, hclustfun = hclust,
   dist_method = NULL, hclust_method = NULL, distfun_row, hclustfun_row,
-  distfun_col, hclustfun_col, dendrogram = c("both", "row", "column",
-  "none"), reorderfun = function(d, w) reorder(d, w), k_row = 1,
-  k_col = 1, symm = FALSE, revC, scale = c("none", "row", "column"),
-  na.rm = TRUE, labRow = rownames(x), labCol = colnames(x), cexRow,
-  cexCol, digits = 3L, cellnote = NULL, theme = NULL,
-  colors = "RdYlBu", width = NULL, height = NULL,
-  xaxis_height = 80, yaxis_width = 120, xaxis_font_size = NULL,
-  yaxis_font_size = NULL, brush_color = "#0000FF", show_grid = TRUE,
-  anim_duration = 500, row_side_colors, col_side_colors,
+  distfun_col, hclustfun_col, dendrogram = c("both", "row", "column", "none"),
+  reorderfun = function(d, w) reorder(d, w), k_row = 1, k_col = 1,
+  symm = FALSE, revC, scale = c("none", "row", "column"), na.rm = TRUE,
+  labRow = rownames(x), labCol = colnames(x), cexRow, cexCol, digits = 3L,
+  cellnote = NULL, theme = NULL, colors = "RdYlBu", width = NULL,
+  height = NULL, xaxis_height = 80, yaxis_width = 120,
+  xaxis_font_size = NULL, yaxis_font_size = NULL, brush_color = "#0000FF",
+  show_grid = TRUE, anim_duration = 500, row_side_colors, col_side_colors,
   seriate = c("OLO", "mean", "none", "GW"), point_size_mat = NULL,
   custom_hovertext = NULL, ...)
 }
