@@ -1,3 +1,98 @@
+* 2019-05-01(Alan O'Callaghan) Namespace fix |02568d7| 
+|  NAMESPACE | 1 +
+|  R/plots.R | 1 +
+|  2 files changed, 2 insertions(+)
+
+* 2019-05-01(Alan O'Callaghan) Bug in tests |65b54ec| 
+|  tests/testthat/test_misc.R | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2019-05-01(Alan O'Callaghan) Remove collaborate (warnings) |ba58fe5| 
+|  NEWS          | 1 +
+|  R/heatmaply.R | 2 +-
+|  2 files changed, 2 insertions(+), 1 deletion(-)
+
+* 2019-04-11(Alan O'Callaghan) Resolve #210 |a1bac75| 
+|  DESCRIPTION | 4 ++--
+|  NEWS        | 7 +++++++
+|  R/plots.R   | 3 +--
+|  3 files changed, 10 insertions(+), 4 deletions(-)
+
+* 2019-02-13(Alan O'Callaghan) style change |182dd40| 
+|  R/plots.R | 3 ++-
+|  1 file changed, 2 insertions(+), 1 deletion(-)
+
+* 2019-01-31(Alan O'Callaghan) Resolve #195 (#206) |80a80af| 
+|  DESCRIPTION      |  2 +-
+|  NEWS             |  4 +++
+|  R/heatmaply.R    | 82 +++++++++++++++++++++++++++++++++++-------------------
+|  R/plots.R        | 24 ++++++++++++----
+|  man/heatmaply.Rd |  8 ++++--
+|  5 files changed, 82 insertions(+), 38 deletions(-)
+
+* 2019-01-18(Alan O'Callaghan) Remove gplots from imports |d221daf| 
+|  DESCRIPTION |  2 +-
+|  R/plots.R   | 10 +++++++++-
+|  2 files changed, 10 insertions(+), 2 deletions(-)
+
+* 2019-01-18(Alan O'Callaghan) Fix #202, reinstate column annotation warning |3e59946| 
+|  DESCRIPTION      |  2 +-
+|  NEWS             |  4 ++-
+|  R/heatmaply.R    |  2 +-
+|  R/plots.R        | 61 +++++++++++++++++++++++++++++------------
+|  man/heatmaply.Rd | 80 ++++++++++++++++++++++++++++--------------------------
+|  man/heatmapr.Rd  | 17 ++++++------
+|  6 files changed, 99 insertions(+), 67 deletions(-)
+
+* 2018-12-14(Alan O'Callaghan) Remove warning |066743a| 
+|  R/heatmaply.R | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2018-12-14(Alan O'Callaghan) Resolve #194 |81ecf80| 
+|  NEWS      | 3 +++
+|  R/plots.R | 7 +++----
+|  2 files changed, 6 insertions(+), 4 deletions(-)
+
+* 2018-12-06(Alan O'Callaghan) Add fallback |0982b80| 
+|  R/plots.R | 31 ++++++++++++++++++++++++++-----
+|  1 file changed, 26 insertions(+), 5 deletions(-)
+
+* 2018-12-03(Alan O'Callaghan) Update DESCRIPTION |1c089f0| 
+|  DESCRIPTION | 8 ++++----
+|  1 file changed, 4 insertions(+), 4 deletions(-)
+
+* 2018-12-03(Alan O'Callaghan) Update NEWS |40bfe61| 
+|  NEWS | 7 +++++++
+|  1 file changed, 7 insertions(+)
+
+* 2018-12-03(Alan O'Callaghan) Use orca (#191) |271929a| 
+|  R/plots.R | 11 +++--------
+|  1 file changed, 3 insertions(+), 8 deletions(-)
+
+* 2018-07-06(Tal Galili) bump to 0.15.2 |136aea4| 
+|  DESCRIPTION | 2 +-
+|  NEWS        | 2 +-
+|  2 files changed, 2 insertions(+), 2 deletions(-)
+
+* 2018-07-06(Tal Galili) update docs |7c24899| 
+|  man/heatmaply.Rd | 5 ++---
+|  1 file changed, 2 insertions(+), 3 deletions(-)
+
+* 2018-07-06(Alan O'Callaghan) Fix test |7c8582d| 
+|  R/heatmaply.R | 31 +++++++++++++++++++------------
+|  1 file changed, 19 insertions(+), 12 deletions(-)
+
+* 2018-07-06(Tal Galili) Fix  code/documentation mismatches |fde3d93| 
+|  man/heatmaply.Rd | 5 +++--
+|  1 file changed, 3 insertions(+), 2 deletions(-)
+
+* 2018-07-06(Tal Galili) bump to 0.15.1 |d34575b| 
+|  ChangeLog   | 72 +++++++++++++++++++++++++++++++++++++++++------------------
+|  DESCRIPTION |  4 ++--
+|  NEWS        |  8 +++++++
+|  NEWS.md     |  8 +++++++
+|  4 files changed, 68 insertions(+), 24 deletions(-)
+
 * 2018-07-06(Alan O'Callaghan) Fix label bug |2cfc90c| 
 |  R/heatmaply.R | 48 ++++++++++++++++++++----------------------------
 |  1 file changed, 20 insertions(+), 28 deletions(-)
@@ -548,18 +643,17 @@
 |  7 files changed, 266 insertions(+), 188 deletions(-)
 
 * 2017-07-27(Alanocallaghan) Plotly side color plots (#75) |dab16ba| 
-|  .gitignore                    |   5 +
-|  NAMESPACE                     |   1 +
-|  NEWS                          |   6 +-
-|  R/heatmaply.R                 | 130 +++++---------
-|  R/plots.R                     | 379 +++++++++++++++++++++++++++++-----------
-|  man/col2plotlyrgb.Rd          |  29 ---
-|  man/ggplot_side_color_plot.Rd |  33 ++++
-|  man/heatmaply.Rd              |  40 +++--
-|  man/side_color_plot.Rd        |  33 ----
-|  vignettes/biological_data.Rmd |  50 ++++++
-|  vignettes/heatmaply.Rmd       |   4 +-
-|  11 files changed, 441 insertions(+), 269 deletions(-)
+|  .gitignore                                        |   5 +
+|  NAMESPACE                                         |   1 +
+|  NEWS                                              |   6 +-
+|  R/heatmaply.R                                     | 130 +++----
+|  R/plots.R                                         | 379 ++++++++++++++------
+|  man/col2plotlyrgb.Rd                              |  29 --
+|  ...de_color_plot.Rd => ggplot_side_color_plot.Rd} |  10 +-
+|  man/heatmaply.Rd                                  |  40 ++-
+|  vignettes/biological_data.Rmd                     |  50 +++
+|  vignettes/heatmaply.Rmd                           |   4 +-
+|  10 files changed, 413 insertions(+), 241 deletions(-)
 
 * 2017-07-15(Alanocallaghan) Update NEWS |87ba31c| 
 |  NEWS | 6 ++++++
@@ -1309,14 +1403,13 @@
 | | | | | |  9 files changed, 27 insertions(+), 10 deletions(-)
 
 | | * | | | 2017-03-22(Alan O'Callaghan) Move plots to file |2f39259| | | | | | 
-| | | | | |  NAMESPACE              |   2 +-
-| | | | | |  R/ggheatmap.R          |  85 ---------
-| | | | | |  R/heatmaply.R          | 351 +------------------------------------
-| | | | | |  R/plots.R              | 331 ++++++++++++++++++++++++++++++++++
-| | | | | |  man/ggheatmap.Rd       |  30 ----
-| | | | | |  man/ggplot_heatmap.Rd  |  34 ++++
-| | | | | |  man/side_color_plot.Rd |   2 +-
-| | | | | |  7 files changed, 369 insertions(+), 466 deletions(-)
+| | | | | |  NAMESPACE                               |   2 +-
+| | | | | |  R/ggheatmap.R                           |  85 -----
+| | | | | |  R/heatmaply.R                           | 351 +-------------------
+| | | | | |  R/plots.R                               | 331 ++++++++++++++++++
+| | | | | |  man/{ggheatmap.Rd => ggplot_heatmap.Rd} |  16 +-
+| | | | | |  man/side_color_plot.Rd                  |   2 +-
+| | | | | |  6 files changed, 345 insertions(+), 442 deletions(-)
 
 | | * | | | 2017-03-15(Alan O'Callaghan) Several bugfixes and functionality adds re: native plotly |d270494| | | | | | 
 | | | | | |  R/heatmaply.R | 57 ++++++++++++++++++++++++++++++++++++++---------
@@ -1642,23 +1735,20 @@
 | | | | | |  5 files changed, 93 insertions(+), 2 deletions(-)
 
 * | | | | | 2017-01-19(Tal Galili) percentalize  -> percentize |54819b4| | | | | | 
-| | | | | |  NAMESPACE           |  8 ++++----
-| | | | | |  NEWS                |  2 +-
-| | | | | |  R/percentize.R      | 40 ++++++++++++++++++-------------------
-| | | | | |  man/normalize.Rd    | 10 +++++-----
-| | | | | |  man/percentalize.Rd | 44 -----------------------------------------
-| | | | | |  man/percentize.Rd   | 44 +++++++++++++++++++++++++++++++++++++++++
-| | | | | |  6 files changed, 74 insertions(+), 74 deletions(-)
+| | | | | |  NAMESPACE                              |  8 ++---
+| | | | | |  NEWS                                   |  2 +-
+| | | | | |  R/percentize.R                         | 40 +++++++++++-----------
+| | | | | |  man/normalize.Rd                       | 10 +++---
+| | | | | |  man/{percentalize.Rd => percentize.Rd} | 22 ++++++------
+| | | | | |  5 files changed, 41 insertions(+), 41 deletions(-)
 
 * | | | | | 2017-01-19(Tal Galili) percentalize -> percentize |fa44979| | | | | | 
-| | | | | |  R/percentalize.R | 191 -------------------------------------------
-| | | | | |  R/percentize.R   | 191 +++++++++++++++++++++++++++++++++++++++++++
-| | | | | |  2 files changed, 191 insertions(+), 191 deletions(-)
+| | | | | |  R/{percentalize.R => percentize.R} | 0
+| | | | | |  1 file changed, 0 insertions(+), 0 deletions(-)
 
 * | | | | | 2017-01-19(Tal Galili) rename ept.R to percentalize.R |6786889| | | | | | 
-| | | | | |  R/ept.R          | 191 -------------------------------------------
-| | | | | |  R/percentalize.R | 191 +++++++++++++++++++++++++++++++++++++++++++
-| | | | | |  2 files changed, 191 insertions(+), 191 deletions(-)
+| | | | | |  R/{ept.R => percentalize.R} | 0
+| | | | | |  1 file changed, 0 insertions(+), 0 deletions(-)
 
 * | | | | | 2017-01-19(Tal Galili) normalize - a pre-processing function for adjusing the range of the variables to be from 0 to 1. |398ae80| | | | | | 
 | | | | | |  NAMESPACE        |  4 +++
@@ -1668,12 +1758,11 @@
 | | | | | |  4 files changed, 130 insertions(+)
 
 * | | | | | 2017-01-19(Tal Galili) rename ept to percentalize |87d93c5| | | | | | 
-| | | | | |  NAMESPACE           |  8 ++++----
-| | | | | |  NEWS                |  2 +-
-| | | | | |  R/ept.R             | 35 +++++++++++++++++---------------
-| | | | | |  man/ept.Rd          | 38 -----------------------------------
-| | | | | |  man/percentalize.Rd | 44 +++++++++++++++++++++++++++++++++++++++++
-| | | | | |  5 files changed, 68 insertions(+), 59 deletions(-)
+| | | | | |  NAMESPACE                       |  8 +++----
+| | | | | |  NEWS                            |  2 +-
+| | | | | |  R/ept.R                         | 35 ++++++++++++++++-------------
+| | | | | |  man/{ept.Rd => percentalize.Rd} | 22 +++++++++++-------
+| | | | | |  4 files changed, 38 insertions(+), 29 deletions(-)
 
 * | | | | | 2017-01-18(Tal Galili) Correct handeling of NA in ept.data.frame (i.e.: ept_predict) |2cc6ec5| | | | | | 
 | | | | | |  R/ept.R | 16 ++++++++++++----

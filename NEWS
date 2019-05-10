@@ -1,26 +1,21 @@
-heatmaply 0.15.4 (2019-04-11)
+heatmaply 0.16.0 (2019-05-10)
 ===============
 
-## BUGFIXES
-* heatmaply
-  - custom_hovertext did not work when plot_method="plotly"
-  - Remove collaborate option internally (would cause warnings to be issued)
-
-heatmaply 0.15.3 (2019-01-18)
-===============
-
-## BUGFIXES
-* heatmaply
-  - Supplying label_names could cause incorrect orientation of side colors
-  - Using plot_method="plotly" could cause incorrect interpretation of colour 
-    strings.
 ## NEW FEATURES
 * heatmaply
   - The boolean argument dend_hoverinfo can control whether hoverinfo is shown
     for the row and column dendrograms.
+## BUGFIXES
+* heatmaply
+  - Supplying label_names could cause incorrect orientation of side colors
+  - Using plot_method="plotly" could cause incorrect interpretation of colour
+    strings.
+  - custom_hovertext did not work when plot_method="plotly"
+  - Remove collaborate option internally (would cause warnings to be issued)
 ## NOTES
 * heatmaply
   - Use `plotly::orca` for saving to file, rather than `plotly::export`
+* Alan O'Callaghan is now recognized in the DESCRIPTION as a co-author of the package, in recognition to his significant (continuous) contribution to the package and the community. Thanks for everything Alan!
 
 heatmaply 0.15.2 (2018-07-06)
 ===============
@@ -63,7 +58,7 @@ heatmaply 0.14.0 (2018-01-20)
   - Add `label_format_fun` argument, which formats text before adding to
     hovertext
   - Row and column annotation legends are now ordered according to factor
-    levels, or by default, are sorted (the previous default behaviour).
+    levels, or by default, are sorted (the previous default behavior).
   - Add `node_type argument, which allows users to plot the heatmap with
     discs rather than squares. See also the `point_size_mat` argument.
   - Add `point_size_mat` argument, which is mapped to point size when
@@ -77,8 +72,8 @@ heatmaply 0.14.0 (2018-01-20)
 
 ### NOTES
 
-* USing stylr to improve the readability of the R code.
-* USing devtools::spell_check() to spell check the doc.
+* Using stylr to improve the readability of the R code.
+* Using devtools::spell_check() to spell check the doc.
 
 
 
