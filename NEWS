@@ -1,3 +1,12 @@
+heatmaply 1.0.0 (2019-xx-yy)
+===============
+
+## BUGFIXES
+* heatmaply
+  - Legends are no longer shown for the row/column dendrogram traces when
+    plot_method = "ggplot".
+
+
 heatmaply 0.16.0 (2019-05-10)
 ===============
 

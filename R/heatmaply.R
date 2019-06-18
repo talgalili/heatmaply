@@ -1095,7 +1095,7 @@ heatmaply.heatmapr <- function(x,
   # turn p, px, and py to plotly objects if necessary
   if (!is.plotly(p)) {
     p <- ggplotly(p, dynamicTicks = dynamicTicks, tooltip = "text") %>%
-      layout(showlegend = TRUE)
+      layout(showlegend = FALSE)
   }
 
   if (draw_cellnote) {
@@ -1154,8 +1154,6 @@ heatmaply.heatmapr <- function(x,
   )
   if (hide_colorbar) {
     p <- hide_colorbar(p)
-    # px <- hide_colorbar(px)
-    # py <- hide_colorbar(py)
   }
 
   # Adjust top based on whether main is empty or not.
@@ -1319,8 +1317,10 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
         plots,
         nrows = nrows,
         widths = widths,
-        shareX = TRUE, shareY = TRUE,
-        titleX = titleX, titleY = titleY,
+        shareX = TRUE, 
+        shareY = TRUE,
+        titleX = titleX, 
+        titleY = titleY,
         margin = subplot_margin,
         heights = heights
       )

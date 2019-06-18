@@ -183,7 +183,9 @@ ggplot_heatmap <- function(xx,
     p <- p + geom_vline(xintercept = c(0:ncol(xx)) + 0.5, color = grid_color) # , size = grid_size # not implemented since it doesn't work with plotly
   }
 
-  if (row_dend_left) p <- p + scale_y_discrete(position = "right") # possible as of ggplot 2.1.0 !
+  if (row_dend_left) {
+    p <- p + scale_y_discrete(position = "right") # possible as of ggplot 2.1.0 !
+  }
 
   p
 }
