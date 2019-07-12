@@ -1203,10 +1203,19 @@ heatmaply.heatmapr <- function(x,
   }
 
   heatmap_subplot <- heatmap_subplot_from_ggplotly(
-    p = p, px = px, py = py,
-    row_dend_left = row_dend_left, subplot_margin = subplot_margin,
-    widths = subplot_widths, heights = subplot_heights,
-    titleX = titleX, titleY = titleY, pr = pr, pc = pc, plot_method = plot_method
+    p = p, 
+    px = px, 
+    py = py,
+    row_dend_left = row_dend_left, 
+    subplot_margin = subplot_margin,
+    widths = subplot_widths, 
+    heights = subplot_heights,
+    titleX = titleX, 
+    titleY = titleY, 
+    pr = pr, 
+    pc = pc, 
+    plot_method = plot_method,
+    showticklabels = showticklabels
   )
   l <- layout(
     heatmap_subplot,
@@ -1235,7 +1244,8 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
                                           row_dend_left = FALSE, subplot_margin = 0,
                                           titleX = TRUE, titleY = TRUE,
                                           widths=NULL, heights=NULL,
-                                          plot_method) {
+                                          plot_method,
+                                          showticklabels=c(TRUE, TRUE)) {
   if (is.null(widths)) {
     if (!is.null(px)) {
       if (is.null(pr)) {
@@ -1334,7 +1344,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
       l <- list(
         anchor = paste0("x", str),
         side = "right",
-        showticklabels = TRUE
+        showticklabels = showticklabels[[1]]
       )
       num_cols <- sum(!ind_null_col)
       if (num_cols == 1) {
