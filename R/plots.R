@@ -238,7 +238,8 @@ plotly_heatmap <- function(x,
                            colorbar_xpos = 1.1, 
                            colorbar_ypos = 1, 
                            colorbar_len = 0.3,
-                           custom_hovertext = NULL) {
+                           custom_hovertext = NULL,
+                           showticklabels = c(TRUE, TRUE)) {
 
   if (is.function(colors)) colors <- colors(256)
 
@@ -279,7 +280,7 @@ plotly_heatmap <- function(x,
         tickvals = 1:ncol(x), ticktext = colnames(x),
         linecolor = "#ffffff",
         range = c(0.5, ncol(x) + 0.5),
-        showticklabels = TRUE
+        showticklabels = showticklabels[[1]]
       ),
       yaxis = list(
         tickfont = list(size = fontsize_row),
@@ -287,7 +288,7 @@ plotly_heatmap <- function(x,
         tickvals = 1:nrow(x), ticktext = rownames(x),
         linecolor = "#ffffff",
         range = c(0.5, nrow(x) + 0.5),
-        showticklabels = TRUE
+        showticklabels = showticklabels[[2]]
       )
     )
   p <- plotly::colorbar(

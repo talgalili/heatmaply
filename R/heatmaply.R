@@ -665,14 +665,14 @@ heatmaply.default <- function(x,
 
   if (!is.null(labRow)) {
     if (all(is.na(labRow))) {
-      showticklabels[2] <- FALSE
+      showticklabels[[2]] <- FALSE
     }
   } else {
     labRow <- rownames(x)
   }
   if (!is.null(labCol)) {
     if (all(is.na(labCol))) {
-      showticklabels[1] <- FALSE
+      showticklabels[[1]] <- FALSE
     }
   } else {
     labCol <- colnames(x)
@@ -1039,7 +1039,8 @@ heatmaply.heatmapr <- function(x,
         palette = row_side_palette,
         fontsize = fontsize_col,
         is_colors = !is.null(RowSideColors),
-        label_name = label_names[[1]]
+        label_name = label_names[[1]],
+        showticklabels = showticklabels
       )
     }
   }
@@ -1353,7 +1354,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
       l <- list(
         anchor = paste0("x", str),
         side = "right",
-        showticklabels = showticklabels[[1]]
+        showticklabels = showticklabels[[2]]
       )
       num_cols <- sum(!ind_null_col)
       if (num_cols == 1) {
