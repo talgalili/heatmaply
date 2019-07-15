@@ -531,7 +531,7 @@ heatmapr <- function(x,
 
   heatmapr <- list(
     rows = rowDend, cols = colDend, matrix = mtx,
-    theme = theme, options = options, cellnote = cellnote
+    theme = theme, options = options
   )
 
   if (!missing(row_side_colors)) heatmapr[["row_side_colors"]] <- row_side_colors

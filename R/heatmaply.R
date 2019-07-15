@@ -1104,18 +1104,27 @@ heatmaply.heatmapr <- function(x,
       cellnote_color <- predict_colors(p, plot_method = plot_method)
     }
 
-    df <- as.data.frame(x[["cellnote"]])
-    df$row <- 1:nrow(df)
-    mdf <- reshape2::melt(df, id.vars = "row")
+    df <- as.data.frame(x[["matrix"]][["cellnote"]])
+    if (plot_method == "plotly") {
+      df[["_row"]] <- seq_len(nrow(df))
+    } else {
+      if (is.null(rownames(df))) {
+        rownames(df) <- seq_len(nrow(df))
+      }
+      df[["_row"]] <- rownames(df)
+    }
+    mdf <- reshape2::melt(df, id.vars = "_row")
     ## TODO: Enforce same dimnames to ensure it's not scrambled?
     # mdf$variable <- factor(mdf$variable, levels = p$x$layout$xaxis$ticktext)
-    mdf$variable <- as.numeric(as.factor(mdf$variable))
+    mdf$variable <- as.factor(mdf$variable)
+    if (plot_method == "plotly") {
+      mdf$variable <- as.numeric(as.factor(mdf$variable))
+    }
     mdf$value <- factor(mdf$value)
-
     p <- p %>% add_trace(
       data = mdf,
       x = ~ variable,
-      y = ~ row,
+      y = ~ `_row`,
       text = ~ value,
       inherit = FALSE,
       type = "scatter",

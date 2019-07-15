@@ -5,7 +5,7 @@ heatmaply 1.0.0 (2019-xx-yy)
 * heatmaply
   - Legends are no longer shown for the row/column dendrogram traces when
     plot_method = "ggplot".
-
+  - cellnote would be placed outwith the heatmap when plot_method = "ggplot"
 
 heatmaply 0.16.0 (2019-05-10)
 ===============
