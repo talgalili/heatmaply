@@ -1,8 +1,8 @@
 Package: heatmaply
 Type: Package
 Title: Interactive Cluster Heat Maps Using 'plotly'
-Version: 0.16.0
-Date: 2019-05-11
+Version: 0.17.0
+Date: 2019-07-17
 Authors@R: c(
     person("Tal", "Galili", role = c("aut", "cre", "cph"), email = "tal.galili@gmail.com", comment = "https://www.r-statistics.com"),
     person("Alan", "O'Callaghan", comment = "https://github.com/Alanocallaghan",role = "aut"),
@@ -53,7 +53,8 @@ Suggests:
     testthat
 VignetteBuilder: knitr
 License: GPL-2 | GPL-3
-URL: https://cran.r-project.org/package=heatmaply,
+URL:http://talgalili.github.io/heatmaply/, 
+    https://cran.r-project.org/package=heatmaply,
     https://github.com/talgalili/heatmaply/,
     https://www.r-statistics.com/tag/heatmaply/
 BugReports: https://github.com/talgalili/heatmaply/issues

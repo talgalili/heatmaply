@@ -1,3 +1,24 @@
+* 2019-05-11(Tal Galili) bump to 0.16.0 |998d55d| 
+|  DESCRIPTION | 4 ++--
+|  1 file changed, 2 insertions(+), 2 deletions(-)
+
+* 2019-05-10(Tal Galili) undo last commit |e5fa2c7| 
+|  man/heatmaply.Rd | 81 ++++++++++++++++++++++++++++--------------------------
+|  man/heatmapr.Rd  | 17 ++++++------
+|  2 files changed, 51 insertions(+), 47 deletions(-)
+
+* 2019-05-10(Tal Galili) Update docs |94d8774| 
+|  man/heatmaply.Rd | 81 ++++++++++++++++++++++++++----------------------------
+|  man/heatmapr.Rd  | 17 ++++++------
+|  2 files changed, 47 insertions(+), 51 deletions(-)
+
+* 2019-05-10(Tal Galili) Update NEWS and bumped to 0.16.0 |5ed450f| 
+|  ChangeLog   | 167 ++++++++++++++++++++++++++++++++++++++++++++--------------
+|  DESCRIPTION |   8 +--
+|  NEWS        |  27 ++++------
+|  NEWS.md     |  27 ++++++++--
+|  4 files changed, 166 insertions(+), 63 deletions(-)
+
 * 2019-05-01(Alan O'Callaghan) Namespace fix |02568d7| 
 |  NAMESPACE | 1 +
 |  R/plots.R | 1 +
