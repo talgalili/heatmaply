@@ -1,5 +1,13 @@
-heatmaply 0.17.0 (2019-07-17)
-----------------------------------------
+heatmaply 1.0.0 (2019-xx-yy)
+===============
+
+## BUGFIXES
+* heatmaply
+  - Legends are no longer shown for the row/column dendrogram traces when
+    plot_method = "ggplot".
+  - cellnote would be placed outwith the heatmap when plot_method = "ggplot"
+  - showticklabels applies when row_dend_left=TRUE and plot_method="plotly"
+
 ###OTHER NOTES
 - Started using pkgdown :)
 

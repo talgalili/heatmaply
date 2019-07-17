@@ -665,14 +665,14 @@ heatmaply.default <- function(x,
 
   if (!is.null(labRow)) {
     if (all(is.na(labRow))) {
-      showticklabels[2] <- FALSE
+      showticklabels[[2]] <- FALSE
     }
   } else {
     labRow <- rownames(x)
   }
   if (!is.null(labCol)) {
     if (all(is.na(labCol))) {
-      showticklabels[1] <- FALSE
+      showticklabels[[1]] <- FALSE
     }
   } else {
     labCol <- colnames(x)
@@ -1039,7 +1039,8 @@ heatmaply.heatmapr <- function(x,
         palette = row_side_palette,
         fontsize = fontsize_col,
         is_colors = !is.null(RowSideColors),
-        label_name = label_names[[1]]
+        label_name = label_names[[1]],
+        showticklabels = showticklabels
       )
     }
   }
@@ -1095,7 +1096,7 @@ heatmaply.heatmapr <- function(x,
   # turn p, px, and py to plotly objects if necessary
   if (!is.plotly(p)) {
     p <- ggplotly(p, dynamicTicks = dynamicTicks, tooltip = "text") %>%
-      layout(showlegend = TRUE)
+      layout(showlegend = FALSE)
   }
 
   if (draw_cellnote) {
@@ -1104,18 +1105,27 @@ heatmaply.heatmapr <- function(x,
       cellnote_color <- predict_colors(p, plot_method = plot_method)
     }
 
-    df <- as.data.frame(x[["cellnote"]])
-    df$row <- 1:nrow(df)
-    mdf <- reshape2::melt(df, id.vars = "row")
+    df <- as.data.frame(x[["matrix"]][["cellnote"]])
+    if (plot_method == "plotly") {
+      df[["_row"]] <- seq_len(nrow(df))
+    } else {
+      if (is.null(rownames(df))) {
+        rownames(df) <- seq_len(nrow(df))
+      }
+      df[["_row"]] <- rownames(df)
+    }
+    mdf <- reshape2::melt(df, id.vars = "_row")
     ## TODO: Enforce same dimnames to ensure it's not scrambled?
     # mdf$variable <- factor(mdf$variable, levels = p$x$layout$xaxis$ticktext)
-    mdf$variable <- as.numeric(as.factor(mdf$variable))
+    mdf$variable <- as.factor(mdf$variable)
+    if (plot_method == "plotly") {
+      mdf$variable <- as.numeric(as.factor(mdf$variable))
+    }
     mdf$value <- factor(mdf$value)
-
     p <- p %>% add_trace(
       data = mdf,
       x = ~ variable,
-      y = ~ row,
+      y = ~ `_row`,
       text = ~ value,
       inherit = FALSE,
       type = "scatter",
@@ -1154,8 +1164,6 @@ heatmaply.heatmapr <- function(x,
   )
   if (hide_colorbar) {
     p <- hide_colorbar(p)
-    # px <- hide_colorbar(px)
-    # py <- hide_colorbar(py)
   }
 
   # Adjust top based on whether main is empty or not.
@@ -1205,10 +1213,19 @@ heatmaply.heatmapr <- function(x,
   }
 
   heatmap_subplot <- heatmap_subplot_from_ggplotly(
-    p = p, px = px, py = py,
-    row_dend_left = row_dend_left, subplot_margin = subplot_margin,
-    widths = subplot_widths, heights = subplot_heights,
-    titleX = titleX, titleY = titleY, pr = pr, pc = pc, plot_method = plot_method
+    p = p, 
+    px = px, 
+    py = py,
+    row_dend_left = row_dend_left, 
+    subplot_margin = subplot_margin,
+    widths = subplot_widths, 
+    heights = subplot_heights,
+    titleX = titleX, 
+    titleY = titleY, 
+    pr = pr, 
+    pc = pc, 
+    plot_method = plot_method,
+    showticklabels = showticklabels
   )
   l <- layout(
     heatmap_subplot,
@@ -1237,7 +1254,8 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
                                           row_dend_left = FALSE, subplot_margin = 0,
                                           titleX = TRUE, titleY = TRUE,
                                           widths=NULL, heights=NULL,
-                                          plot_method) {
+                                          plot_method,
+                                          showticklabels=c(TRUE, TRUE)) {
   if (is.null(widths)) {
     if (!is.null(px)) {
       if (is.null(pr)) {
@@ -1319,8 +1337,10 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
         plots,
         nrows = nrows,
         widths = widths,
-        shareX = TRUE, shareY = TRUE,
-        titleX = titleX, titleY = titleY,
+        shareX = TRUE, 
+        shareY = TRUE,
+        titleX = titleX, 
+        titleY = titleY,
         margin = subplot_margin,
         heights = heights
       )
@@ -1334,7 +1354,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
       l <- list(
         anchor = paste0("x", str),
         side = "right",
-        showticklabels = TRUE
+        showticklabels = showticklabels[[2]]
       )
       num_cols <- sum(!ind_null_col)
       if (num_cols == 1) {
