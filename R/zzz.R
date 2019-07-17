@@ -304,4 +304,5 @@ heatmaplyWelcomeMessage <- function() {
 # file.copy("NEWS", "NEWS.md",overwrite = TRUE)
 # devtools::build_win(version="R-release")
 # devtools::build_win(version="R-devel")
+# devtools::check_win_devel()
 # release()
