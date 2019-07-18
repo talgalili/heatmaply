@@ -981,7 +981,8 @@ heatmaply.heatmapr <- function(x,
       row_dend_left = row_dend_left,
       label_names = label_names,
       type = node_type,
-      fontsize_row = fontsize_row, fontsize_col = fontsize_col,
+      fontsize_row = fontsize_row, 
+      fontsize_col = fontsize_col,
       point_size_mat = point_size_mat,
       point_size_name = point_size_name,
       label_format_fun = label_format_fun,
@@ -1062,7 +1063,7 @@ heatmaply.heatmapr <- function(x,
         text_angle = row_text_angle,
         palette = col_side_palette,
         is_colors = !is.null(ColSideColors),
-        fontsize = fontsize_col,
+        fontsize = fontsize_row,
         label_name = label_names[[2]]
       ) + side_color_layers
     } else {
@@ -1071,7 +1072,7 @@ heatmaply.heatmapr <- function(x,
         type = "column",
         text_angle = row_text_angle,
         palette = col_side_palette,
-        fontsize = fontsize_col,
+        fontsize = fontsize_row,
         is_colors = !is.null(ColSideColors),
         label_name = label_names[[2]]
       )

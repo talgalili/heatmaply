@@ -153,11 +153,13 @@ ggplot_heatmap <- function(xx,
     theme(
       axis.text.x = element_text(
         angle = column_text_angle,
-        size = fontsize_col, hjust = 1
+        size = fontsize_col, 
+        hjust = 1
       ),
       axis.text.y = element_text(
         angle = row_text_angle,
-        size = fontsize_row, hjust = 1
+        size = fontsize_row, 
+        hjust = 1
       )
     )
 
@@ -406,7 +408,8 @@ plotly_dend <- function(dend,
 #'
 #' @return A ggplot geom_tile object
 #'
-ggplot_side_color_plot <- function(df, palette = NULL,
+ggplot_side_color_plot <- function(df, 
+                                   palette = NULL,
                                    scale_title = paste(type, "side colors"), 
                                    type = c("column", "row"),
                                    text_angle = if (type == "column") 0 else 90, 
@@ -448,7 +451,7 @@ ggplot_side_color_plot <- function(df, palette = NULL,
 
   ## Don't need this hack any more?
   # if(original_dim[2] > 1) {
-  text_element <- element_text(angle = text_angle)
+  text_element <- element_text(angle = text_angle, size = fontsize)
   # } else text_element <- element_blank()
 
   if (type == "column") {
@@ -593,56 +596,6 @@ parse_plotly_color <- function(color) {
 }
 
 
-
-# # Create a plotly colorscale from a list of colors in any format.
-# # Probably not needed currently
-# make_colorscale <- function(colors) {
-#     seq <- seq(0, 1, by = 1 / length(colors))
-#     scale <- list(
-#         sapply(seq_along(colors),
-#           function(i) {
-#             if (i == 1) {
-#                 0
-#             } else if (i == length(colors)) {
-#                 1
-#             } else {
-#                 seq[i]
-#             }
-#           }
-#         ),
-#         col2plotlyrgb(colors)
-#     )
-#     scale
-# }
-
-# #' @title Color to RGB Text
-# #' @description
-# #' Plotly takes colors in this format "rgb(255, 0, 0)"
-# #'
-# #' @param col vector of any of the three kinds of R color specifications,
-# #' i.e., either a color name (as listed by colors()),
-# #' a hexadecimal string of the form "#rrggbb" or "#rrggbbaa" (see rgb),
-# #' or a positive integer i meaning palette()[i].
-# #'
-# #' @return
-# #' A character of the form "rgb(value1,value1,value3)"
-# #'
-# #' @seealso \link{col2rgb}
-# #' @examples
-# #' \dontrun{
-# #' col2rgb("peachpuff")
-# #' col2plotlyrgb("peachpuff")
-# #' }
-# col2plotlyrgb <- function(col) {
-#     rgb <- grDevices::col2rgb(col)
-#     paste0(
-#       "rgb(",
-#       rgb["red", ], ",",
-#       rgb["green", ], ",",
-#       rgb["blue", ], ")"
-#     )
-# }
-
 ## Helper function to generate "normal" colors for dendrograms
 ## ie black if one k or rainbow_hcl otherwise
 k_colors <- function(k) {
@@ -652,8 +605,6 @@ k_colors <- function(k) {
     "black"
   }
 }
-
-
 
 
 # Create a plotly colorscale from a list of colors in any format.

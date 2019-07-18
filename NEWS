@@ -7,6 +7,8 @@ heatmaply 1.0.0 (2019-07-17)
     plot_method = "ggplot".
   - cellnote would be placed outwith the heatmap when plot_method = "ggplot"
   - showticklabels applies when row_dend_left=TRUE and plot_method="plotly"
+  - fontsize_row and fontsize_col apply to side colour plots as well
+    as the main plot axes.
 
 ###OTHER NOTES
 - Started using pkgdown :)
