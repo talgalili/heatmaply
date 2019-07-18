@@ -1039,8 +1039,7 @@ heatmaply.heatmapr <- function(x,
         palette = row_side_palette,
         fontsize = fontsize_col,
         is_colors = !is.null(RowSideColors),
-        label_name = label_names[[1]],
-        showticklabels = showticklabels
+        label_name = label_names[[1]]
       )
     }
   }
