@@ -302,7 +302,6 @@ heatmaplyWelcomeMessage <- function() {
 
 # shell('git log --graph --stat --date=short --pretty=format:"%ad(%an) %s |%h" > ChangeLog', intern = TRUE)
 # file.copy("NEWS", "NEWS.md",overwrite = TRUE)
-# devtools::build_win(version="R-release")
-# devtools::build_win(version="R-devel")
 # devtools::check_win_devel()
+# pkgdown::build_site(run_dont_run = TRUE)
 # release()

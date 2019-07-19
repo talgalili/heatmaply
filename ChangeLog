@@ -1,3 +1,148 @@
+* 2019-07-18(Alan O'Callaghan) fontsize_row/col applies to side colours too |18502a1| 
+|  NEWS          |  2 ++
+|  R/heatmaply.R |  7 ++++---
+|  R/plots.R     | 63 +++++++--------------------------------------------------
+|  3 files changed, 13 insertions(+), 59 deletions(-)
+
+* 2019-07-18(Alan O'Callaghan) Remove unused ticklabel arg |88e3ca6| 
+|  R/heatmaply.R | 3 +--
+|  1 file changed, 1 insertion(+), 2 deletions(-)
+
+* 2019-07-17(Tal Galili) add ignores to pass CRAN |6fecb8f| 
+|  .Rbuildignore | 20 ++++++++++++++++++++
+|  1 file changed, 20 insertions(+)
+
+* 2019-07-17(Tal Galili) updae pgddown (and fix .gitignore) |44f510d| 
+|  .gitignore                                        |     2 +-
+|  R/zzz.R                                           |     1 +
+|  docs/CONDUCT.html                                 |   138 +
+|  docs/articles/heatmaply.html                      |   536 +
+|  .../crosstalk-1.0.0/css/crosstalk.css             |    27 +
+|  .../crosstalk-1.0.0/js/crosstalk.js               |  1471 +++
+|  .../crosstalk-1.0.0/js/crosstalk.js.map           |    37 +
+|  .../crosstalk-1.0.0/js/crosstalk.min.js           |     2 +
+|  .../crosstalk-1.0.0/js/crosstalk.min.js.map       |     1 +
+|  .../figure-html/unnamed-chunk-20-1.png            |   Bin 0 -> 10157 bytes
+|  .../figure-html/unnamed-chunk-23-1.png            |   Bin 0 -> 9430 bytes
+|  .../htmlwidgets-1.3/htmlwidgets.js                |   839 ++
+|  .../jquery-1.11.3/jquery-AUTHORS.txt              |   217 +
+|  .../heatmaply_files/jquery-1.11.3/jquery.js       | 10351 ++++++++++++++++++
+|  .../heatmaply_files/jquery-1.11.3/jquery.min.js   |     5 +
+|  .../heatmaply_files/jquery-1.11.3/jquery.min.map  |     1 +
+|  .../plotly-binding-4.9.0/plotly.js                |   931 ++
+|  .../plotly-htmlwidgets.css                        |     9 +
+|  .../plotly-main-1.46.1/plotly-latest.min.js       |     7 +
+|  .../typedarray-0.1/typedarray.min.js              |     1 +
+|  docs/articles/index.html                          |   134 +
+|  docs/authors.html                                 |   166 +
+|  docs/docsearch.css                                |   148 +
+|  docs/docsearch.js                                 |    85 +
+|  docs/index.html                                   |   291 +
+|  docs/link.svg                                     |    12 +
+|  docs/news/index.html                              |   745 ++
+|  docs/pkgdown.css                                  |   236 +
+|  docs/pkgdown.js                                   |   115 +
+|  docs/pkgdown.yml                                  |     6 +
+|  docs/reference/RColorBrewer_colors.html           |   277 +
+|  docs/reference/ggplot_side_color_plot.html        |   194 +
+|  docs/reference/heatmaply.html                     |   804 ++
+|  docs/reference/heatmapr.html                      |   387 +
+|  docs/reference/index.html                         |   205 +
+|  docs/reference/is.heatmapr.html                   |   162 +
+|  docs/reference/is.na10.html                       |   198 +
+|  docs/reference/is.plotly.html                     |   162 +
+|  docs/reference/normalize.html                     |   196 +
+|  docs/reference/percentize.html                    |   196 +
+|  40 files changed, 19294 insertions(+), 1 deletion(-)
+
+* 2019-07-17(Tal Galili) redo pkgdown |a0f1e1f| 
+|  .../crosstalk-1.0.0/css/crosstalk.css             |    27 -
+|  .../crosstalk-1.0.0/js/crosstalk.js               |  1471 ---
+|  .../crosstalk-1.0.0/js/crosstalk.js.map           |    37 -
+|  .../crosstalk-1.0.0/js/crosstalk.min.js           |     2 -
+|  .../crosstalk-1.0.0/js/crosstalk.min.js.map       |     1 -
+|  .../figure-html/unnamed-chunk-20-1.png            |   Bin 10157 -> 0 bytes
+|  .../figure-html/unnamed-chunk-23-1.png            |   Bin 9430 -> 0 bytes
+|  .../htmlwidgets-1.3/htmlwidgets.js                |   839 --
+|  .../jquery-1.11.3/jquery-AUTHORS.txt              |   217 -
+|  .../heatmaply_files/jquery-1.11.3/jquery.js       | 10351 ------------------
+|  .../heatmaply_files/jquery-1.11.3/jquery.min.js   |     5 -
+|  .../heatmaply_files/jquery-1.11.3/jquery.min.map  |     1 -
+|  .../plotly-binding-4.9.0/plotly.js                |   931 --
+|  .../plotly-htmlwidgets.css                        |     9 -
+|  .../plotly-main-1.46.1/plotly-latest.min.js       |     7 -
+|  .../typedarray-0.1/typedarray.min.js              |     1 -
+|  docs/docsearch.css                                |   148 -
+|  docs/docsearch.js                                 |    85 -
+|  docs/link.svg                                     |    12 -
+|  docs/pkgdown.css                                  |   236 -
+|  docs/pkgdown.js                                   |   115 -
+|  docs/pkgdown.yml                                  |     6 -
+|  22 files changed, 14501 deletions(-)
+
+* 2019-07-17(Tal Galili) minor fixes |c272344| 
+|  DESCRIPTION |  2 +-
+|  NEWS        |  2 +-
+|  NEWS.md     | 12 ++++++++++--
+|  3 files changed, 12 insertions(+), 4 deletions(-)
+
+*   2019-07-17(Tal Galili) merge |5c3c451
+|\  
+| * 2019-07-15(Alan O'Callaghan) Fix labels bug introduced with fix for #214 |6268509| | 
+| |  R/heatmaply.R | 9 +++++----
+| |  R/plots.R     | 7 ++++---
+| |  2 files changed, 9 insertions(+), 7 deletions(-)
+
+| *   2019-07-15(Alan O'Callaghan) Merge branch 'master' of github.com:talgalili/heatmaply |7850098
+| |\  
+| | * 2019-07-12(Alan O'Callaghan) fix showticklabels behaviour for plotly |5c930b4| | | 
+| | |  NEWS          |  2 +-
+| | |  R/heatmaply.R | 22 ++++++++++++++++------
+| | |  2 files changed, 17 insertions(+), 7 deletions(-)
+
+| * | 2019-07-15(Alan O'Callaghan) Add note to news, use _row not row |73d4152
+| |/  | |   
+| |    NEWS          |  2 +-
+| |    R/heatmaply.R | 21 +++++++++++++++------
+| |    R/heatmapr.R  |  2 +-
+| |    3 files changed, 17 insertions(+), 8 deletions(-)
+
+| * 2019-06-18(Alan O'Callaghan) Resolve #212 |7e4b829| | 
+| |  NEWS          |  9 +++++++++
+| |  R/heatmaply.R | 10 +++++-----
+| |  R/plots.R     |  4 +++-
+| |  3 files changed, 17 insertions(+), 6 deletions(-)
+
+* | 2019-07-17(Tal Galili) Started using pkgdown :) |aeaa89c
+|/  |   
+|    ChangeLog                                        |    21 +
+|    DESCRIPTION                                      |     7 +-
+|    NEWS                                             |     5 +
+|    NEWS.md                                          |     5 +
+|    .../crosstalk-1.0.0/css/crosstalk.css            |    27 +
+|    .../crosstalk-1.0.0/js/crosstalk.js              |  1471 +++
+|    .../crosstalk-1.0.0/js/crosstalk.js.map          |    37 +
+|    .../crosstalk-1.0.0/js/crosstalk.min.js          |     2 +
+|    .../crosstalk-1.0.0/js/crosstalk.min.js.map      |     1 +
+|    .../figure-html/unnamed-chunk-20-1.png           |   Bin 0 -> 10157 bytes
+|    .../figure-html/unnamed-chunk-23-1.png           |   Bin 0 -> 9430 bytes
+|    .../htmlwidgets-1.3/htmlwidgets.js               |   839 ++
+|    .../jquery-1.11.3/jquery-AUTHORS.txt             |   217 +
+|    .../heatmaply_files/jquery-1.11.3/jquery.js      | 10351 +++++++++++++++++
+|    .../heatmaply_files/jquery-1.11.3/jquery.min.js  |     5 +
+|    .../heatmaply_files/jquery-1.11.3/jquery.min.map |     1 +
+|    .../plotly-binding-4.9.0/plotly.js               |   931 ++
+|    .../plotly-htmlwidgets.css                       |     9 +
+|    .../plotly-main-1.46.1/plotly-latest.min.js      |     7 +
+|    .../typedarray-0.1/typedarray.min.js             |     1 +
+|    docs/docsearch.css                               |   148 +
+|    docs/docsearch.js                                |    85 +
+|    docs/link.svg                                    |    12 +
+|    docs/pkgdown.css                                 |   236 +
+|    docs/pkgdown.js                                  |   115 +
+|    docs/pkgdown.yml                                 |     6 +
+|    26 files changed, 14536 insertions(+), 3 deletions(-)
+
 * 2019-05-11(Tal Galili) bump to 0.16.0 |998d55d| 
 |  DESCRIPTION | 4 ++--
 |  1 file changed, 2 insertions(+), 2 deletions(-)
