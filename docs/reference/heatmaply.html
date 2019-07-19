@@ -224,7 +224,7 @@ help identify different cells. This is implemented using <a href='https://www.rd
       <td><p>a vector of colors to use for heatmap color.
 The default uses
 <code><a href='https://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a>(n=256, alpha = 1, begin = 0, end = 1, option = "viridis")</code>
-It is passed to <a href='https://ggplot2.tidyverse.org/reference/scale_gradient.html'>scale_fill_gradientn</a>.
+It is passed to <a href='https://www.rdocumentation.org/packages/ggplot2/topics/scale_gradient'>scale_fill_gradientn</a>.
 If colors is a color function (with the first argument being `n` = the number of colors),
 it will be used to create 256 colors from that function.
 (col is there to stay compatible with <a href='https://www.rdocumentation.org/packages/gplots/topics/heatmap.2'>heatmap.2</a>)</p></td>
@@ -639,7 +639,7 @@ is shown for the row and column dendrograms.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-</div><span class='co'># NOT RUN {</span>
+</div><div class='input'>
 <span class='co'># mtcars</span>
 <span class='co'># x &lt;- heatmapr(mtcars)</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>heatmaply</span>)
@@ -686,10 +686,18 @@ is shown for the row and column dendrograms.</p></td>
 <span class='co'># We can save heatmaply as an HTML file by using:</span>
 <span class='fu'>heatmaply</span>(<span class='no'>iris</span>[,-<span class='fl'>5</span>], <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"heatmaply_iris.html"</span>)
 <span class='co'># or a png/pdf/jpeg file using:</span>
-<span class='fu'>heatmaply</span>(<span class='no'>iris</span>[,-<span class='fl'>5</span>], <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"heatmaply_iris.png"</span>)
-<span class='co'># or just doing it in one go:</span>
-<span class='fu'>heatmaply</span>(<span class='no'>iris</span>[,-<span class='fl'>5</span>], <span class='kw'>file</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"heatmaply_iris.html"</span>, <span class='st'>"heatmaply_iris.png"</span>) )
-
+<span class='fu'>heatmaply</span>(<span class='no'>iris</span>[,-<span class='fl'>5</span>], <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"heatmaply_iris.png"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: plotly::orca failed:</span>
+#&gt; <span class='warning'> Error: The orca command-line utility is required for this functionality.</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>Please follow the installation instructions here -- https://github.com/plotly/orca#installation</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'plotly::export' is deprecated.</span>
+#&gt; <span class='warning'>Use 'orca' instead.</span>
+#&gt; <span class='warning'>See help("Deprecated")</span></div><div class='input'><span class='co'># or just doing it in one go:</span>
+<span class='fu'>heatmaply</span>(<span class='no'>iris</span>[,-<span class='fl'>5</span>], <span class='kw'>file</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"heatmaply_iris.html"</span>, <span class='st'>"heatmaply_iris.png"</span>) )</div><div class='output co'>#&gt; <span class='warning'>Warning: plotly::orca failed:</span>
+#&gt; <span class='warning'> Error: The orca command-line utility is required for this functionality.</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>Please follow the installation instructions here -- https://github.com/plotly/orca#installation</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'plotly::export' is deprecated.</span>
+#&gt; <span class='warning'>Use 'orca' instead.</span>
+#&gt; <span class='warning'>See help("Deprecated")</span></div><div class='input'>
 
 
 <span class='co'># If we don't want the HTML to be selfcontained, we can use the following:</span>
@@ -704,22 +712,21 @@ is shown for the row and column dendrograms.</p></td>
 <span class='no'>x</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>as.matrix</a></span>(<span class='kw pkg'>datasets</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/datasets/topics/mtcars'>mtcars</a></span>)
 <span class='no'>rc</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>colorspace</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/colorspace/topics/rainbow_hcl'>rainbow_hcl</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>x</span>))
 
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>gplots</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>viridis</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>gplots</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'gplots'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:stats':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    lowess</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>viridis</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/gplots/topics/heatmap.2'>heatmap.2</a></span>(<span class='no'>x</span>, <span class='kw'>trace</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/viridis/topics/reexports'>viridis</a></span>(<span class='fl'>100</span>),
-          <span class='kw'>RowSideColors</span><span class='kw'>=</span><span class='no'>rc</span>)
-
+          <span class='kw'>RowSideColors</span><span class='kw'>=</span><span class='no'>rc</span>)</div><div class='img'><img src='heatmaply-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'>heatmaply</span>(<span class='no'>x</span>, <span class='kw'>seriate</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
           <span class='kw'>RowSideColors</span><span class='kw'>=</span><span class='no'>rc</span>)
 
 
 <span class='fu'>heatmaply</span>(<span class='no'>x</span>[,-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>8</span>,<span class='fl'>9</span>)], <span class='kw'>seriate</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
           <span class='kw'>col_side_colors</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>0</span>,<span class='fl'>5</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>)),
-          <span class='kw'>row_side_colors</span> <span class='kw'>=</span> <span class='no'>x</span>[,<span class='fl'>8</span>:<span class='fl'>9</span>])
-<span class='fu'>heatmaply</span>(<span class='no'>x</span>[,-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>8</span>,<span class='fl'>9</span>)], <span class='kw'>seriate</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
+          <span class='kw'>row_side_colors</span> <span class='kw'>=</span> <span class='no'>x</span>[,<span class='fl'>8</span>:<span class='fl'>9</span>])</div><div class='output co'>#&gt; <span class='warning'>Warning: The hover text for col_side_colors is currently not implemented (due to an issue in plotly). We hope this would get resolved in future releases.</span></div><div class='input'><span class='fu'>heatmaply</span>(<span class='no'>x</span>[,-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>8</span>,<span class='fl'>9</span>)], <span class='kw'>seriate</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
           <span class='kw'>col_side_colors</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>a</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>0</span>,<span class='fl'>5</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>))),
-          <span class='kw'>row_side_colors</span> <span class='kw'>=</span> <span class='no'>x</span>[,<span class='fl'>8</span>:<span class='fl'>9</span>])
-
+          <span class='kw'>row_side_colors</span> <span class='kw'>=</span> <span class='no'>x</span>[,<span class='fl'>8</span>:<span class='fl'>9</span>])</div><div class='output co'>#&gt; <span class='warning'>Warning: The hover text for col_side_colors is currently not implemented (due to an issue in plotly). We hope this would get resolved in future releases.</span></div><div class='input'>
 
 <span class='co'>## Example of using Rowv And Colv for custumized dendrograms.</span>
 
@@ -727,8 +734,22 @@ is shown for the row and column dendrograms.</p></td>
 <span class='no'>x</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>as.matrix</a></span>(<span class='kw pkg'>datasets</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/datasets/topics/mtcars'>mtcars</a></span>)
 
 <span class='co'># now let's spice up the dendrograms a bit:</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dendextend</span>)
-
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dendextend</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>---------------------</span>
+#&gt; <span class='message'>Welcome to dendextend version 1.12.0</span>
+#&gt; <span class='message'>Type citation('dendextend') for how to cite the package.</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>Type browseVignettes(package = 'dendextend') for the package vignette.</span>
+#&gt; <span class='message'>The github page is: https://github.com/talgalili/dendextend/</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>Suggestions and bug-reports can be submitted at: https://github.com/talgalili/dendextend/issues</span>
+#&gt; <span class='message'>Or contact: &lt;tal.galili@gmail.com&gt;</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>	To suppress this message use:  suppressPackageStartupMessages(library(dendextend))</span>
+#&gt; <span class='message'>---------------------</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'dendextend'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:stats':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    cutree</span></div><div class='input'>
 <span class='no'>row_dend</span>  <span class='kw'>&lt;-</span> <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='no'>dist</span> <span class='kw'>%&gt;%</span> <span class='no'>hclust</span> <span class='kw'>%&gt;%</span> <span class='no'>as.dendrogram</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://www.rdocumentation.org/packages/dendextend/topics/set'>set</a></span>(<span class='st'>"branches_k_color"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>3</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/dendextend/topics/set'>set</a></span>(<span class='st'>"branches_lwd"</span>, <span class='fl'>4</span>) <span class='kw'>%&gt;%</span>
   <span class='no'>ladderize</span>
@@ -765,15 +786,7 @@ is shown for the row and column dendrograms.</p></td>
 
 <span class='co'># this is what allows for a much larger matrix to be printed:</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>2017</span>-<span class='fl'>05</span>-<span class='fl'>18</span>)
-<span class='no'>large_x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>19</span>), <span class='fl'>1000</span>,<span class='fl'>100</span>)
-<span class='fu'>heatmaply</span>(<span class='no'>large_x</span>, <span class='kw'>dendrogram</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>showticklabels</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>margins</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>))
-
-
-<span class='co'># }</span><span class='co'># NOT RUN {</span>
-<span class='fu'>heatmaply_na</span>(<span class='no'>airquality</span>)
-<span class='co'># }</span><span class='co'># NOT RUN {</span>
-<span class='fu'>heatmaply_cor</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></span>(<span class='no'>mtcars</span>))
-<span class='co'># }</span></pre>
+<span class='no'>large_x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>19</span>), <span class='fl'>1000</span>,<span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: data length [19] is not a sub-multiple or multiple of the number of rows [1000]</span></div><div class='input'><span class='fu'>heatmaply</span>(<span class='no'>large_x</span>, <span class='kw'>dendrogram</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>showticklabels</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>margins</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>))</div><div class='input'><span class='fu'>heatmaply_na</span>(<span class='no'>airquality</span>)</div><div class='input'><span class='fu'>heatmaply_cor</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></span>(<span class='no'>mtcars</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
