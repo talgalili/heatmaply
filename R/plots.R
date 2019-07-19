@@ -414,7 +414,7 @@ ggplot_side_color_plot <- function(df,
                                    type = c("column", "row"),
                                    text_angle = if (type == "column") 0 else 90, 
                                    is_colors = FALSE, 
-                                   fontsize,
+                                   fontsize = 10,
                                    label_name = NULL) {
 
   type <- match.arg(type)
