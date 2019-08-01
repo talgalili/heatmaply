@@ -108,6 +108,9 @@ is.plotly <- function(x) {
 #' is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv
 #' (or Colv) arguments are honoured.
 #' It also accepts TRUE/FALSE as synonyms for "both"/"none".
+#' @param show_dendrogram Logical vector of length controlling whether the row 
+#' and column dendrograms are displayed. If a logical scalar is 
+#' provided, it is repeated to become a logical vector of length two.
 #' @param reorderfun function(d, w) of dendrogram and weights for reordering the
 #' row and column dendrograms. The default uses stats{reorder.dendrogram}
 #'
@@ -510,6 +513,7 @@ heatmaply.default <- function(x,
                               hclustfun_col,
 
                               dendrogram = c("both", "row", "column", "none"),
+                              show_dendrogram = c(TRUE, TRUE),
                               reorderfun = function(d, w) reorder(d, w),
 
                               k_row = 1,
@@ -711,6 +715,7 @@ heatmaply.default <- function(x,
     hclustfun_col = hclustfun_col,
 
     dendrogram = dendrogram,
+    show_dendrogram = show_dendrogram,
     reorderfun = reorderfun,
 
     k_row = k_row,

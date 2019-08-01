@@ -10,16 +10,16 @@ The interface was designed based on \link{heatmap}, \link[gplots]{heatmap.2}, an
 heatmapr(x, Rowv, Colv, distfun = dist, hclustfun = hclust,
   dist_method = NULL, hclust_method = NULL, distfun_row, hclustfun_row,
   distfun_col, hclustfun_col, dendrogram = c("both", "row", "column",
-  "none"), reorderfun = function(d, w) reorder(d, w), k_row = 1,
-  k_col = 1, symm = FALSE, revC, scale = c("none", "row", "column"),
-  na.rm = TRUE, labRow = rownames(x), labCol = colnames(x), cexRow,
-  cexCol, digits = 3L, cellnote = NULL, theme = NULL,
-  colors = "RdYlBu", width = NULL, height = NULL,
-  xaxis_height = 80, yaxis_width = 120, xaxis_font_size = NULL,
-  yaxis_font_size = NULL, brush_color = "#0000FF", show_grid = TRUE,
-  anim_duration = 500, row_side_colors, col_side_colors,
-  seriate = c("OLO", "mean", "none", "GW"), point_size_mat = NULL,
-  custom_hovertext = NULL, ...)
+  "none"), show_dendrogram = c(TRUE, TRUE), reorderfun = function(d, w)
+  reorder(d, w), k_row = 1, k_col = 1, symm = FALSE, revC,
+  scale = c("none", "row", "column"), na.rm = TRUE,
+  labRow = rownames(x), labCol = colnames(x), cexRow, cexCol,
+  digits = 3L, cellnote = NULL, theme = NULL, colors = "RdYlBu",
+  width = NULL, height = NULL, xaxis_height = 80,
+  yaxis_width = 120, xaxis_font_size = NULL, yaxis_font_size = NULL,
+  brush_color = "#0000FF", show_grid = TRUE, anim_duration = 500,
+  row_side_colors, col_side_colors, seriate = c("OLO", "mean", "none",
+  "GW"), point_size_mat = NULL, custom_hovertext = NULL, ...)
 }
 \arguments{
 \item{x}{A numeric matrix
@@ -50,6 +50,10 @@ this can be one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA
 \item{hclustfun_col}{hclustfun for col dendrogram only.}
 
 \item{dendrogram}{character string indicating whether to draw 'none', 'row', 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv (or Colv) arguments are honoured.}
+
+\item{show_dendrogram}{Logical vector of length controlling whether the row 
+and column dendrograms are displayed. If a logical scalar is 
+provided, it is repeated to become a logical vector of length two.}
 
 \item{reorderfun}{function(d, w) of dendrogram and weights for reordering the row and column dendrograms. The default uses stats{reorder.dendrogram}}
 
