@@ -627,11 +627,16 @@ heatmaply.default <- function(x,
   }
   dendrogram <- match.arg(dendrogram)
 
-  if (!(is.data.frame(x) | is.matrix(x))) stop("x must be either a data.frame or a matrix.")
+  if (!(is.data.frame(x) | is.matrix(x))) {
+    stop("x must be either a data.frame or a matrix.")
+  }
 
-  if (!missing(srtRow)) row_text_angle <- srtRow
-  if (!missing(srtCol)) column_text_angle <- srtCol
-
+  if (!missing(srtRow)) {
+    row_text_angle <- srtRow
+  }
+  if (!missing(srtCol)) {
+    column_text_angle <- srtCol
+  }
   if (!is.null(ColSideColors)) {
     col_side_colors <- ColSideColors
   }
@@ -639,8 +644,12 @@ heatmaply.default <- function(x,
     row_side_colors <- RowSideColors
   }
 
-  if (!missing(cexRow)) fontsize_row <- if (is.numeric(cexRow)) cexRow * 10 else cexRow
-  if (!missing(cexCol)) fontsize_col <- if (is.numeric(cexCol)) cexCol * 10 else cexCol
+  if (!missing(cexRow)) {
+    fontsize_row <- if (is.numeric(cexRow)) cexRow * 10 else cexRow
+  }
+  if (!missing(cexCol)) {
+    fontsize_col <- if (is.numeric(cexCol)) cexCol * 10 else cexCol
+  }
 
   # TODO: maybe create heatmaply.data.frame heatmaply.matrix instead.
   #       But right now I am not sure this would be needed.

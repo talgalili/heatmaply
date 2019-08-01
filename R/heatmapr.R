@@ -213,6 +213,12 @@ heatmapr <- function(x,
     }
   }
 
+  if (!(is.logical(show_dendrogram) & length(show_dendrogram) %in% c(1, 2))) {
+    stop("show_dendrogram must be a logical vector of length 1 or 2")
+  }
+  if (length(show_dendrogram) == 1) {
+    show_dendrogram <- rep(show_dendrogram, 2)
+  }
 
   if (missing(distfun_row)) distfun_row <- distfun
   if (missing(hclustfun_row)) hclustfun_row <- hclustfun
