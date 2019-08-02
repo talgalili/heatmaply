@@ -166,14 +166,14 @@ this can be one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA
 
 \item{hclustfun_col}{hclustfun for col dendrogram only.}
 
-\item{dendrogram}{character string indicating whether to draw 'none', 'row',
-'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv)
-is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv
-(or Colv) arguments are honoured.
+\item{dendrogram}{character string indicating whether to compute 'none', 
+'row', 'column' or 'both' dendrograms. Defaults to 'both'. 
+However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', 
+then a warning is issued and Rowv (or Colv) arguments are honoured.
 It also accepts TRUE/FALSE as synonyms for "both"/"none".}
 
-\item{show_dendrogram}{Logical vector of length controlling whether the row 
-and column dendrograms are displayed. If a logical scalar is 
+\item{show_dendrogram}{Logical vector of length two, controlling whether 
+the row and/or column dendrograms are displayed. If a logical scalar is 
 provided, it is repeated to become a logical vector of length two.}
 
 \item{reorderfun}{function(d, w) of dendrogram and weights for reordering the

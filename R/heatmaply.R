@@ -103,13 +103,13 @@ is.plotly <- function(x) {
 #' @param distfun_col distfun for row dendrogram only.
 #' @param hclustfun_col hclustfun for col dendrogram only.
 #'
-#' @param dendrogram character string indicating whether to draw 'none', 'row',
-#' 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv)
-#' is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv
-#' (or Colv) arguments are honoured.
+#' @param dendrogram character string indicating whether to compute 'none', 
+#' 'row', 'column' or 'both' dendrograms. Defaults to 'both'. 
+#' However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', 
+#' then a warning is issued and Rowv (or Colv) arguments are honoured.
 #' It also accepts TRUE/FALSE as synonyms for "both"/"none".
-#' @param show_dendrogram Logical vector of length controlling whether the row 
-#' and column dendrograms are displayed. If a logical scalar is 
+#' @param show_dendrogram Logical vector of length two, controlling whether 
+#' the row and/or column dendrograms are displayed. If a logical scalar is 
 #' provided, it is repeated to become a logical vector of length two.
 #' @param reorderfun function(d, w) of dendrogram and weights for reordering the
 #' row and column dendrograms. The default uses stats{reorder.dendrogram}
