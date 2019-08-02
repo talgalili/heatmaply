@@ -103,11 +103,14 @@ is.plotly <- function(x) {
 #' @param distfun_col distfun for row dendrogram only.
 #' @param hclustfun_col hclustfun for col dendrogram only.
 #'
-#' @param dendrogram character string indicating whether to draw 'none', 'row',
-#' 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv)
-#' is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv
-#' (or Colv) arguments are honoured.
+#' @param dendrogram character string indicating whether to compute 'none', 
+#' 'row', 'column' or 'both' dendrograms. Defaults to 'both'. 
+#' However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', 
+#' then a warning is issued and Rowv (or Colv) arguments are honoured.
 #' It also accepts TRUE/FALSE as synonyms for "both"/"none".
+#' @param show_dendrogram Logical vector of length two, controlling whether 
+#' the row and/or column dendrograms are displayed. If a logical scalar is 
+#' provided, it is repeated to become a logical vector of length two.
 #' @param reorderfun function(d, w) of dendrogram and weights for reordering the
 #' row and column dendrograms. The default uses stats{reorder.dendrogram}
 #'
@@ -510,6 +513,7 @@ heatmaply.default <- function(x,
                               hclustfun_col,
 
                               dendrogram = c("both", "row", "column", "none"),
+                              show_dendrogram = c(TRUE, TRUE),
                               reorderfun = function(d, w) reorder(d, w),
 
                               k_row = 1,
@@ -623,11 +627,16 @@ heatmaply.default <- function(x,
   }
   dendrogram <- match.arg(dendrogram)
 
-  if (!(is.data.frame(x) | is.matrix(x))) stop("x must be either a data.frame or a matrix.")
+  if (!(is.data.frame(x) | is.matrix(x))) {
+    stop("x must be either a data.frame or a matrix.")
+  }
 
-  if (!missing(srtRow)) row_text_angle <- srtRow
-  if (!missing(srtCol)) column_text_angle <- srtCol
-
+  if (!missing(srtRow)) {
+    row_text_angle <- srtRow
+  }
+  if (!missing(srtCol)) {
+    column_text_angle <- srtCol
+  }
   if (!is.null(ColSideColors)) {
     col_side_colors <- ColSideColors
   }
@@ -635,8 +644,12 @@ heatmaply.default <- function(x,
     row_side_colors <- RowSideColors
   }
 
-  if (!missing(cexRow)) fontsize_row <- if (is.numeric(cexRow)) cexRow * 10 else cexRow
-  if (!missing(cexCol)) fontsize_col <- if (is.numeric(cexCol)) cexCol * 10 else cexCol
+  if (!missing(cexRow)) {
+    fontsize_row <- if (is.numeric(cexRow)) cexRow * 10 else cexRow
+  }
+  if (!missing(cexCol)) {
+    fontsize_col <- if (is.numeric(cexCol)) cexCol * 10 else cexCol
+  }
 
   # TODO: maybe create heatmaply.data.frame heatmaply.matrix instead.
   #       But right now I am not sure this would be needed.
@@ -711,6 +724,7 @@ heatmaply.default <- function(x,
     hclustfun_col = hclustfun_col,
 
     dendrogram = dendrogram,
+    show_dendrogram = show_dendrogram,
     reorderfun = reorderfun,
 
     k_row = k_row,

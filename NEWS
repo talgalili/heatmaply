@@ -1,6 +1,12 @@
 heatmaply 1.0.0 (2019-07-19)
 ===============
 
+## NEW FEATURES 
+* heatmaply
+  - The argument show_dendrogram controls whether to display the row and 
+    column dendrograms. This allows the user to display a clustered heatmap 
+    without displaying the dendrograms used to cluster the data.
+
 ## BUGFIXES
 * heatmaply
   - Legends are no longer shown for the row/column dendrogram traces when

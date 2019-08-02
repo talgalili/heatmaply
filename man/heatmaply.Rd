@@ -23,10 +23,11 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   Colv, distfun = dist, hclustfun = hclust, dist_method = NULL,
   hclust_method = NULL, distfun_row, hclustfun_row, distfun_col,
   hclustfun_col, dendrogram = c("both", "row", "column", "none"),
-  reorderfun = function(d, w) reorder(d, w), k_row = 1, k_col = 1,
-  symm = FALSE, revC, scale = c("none", "row", "column"),
-  na.rm = TRUE, row_dend_left = FALSE, margins = c(NA, NA, NA, NA),
-  ..., scale_fill_gradient_fun = NULL, grid_color = NA, grid_gap = 0,
+  show_dendrogram = c(TRUE, TRUE), reorderfun = function(d, w)
+  reorder(d, w), k_row = 1, k_col = 1, symm = FALSE, revC,
+  scale = c("none", "row", "column"), na.rm = TRUE,
+  row_dend_left = FALSE, margins = c(NA, NA, NA, NA), ...,
+  scale_fill_gradient_fun = NULL, grid_color = NA, grid_gap = 0,
   srtRow, srtCol, xlab = "", ylab = "", main = "", titleX = TRUE,
   titleY = TRUE, hide_colorbar = FALSE, key.title = NULL,
   return_ppxpy = FALSE, row_side_colors, row_side_palette = NULL,
@@ -165,11 +166,15 @@ this can be one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA
 
 \item{hclustfun_col}{hclustfun for col dendrogram only.}
 
-\item{dendrogram}{character string indicating whether to draw 'none', 'row',
-'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv)
-is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv
-(or Colv) arguments are honoured.
+\item{dendrogram}{character string indicating whether to compute 'none', 
+'row', 'column' or 'both' dendrograms. Defaults to 'both'. 
+However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', 
+then a warning is issued and Rowv (or Colv) arguments are honoured.
 It also accepts TRUE/FALSE as synonyms for "both"/"none".}
+
+\item{show_dendrogram}{Logical vector of length two, controlling whether 
+the row and/or column dendrograms are displayed. If a logical scalar is 
+provided, it is repeated to become a logical vector of length two.}
 
 \item{reorderfun}{function(d, w) of dendrogram and weights for reordering the
 row and column dendrograms. The default uses stats{reorder.dendrogram}}
