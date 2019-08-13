@@ -429,7 +429,9 @@ ggplot_side_color_plot <- function(df,
   ## TODO: Find out why names are dropped when ncol(df) == 1 (Not any more?)
   original_dim <- dim(df)
 
-  if (is.null(palette)) palette <- default_side_colors
+  if (is.null(palette)) {
+    palette <- side_color_palette_factory(numeric = FALSE)
+  }
 
   ## Custom label
   if (type %in% colnames(df)) {
@@ -493,28 +495,272 @@ ggplot_side_color_plot <- function(df,
 }
 
 
+side_color_palette_factory <- function(numeric = FALSE) {
+  if (numeric) {
+    return(viridis::viridis)
+  }
+  categorical_side_colors <- function(n) {
+    ## Warning if n < 3 in any case
+    suppressWarnings(
+      if (n <= 12) {
+        RColorBrewer::brewer.pal(n, "Paired")[seq_len(n)]
+      } else if (n <= 20) {
+        c(
+          RColorBrewer::brewer.pal(12, "Paired"),
+          RColorBrewer::brewer.pal(n - 12, "Set2")
+        )[seq_len(n)]
+      } else if (n <= 32) {
+        c(
+          RColorBrewer::brewer.pal(12, "Paired"),
+          RColorBrewer::brewer.pal(8, "Set2"),
+          RColorBrewer::brewer.pal(n - 20, "Set3")
+        )[seq_len(n)]
+      } else {
+        colorspace::rainbow_hcl(n)
+      }
+    )
+  }
+}
 
-default_side_colors <- function(n) {
-  ## Warning if n < 3 in any case
-  suppressWarnings(
-    if (n <= 12) {
-      RColorBrewer::brewer.pal(n, "Paired")[seq_len(n)]
-    } else if (n <= 20) {
-      c(
-        RColorBrewer::brewer.pal(12, "Paired"),
-        RColorBrewer::brewer.pal(n - 12, "Set2")
-      )[seq_len(n)]
-    } else if (n <= 32) {
-      c(
-        RColorBrewer::brewer.pal(12, "Paired"),
-        RColorBrewer::brewer.pal(8, "Set2"),
-        RColorBrewer::brewer.pal(n - 20, "Set3")
-      )[seq_len(n)]
-    } else {
-      colorspace::rainbow_hcl(n)
+
+plotly_side_color_plot <- function(x, ...) {
+  UseMethod("plotly_side_color_plot")
+}
+
+#' @export
+plotly_side_color_plot.matrix <- function(x, ...) {
+  plotly_side_color_plot(as.data.frame(x), ...)
+}
+
+#' @importFrom stats setNames
+#' @export
+plotly_side_color_plot.data.frame <- function(x, ...) {
+  lapply(seq_along(x), function(i) {
+      plotly_side_color_plot(x[[i]], 
+        row_names = rownames(x),
+        key_title = colnames(x)[[i]],
+        ...
+      )
     }
   )
 }
+
+#' @export
+plotly_side_color_plot.character <- function(x, ...) {
+  plotly_side_color_plot(x, ...)
+}
+
+#' @importFrom stats setNames
+#' @export
+plotly_side_color_plot.factor <- function(
+    x, 
+    key_title,
+    row_names,
+    palette = NULL,
+    scale_title = paste(type, "side colors"), 
+    type = c("column", "row"),
+    text_angle = if (type == "column") 0 else 90, 
+    is_colors = FALSE,
+    label_name = NULL, 
+    fontsize = 10) {
+
+  type <- match.arg(type)
+
+  if (is.null(label_name)) {
+    label_name <- type
+  }
+  levels <- levels(x)
+  levels <- levels[!is.na(levels)]
+
+  if (is.null(palette)) {
+    palette <- side_color_palette_factory(numeric = FALSE)
+  }
+
+  if (is.function(palette)) {
+    palette <- setNames(palette(length(levels)), levels)
+  } else {
+    palette <- setNames(col2hex(palette), names(palette))
+    if (!all(levels %in% names(palette))) {
+      stop(paste0(
+        "Not all levels of the ", type,
+        "_side_colors are mapped in the ", type, "_side_palette"
+      ))
+    }
+  }
+
+  levs2colors <- palette[as.character(levels)]
+  levs2nums <- setNames(seq_along(levels), levels)
+  nums <- as.numeric(levs2nums[as.character(x)])
+  nums <- matrix(nums, ncol = 1, dimnames = list(row_names, key_title))
+  if (type == "column") {
+    nums <- t(nums)
+  }
+
+  if (type == "row") {
+    text_mat <- paste0(
+      "value: ", x, "<br>",
+      "variable: ", key_title, "<br>",
+      label_name, ": ", row_names)
+  } else {
+    text_mat <- paste0(
+      "value: ", x, "<br>",
+      label_name, ": ", key_title, "<br>",
+      "variable: ", row_names
+    )
+  }
+  text_mat <- matrix(text_mat, ncol = 1)
+  if (type == "column") {
+    text_mat <- t(text_mat)
+  }
+  ## Ensure tickvals are in right position when n = 2
+  offset <- ((length(levels) - 1) / length(levels)) / 2
+  plotly_side_heatmap(
+    data = nums, 
+    text_mat = text_mat, 
+    colors = levs2colors, 
+    colorscale = discrete_colorscale(levs2colors),
+    key_title = key_title,
+    offset = offset,
+    levels = levels,
+    text_angle = text_angle,
+    type = type,
+    fontsize = fontsize
+  )
+}
+
+
+
+#' @export
+plotly_side_color_plot.numeric <- function(
+    x, 
+    key_title,
+    row_names,
+    palette = NULL,
+    scale_title = paste(type, "side colors"), 
+    type = c("column", "row"),
+    text_angle = if (type == "column") 0 else 90, 
+    is_colors = FALSE,
+    label_name = NULL, 
+    fontsize = 10) {
+
+  type <- match.arg(type)
+
+  if (is.null(label_name)) {
+    label_name <- type
+  }
+
+  if (is.null(palette)) {
+    palette <- side_color_palette_factory(numeric = TRUE)
+  }
+
+  x <- matrix(x, ncol = 1, dimnames = list(row_names, key_title))
+  if (type == "column") {
+    x <- t(x)
+  }
+
+  if (type == "row") {
+    text_mat <- paste0(
+      "value: ", x, "<br>",
+      "variable: ", key_title, "<br>",
+      label_name, ": ", row_names)
+  } else {
+    text_mat <- paste0(
+      "value: ", x, "<br>",
+      label_name, ": ", key_title, "<br>",
+      "variable: ", row_names
+    )
+  }
+  text_mat <- matrix(text_mat, ncol = 1)
+  if (type == "column") {
+    text_mat <- t(text_mat)
+  }
+  ## Ensure tickvals are in right position when n = 2
+  offset <- ((length(levels) - 1) / length(levels)) / 2
+
+  plotly_side_heatmap(
+    data = x, 
+    text_mat = text_mat, 
+    colors = palette(100), 
+    colorscale = NULL,
+    key_title = key_title,
+    offset = offset,
+    levels = NULL,
+    text_angle = text_angle,
+    type = type,
+    fontsize = fontsize
+  )
+}
+
+
+plotly_side_heatmap <- function(
+    data,
+    text_mat,
+    colors,
+    colorscale,
+    key_title,
+    offset,
+    levels,
+    text_angle,
+    type,
+    fontsize = 10) {
+
+  ## https://stackoverflow.com/questions/42524450/using-discrete-custom-color-in-a-plotly-heatmap
+  colorbar_list <- list(
+    # Capitalise first letter
+    title = key_title,
+    len = 0.2
+  )
+  if (!is.null(levels)) {
+    colorbar_list <- c(
+      colorbar_list, 
+      list(
+        tickmode = "array",
+        ## Issue #137
+        tickvals = seq(
+          1 + offset,
+          length(levels) - offset,
+          length.out = length(levels)
+        ),
+        ticktext = levels
+      )
+    )
+  }
+
+  p <- plot_ly(
+    z = data, x = 1:ncol(data), y = 1:nrow(data),
+    text = as.matrix(text_mat), hoverinfo = "text",
+    type = "heatmap", showlegend = FALSE, colors = colors,
+    colorscale = colorscale,
+    colorbar = colorbar_list
+  )
+  if (type == "row") {
+    p <- p %>% layout(
+      xaxis = list(
+        tickfont = list(size = fontsize),
+        tickangle = text_angle,
+        tickvals = 1:ncol(data), ticktext = colnames(data),
+        linecolor = "#ffffff",
+        range = c(0.5, ncol(data) + 0.5),
+        showticklabels = TRUE
+      ),
+      yaxis = list(showticklabels = FALSE)
+    )
+  } else {
+    p <- p %>% layout(
+      yaxis = list(
+        tickfont = list(size = fontsize),
+        tickangle = text_angle,
+        tickvals = 1:nrow(data), ticktext = rownames(data),
+        linecolor = "#ffffff",
+        range = c(0.5, nrow(data) + 0.5),
+        showticklabels = TRUE
+      ),
+      xaxis = list(showticklabels = FALSE)
+    )
+  }
+  p
+}
+
 
 ## Predict luminosity of cells and change text based on that
 ## http://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
@@ -613,134 +859,6 @@ discrete_colorscale <- function(colors) {
   seq <- seq(0, 1, length.out = length(colors))
   setNames(data.frame(seq, colors), NULL)
 }
-
-#' @importFrom stats setNames
-plotly_side_color_plot <- function(df, 
-                                   palette = NULL,
-                                   scale_title = paste(type, "side colors"), 
-                                   type = c("column", "row"),
-                                   text_angle = if (type == "column") 0 else 90, 
-                                   is_colors = FALSE,
-                                   label_name = NULL, 
-                                   fontsize = 10) {
-
-  type <- match.arg(type)
-
-  if (is.null(label_name)) label_name <- type
-
-  data <- df
-  data[] <- lapply(df, factor)
-  # if (type == "column") {
-  #   data <- t(data)
-  # }
-  data <- as.data.frame(data, stringsAsFactors = TRUE)
-  data[] <- lapply(data, factor)
-  data_vals <- unlist(data)
-  levels <- levels(data_vals)
-  levels <- levels[!is.na(levels)]
-
-  if (is.null(palette)) palette <- default_side_colors
-
-  if (is.function(palette)) {
-    palette <- setNames(palette(length(levels)), levels)
-  } else {
-    palette <- setNames(col2hex(palette), names(palette))
-    if (!all(levels %in% names(palette))) {
-      stop(paste0(
-        "Not all levels of the ", type,
-        "_side_colors are mapped in the ", type, "_side_palette"
-      ))
-    }
-  }
-
-  levs2colors <- palette[as.character(levels)]
-  levs2nums <- setNames(seq_along(levels), levels)
-
-  df_nums <- data
-  df_nums[] <- lapply(data, function(col) as.numeric(levs2nums[as.character(col)]))
-  df_nums <- as.matrix(df_nums)
-  if (type == "column") {
-    df_nums <- t(df_nums)
-  }
-  if (ncol(df) == 1) {
-    key_title <- colnames(df)
-  } else {
-    key_title <- paste(gsub("^(\\w)", "\\U\\1", type, perl = TRUE), "annotation")
-  }
-
-  text_mat <- data
-  text_mat[] <- lapply(
-    seq_along(text_mat),
-    function(i) {
-      if (type == "row") {
-        paste0(
-          "value: ", data[, i], "<br>",
-          "variable: ", colnames(data)[i], "<br>",
-          label_name, ": ", rownames(data)
-        )
-      } else {
-        paste0(
-          "value: ", data[, i], "<br>",
-          label_name, ": ", colnames(data)[i], "<br>",
-          "variable: ", rownames(data)
-        )
-      }
-    }
-  )
-
-  ## Ensure tickvals are in right position when n = 2
-  offset <- ((length(levels) - 1) / length(levels)) / 2
-
-  ## https://stackoverflow.com/questions/42524450/using-discrete-custom-color-in-a-plotly-heatmap
-  p <- plot_ly(
-    z = df_nums, x = 1:ncol(df_nums), y = 1:nrow(df_nums),
-    text = as.matrix(text_mat), hoverinfo = "text",
-    type = "heatmap", showlegend = FALSE, colors = levs2colors,
-    colorscale = discrete_colorscale(levs2colors),
-    colorbar = list(
-      # Capitalise first letter
-      title = key_title,
-      tickmode = "array",
-      ## Issue #137
-      tickvals = seq(
-        1 + offset,
-        length(levels) - offset,
-        length.out = length(levels)
-      ),
-      ticktext = levels,
-      len = 0.2
-    )
-  )
-  if (type == "row") {
-    p <- p %>% layout(
-      xaxis = list(
-        tickfont = list(size = fontsize),
-        tickangle = text_angle,
-        tickvals = 1:ncol(df_nums), ticktext = colnames(df_nums),
-        linecolor = "#ffffff",
-        range = c(0.5, ncol(df_nums) + 0.5),
-        showticklabels = TRUE
-      ),
-      yaxis = list(showticklabels = FALSE)
-    )
-  } else {
-    p <- p %>% layout(
-      yaxis = list(
-        tickfont = list(size = fontsize),
-        tickangle = text_angle,
-        tickvals = 1:nrow(df_nums), ticktext = rownames(df_nums),
-        linecolor = "#ffffff",
-        range = c(0.5, nrow(df_nums) + 0.5),
-        showticklabels = TRUE
-      ),
-      xaxis = list(showticklabels = FALSE)
-    )
-  }
-  p
-}
-
-
-
 
 
 #' @import webshot

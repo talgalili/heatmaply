@@ -105,7 +105,8 @@ test_that("k_colors works", {
 
 test_that("default colors works", {
   for (i in 1:50) {
-    expect_equal(length(heatmaply:::default_side_colors(i)), i)
+    expect_equal(length(heatmaply:::side_color_palette_factory()(i)), i)
+    expect_equal(length(heatmaply:::side_color_palette_factory(numeric=TRUE)(i)), i)
   }
 })
 
