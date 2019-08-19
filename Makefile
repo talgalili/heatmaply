@@ -11,3 +11,6 @@ vignettes:
 
 install:
 	R --slave --no-save -e 'library("devtools"); install()'
+
+docs:
+	R --slave --no-save -e 'library("pkgdown"); build_site()'
