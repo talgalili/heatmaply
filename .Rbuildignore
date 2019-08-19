@@ -26,3 +26,5 @@ Rplot001.jpg
 ^revdep$
 ^appveyor\.yml$
 ^\.github$
+^doc$
+^Meta$

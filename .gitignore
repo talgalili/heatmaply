@@ -14,3 +14,5 @@ tests/testthat/tmp.*
 tmp*
 \.\.Rcheck
 vignettes/*.R
+doc
+Meta

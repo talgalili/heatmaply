@@ -203,7 +203,14 @@ heatmaply(is.na10(airquality), grid_gap = 1,
 Changing color palettes
 -------------------
 
-We can use colors other than the default `viridis`. For example, we may want to use other color palettes in order to get divergent colors for the correlations (these will, sadly, be less useful for colorblind people):
+We can use colors other than the default `viridis`. The packages
+[cetcolor](https://cran.rstudio.com/web/packages/cetcolor/) and 
+[RColorBrewer](https://cran.r-project.org/web/packages/RColorBrewer/index.html)
+provide a number of excellent options for continuous and discrete colour 
+palettes. These are generally designed to be perceptually uniform, and often
+also colorblind-friendly.
+
+For example, we may want to use other color palettes in order to get divergent colors for the correlations (these will, sadly, be less useful for colorblind people):
 
 ```{r}
 # divergent_viridis_magma <- c(rev(viridis(100, begin = 0.3)), magma(100, begin = 0.3))
