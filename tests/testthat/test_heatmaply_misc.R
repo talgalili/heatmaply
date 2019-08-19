@@ -100,7 +100,7 @@ test_that("long_data works", {
   mdf <- reshape2::melt(as.matrix(mtcars))
   colnames(mdf) <- c("name", "variable", "value")
   expect_is(heatmaply(long_data = mdf), "plotly")
-  expect_error(heatmaply(x, mtcars, long_data = mdf),
+  expect_error(heatmaply(mtcars, long_data = mdf),
     "x and long_data should not be used together")
 })
 

@@ -307,24 +307,7 @@ heatmapr <- function(x,
   }
 
   if (isTRUE(Rowv)) {
-    Rowv <- switch(seriate,
-      "mean" = rowMeans(x, na.rm = na.rm),
-      "none" = 1:nrow(x),
-      "OLO" = {
-        dist_x <- distfun_row(x) # dist is on the rows by default
-        hc_x <- hclustfun_row(dist_x)
-        dend_x <- as.dendrogram(hc_x)
-        dend_x2 <- seriate_dendrogram(dend_x, dist_x, method = "OLO")
-        dend_x2
-      },
-      "GW" = {
-        dist_x <- distfun_row(x) # dist is on the rows by default
-        hc_x <- hclustfun_row(dist_x)
-        dend_x <- as.dendrogram(hc_x)
-        dend_x2 <- seriate_dendrogram(dend_x, dist_x, method = "GW")
-        dend_x2
-      }
-    )
+    Rowv <- create_dend(x, seriate, distfun_row, hclustfun_row, na.rm)
   }
   if (is.numeric(Rowv)) {
     Rowv <- reorderfun(as.dendrogram(hclustfun_row(distfun_row(x))), Rowv)
@@ -356,26 +339,7 @@ heatmapr <- function(x,
     Colv <- Rowv
   }
   if (isTRUE(Colv)) {
-    Colv <- switch(seriate,
-      "mean" = colMeans(x, na.rm = na.rm),
-      "none" = 1:ncol(x),
-      "OLO" = {
-        dist_x <- distfun_col(t(x)) # dist is on the rows by default
-        hc_x <- hclustfun_col(dist_x)
-        o <- seriate(dist_x, method = "OLO", control = list(hclust = hc_x))
-        dend_x <- as.dendrogram(hc_x)
-        dend_x2 <- rotate(dend_x, order = rev(labels(dist_x)[get_order(o)]))
-        dend_x2
-      },
-      "GW" = {
-        dist_x <- distfun_col(t(x)) # dist is on the rows by default
-        hc_x <- hclustfun_col(dist_x)
-        o <- seriate(dist_x, method = "GW", control = list(hclust = hc_x))
-        dend_x <- as.dendrogram(hc_x)
-        dend_x2 <- rotate(dend_x, order = rev(labels(dist_x)[get_order(o)]))
-        dend_x2
-      }
-    )
+    Colv <- create_dend(t(x), seriate, distfun_row, hclustfun_row, na.rm)
   }
   if (is.numeric(Colv)) {
     Colv <- reorderfun(as.dendrogram(hclustfun_col(distfun_col(t(x)))), rev(Colv))
@@ -569,4 +533,26 @@ heatmapr <- function(x,
 #' @return logical - is the object of class heatmapr.
 is.heatmapr <- function(x) {
   inherits(x, "heatmapr")
+}
+
+
+create_dend <- function(x, seriate, distfun_row, hclustfun_row, na.rm) {
+  switch(seriate,
+    "mean" = rowMeans(x, na.rm = na.rm),
+    "none" = 1:nrow(x),
+    "OLO" = {
+      dist_x <- distfun_row(x) # dist is on the rows by default
+      hc_x <- hclustfun_row(dist_x)
+      dend_x <- as.dendrogram(hc_x)
+      dend_x2 <- seriate_dendrogram(dend_x, dist_x, method = "OLO")
+      dend_x2
+    },
+    "GW" = {
+      dist_x <- distfun_row(x) # dist is on the rows by default
+      hc_x <- hclustfun_row(dist_x)
+      dend_x <- as.dendrogram(hc_x)
+      dend_x2 <- seriate_dendrogram(dend_x, dist_x, method = "GW")
+      dend_x2
+    }
+  )
 }
