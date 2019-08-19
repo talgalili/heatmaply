@@ -6,6 +6,8 @@ heatmaply 1.0.0 (2019-07-19)
   - The argument show_dendrogram controls whether to display the row and 
     column dendrograms. This allows the user to display a clustered heatmap 
     without displaying the dendrograms used to cluster the data.
+  - Setting hclust_method=NA uses dendextend::find_dend to find the "optimal"
+    dendrogram. For details see `?find_dend`
 
 ## BUGFIXES
 * heatmaply

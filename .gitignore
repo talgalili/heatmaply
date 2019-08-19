@@ -13,3 +13,4 @@ test2.rda
 tests/testthat/tmp.*
 tmp*
 \.\.Rcheck
+vignettes/*.R

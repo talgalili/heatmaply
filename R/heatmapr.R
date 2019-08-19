@@ -210,11 +210,15 @@ heatmapr <- function(x,
     }
   }
   if (!is.null(hclust_method)) {
-    hclustfun_old <- hclustfun
-    hclustfun <- function(x) {
-      hclustfun_old(x, method = hclust_method)
+    if (is.na(hclust_method)) {
+      hclustfun <- find_dend
+    } else {
+      hclustfun_old <- hclustfun
+      hclustfun <- function(x) {
+        hclustfun_old(x, method = hclust_method)
+      }
     }
-  }
+  } 
 
   if (!(is.logical(show_dendrogram) & length(show_dendrogram) %in% c(1, 2))) {
     stop("show_dendrogram must be a logical vector of length 1 or 2")

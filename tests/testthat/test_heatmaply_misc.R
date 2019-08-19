@@ -100,7 +100,8 @@ test_that("long_data works", {
   mdf <- reshape2::melt(as.matrix(mtcars))
   colnames(mdf) <- c("name", "variable", "value")
   expect_is(heatmaply(long_data = mdf), "plotly")
-  expect_error(heatmaply(x, mtcars, long_data = mdf))
+  expect_error(heatmaply(x, mtcars, long_data = mdf),
+    "x and long_data should not be used together")
 })
 
 test_that("heatmaply_na works", {
@@ -142,4 +143,8 @@ test_that("custom_hovertext works", {
   for (plot_method in c("plotly", "ggplot")) {
     expect_error(heatmaply(mtcars, plot_method = plot_method, custom_hovertext = mat), NA)
   }
+})
+
+test_that("hclust_method=NA works", {
+  expect_error(heatmaply(mtcars, hclust_method=NA), NA)
 })

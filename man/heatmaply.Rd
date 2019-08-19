@@ -156,7 +156,10 @@ or "minkowski".}
 \item{hclust_method}{default is NULL (which results in "complete" to be used).
 Can accept alternative character strings indicating the
 method to be passed to hclustfun By default hclustfun is \link{hclust} hence
-this can be one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).}
+this can be one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).
+Specifying hclust_method=NA causes heatmaply to use 
+\code{\link[dendextend]{find_dend}} to find the "optimal" dendrogram for
+the data.}
 
 \item{distfun_row}{distfun for row dendrogram only.}
 
