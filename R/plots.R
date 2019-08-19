@@ -160,7 +160,8 @@ ggplot_heatmap <- function(xx,
         angle = row_text_angle,
         size = fontsize_row, 
         hjust = 1
-      )
+      ),
+      axis.title = element_blank()
     )
 
   if (type == "scatter") {

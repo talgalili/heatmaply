@@ -15,6 +15,8 @@ heatmaply 1.0.0 (2019-07-19)
   - showticklabels applies when row_dend_left=TRUE and plot_method="plotly"
   - fontsize_row and fontsize_col apply to side colour plots as well
     as the main plot axes.
+  - cellnote did not work properly in some cases.
+  - grid_gap now works for side colour plots with plot_method="plotly".
 
 ###OTHER NOTES
 - Started using pkgdown :)

@@ -1120,21 +1120,12 @@ heatmaply.heatmapr <- function(x,
     }
 
     df <- as.data.frame(x[["matrix"]][["cellnote"]])
-    if (plot_method == "plotly") {
-      df[["_row"]] <- seq_len(nrow(df))
-    } else {
-      if (is.null(rownames(df))) {
-        rownames(df) <- seq_len(nrow(df))
-      }
-      df[["_row"]] <- rownames(df)
-    }
+    df[["_row"]] <- seq_len(nrow(df))
     mdf <- reshape2::melt(df, id.vars = "_row")
     ## TODO: Enforce same dimnames to ensure it's not scrambled?
     # mdf$variable <- factor(mdf$variable, levels = p$x$layout$xaxis$ticktext)
     mdf$variable <- as.factor(mdf$variable)
-    if (plot_method == "plotly") {
-      mdf$variable <- as.numeric(as.factor(mdf$variable))
-    }
+    mdf$variable <- as.numeric(mdf$variable)
     mdf$value <- factor(mdf$value)
     p <- p %>% add_trace(
       data = mdf,
@@ -1198,9 +1189,15 @@ heatmaply.heatmapr <- function(x,
   # add a white grid
   if (grid_gap > 0) {
     p <- style(p, xgap = grid_gap, ygap = grid_gap, traces = 1)
-    # doesn't seem to work.
-    # if(!is.null(pr)) pr <- style(pr, xgap = grid_gap)
-    # if(!is.null(pc)) pc <- style(pc, ygap = grid_gap)
+    # doesn't seem to work for ggplot2.
+    if (plot_method == "plotly") {
+      if (!is.null(pr)) {
+        pr <- style(pr, ygap = grid_gap)
+      }
+      if (!is.null(pc)) {
+        pc <- style(pc, xgap = grid_gap)
+      }
+    }
   }
 
 
