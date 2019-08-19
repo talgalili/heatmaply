@@ -45,7 +45,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   point_size_mat = NULL, point_size_name = "Point size",
   label_format_fun = function(...) format(..., digits = 4),
   labRow = NULL, labCol = NULL, custom_hovertext = NULL,
-  col = NULL, dend_hoverinfo = TRUE)
+  col = NULL, dend_hoverinfo = TRUE, side_color_colorbar_len = 0.3)
 
 \method{heatmaply}{heatmapr}(x, colors = viridis(n = 256, alpha = 1,
   begin = 0, end = 1, option = "viridis"), limits = NULL,
@@ -73,7 +73,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   point_size_name = "Point size", label_format_fun = function(...)
   format(..., digits = 4),
   custom_hovertext = x[["matrix"]][["custom_hovertext"]],
-  dend_hoverinfo = TRUE)
+  dend_hoverinfo = TRUE, side_color_colorbar_len = 0.3)
 }
 \arguments{
 \item{x}{can either be a heatmapr object, or a numeric matrix
@@ -370,6 +370,11 @@ if "ggplot" then it is appended to the existing text.}
 
 \item{dend_hoverinfo}{Boolean value which controls whether mouseover text 
 is shown for the row and column dendrograms.}
+
+\item{side_color_colorbar_len}{As with colorbar_len, this controls the
+length of the colorbar/color key relative to the total plot height. 
+This argument controls the colorbar_len of the side colour plots. 
+Only used if plot_method = "plotly".}
 }
 \description{
 An object of class heatmapr includes all the needed information
