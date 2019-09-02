@@ -31,3 +31,11 @@ test_that("show_dendrogram error conditions", {
   expect_error(heatmapr(mtcars, show_dendrogram = c(TRUE, FALSE)), NA)
 
 })
+
+
+test_that("create_dend works", {
+  for (ser in c("mean", "none", "OLO", "GW")) {
+    expect_error(create_dend(as.matrix(mtcars), ser, dist, hclust, TRUE), NA)
+    expect_error(create_dend(as.matrix(mtcars), ser, dist, hclust, FALSE), NA)
+  }
+})

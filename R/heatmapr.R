@@ -536,23 +536,23 @@ is.heatmapr <- function(x) {
 }
 
 
-create_dend <- function(x, seriate, distfun_row, hclustfun_row, na.rm) {
+create_dend <- function(x, seriate, distfun, hclustfun, na.rm) {
   switch(seriate,
     "mean" = rowMeans(x, na.rm = na.rm),
     "none" = 1:nrow(x),
     "OLO" = {
-      dist_x <- distfun_row(x) # dist is on the rows by default
-      hc_x <- hclustfun_row(dist_x)
-      dend_x <- as.dendrogram(hc_x)
-      dend_x2 <- seriate_dendrogram(dend_x, dist_x, method = "OLO")
-      dend_x2
+      dist <- distfun(x)
+      hc <- hclustfun(dist)
+      dend <- as.dendrogram(hc)
+      dend <- seriate_dendrogram(dend, dist, method = "OLO")
+      dend
     },
     "GW" = {
-      dist_x <- distfun_row(x) # dist is on the rows by default
-      hc_x <- hclustfun_row(dist_x)
-      dend_x <- as.dendrogram(hc_x)
-      dend_x2 <- seriate_dendrogram(dend_x, dist_x, method = "GW")
-      dend_x2
+      dist <- distfun(x)
+      hc <- hclustfun(dist)
+      dend <- as.dendrogram(hc)
+      dend <- seriate_dendrogram(dend, dist, method = "GW")
+      dend
     }
   )
 }
