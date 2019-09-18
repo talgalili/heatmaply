@@ -950,7 +950,7 @@ heatmaply.heatmapr <- function(x,
     if (plot_method == "ggplot") {
       col_ggdend <- as.ggdend(cols)
       xlims <- c(0.5, nrow(col_ggdend$labels) + 0.5)
-      py <- ggplot(cols, labels = FALSE) + 
+      py <- ggplot(cols, labels = FALSE, na.rm = TRUE) + 
         theme_bw() +
         coord_cartesian(expand = FALSE, xlim = xlims) +
         theme_clear_grid_dends
@@ -967,7 +967,7 @@ heatmaply.heatmapr <- function(x,
       row_ggdend <- as.ggdend(rows)
       ylims <- c(0.5, nrow(row_ggdend$labels) + 0.5)
 
-      px <- ggplot(row_ggdend, labels = FALSE) +
+      px <- ggplot(row_ggdend, labels = FALSE, na.rm = TRUE) +
         theme_bw() +
         coord_flip(expand = FALSE, xlim = ylims) +
         theme_clear_grid_dends
@@ -1065,8 +1065,6 @@ heatmaply.heatmapr <- function(x,
   if (is.null(col_side_colors)) {
     pc <- NULL
   } else {
-    warning("The hover text for col_side_colors is currently not implemented (due to an issue in plotly). We hope this would get resolved in future releases.")
-
     side_color_df <- x[["col_side_colors"]]
     if (is.matrix(side_color_df)) side_color_df <- as.data.frame(side_color_df)
     assert_that(
