@@ -1,93 +1,80 @@
+#' ggplot heatmap equivalent to heatmaply
+#' 
+#' This function produces a ggplot analogue of heatmaply figures 
+#' using \link[egg]{ggarrange}. This function may not always support the same
+#' set of features as , and exporting the heatmaply object with, for example,
+#' \link[plotly]{orca} or \code{heatmaply(mtcars, file = "foo.png")}.
+#' 
+#' @param ... Passed to \link{heatmaply}
+#' @param widths,heights Relative widths and heights of plots.
+#' @param row_dend_left Logical argument controlling whether the row 
+#'  dendrogram is placed on the left of the plot.
+#' @examples
+#' ggheatmap(mtcars)
 #' @export
-ggheatmap <- function(..., row_dend_left = FALSE) {
-  plots <- heatmaply(..., row_dend_left = row_dend_left, return_ppxpy = TRUE)
+ggheatmap <- function(..., widths = NULL, heights = NULL, row_dend_left = FALSE) {
+  plots <- heatmaply(
+    ..., 
+    row_dend_left = row_dend_left, 
+    return_ppxpy = TRUE,
+    plot_method = "ggplot"
+  )
   arrange_plots(
     plots, 
+    widths = widths,
+    heights = heights,
     row_dend_left = row_dend_left
   )
 }
 
 
 ## TODO: duplication with heatmap_subplot_from_ggplotly
-#' @importFrom grid unit.pmax 
-#' @importFrom gridExtra grid.arrange
-#' @importFrom ggplot2 ggplotGrob
-arrange_plots <- function(plots, row_dend_left = FALSE) {
+arrange_plots <- function(
+    plots, 
+    widths = NULL, 
+    heights = NULL, 
+    row_dend_left = FALSE) {
+
   plots <- plots[!sapply(plots, is.null)]
-  # if (!row_dend_left) {
-  #   plots$p <- plots$p + theme(legend.position = "left")
-  # }
-  plots[] <- lapply(plots, ggplotGrob)
+  if (!row_dend_left) {
+    plots$p <- plots$p + theme(legend.position = "left")
+  }
+  plots <- lapply(plots, function(x) x + theme(plot.margin = unit(c(0, 0, 0, 0), "npc")))
 
   column_list <- list(plots$py, plots$pc, plots$p)
   ind_null_col <- sapply(column_list, is.null)
 
-  if (!is.null(plots$py)) {
-    plots$py$widths <- unit.pmax(
-      plots$py$widths,
-      plots$p$widths,
-      plots$pc$widths
-    )
-  }
-  if (!is.null(plots$pc)) {
-    plots$pc$widths <- unit.pmax(
-      plots$py$widths,
-      plots$p$widths,
-      plots$pc$widths
-    )
-  }
-  plots$p$widths <- unit.pmax(
-    plots$py$widths,
-    plots$p$widths,
-    plots$pc$widths
-  )
-
-  if (!is.null(plots$px)) {
-    plots$px$heights <- unit.pmax(
-      plots$p$heights,
-      plots$px$heights,
-      plots$pr$heights
-    )
-  }
-  if (!is.null(plots$pr)) {
-    plots$pr$heights <- unit.pmax(
-      plots$p$heights,
-      plots$px$heights,
-      plots$pr$heights
-    )
-  }
-  plots$p$heights <- unit.pmax(
-    plots$p$heights,
-    plots$px$heights,
-    plots$pr$heights
-  )
-
   row1_list <- list(plots$py, ggplot_empty(), ggplot_empty())
   row2_list <- list(plots$pc, ggplot_empty(), ggplot_empty())
   row3_list <- list(plots$p, plots$pr, plots$px)
-
 
   if (row_dend_left) {
     row3_list <- rev(row3_list)
     row2_list <- rev(row2_list)
     row1_list <- rev(row1_list)
   }
-  plots <- c(
+  plotlist <- c(
     row1_list,
     row2_list,
     row3_list
   )
 
   nrows <- sum(!ind_null_col)
-  ind_remove_col <- rep(ind_null_col, each = length(plots) / 3)
+  ind_remove_col <- rep(ind_null_col, each = length(plotlist) / 3)
 
   ind_null_row <- sapply(row3_list, is.null)
-  ind_remove_row <- rep(ind_null_row, length.out = length(plots))
-  plots <- plots[!(ind_remove_row | ind_remove_col)]
+  ncols <- sum(!ind_null_row)
+  ind_remove_row <- rep(ind_null_row, length.out = length(plotlist))
+  plotlist <- plotlist[!(ind_remove_row | ind_remove_col)]
 
-  grid.arrange(grobs = plots, nrow = nrows)
+  egg::ggarrange(
+    plots = plotlist,
+    ncol = ncols,
+    widths = widths %||% default_dims(plots$px, plots$pr),
+    heights = heights %||% rev(default_dims(plots$py, plots$pc))
+  )
 }
 
 ggplot_empty <- function() {
-  ggplot() + theme_void()
+  ggplot() + theme_void() + theme(plot.margin = unit(c(0, 0, 0, 0), "npc"))
 }

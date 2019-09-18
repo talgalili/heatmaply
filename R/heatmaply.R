@@ -1261,7 +1261,22 @@ heatmaply.heatmapr <- function(x,
 
 
 
-
+default_dims <- function(px, pr) {
+  if (!is.null(px)) {
+    if (is.null(pr)) {
+      widths <- c(0.8, 0.2)
+    } else {
+      widths <- c(0.7, 0.1, 0.2)
+    }
+  } else {
+    if (is.null(pr)) {
+      widths <- 1
+    } else {
+      widths <- c(0.9, 0.1)
+    }
+  }
+  widths
+}
 
 
 heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
@@ -1270,38 +1285,12 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
                                           widths=NULL, heights=NULL,
                                           plot_method,
                                           showticklabels=c(TRUE, TRUE)) {
-  if (is.null(widths)) {
-    if (!is.null(px)) {
-      if (is.null(pr)) {
-        widths <- c(0.8, 0.2)
-      } else {
-        widths <- c(0.7, 0.1, 0.2)
-      }
-    } else {
-      if (is.null(pr)) {
-        widths <- 1
-      } else {
-        widths <- c(0.9, 0.1)
-      }
-    }
-    if (row_dend_left) widths <- rev(widths)
+  widths <- widths %||% default_dims(px, pr)
+  if (row_dend_left) {
+    widths <- rev(widths)
   }
+  heights <- heights %||% rev(default_dims(py, pc))
 
-  if (is.null(heights)) {
-    if (!is.null(py)) {
-      if (is.null(pc)) {
-        heights <- c(0.2, 0.8)
-      } else {
-        heights <- c(0.2, 0.1, 0.7)
-      }
-    } else {
-      if (is.null(pc)) {
-        heights <- 1
-      } else {
-        heights <- c(0.1, 0.9)
-      }
-    }
-  }
 
   # make different plots based on which dendrogram and sidecolors we have
   row1_list <- list(py, plotly_empty(), plotly_empty())

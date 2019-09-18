@@ -452,12 +452,11 @@ ggplot_side_color_plot <- function(df,
 
   ## Don't need this hack any more?
   # if(original_dim[2] > 1) {
-  text_element <- element_text(angle = text_angle, size = fontsize)
+  text_element <- element_text(angle = text_angle, hjust = 1, size = fontsize)
   # } else text_element <- element_blank()
 
   if (type == "column") {
     mapping <- aes_string(x = paste_aes(id_var), y = "variable", fill = "value")
-
     specific_theme <- theme(
       axis.text.x = element_blank(),
       axis.text.y = text_element
@@ -466,7 +465,8 @@ ggplot_side_color_plot <- function(df,
     mapping <- aes_string(x = "variable", y = paste_aes(id_var), fill = "value")
     specific_theme <- theme(
       axis.text.x = text_element,
-      axis.text.y = element_blank()
+      axis.text.y = element_blank(),
+      legend.position = "top"
     )
   }
   theme <- list(common_theme, specific_theme)
@@ -485,7 +485,7 @@ ggplot_side_color_plot <- function(df,
     xlab("") +
     ylab("") +
     scale_fill_manual(
-      name = NULL,
+      name = scale_title,
       breaks = levels(df[["value"]]),
       values = palette[levels(df[["value"]])]
     ) +

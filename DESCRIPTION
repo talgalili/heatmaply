@@ -44,8 +44,7 @@ Imports:
     htmlwidgets,
     webshot,
     assertthat,
-    grid,
-    gridExtra
+    egg
 Suggests:
     knitr,
     covr,
@@ -62,3 +61,4 @@ URL:http://talgalili.github.io/heatmaply/,
 BugReports: https://github.com/talgalili/heatmaply/issues
 LazyData: true
 RoxygenNote: 6.1.1
+Encoding: UTF-8
