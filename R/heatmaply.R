@@ -297,6 +297,10 @@ is.plotly <- function(x) {
 #' backward compatibility with gplots::heatmap.2.
 #' @param dend_hoverinfo Boolean value which controls whether mouseover text 
 #' is shown for the row and column dendrograms.
+#' @param side_color_colorbar_len As with colorbar_len, this controls the
+#' length of the colorbar/color key relative to the total plot height. 
+#' This argument controls the colorbar_len of the side colour plots. 
+#' Only used if plot_method = "plotly".
 #'
 #' @export
 #' @examples
@@ -578,7 +582,8 @@ heatmaply.default <- function(x,
                               labRow = NULL, labCol = NULL,
                               custom_hovertext = NULL,
                               col = NULL,
-                              dend_hoverinfo = TRUE) {
+                              dend_hoverinfo = TRUE,
+                              side_color_colorbar_len = 0.3) {
   if (!missing(long_data)) {
     if (!missing(x)) {
       stop("x and long_data should not be used together")
@@ -788,7 +793,8 @@ heatmaply.default <- function(x,
     node_type = node_type,
     point_size_name = point_size_name,
     label_format_fun = label_format_fun,
-    dend_hoverinfo = dend_hoverinfo
+    dend_hoverinfo = dend_hoverinfo,
+    side_color_colorbar_len = side_color_colorbar_len
   )
 
   # TODO: think more on what should be passed in "..."
@@ -864,7 +870,9 @@ heatmaply.heatmapr <- function(x,
                                point_size_name = "Point size",
                                label_format_fun = function(...) format(..., digits = 4),
                                custom_hovertext = x[["matrix"]][["custom_hovertext"]],
-                               dend_hoverinfo = TRUE) {
+                               dend_hoverinfo = TRUE,
+                               side_color_colorbar_len = 0.3) {
+
   node_type <- match.arg(node_type)
   plot_method <- match.arg(plot_method)
   cellnote_textposition <- match.arg(
@@ -1057,6 +1065,7 @@ heatmaply.heatmapr <- function(x,
         palette = row_side_palette,
         fontsize = fontsize_col,
         is_colors = !is.null(RowSideColors),
+        colorbar_len = side_color_colorbar_len,
         label_name = label_names[[1]]
       )
     }
@@ -1089,6 +1098,7 @@ heatmaply.heatmapr <- function(x,
         palette = col_side_palette,
         fontsize = fontsize_row,
         is_colors = !is.null(ColSideColors),
+        colorbar_len = side_color_colorbar_len,
         label_name = label_names[[2]]
       )
     }

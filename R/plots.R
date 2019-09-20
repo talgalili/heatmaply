@@ -622,7 +622,8 @@ plotly_side_color_plot <- function(df,
                                    type = c("column", "row"),
                                    text_angle = if (type == "column") 0 else 90, 
                                    is_colors = FALSE,
-                                   label_name = NULL, 
+                                   label_name = NULL,
+                                   colorbar_len = 0.3,
                                    fontsize = 10) {
 
   type <- match.arg(type)
@@ -709,7 +710,7 @@ plotly_side_color_plot <- function(df,
         length.out = length(levels)
       ),
       ticktext = levels,
-      len = 0.2
+      len = colorbar_len
     )
   )
   if (type == "row") {
