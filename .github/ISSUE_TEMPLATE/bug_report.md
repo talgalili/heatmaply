@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: "[BUG]"
+title: ''
 labels: bug
 assignees: ''
 
@@ -12,7 +12,10 @@ A clear and concise description of what the bug is.
 
 **To Reproduce**
 
-See:  [How to make a great R reproducible example](https://stackoverflow.com/a/5963610/256662) on what we expect of you to supply so to be able to help you with solving the issue.
+Learn how to make a great R reproducible example in the following URL:
+https://stackoverflow.com/a/5963610/256662
+
+And please supply us with such information so that we will be able to help you with solving the issue.
 
 
 
