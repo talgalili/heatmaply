@@ -51,7 +51,7 @@ test_that("SideColors", {
   rs <- rscolors[as.character(rs)]
   h <- heatmaply(mtcars, RowSideColors = rs)
   expect_is(h, "plotly")
-  expect_warning(h <- heatmaply(t(mtcars), ColSideColors = rs))
+  h <- heatmaply(t(mtcars), ColSideColors = rs)
   expect_is(h, "plotly")
 })
 
