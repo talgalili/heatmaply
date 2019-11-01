@@ -140,6 +140,34 @@ heatmaply_cor(
 )
 ```
 
+We can also do a more advanced correlation heatmap where the p-value from
+the correlation test is mapped to point size: 
+
+```{r}
+
+r <- cor(mtcars)
+## We use this function to calculate a matrix of p-values from correlation tests
+## https://stackoverflow.com/a/13112337/4747043
+cor.test.p <- function(x){
+    FUN <- function(x, y) cor.test(x, y)[["p.value"]]
+    z <- outer(
+      colnames(x), 
+      colnames(x), 
+      Vectorize(function(i,j) FUN(x[,i], x[,j]))
+    )
+    dimnames(z) <- list(colnames(x), colnames(x))
+    z
+}
+p <- cor.test.p(mtcars)
+
+heatmaply_cor(
+  r,
+  node_type = "scatter",
+  point_size_mat = -log10(p), 
+  point_size_name = "-log10(p-value)",
+  label_names = c("x", "y", "Correlation")
+)
+```
 
 
 
@@ -312,8 +340,8 @@ heatmaply(
 
 
 
-Customized dendrograms and side annotation
-==========================================
+Customized dendrograms and annotation
+=====================================
 
 
 Various seriation options
@@ -502,6 +530,40 @@ heatmaply(
   row_side_colors = x[, 8:9]
 )
 
+```
+
+Text annotations
+----------------
+
+`heatmaply` includes the `cellnote` argument, which allows us to display
+character values overlaid on the heatmap. By default, the colour of the text
+on each cell is chosen to ensure legibility, with black text shown over light
+cells and white text shown over dark cells.
+
+```{r}
+heatmaply(
+  mtcars,
+  cellnote = mtcars
+)
+```
+
+
+Hover text
+----------
+
+As hovertext is one of the most useful aspects of interactive heatmaps,
+`heatmaply` allows users to append custom hovertext:
+
+```{r}
+mat <- mtcars
+mat[] <- paste("This cell is", rownames(mat))
+mat[] <- lapply(colnames(mat), function(colname) {
+    paste0(mat[, colname], ", ", colname)
+})
+heatmaply(
+  mtcars,
+  custom_hovertext = mat
+)
 ```
 
 
