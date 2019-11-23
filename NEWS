@@ -1,16 +1,16 @@
-heatmaply 1.0.0 (2019-07-19)
+heatmaply 1.0.0 (2019-11-23)
 ===============
 
-## NEW FEATURES 
+## NEW FEATURES
 * heatmaply
-  - The argument show_dendrogram controls whether to display the row and 
-    column dendrograms. This allows the user to display a clustered heatmap 
+  - The argument show_dendrogram controls whether to display the row and
+    column dendrograms. This allows the user to display a clustered heatmap
     without displaying the dendrograms used to cluster the data.
   - Setting hclust_method=NA uses dendextend::find_dend to find the "optimal"
     dendrogram. For details see `?find_dend`
   - Updated the vignettes with better code examples, larger figure sizes,
     and new features.
-  - Add the sidecolor_colorbar_len argument to control the size of the side 
+  - Add the sidecolor_colorbar_len argument to control the size of the side
     color plot legend when `plot_method = "plotly"`
 
 ## BUGFIXES

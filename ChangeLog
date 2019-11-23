@@ -1,3 +1,118 @@
+* 2019-11-01(Alan O'Callaghan) Add more examples to vignette! (#224) |d40d361| 
+|  vignettes/heatmaply.Rmd | 66 +++++++++++++++++++++++++++++++++++++++++++++--
+|  1 file changed, 64 insertions(+), 2 deletions(-)
+
+* 2019-10-15(Alan O'Callaghan) Add ggheatmap, improve vignette for V1.0.0. (#220) |08a9b19| 
+|  DESCRIPTION                          |   4 +-
+|  NAMESPACE                            |   1 +
+|  NEWS                                 |   9 +-
+|  R/ggheatmap.R                        |  80 +++++
+|  R/heatmaply.R                        |  73 +++--
+|  R/plots.R                            |  14 +-
+|  man/ggheatmap.Rd                     |  25 ++
+|  man/heatmaply.Rd                     |   9 +-
+|  tests/testthat/test_ggheatmap.R      |  20 ++
+|  tests/testthat/test_heatmaply.R      |  35 +--
+|  tests/testthat/test_heatmaply_misc.R |   2 +-
+|  vignettes/heatmaply.Rmd              | 523 +++++++++++++++++++++------------
+|  12 files changed, 539 insertions(+), 256 deletions(-)
+
+* 2019-09-27(Tal Galili) Update issue templates 2 |2a6c548| 
+|  .github/ISSUE_TEMPLATE/bug_report.md | 7 +++++--
+|  1 file changed, 5 insertions(+), 2 deletions(-)
+
+* 2019-09-27(Tal Galili) Update issue templates |e2548ad| 
+|  .github/ISSUE_TEMPLATE/bug_report.md      | 26 ++++++++++++++++++++++++++
+|  .github/ISSUE_TEMPLATE/feature_request.md | 20 ++++++++++++++++++++
+|  2 files changed, 46 insertions(+)
+
+* 2019-09-02(Alan O'Callaghan) Add create_dend test |0935a08| 
+|  R/heatmapr.R                   | 22 +++++++++++-----------
+|  tests/testthat/test_heatmapr.R |  8 ++++++++
+|  2 files changed, 19 insertions(+), 11 deletions(-)
+
+* 2019-08-19(Alan O'Callaghan) pkgdown rule |26dcecb| 
+|  Makefile | 3 +++
+|  1 file changed, 3 insertions(+)
+
+* 2019-08-19(Alan O'Callaghan) Resolve #44 |3eefa56| 
+|  R/heatmapr.R                         | 62 +++++++++++++---------------------
+|  tests/testthat/test_heatmaply_misc.R |  2 +-
+|  2 files changed, 25 insertions(+), 39 deletions(-)
+
+* 2019-08-19(Alan O'Callaghan) Resolve #182 |0372ae3| 
+|  .Rbuildignore           | 2 ++
+|  .gitignore              | 2 ++
+|  vignettes/heatmaply.Rmd | 9 ++++++++-
+|  3 files changed, 12 insertions(+), 1 deletion(-)
+
+* 2019-08-19(Alan O'Callaghan) Add hclust_method=NA functionality. Resolve #58 |a193b75| 
+|  .gitignore                           |  1 +
+|  NEWS                                 |  2 ++
+|  R/heatmaply.R                        |  5 ++++-
+|  R/heatmapr.R                         | 12 ++++++++----
+|  man/heatmaply.Rd                     |  5 ++++-
+|  tests/testthat/test_heatmaply_misc.R |  7 ++++++-
+|  6 files changed, 25 insertions(+), 7 deletions(-)
+
+* 2019-08-19(Alan O'Callaghan) cellnote and grid_gap fixes |4df91c2| 
+|  NEWS          |  2 ++
+|  R/heatmaply.R | 25 +++++++++++--------------
+|  R/plots.R     |  3 ++-
+|  3 files changed, 15 insertions(+), 15 deletions(-)
+
+* 2019-08-02(Alan O'Callaghan) show_dendrogram argument (#215) |b66df95| 
+|  NEWS                           |  6 ++++++
+|  R/heatmaply.R                  | 34 ++++++++++++++++++++++++----------
+|  R/heatmapr.R                   | 19 ++++++++++++++++---
+|  man/heatmaply.Rd               | 21 +++++++++++++--------
+|  man/heatmapr.Rd                | 29 ++++++++++++++++++-----------
+|  tests/testthat/test_heatmapr.R |  9 +++++++++
+|  6 files changed, 86 insertions(+), 32 deletions(-)
+
+*   2019-07-19(Alan O'Callaghan) Merge branch 'master' of github.com:talgalili/heatmaply |a352dff
+|\  
+| * 2019-07-19(Tal Galili) attempt to have heatmaply show in the examples of pkgdown (didn't work, sadly. But still this version is better..) |8b81673| | 
+| |  ChangeLog                                        |   145 +
+| |  DESCRIPTION                                      |     2 +-
+| |  NEWS                                             |     2 +-
+| |  NEWS.md                                          |     4 +-
+| |  R/zzz.R                                          |     3 +-
+| |  docs/articles/heatmaply.html                     |    66 +-
+| |  docs/news/index.html                             |     7 +-
+| |  docs/reference/RColorBrewer_colors-1.png         |   Bin 0 -> 11695 bytes
+| |  docs/reference/RColorBrewer_colors-2.png         |   Bin 0 -> 15609 bytes
+| |  docs/reference/RColorBrewer_colors.html          |    22 +-
+| |  docs/reference/heatmaply-1.png                   |   Bin 0 -> 32964 bytes
+| |  docs/reference/heatmaply.html                    |    63 +-
+| |  docs/reference/heatmaply_iris.html               |    22 +
+| |  docs/reference/heatmaply_iris.png                |   Bin 0 -> 39646 bytes
+| |  .../crosstalk-1.0.0/css/crosstalk.css            |    27 +
+| |  .../crosstalk-1.0.0/js/crosstalk.js              |  1471 +++
+| |  .../crosstalk-1.0.0/js/crosstalk.js.map          |    37 +
+| |  .../crosstalk-1.0.0/js/crosstalk.min.js          |     2 +
+| |  .../crosstalk-1.0.0/js/crosstalk.min.js.map      |     1 +
+| |  .../htmlwidgets-1.3/htmlwidgets.js               |   839 ++
+| |  .../jquery-1.11.3/jquery-AUTHORS.txt             |   217 +
+| |  .../heatmaply_iris_files/jquery-1.11.3/jquery.js | 10351 +++++++++++++++++
+| |  .../jquery-1.11.3/jquery.min.js                  |     5 +
+| |  .../jquery-1.11.3/jquery.min.map                 |     1 +
+| |  .../plotly-binding-4.9.0/plotly.js               |   931 ++
+| |  .../plotly-htmlwidgets.css                       |     9 +
+| |  .../plotly-main-1.46.1/plotly-latest.min.js      |     7 +
+| |  .../typedarray-0.1/typedarray.min.js             |     1 +
+| |  docs/reference/heatmapr.html                     |     6 +-
+| |  docs/reference/is.na10.html                      |     7 +-
+| |  docs/reference/normalize.html                    |    20 +-
+| |  docs/reference/percentize.html                   |    20 +-
+| |  32 files changed, 14183 insertions(+), 105 deletions(-)
+
+* | 2019-07-19(Alan O'Callaghan) Add default val |240f1a4
+|/  |   
+|    R/plots.R                     | 2 +-
+|    man/ggplot_side_color_plot.Rd | 3 ++-
+|    2 files changed, 3 insertions(+), 2 deletions(-)
+
 * 2019-07-18(Alan O'Callaghan) fontsize_row/col applies to side colours too |18502a1| 
 |  NEWS          |  2 ++
 |  R/heatmaply.R |  7 ++++---

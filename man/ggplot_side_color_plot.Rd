@@ -4,10 +4,16 @@
 \alias{ggplot_side_color_plot}
 \title{Side color plots for heatmaps}
 \usage{
-ggplot_side_color_plot(df, palette = NULL, scale_title = paste(type,
-  "side colors"), type = c("column", "row"), text_angle = if (type ==
-  "column") 0 else 90, is_colors = FALSE, fontsize = 10,
-  label_name = NULL)
+ggplot_side_color_plot(
+  df,
+  palette = NULL,
+  scale_title = paste(type, "side colors"),
+  type = c("column", "row"),
+  text_angle = if (type == "column") 0 else 90,
+  is_colors = FALSE,
+  fontsize = 10,
+  label_name = NULL
+)
 }
 \arguments{
 \item{df}{A "molten" data.frame as produced by (eg) reshape2::melt}

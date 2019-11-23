@@ -1,5 +1,17 @@
-heatmaply 1.0.0 (2019-07-19)
+heatmaply 1.0.0 (2019-11-23)
 ===============
+
+## NEW FEATURES
+* heatmaply
+  - The argument show_dendrogram controls whether to display the row and
+    column dendrograms. This allows the user to display a clustered heatmap
+    without displaying the dendrograms used to cluster the data.
+  - Setting hclust_method=NA uses dendextend::find_dend to find the "optimal"
+    dendrogram. For details see `?find_dend`
+  - Updated the vignettes with better code examples, larger figure sizes,
+    and new features.
+  - Add the sidecolor_colorbar_len argument to control the size of the side
+    color plot legend when `plot_method = "plotly"`
 
 ## BUGFIXES
 * heatmaply
@@ -9,8 +21,10 @@ heatmaply 1.0.0 (2019-07-19)
   - showticklabels applies when row_dend_left=TRUE and plot_method="plotly"
   - fontsize_row and fontsize_col apply to side colour plots as well
     as the main plot axes.
+  - cellnote did not work properly in some cases.
+  - grid_gap now works for side colour plots with plot_method="plotly".
 
-###OTHER NOTES
+### OTHER NOTES
 - Started using pkgdown :)
 
 heatmaply 0.16.0 (2019-05-10)
@@ -431,11 +445,8 @@ TODO:
 * remove unneeded code from d3heatmap
 * add many options for controlling the heatmap "as it should be"
 * implement all relevant options streight to heatmaply.
-* ggheatmap?
 * Expose widths and heights from heatmap_subplot_from_ggplotly to heatmaply
-
 * write example for using seriation+dendextend for heatmaps.
-
 * Show the following example for using seriation:
 
 

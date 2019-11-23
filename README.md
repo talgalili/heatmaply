@@ -39,7 +39,7 @@ This package is still under active development. If you have features you would l
 
 ### Latest news
 
-You can see the most recent changes to the package in the [NEWS.md file](https://github.com/talgalili/heatmaply/blob/master/NEWS.md)
+You can see the most recent changes to the package in the [NEWS.md file](https://talgalili.github.io/heatmaply/news/index.html)
 
 
 

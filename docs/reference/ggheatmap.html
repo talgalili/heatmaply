@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Citation and Authors • heatmaply</title>
+<title>ggplot heatmap equivalent to heatmaply — ggheatmap • heatmaply</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -27,12 +27,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script>
+<link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script>
 
 
 
-<meta property="og:title" content="Citation and Authors" />
+<meta property="og:title" content="ggplot heatmap equivalent to heatmaply — ggheatmap" />
+
+<meta property="og:description" content="This function produces a ggplot analogue of heatmaply figures 
+using ggarrange. This function may not always support the same
+set of features as , and exporting the heatmaply object with, for example,
+orca or heatmaply(mtcars, file = &quot;foo.png&quot;)." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -50,7 +56,7 @@
   </head>
 
   <body>
-    <div class="container template-citation-authors">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -62,7 +68,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">heatmaply</a>
+        <a class="navbar-link" href="../index.html">heatmaply</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
@@ -70,19 +76,19 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">
+  <a href="../index.html">
     <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="articles/heatmaply.html">Get started</a>
+  <a href="../articles/heatmaply.html">Get started</a>
 </li>
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="news/index.html">Changelog</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -104,53 +110,56 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Citation</h1>
-      <small class="dont-index">Source: <a href='https://github.com/talgalili/heatmaply/blob/master/inst/CITATION'><code>inst/CITATION</code></a></small>
+    <h1>ggplot heatmap equivalent to heatmaply</h1>
+    <small class="dont-index">Source: <a href='https://github.com/talgalili/heatmaply/blob/master/R/ggheatmap.R'><code>R/ggheatmap.R</code></a></small>
+    <div class="hidden name"><code>ggheatmap.Rd</code></div>
     </div>
 
-    <p>Galili, Tal, O'Callaghan, Alan, Sidi, Jonathan, Sievert, Carson (2017).
-&ldquo;heatmaply: an R package for creating interactive cluster heatmaps for online publishing.&rdquo;
-<em>Bioinformatics</em>.
-doi: <a href="https://doi.org/10.1093/bioinformatics/btx657">10.1093/bioinformatics/btx657</a>, https://academic.oup.com/bioinformatics/article-pdf/doi/10.1093/bioinformatics/btx657/21358327/btx657.pdf, <a href="http://dx.doi.org/10.1093/bioinformatics/btx657">http://dx.doi.org/10.1093/bioinformatics/btx657</a>. 
-</p>
-    <pre>@Article{,
-  author = {{Galili} and {Tal} and {O'Callaghan} and {Alan} and {Sidi} and {Jonathan} and {Sievert} and {Carson}},
-  title = {heatmaply: an R package for creating interactive cluster heatmaps for online publishing},
-  journal = {Bioinformatics},
-  year = {2017},
-  doi = {10.1093/bioinformatics/btx657},
-  url = {http://dx.doi.org/10.1093/bioinformatics/btx657},
-  eprint = {https://academic.oup.com/bioinformatics/article-pdf/doi/10.1093/bioinformatics/btx657/21358327/btx657.pdf},
-}</pre>
-    <div class="page-header">
-      <h1>Authors</h1>
+    <div class="ref-description">
+    
+    <p>This function produces a ggplot analogue of heatmaply figures 
+using <a href='https://rdrr.io/pkg/egg/man/ggarrange.html'>ggarrange</a>. This function may not always support the same
+set of features as , and exporting the heatmaply object with, for example,
+<a href='https://rdrr.io/pkg/plotly/man/orca.html'>orca</a> or <code><a href='heatmaply.html'>heatmaply(mtcars, file = "foo.png")</a></code>.</p>
+    
     </div>
 
-    <ul class="list-unstyled">
-      <li>
-        <p><strong>Tal Galili</strong>. Author, maintainer, copyright holder. 
-        <br /><small>https://www.r-statistics.com</small></p>
-      </li>
-      <li>
-        <p><strong>Alan O'Callaghan</strong>. Author. 
-        <br /><small>https://github.com/Alanocallaghan</small></p>
-      </li>
-      <li>
-        <p><strong>Jonathan Sidi</strong>. Contributor. 
-        <br /><small>https://github.com/yonicd</small></p>
-      </li>
-      <li>
-        <p><strong>Yoav Benjamini</strong>. Thesis advisor. 
-        </p>
-      </li>
+    <pre class="usage"><span class='fu'>ggheatmap</span>(<span class='no'>...</span>, <span class='kw'>widths</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>heights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>row_dend_left</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>...</th>
+      <td><p>Passed to <a href='heatmaply.html'>heatmaply</a></p></td>
+    </tr>
+    <tr>
+      <th>widths, heights</th>
+      <td><p>Relative widths and heights of plots.</p></td>
+    </tr>
+    <tr>
+      <th>row_dend_left</th>
+      <td><p>Logical argument controlling whether the row 
+dendrogram is placed on the left of the plot.</p></td>
+    </tr>
+    </table>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>ggheatmap</span>(<span class='no'>mtcars</span>)</div><div class='img'><img src='ggheatmap-1.png' alt='' width='700' height='433' /></div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+            
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
-
 </div>
-
 
 
       <footer>

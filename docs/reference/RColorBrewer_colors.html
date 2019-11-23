@@ -16,13 +16,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -56,6 +58,7 @@ It goes from blue (cool) to ref (warm), based on well thought-out design element
 <![endif]-->
 
 
+
   </head>
 
   <body>
@@ -80,7 +83,7 @@ It goes from blue (cool) to ref (warm), based on well thought-out design element
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -98,7 +101,7 @@ It goes from blue (cool) to ref (warm), based on well thought-out design element
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/talgalili/heatmaply">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -109,6 +112,7 @@ It goes from blue (cool) to ref (warm), based on well thought-out design element
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -122,7 +126,7 @@ It goes from blue (cool) to ref (warm), based on well thought-out design element
     <div class="ref-description">
     
     <p>Functions for getting the colors of RColorBrewer (i.e.: brewer.pal) without the limitation of only 9/11
-color values, based on <a href='https://www.rdocumentation.org/packages/grDevices/topics/colorRamp'>colorRampPalette</a>.</p>
+color values, based on <a href='https://rdrr.io/r/grDevices/colorRamp.html'>colorRampPalette</a>.</p>
 <p>For sequential palettes this is not essential since we have viridis. But for diverging palettes
 this is quit essential.</p>
 <p>The sequential palettes names are
@@ -213,22 +217,31 @@ Thanks to the user YAK, who relied on the code from the Rgnuplot package
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>RColorBrewer</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/RColorBrewer/topics/ColorBrewer'>display.brewer.all</a></span>(<span class='kw'>n</span><span class='kw'>=</span><span class='fl'>11</span>,<span class='kw'>type</span><span class='kw'>=</span><span class='st'>"div"</span>); <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/title'>title</a></span>(<span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Divergent color palette"</span>)</div><div class='img'><img src='RColorBrewer_colors-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/RColorBrewer/topics/ColorBrewer'>display.brewer.all</a></span>(<span class='kw'>n</span><span class='kw'>=</span><span class='fl'>9</span>,<span class='kw'>type</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"seq"</span>)); <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/title'>title</a></span>(<span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Sequential color palette"</span>)</div><div class='img'><img src='RColorBrewer_colors-2.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='co'># \dontrun{</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>RColorBrewer</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html'>display.brewer.all</a></span>(<span class='kw'>n</span><span class='kw'>=</span><span class='fl'>11</span>,<span class='kw'>type</span><span class='kw'>=</span><span class='st'>"div"</span>); <span class='fu'><a href='https://rdrr.io/r/graphics/title.html'>title</a></span>(<span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Divergent color palette"</span>)</div><div class='img'><img src='RColorBrewer_colors-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html'>display.brewer.all</a></span>(<span class='kw'>n</span><span class='kw'>=</span><span class='fl'>9</span>,<span class='kw'>type</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"seq"</span>)); <span class='fu'><a href='https://rdrr.io/r/graphics/title.html'>title</a></span>(<span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Sequential color palette"</span>)</div><div class='img'><img src='RColorBrewer_colors-2.png' alt='' width='700' height='433' /></div><div class='input'>
 
 
 <span class='no'>img</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>obj</span>, <span class='no'>nam</span>) {
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/image'>image</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='no'>obj</span>), <span class='fl'>1</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>as.matrix</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='no'>obj</span>)), <span class='kw'>col</span><span class='kw'>=</span><span class='no'>obj</span>,
+  <span class='fu'><a href='https://rdrr.io/r/graphics/image.html'>image</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>obj</span>), <span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>obj</span>)), <span class='kw'>col</span><span class='kw'>=</span><span class='no'>obj</span>,
         <span class='kw'>main</span> <span class='kw'>=</span> <span class='no'>nam</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>xaxt</span> <span class='kw'>=</span> <span class='st'>"n"</span>, <span class='kw'>yaxt</span> <span class='kw'>=</span> <span class='st'>"n"</span>,  <span class='kw'>bty</span> <span class='kw'>=</span> <span class='st'>"n"</span>)
 }
 
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/par'>par</a></span>(<span class='kw'>mfrow</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>1</span>))
-<span class='fu'>img</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rev'>rev</a></span>(<span class='fu'>cool_warm</span>(<span class='fl'>500</span>)), <span class='st'>"cool_warm, (Moreland 2009)"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>RdBu</span>(<span class='fl'>500</span>), <span class='st'>"RdBu"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>BrBG</span>(<span class='fl'>500</span>), <span class='st'>"BrBG"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>PiYG</span>(<span class='fl'>500</span>), <span class='st'>"PiYG"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>PRGn</span>(<span class='fl'>500</span>), <span class='st'>"PRGn"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>PuOr</span>(<span class='fl'>500</span>), <span class='st'>"PuOr"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>RdGy</span>(<span class='fl'>500</span>), <span class='st'>"RdGy"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>RdYlBu</span>(<span class='fl'>500</span>), <span class='st'>"RdYlBu"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>RdYlGn</span>(<span class='fl'>500</span>), <span class='st'>"RdYlGn"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>Spectral</span>(<span class='fl'>500</span>), <span class='st'>"Spectral"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>1</span>))
+<span class='fu'>img</span>(<span class='fu'><a href='https://rdrr.io/r/base/rev.html'>rev</a></span>(<span class='fu'>cool_warm</span>(<span class='fl'>500</span>)), <span class='st'>"cool_warm, (Moreland 2009)"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>RdBu</span>(<span class='fl'>500</span>), <span class='st'>"RdBu"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>BrBG</span>(<span class='fl'>500</span>), <span class='st'>"BrBG"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>PiYG</span>(<span class='fl'>500</span>), <span class='st'>"PiYG"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>PRGn</span>(<span class='fl'>500</span>), <span class='st'>"PRGn"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>PuOr</span>(<span class='fl'>500</span>), <span class='st'>"PuOr"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>RdGy</span>(<span class='fl'>500</span>), <span class='st'>"RdGy"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>RdYlBu</span>(<span class='fl'>500</span>), <span class='st'>"RdYlBu"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>RdYlGn</span>(<span class='fl'>500</span>), <span class='st'>"RdYlGn"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>Spectral</span>(<span class='fl'>500</span>), <span class='st'>"Spectral"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'>
 
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>heatmaply</span>)
-<span class='fu'><a href='heatmaply.html'>heatmaply</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></span>(<span class='no'>mtcars</span>), <span class='kw'>colors</span> <span class='kw'>=</span> <span class='no'>PiYG</span>, <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>1</span>,<span class='fl'>1</span>))
-<span class='fu'><a href='heatmaply.html'>heatmaply</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></span>(<span class='no'>mtcars</span>), <span class='kw'>colors</span> <span class='kw'>=</span> <span class='no'>RdBu</span>, <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>1</span>,<span class='fl'>1</span>))</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>heatmaply</span>)
+<span class='fu'><a href='heatmaply.html'>heatmaply</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>mtcars</span>), <span class='kw'>colors</span> <span class='kw'>=</span> <span class='no'>PiYG</span>, <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1</span>,<span class='fl'>1</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: unable to load shared object '/Library/Frameworks/R.framework/Resources/modules//R_X11.so':</span>
+#&gt; <span class='warning'>  dlopen(/Library/Frameworks/R.framework/Resources/modules//R_X11.so, 6): Library not loaded: /opt/X11/lib/libfontconfig.1.dylib</span>
+#&gt; <span class='warning'>  Referenced from: /Library/Frameworks/R.framework/Resources/modules//R_X11.so</span>
+#&gt; <span class='warning'>  Reason: Incompatible library version: R_X11.so requires version 11.0.0 or later, but libfontconfig.1.dylib provides version 10.0.0</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'heatmap' objects don't have these attributes: 'showlegend'</span>
+#&gt; <span class='warning'>Valid attributes include:</span>
+#&gt; <span class='warning'>'type', 'visible', 'opacity', 'name', 'uid', 'ids', 'customdata', 'meta', 'hoverinfo', 'hoverlabel', 'stream', 'transforms', 'uirevision', 'z', 'x', 'x0', 'dx', 'y', 'y0', 'dy', 'text', 'hovertext', 'transpose', 'xtype', 'ytype', 'zsmooth', 'connectgaps', 'xgap', 'ygap', 'zhoverformat', 'hovertemplate', 'zauto', 'zmin', 'zmax', 'zmid', 'colorscale', 'autocolorscale', 'reversescale', 'showscale', 'colorbar', 'coloraxis', 'xcalendar', 'ycalendar', 'xaxis', 'yaxis', 'idssrc', 'customdatasrc', 'metasrc', 'hoverinfosrc', 'zsrc', 'xsrc', 'ysrc', 'textsrc', 'hovertextsrc', 'hovertemplatesrc', 'key', 'set', 'frame', 'transforms', '_isNestedKey', '_isSimpleKey', '_isGraticule', '_bbox'</span></div><div class='input'><span class='fu'><a href='heatmaply.html'>heatmaply</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>mtcars</span>), <span class='kw'>colors</span> <span class='kw'>=</span> <span class='no'>RdBu</span>, <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1</span>,<span class='fl'>1</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: 'heatmap' objects don't have these attributes: 'showlegend'</span>
+#&gt; <span class='warning'>Valid attributes include:</span>
+#&gt; <span class='warning'>'type', 'visible', 'opacity', 'name', 'uid', 'ids', 'customdata', 'meta', 'hoverinfo', 'hoverlabel', 'stream', 'transforms', 'uirevision', 'z', 'x', 'x0', 'dx', 'y', 'y0', 'dy', 'text', 'hovertext', 'transpose', 'xtype', 'ytype', 'zsmooth', 'connectgaps', 'xgap', 'ygap', 'zhoverformat', 'hovertemplate', 'zauto', 'zmin', 'zmax', 'zmid', 'colorscale', 'autocolorscale', 'reversescale', 'showscale', 'colorbar', 'coloraxis', 'xcalendar', 'ycalendar', 'xaxis', 'yaxis', 'idssrc', 'customdatasrc', 'metasrc', 'hoverinfosrc', 'zsrc', 'xsrc', 'ysrc', 'textsrc', 'hovertextsrc', 'hovertemplatesrc', 'key', 'set', 'frame', 'transforms', '_isNestedKey', '_isSimpleKey', '_isGraticule', '_bbox'</span></div><div class='input'>
+# }
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -245,19 +258,23 @@ Thanks to the user YAK, who relied on the code from the Rgnuplot package
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by Tal Galili, Alan O'Callaghan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

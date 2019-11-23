@@ -16,13 +16,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -50,6 +52,7 @@ using plotly (but potentially also with other graphical devices)." />
 <![endif]-->
 
 
+
   </head>
 
   <body>
@@ -74,7 +77,7 @@ using plotly (but potentially also with other graphical devices)." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -92,7 +95,7 @@ using plotly (but potentially also with other graphical devices)." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/talgalili/heatmaply">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -103,6 +106,7 @@ using plotly (but potentially also with other graphical devices)." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -122,19 +126,51 @@ using plotly (but potentially also with other graphical devices).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>heatmapr</span>(<span class='no'>x</span>, <span class='no'>Rowv</span>, <span class='no'>Colv</span>, <span class='kw'>distfun</span> <span class='kw'>=</span> <span class='no'>dist</span>, <span class='kw'>hclustfun</span> <span class='kw'>=</span> <span class='no'>hclust</span>,
-  <span class='kw'>dist_method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hclust_method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>distfun_row</span>, <span class='no'>hclustfun_row</span>,
-  <span class='no'>distfun_col</span>, <span class='no'>hclustfun_col</span>, <span class='kw'>dendrogram</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"both"</span>, <span class='st'>"row"</span>, <span class='st'>"column"</span>,
-  <span class='st'>"none"</span>), <span class='kw'>reorderfun</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>d</span>, <span class='no'>w</span>) <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/reorder.factor'>reorder</a></span>(<span class='no'>d</span>, <span class='no'>w</span>), <span class='kw'>k_row</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>k_col</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>symm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>revC</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"row"</span>, <span class='st'>"column"</span>),
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labRow</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>rownames</a></span>(<span class='no'>x</span>), <span class='kw'>labCol</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>x</span>), <span class='no'>cexRow</span>,
-  <span class='no'>cexCol</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3L</span>, <span class='kw'>cellnote</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>theme</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>colors</span> <span class='kw'>=</span> <span class='st'>"RdYlBu"</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>xaxis_height</span> <span class='kw'>=</span> <span class='fl'>80</span>, <span class='kw'>yaxis_width</span> <span class='kw'>=</span> <span class='fl'>120</span>, <span class='kw'>xaxis_font_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>yaxis_font_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>brush_color</span> <span class='kw'>=</span> <span class='st'>"#0000FF"</span>, <span class='kw'>show_grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>anim_duration</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='no'>row_side_colors</span>, <span class='no'>col_side_colors</span>,
-  <span class='kw'>seriate</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"OLO"</span>, <span class='st'>"mean"</span>, <span class='st'>"none"</span>, <span class='st'>"GW"</span>), <span class='kw'>point_size_mat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>custom_hovertext</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>heatmapr</span>(
+  <span class='no'>x</span>,
+  <span class='no'>Rowv</span>,
+  <span class='no'>Colv</span>,
+  <span class='kw'>distfun</span> <span class='kw'>=</span> <span class='no'>dist</span>,
+  <span class='kw'>hclustfun</span> <span class='kw'>=</span> <span class='no'>hclust</span>,
+  <span class='kw'>dist_method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>hclust_method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>distfun_row</span>,
+  <span class='no'>hclustfun_row</span>,
+  <span class='no'>distfun_col</span>,
+  <span class='no'>hclustfun_col</span>,
+  <span class='kw'>dendrogram</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"both"</span>, <span class='st'>"row"</span>, <span class='st'>"column"</span>, <span class='st'>"none"</span>),
+  <span class='kw'>show_dendrogram</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>TRUE</span>),
+  <span class='kw'>reorderfun</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>d</span>, <span class='no'>w</span>) <span class='fu'><a href='https://rdrr.io/r/stats/reorder.factor.html'>reorder</a></span>(<span class='no'>d</span>, <span class='no'>w</span>),
+  <span class='kw'>k_row</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>k_col</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>symm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>revC</span>,
+  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"row"</span>, <span class='st'>"column"</span>),
+  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>labRow</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>x</span>),
+  <span class='kw'>labCol</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>x</span>),
+  <span class='no'>cexRow</span>,
+  <span class='no'>cexCol</span>,
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3L</span>,
+  <span class='kw'>cellnote</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>theme</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>colors</span> <span class='kw'>=</span> <span class='st'>"RdYlBu"</span>,
+  <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>height</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>xaxis_height</span> <span class='kw'>=</span> <span class='fl'>80</span>,
+  <span class='kw'>yaxis_width</span> <span class='kw'>=</span> <span class='fl'>120</span>,
+  <span class='kw'>xaxis_font_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>yaxis_font_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>brush_color</span> <span class='kw'>=</span> <span class='st'>"#0000FF"</span>,
+  <span class='kw'>show_grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>anim_duration</span> <span class='kw'>=</span> <span class='fl'>500</span>,
+  <span class='no'>row_side_colors</span>,
+  <span class='no'>col_side_colors</span>,
+  <span class='kw'>seriate</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"OLO"</span>, <span class='st'>"mean"</span>, <span class='st'>"none"</span>, <span class='st'>"GW"</span>),
+  <span class='kw'>point_size_mat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>custom_hovertext</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -146,7 +182,7 @@ Defaults to <code>TRUE</code> unless <code>x</code> contains any <code>NA</code>
     </tr>
     <tr>
       <th>Rowv</th>
-      <td><p>determines if and how the row dendrogram should be reordered.    By default, it is TRUE, which implies dendrogram is computed and reordered based on row means. If NULL or FALSE, then no dendrogram is computed and no reordering is done. If a <a href='https://www.rdocumentation.org/packages/stats/topics/dendrogram'>dendrogram</a> (or <a href='https://www.rdocumentation.org/packages/stats/topics/hclust'>hclust</a>), then it is used "as-is", ie without any reordering. If a vector of integers, then dendrogram is computed and reordered based on the order of the vector.</p></td>
+      <td><p>determines if and how the row dendrogram should be reordered.    By default, it is TRUE, which implies dendrogram is computed and reordered based on row means. If NULL or FALSE, then no dendrogram is computed and no reordering is done. If a <a href='https://rdrr.io/r/stats/dendrogram.html'>dendrogram</a> (or <a href='https://rdrr.io/r/stats/hclust.html'>hclust</a>), then it is used "as-is", ie without any reordering. If a vector of integers, then dendrogram is computed and reordered based on the order of the vector.</p></td>
     </tr>
     <tr>
       <th>Colv</th>
@@ -163,13 +199,13 @@ Defaults to <code>TRUE</code> unless <code>x</code> contains any <code>NA</code>
     <tr>
       <th>dist_method</th>
       <td><p>default is NULL (which results in "euclidean" to be used). Can accept alternative character strings indicating the
-method to be passed to distfun. By default distfun. is <a href='https://www.rdocumentation.org/packages/stats/topics/dist'>dist</a> hence
+method to be passed to distfun. By default distfun. is <a href='https://rdrr.io/r/stats/dist.html'>dist</a> hence
 this can be one of "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski".</p></td>
     </tr>
     <tr>
       <th>hclust_method</th>
       <td><p>default is NULL (which results in "complete" to be used). Can accept alternative character strings indicating the
-method to be passed to hclustfun By default hclustfun is <a href='https://www.rdocumentation.org/packages/stats/topics/hclust'>hclust</a> hence
+method to be passed to hclustfun By default hclustfun is <a href='https://rdrr.io/r/stats/hclust.html'>hclust</a> hence
 this can be one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).</p></td>
     </tr>
     <tr>
@@ -190,7 +226,16 @@ this can be one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA
     </tr>
     <tr>
       <th>dendrogram</th>
-      <td><p>character string indicating whether to draw 'none', 'row', 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', then a warning is issued and Rowv (or Colv) arguments are honoured.</p></td>
+      <td><p>character string indicating whether to compute 'none',
+'row', 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv 
+(or Colv) is FALSE or NULL and dendrogram is 'both', then a warning is issued
+and Rowv (or Colv) arguments are honoured.</p></td>
+    </tr>
+    <tr>
+      <th>show_dendrogram</th>
+      <td><p>Logical vector of length controlling whether the row 
+and column dendrograms are displayed. If a logical scalar is 
+provided, it is repeated to become a logical vector of length two.</p></td>
     </tr>
     <tr>
       <th>reorderfun</th>
@@ -198,13 +243,13 @@ this can be one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA
     </tr>
     <tr>
       <th>k_row</th>
-      <td><p>an integer scalar with the desired number of groups by which to color the dendrogram's branches in the rows (uses <a href='https://www.rdocumentation.org/packages/dendextend/topics/color_branches'>color_branches</a>)
-If NA then <a href='https://www.rdocumentation.org/packages/dendextend/topics/find_k'>find_k</a> is used to deduce the optimal number of clusters.</p></td>
+      <td><p>an integer scalar with the desired number of groups by which to color the dendrogram's branches in the rows (uses <a href='https://rdrr.io/pkg/dendextend/man/color_branches.html'>color_branches</a>)
+If NA then <a href='https://rdrr.io/pkg/dendextend/man/find_k.html'>find_k</a> is used to deduce the optimal number of clusters.</p></td>
     </tr>
     <tr>
       <th>k_col</th>
-      <td><p>an integer scalar with the desired number of groups by which to color the dendrogram's branches in the columns (uses <a href='https://www.rdocumentation.org/packages/dendextend/topics/color_branches'>color_branches</a>)
-If NA then <a href='https://www.rdocumentation.org/packages/dendextend/topics/find_k'>find_k</a> is used to deduce the optimal number of clusters.</p></td>
+      <td><p>an integer scalar with the desired number of groups by which to color the dendrogram's branches in the columns (uses <a href='https://rdrr.io/pkg/dendextend/man/color_branches.html'>color_branches</a>)
+If NA then <a href='https://rdrr.io/pkg/dendextend/man/find_k.html'>find_k</a> is used to deduce the optimal number of clusters.</p></td>
     </tr>
     <tr>
       <th>symm</th>
@@ -244,7 +289,7 @@ and will give it a value cexCol*14</p></td>
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>integer indicating the number of decimal places to be used by <a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a> for 'label'.</p></td>
+      <td><p>integer indicating the number of decimal places to be used by <a href='https://rdrr.io/r/base/Round.html'>round</a> for 'label'.</p></td>
     </tr>
     <tr>
       <th>cellnote</th>
@@ -263,7 +308,7 @@ standalone visualizations, not R Markdown or Shiny.</p></td>
       <td><p>Either a colorbrewer2.org palette name (e.g. <code>"YlOrRd"</code> or
 <code>"Blues"</code>), or a vector of colors to interpolate in hexadecimal
 <code>"#RRGGBB"</code> format, or a color interpolation function like
-<code><a href='https://www.rdocumentation.org/packages/grDevices/topics/colorRamp'>colorRamp</a></code>.</p></td>
+<code><a href='https://rdrr.io/r/grDevices/colorRamp.html'>colorRamp</a></code>.</p></td>
     </tr>
     <tr>
       <th>width</th>
@@ -318,7 +363,7 @@ as the column side colors it will produce.</p></td>
       <td><p>character indicating the method of matrix sorting (default: "OLO").
 Implemented options include:
 "OLO" (Optimal leaf ordering, optimizes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
-"mean" (sorts the matrix based on the reorderfun using marginal means of the matrix. This is the default used by <a href='https://www.rdocumentation.org/packages/gplots/topics/heatmap.2'>heatmap.2</a>),
+"mean" (sorts the matrix based on the reorderfun using marginal means of the matrix. This is the default used by <a href='https://rdrr.io/pkg/gplots/man/heatmap.2.html'>heatmap.2</a>),
 "none" (the default order produced by the dendrogram),
 "GW" (Gruvaeus and Wainer heuristic to optimize the Hamiltonian path length that is restricted by the dendrogram structure)</p></td>
     </tr>
@@ -338,19 +383,20 @@ Implemented options include:
     
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>The interface was designed based on <a href='https://www.rdocumentation.org/packages/stats/topics/heatmap'>heatmap</a>, <a href='https://www.rdocumentation.org/packages/gplots/topics/heatmap.2'>heatmap.2</a>, and <a href='https://www.rdocumentation.org/packages/d3heatmap/topics/d3heatmap'>d3heatmap</a>.</p>
+    <p>The interface was designed based on <a href='https://rdrr.io/r/stats/heatmap.html'>heatmap</a>, <a href='https://rdrr.io/pkg/gplots/man/heatmap.2.html'>heatmap.2</a>, and <a href='https://rdrr.io/pkg/d3heatmap/man/d3heatmap.html'>d3heatmap</a>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='https://www.rdocumentation.org/packages/stats/topics/heatmap'>heatmap</a>, <a href='https://www.rdocumentation.org/packages/gplots/topics/heatmap.2'>heatmap.2</a>,  <a href='https://www.rdocumentation.org/packages/d3heatmap/topics/d3heatmap'>d3heatmap</a></p></div>
+    <div class='dont-index'><p><a href='https://rdrr.io/r/stats/heatmap.html'>heatmap</a>, <a href='https://rdrr.io/pkg/gplots/man/heatmap.2.html'>heatmap.2</a>,  <a href='https://rdrr.io/pkg/d3heatmap/man/d3heatmap.html'>d3heatmap</a></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>heatmaply</span>)
+<span class='co'># \dontrun{</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>heatmaply</span>)
 <span class='no'>hm</span> <span class='kw'>&lt;-</span> <span class='fu'>heatmapr</span>(<span class='no'>mtcars</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='st'>"column"</span>, <span class='kw'>colors</span> <span class='kw'>=</span> <span class='st'>"Blues"</span>)
-<span class='fu'><a href='heatmaply.html'>heatmaply</a></span>(<span class='no'>hm</span>)</div><div class='input'>
-</div></pre>
+<span class='fu'><a href='heatmaply.html'>heatmaply</a></span>(<span class='no'>hm</span>)
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -367,19 +413,23 @@ Implemented options include:
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by Tal Galili, Alan O'Callaghan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
