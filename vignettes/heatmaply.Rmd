@@ -52,7 +52,7 @@ heatmaps as d3heatmap, with the advantage of speed (plotly.js is able to
 handle larger size matrix), and the ability to zoom from the dendrogram.
 
 heatmaply also provides an interface based around the 
-[plotly R package](https://cran.r-project.org/web/packages/plotly/index.html).
+[plotly R package](https://CRAN.R-project.org/package=plotly).
 This interface can be used by choosing `plot_method = "plotly"` instead of
 the default `plot_method = "ggplot"`. This interface can provide smaller
 objects and faster rendering to disk in many cases and provides otherwise almost
@@ -294,8 +294,8 @@ Changing color palettes
 -----------------------
 
 We can use colors other than the default `viridis`. The packages
-[`cetcolor`](https://cran.rstudio.com/web/packages/cetcolor/) and 
-[`RColorBrewer`](https://cran.r-project.org/web/packages/RColorBrewer/index.html)
+[`cetcolor`](https://CRAN.R-project.org/package=cetcolor) and 
+[`RColorBrewer`](https://CRAN.R-project.org/package=RColorBrewer)
 provide a number of excellent options for continuous and discrete colour 
 palettes. These are generally designed to be perceptually uniform, and often
 also colorblind-friendly.
@@ -570,8 +570,8 @@ heatmaply(
 ggheatmap
 ---------
 
-`heatmaply` also has the option to produce vector graphic equivalents using
-the excellent [`egg`](https://cran.r-project.org/web/packages/egg/index.html) 
+`heatmaply` also has the option to produce (static) vector graphic equivalents using
+the excellent [`egg`](https://CRAN.R-project.org/package=egg) 
 package. This feature is somewhat experimental, and all feedback and 
 contributions to improve it are highly appreciated.
 
@@ -688,7 +688,7 @@ You are welcome to:
 Latest news
 ===========
 
-You can see the most recent changes to the package in the [NEWS.md file](https://talgalili.github.io/heatmaply/news/index.html)
+You can see the most recent changes to the package in the [NEWS.md file](https://talgalili.github.io/heatmaply/news)
 
 
 

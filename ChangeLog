@@ -1,3 +1,54 @@
+* 2019-11-23(Tal Galili) Update docs before release to CRAN |69b42ae| 
+|  ChangeLog                                         | 115 +++
+|  DESCRIPTION                                       |   6 +-
+|  NEWS                                              |  10 +-
+|  NEWS.md                                           |  21 +-
+|  R/zzz.R                                           |   1 +
+|  README.md                                         |   2 +-
+|  docs/404.html                                     | 138 +++
+|  docs/CONDUCT.html                                 |  20 +-
+|  docs/articles/heatmaply.html                      | 653 +++++++++-----
+|  .../figure-html/unnamed-chunk-21-1.png            | Bin 0 -> 50131 bytes
+|  .../figure-html/unnamed-chunk-24-1.png            | Bin 0 -> 44299 bytes
+|  .../figure-html/unnamed-chunk-29-1.png            | Bin 0 -> 86294 bytes
+|  .../htmlwidgets-1.5.1/htmlwidgets.js              | 903 +++++++++++++++++++
+|  .../plotly-binding-4.9.1/plotly.js                | 935 ++++++++++++++++++++
+|  .../plotly-htmlwidgets.css                        |   0
+|  .../plotly-main-1.49.4/plotly-latest.min.js       |   7 +
+|  docs/articles/index.html                          |  20 +-
+|  docs/authors.html                                 |  20 +-
+|  docs/index.html                                   |  73 +-
+|  docs/news/index.html                              |  99 ++-
+|  docs/pkgdown.css                                  |  46 +-
+|  docs/pkgdown.js                                   |  14 +-
+|  docs/pkgdown.yml                                  |   2 +-
+|  docs/reference/RColorBrewer_colors-1.png          | Bin 11695 -> 54380 bytes
+|  docs/reference/RColorBrewer_colors-2.png          | Bin 15609 -> 74571 bytes
+|  docs/reference/RColorBrewer_colors.html           |  51 +-
+|  docs/reference/ggheatmap-1.png                    | Bin 0 -> 158702 bytes
+|  docs/reference/ggheatmap.html                     | 183 ++++
+|  docs/reference/ggplot_side_color_plot.html        |  33 +-
+|  docs/reference/heatmaply-1.png                    | Bin 32964 -> 75746 bytes
+|  docs/reference/heatmaply.html                     | 531 +++++++----
+|  docs/reference/heatmaply_iris.html                |  17 +-
+|  .../htmlwidgets.js                                |  74 +-
+|  .../plotly.js                                     |  30 +-
+|  .../plotly-htmlwidgets.css                        |   9 +
+|  .../plotly-main-1.46.1/plotly-latest.min.js       |   7 -
+|  .../plotly-main-1.49.4/plotly-latest.min.js       |   7 +
+|  docs/reference/heatmapr.html                      | 120 ++-
+|  docs/reference/index.html                         |  38 +-
+|  docs/reference/is.heatmapr.html                   |  20 +-
+|  docs/reference/is.na10.html                       |  55 +-
+|  docs/reference/is.plotly.html                     |  20 +-
+|  docs/reference/normalize.html                     |  42 +-
+|  docs/reference/percentize.html                    |  43 +-
+|  man/ggplot_side_color_plot.Rd                     |  14 +-
+|  man/heatmaply.Rd                                  | 202 +++--
+|  man/heatmapr.Rd                                   |  58 +-
+|  vignettes/heatmaply.Rmd                           |   4 +-
+|  48 files changed, 3870 insertions(+), 773 deletions(-)
+
 * 2019-11-01(Alan O'Callaghan) Add more examples to vignette! (#224) |d40d361| 
 |  vignettes/heatmaply.Rmd | 66 +++++++++++++++++++++++++++++++++++++++++++++--
 |  1 file changed, 64 insertions(+), 2 deletions(-)

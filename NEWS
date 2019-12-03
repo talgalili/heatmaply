@@ -1,4 +1,4 @@
-heatmaply 1.0.0 (2019-11-23)
+heatmaply 1.0.0 (2019-12-03)
 ===============
 
 ## NEW FEATURES
@@ -23,6 +23,7 @@ heatmaply 1.0.0 (2019-11-23)
     as the main plot axes.
   - cellnote did not work properly in some cases.
   - grid_gap now works for side colour plots with plot_method="plotly".
+  - Fixed a few canonical URL issues in the vignette
 
 ### OTHER NOTES
 - Started using pkgdown :)
