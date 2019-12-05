@@ -1,4 +1,4 @@
-heatmaply 1.0.0 (2019-12-03)
+heatmaply 1.0.0 (2019-12-05)
 ===============
 
 ## NEW FEATURES

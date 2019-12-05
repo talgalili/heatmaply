@@ -397,7 +397,7 @@ heatmaply(
 This works heavily relies on the `seriation` package (their 
 [vignette](https://CRAN.R-project.org/package=seriation/vignettes/seriation.pdf)
 is well worth the read), and also lightly on the `dendextend` package (see
-[vignette](https://CRAN.R-project.org/package=dendextend/vignettes/introduction.html) )
+[vignette](http://talgalili.github.io/dendextend/articles/dendextend.html) )
 
 
 Customized dendrograms using dendextend
