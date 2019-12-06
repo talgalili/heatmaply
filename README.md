@@ -179,7 +179,8 @@ it, please support the project by citing the appropriate journal articles.
 
 You are welcome to:
 
-* submit suggestions and bug-reports at: <https://github.com/talgalili/heatmaply/issues>
-* send a pull request on: <https://github.com/talgalili/heatmaply/>
-* compose a friendly e-mail to: <tal.galili@gmail.com>
+* Ask questions on: <https://stackoverflow.com/questions/tagged/heatmaply>
+* Submit suggestions and bug-reports at: <https://github.com/talgalili/heatmaply/issues>
+* Send a pull request on: <https://github.com/talgalili/heatmaply/>
+* Compose a friendly e-mail to: <tal.galili@gmail.com>
 
