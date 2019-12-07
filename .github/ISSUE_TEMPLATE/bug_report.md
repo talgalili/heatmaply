@@ -7,10 +7,10 @@ assignees: ''
 
 ---
 
-**Describe the bug**
+# Describe the bug
 A clear and concise description of what the bug is.
 
-**To Reproduce**
+# To Reproduce
 
 Learn how to make a great R reproducible example in the following URL:
 https://stackoverflow.com/a/5963610/256662
@@ -19,11 +19,11 @@ And please supply us with such information so that we will be able to help you w
 
 
 
-**Expected behavior**
+# Expected behavior
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
+# Screenshots
 If applicable, add screenshots to help explain your problem.
 
-**Additional context**
+# Additional context
 Add any other context about the problem here.
