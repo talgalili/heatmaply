@@ -1,3 +1,13 @@
+heatmaply 1.1.1 (2020-01-06)
+===============
+
+### NEW FEATURE
+* heatmaply
+  - Add dendrogram_layers argument to allow users to arbitrarily customise
+    dendrograms using ggplot2 themes/scales etc before conversion to plotly 
+    objects.
+
+
 heatmaply 1.0.1 (2019-12-06)
 ===============
 
