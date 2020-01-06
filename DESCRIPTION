@@ -60,5 +60,5 @@ URL: https://talgalili.github.io/heatmaply/,
     https://www.r-statistics.com/tag/heatmaply/
 BugReports: https://github.com/talgalili/heatmaply/issues
 LazyData: true
-RoxygenNote: 7.0.1
+RoxygenNote: 7.0.2
 Encoding: UTF-8

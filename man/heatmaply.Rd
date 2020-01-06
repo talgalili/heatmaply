@@ -71,6 +71,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   seriate = c("OLO", "mean", "none", "GW"),
   heatmap_layers = NULL,
   side_color_layers = NULL,
+  dendrogram_layers = NULL,
   branches_lwd = 0.6,
   file,
   width = NULL,
@@ -142,6 +143,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   RowSideColors,
   heatmap_layers = NULL,
   side_color_layers = NULL,
+  dendrogram_layers = NULL,
   branches_lwd = 0.6,
   label_names = c("row", "column", "value"),
   fontsize_row = 10,
@@ -367,11 +369,14 @@ the matrix. This is the default used by \link[gplots]{heatmap.2}),
 "GW" (Gruvaeus and Wainer heuristic to optimize the Hamiltonian path length
 that is restricted by the dendrogram structure)}
 
-\item{heatmap_layers}{ggplot object (eg, theme_bw()) to be added to
+\item{heatmap_layers}{ggplot object(s) (eg, list(theme_bw())) to be added to
 the heatmap before conversion to a plotly object.}
 
-\item{side_color_layers}{Layers to be added to side color plots, similar to
-heatmap_layers.}
+\item{side_color_layers}{ggplot2 objects to be added to side color plots,
+similar to heatmap_layers.}
+
+\item{dendrogram_layers}{ggplot2 objects to be added to dendrograms,
+similar to heatmap_layers and side_color_layers.}
 
 \item{branches_lwd}{numeric (default is 0.6). The width of the dendrograms' branches.
 If NULL then it is ignored. If the "lwd" is already defined in Rowv/Colv then this
