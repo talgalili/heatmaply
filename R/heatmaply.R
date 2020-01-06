@@ -216,10 +216,12 @@ is.plotly <- function(x) {
 #' "GW" (Gruvaeus and Wainer heuristic to optimize the Hamiltonian path length
 #' that is restricted by the dendrogram structure)
 #'
-#' @param heatmap_layers ggplot object (eg, theme_bw()) to be added to
-#'  the heatmap before conversion to a plotly object.
-#' @param side_color_layers Layers to be added to side color plots, similar to
-#' 	heatmap_layers.
+#' @param heatmap_layers ggplot object(s) (eg, list(theme_bw())) to be 
+#'  added to the heatmap before conversion to a plotly object.
+#' @param side_color_layers ggplot objects to be added to side color plots, 
+#'  similar to heatmap_layers.
+#' @param dendrogram_layers ggplot2 object(s) to be added to side color plots, 
+#'  similar to heatmap_layers and side_color_layers.
 #' @param branches_lwd numeric (default is 0.6). The width of the dendrograms' branches.
 #' If NULL then it is ignored. If the "lwd" is already defined in Rowv/Colv then this
 #' parameter is ignored (it is checked using \link[dendextend]{has_edgePar}("lwd")).
@@ -555,6 +557,7 @@ heatmaply.default <- function(x,
                               seriate = c("OLO", "mean", "none", "GW"),
                               heatmap_layers = NULL,
                               side_color_layers = NULL,
+                              dendrogram_layers = NULL,
                               branches_lwd = 0.6,
                               file,
                               width = NULL,
@@ -769,6 +772,7 @@ heatmaply.default <- function(x,
     col_side_palette = col_side_palette,
     heatmap_layers = heatmap_layers,
     side_color_layers = side_color_layers,
+    dendrogram_layers = dendrogram_layers,
     ColSideColors = ColSideColors,
     RowSideColors = RowSideColors,
     branches_lwd = branches_lwd,
@@ -851,6 +855,7 @@ heatmaply.heatmapr <- function(x,
                                RowSideColors,
                                heatmap_layers = NULL,
                                side_color_layers = NULL,
+                               dendrogram_layers = NULL,
                                branches_lwd = 0.6,
                                label_names = c("row", "column", "value"),
                                fontsize_row = 10,
@@ -961,7 +966,8 @@ heatmaply.heatmapr <- function(x,
       py <- ggplot(cols, labels = FALSE, na.rm = TRUE) + 
         theme_bw() +
         coord_cartesian(expand = FALSE, xlim = xlims) +
-        theme_clear_grid_dends
+        theme_clear_grid_dends +
+        dendrogram_layers
     } else {
       py <- plotly_dend(cols, 
                         side = "col", 
@@ -978,8 +984,8 @@ heatmaply.heatmapr <- function(x,
       px <- ggplot(row_ggdend, labels = FALSE, na.rm = TRUE) +
         theme_bw() +
         coord_flip(expand = FALSE, xlim = ylims) +
-        theme_clear_grid_dends
-
+        theme_clear_grid_dends +
+        dendrogram_layers
       if (row_dend_left) {
         px <- px + scale_y_reverse()
       }
@@ -1028,11 +1034,6 @@ heatmaply.heatmapr <- function(x,
       custom_hovertext = custom_hovertext
     )
   }
-
-
-
-
-
 
   # TODO: Add native plotly sidecolor function.
   # TODO: Possibly use function to generate all 3 plots to prevent complex logic here
