@@ -1,10 +1,3 @@
-heatmaply 1.0.1 (2020-02-13)
-===============
-
-## BUGFIXES
-* heatmaply
-  - Correctly hide dendrogram axes when plot_method="plotly"
-
 heatmaply 1.0.0 (2019-12-05)
 ===============
 

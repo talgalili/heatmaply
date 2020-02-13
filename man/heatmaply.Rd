@@ -86,6 +86,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   subplot_widths = NULL,
   subplot_heights = NULL,
   colorbar_len = 0.3,
+  colorbar_thickness = 30,
   colorbar_xanchor = if (row_dend_left) "right" else "left",
   colorbar_yanchor = "bottom",
   colorbar_xpos = if (row_dend_left) -0.1 else 1.1,
@@ -155,6 +156,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   colorbar_xpos = if (row_dend_left) -0.1 else 1.1,
   colorbar_ypos = 0,
   colorbar_len = 0.3,
+  colorbar_thickness = 30,
   showticklabels = c(TRUE, TRUE),
   dynamicTicks = FALSE,
   node_type = c("scatter", "heatmap"),
@@ -417,6 +419,9 @@ plots involved.}
 
 \item{colorbar_len}{The length of the colorbar/color key relative to the total
 plot height. Only used if plot_method = "plotly"}
+
+\item{colorbar_thickness}{The thickness (width) of the colorbar/color key
+in pixels. Only used if plot_method = "plotly".}
 
 \item{colorbar_xanchor, colorbar_yanchor}{The x and y anchoring points of the
 colorbar/color legend. Can be "left", "middle" or "right" for colorbar_xanchor,

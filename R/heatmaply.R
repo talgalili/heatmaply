@@ -1,30 +1,3 @@
-## TODO: roxygen documentation of all functions
-
-# devtools::install_github("ropensci/plotly", ref = "fix/subplot")
-# reference: https://plot.ly/ggplot2/ggdendro-dendrograms/
-# to answer later: http://stackoverflow.com/questions/34733829/questions-about-a-tutorial-regarding-interactive-heatmaps-with-plotly
-# to check: https://plot.ly/r/heatmaps/
-
-
-
-#' @title Checks if an object is of class plotly or not.
-#' @export
-#' @description
-#' Helpful for the plot_method in link{heatmaply}.
-#'
-#' @param x an object to check
-#'
-#' @return
-#' TRUE if the object inherits "plotly" as a class.
-#'
-is.plotly <- function(x) {
-  inherits(x, "plotly")
-}
-
-
-
-
-
 #' @title  Cluster heatmap based on plotly
 #' @name heatmaply
 #'
@@ -256,6 +229,9 @@ is.plotly <- function(x) {
 #'
 #' @param colorbar_len The length of the colorbar/color key relative to the total
 #' plot height. Only used if plot_method = "plotly"
+#'
+#' @param colorbar_thickness The thickness (width) of the colorbar/color key
+#' in pixels. Only used if plot_method = "plotly".
 #'
 #' @param colorbar_xanchor,colorbar_yanchor The x and y anchoring points of the
 #' colorbar/color legend. Can be "left", "middle" or "right" for colorbar_xanchor,
@@ -571,6 +547,7 @@ heatmaply.default <- function(x,
                               subplot_widths = NULL,
                               subplot_heights = NULL,
                               colorbar_len = 0.3,
+                              colorbar_thickness = 30,
                               colorbar_xanchor = if (row_dend_left) "right" else "left",
                               colorbar_yanchor = "bottom",
                               colorbar_xpos = if (row_dend_left) -0.1 else 1.1,
@@ -787,6 +764,7 @@ heatmaply.default <- function(x,
     subplot_widths = subplot_widths,
     subplot_heights = subplot_heights,
     colorbar_len = colorbar_len,
+    colorbar_thickness = colorbar_thickness,
     colorbar_xanchor = colorbar_xanchor,
     colorbar_yanchor = colorbar_yanchor,
     colorbar_xpos = colorbar_xpos,
@@ -867,6 +845,7 @@ heatmaply.heatmapr <- function(x,
                                colorbar_xpos = if (row_dend_left) -0.1 else 1.1,
                                colorbar_ypos = 0,
                                colorbar_len = 0.3,
+                               colorbar_thickness = 30,
                                showticklabels = c(TRUE, TRUE),
                                dynamicTicks = FALSE,
                                node_type = c("scatter", "heatmap"),
@@ -1031,6 +1010,7 @@ heatmaply.heatmapr <- function(x,
       colorbar_yanchor = colorbar_yanchor, colorbar_xanchor = colorbar_xanchor,
       colorbar_xpos = colorbar_xpos, colorbar_ypos = colorbar_ypos,
       colorbar_len = colorbar_len,
+      colorbar_thickness = colorbar_thickness,
       custom_hovertext = custom_hovertext
     )
   }
@@ -1128,6 +1108,13 @@ heatmaply.heatmapr <- function(x,
   if (!is.plotly(p)) {
     p <- ggplotly(p, dynamicTicks = dynamicTicks, tooltip = "text") %>%
       layout(showlegend = FALSE)
+      ## Currently broken, see:
+      ##  https://github.com/ropensci/plotly/issues/1701
+      # %>%
+      # colorbar(
+      #   len = colorbar_len,
+      #   thickness = colorbar_thickness
+      # )
   }
 
   if (draw_cellnote) {
@@ -1403,4 +1390,18 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
 calc_margin <- function(labels, fontsize) {
   max(nchar(labels) * fontsize, na.rm = TRUE) * 0.6
   # http://stackoverflow.com/questions/19113725/what-dependency-between-font-size-and-width-of-char-in-monospace-font
+}
+
+#' @title Checks if an object is of class plotly or not.
+#' @export
+#' @description
+#' Helpful for the plot_method in link{heatmaply}.
+#'
+#' @param x an object to check
+#'
+#' @return
+#' TRUE if the object inherits "plotly" as a class.
+#'
+is.plotly <- function(x) {
+  inherits(x, "plotly")
 }

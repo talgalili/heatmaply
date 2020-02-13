@@ -241,6 +241,7 @@ plotly_heatmap <- function(x,
                            colorbar_xpos = 1.1, 
                            colorbar_ypos = 1, 
                            colorbar_len = 0.3,
+                           colorbar_thickness = 30,
                            custom_hovertext = NULL,
                            showticklabels = c(TRUE, TRUE)) {
 
@@ -273,7 +274,10 @@ plotly_heatmap <- function(x,
   }
   p <- plot_ly(
     z = x, x = 1:ncol(x), y = 1:nrow(x), text = text_mat,
-    type = "heatmap", showlegend = FALSE, colors = colors, hoverinfo = "text",
+    type = "heatmap",
+    showlegend = FALSE,
+    colors = colors,
+    hoverinfo = "text",
     zmin = limits[1], zmax = limits[2]
   ) %>%
     layout(
@@ -295,9 +299,15 @@ plotly_heatmap <- function(x,
       )
     )
   p <- plotly::colorbar(
-    p, lenmode = "fraction", title = key_title,
-    xanchor = colorbar_xanchor, x = colorbar_xpos, y = colorbar_ypos,
-    yanchor = colorbar_yanchor, len = colorbar_len
+    p,
+    lenmode = "fraction",
+    title = key_title,
+    xanchor = colorbar_xanchor,
+    x = colorbar_xpos,
+    y = colorbar_ypos,
+    yanchor = colorbar_yanchor,
+    len = colorbar_len,
+    thickness = colorbar_thickness
   )
   p
 }
