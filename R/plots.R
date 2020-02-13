@@ -341,12 +341,14 @@ plotly_dend <- function(dend,
     title = "",
     range = c(0, max(segs$y)),
     linecolor = "#ffffff",
+    visible = FALSE,
     showgrid = FALSE
   )
   axis2 <- list(
     title = "",
     range = c(0, lab_max),
     linecolor = "#ffffff",
+    visible = FALSE,
     showgrid = FALSE
   )
 
