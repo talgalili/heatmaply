@@ -271,8 +271,8 @@ plotly_heatmap <- function(x,
         )
       }
     )
+    text_mat <- as.matrix(text_mat)
   }
-  text_mat <- as.matrix(text_mat)
 
   p <- plot_ly(
     z = x, x = 1:ncol(x), y = 1:nrow(x), text = text_mat,
