@@ -153,12 +153,12 @@ ggplot_heatmap <- function(xx,
     theme(
       axis.text.x = element_text(
         angle = column_text_angle,
-        size = fontsize_col, 
+        size = fontsize_col,
         hjust = 1
       ),
       axis.text.y = element_text(
         angle = row_text_angle,
-        size = fontsize_row, 
+        size = fontsize_row,
         hjust = 1
       ),
       axis.title = element_blank()
@@ -227,19 +227,19 @@ paste_aes <- function(x) {
 plotly_heatmap <- function(x,
                            limits = range(x),
                            colors = viridis(n = 256, alpha = 1, begin = 0, end = 1, option = "viridis"),
-                           row_text_angle = 0, 
-                           column_text_angle = 45, 
-                           grid.color, 
+                           row_text_angle = 0,
+                           column_text_angle = 45,
+                           grid.color,
                            grid.size,
-                           row_dend_left = FALSE, 
+                           row_dend_left = FALSE,
                            fontsize_row = 10,
-                           fontsize_col = 10, 
+                           fontsize_col = 10,
                            key_title = "",
-                           colorbar_xanchor = "left", 
+                           colorbar_xanchor = "left",
                            colorbar_yanchor = "bottom",
                            label_names = NULL,
-                           colorbar_xpos = 1.1, 
-                           colorbar_ypos = 1, 
+                           colorbar_xpos = 1.1,
+                           colorbar_ypos = 1,
                            colorbar_len = 0.3,
                            colorbar_thickness = 30,
                            custom_hovertext = NULL,
@@ -257,21 +257,23 @@ plotly_heatmap <- function(x,
     assert_that(length(label_names) == 3)
   }
 
-  text_mat <- as.data.frame(x)
-  text_mat[] <- lapply(
-    seq_along(text_mat),
-    function(i) {
-      paste0(
-        label_names[3], ": ", x[, i], "<br>",
-        label_names[2], ": ", colnames(x)[i], "<br>",
-        label_names[1], ": ", rownames(x)
-      )
-    }
-  )
-  text_mat <- as.matrix(text_mat)
   if (!is.null(custom_hovertext)) {
-    text_mat[] <- paste(text_mat, custom_hovertext, sep = "<br>")
+    text_mat <- custom_hovertext
+  } else {
+    text_mat <- as.data.frame(x)
+    text_mat[] <- lapply(
+      seq_along(text_mat),
+      function(i) {
+        paste0(
+          label_names[3], ": ", x[, i], "<br>",
+          label_names[2], ": ", colnames(x)[i], "<br>",
+          label_names[1], ": ", rownames(x)
+        )
+      }
+    )
+    text_mat <- as.matrix(text_mat)
   }
+
   p <- plot_ly(
     z = x, x = 1:ncol(x), y = 1:nrow(x), text = text_mat,
     type = "heatmap",
@@ -313,8 +315,8 @@ plotly_heatmap <- function(x,
 }
 
 
-plotly_dend <- function(dend, 
-                        side = c("row", "col"), 
+plotly_dend <- function(dend,
+                        side = c("row", "col"),
                         flip = FALSE,
                         dend_hoverinfo = TRUE) {
 
@@ -419,12 +421,12 @@ plotly_dend <- function(dend,
 #'
 #' @return A ggplot geom_tile object
 #'
-ggplot_side_color_plot <- function(df, 
+ggplot_side_color_plot <- function(df,
                                    palette = NULL,
-                                   scale_title = paste(type, "side colors"), 
+                                   scale_title = paste(type, "side colors"),
                                    type = c("column", "row"),
-                                   text_angle = if (type == "column") 0 else 90, 
-                                   is_colors = FALSE, 
+                                   text_angle = if (type == "column") 0 else 90,
+                                   is_colors = FALSE,
                                    fontsize = 10,
                                    label_name = NULL) {
 
@@ -529,9 +531,9 @@ default_side_colors <- function(n) {
 
 ## Predict luminosity of cells and change text based on that
 ## http://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
-predict_colors <- function(p, 
+predict_colors <- function(p,
                            colorscale_df = p$x$data[[1]]$colorscale,
-                           cell_values = p$x$data[[1]]$z, 
+                           cell_values = p$x$data[[1]]$z,
                            plot_method = c("ggplot", "plotly")) {
 
   plot_method <- match.arg(plot_method)
@@ -626,11 +628,11 @@ discrete_colorscale <- function(colors) {
 }
 
 #' @importFrom stats setNames
-plotly_side_color_plot <- function(df, 
+plotly_side_color_plot <- function(df,
                                    palette = NULL,
-                                   scale_title = paste(type, "side colors"), 
+                                   scale_title = paste(type, "side colors"),
                                    type = c("column", "row"),
-                                   text_angle = if (type == "column") 0 else 90, 
+                                   text_angle = if (type == "column") 0 else 90,
                                    is_colors = FALSE,
                                    label_name = NULL,
                                    colorbar_len = 0.3,
@@ -848,8 +850,8 @@ hmly_to_file <- Vectorize(hmly_to_file_1file, vectorize.args = "file")
 #' @importFrom grDevices col2rgb
 col2hex <- function(col) {
     colMat <- col2rgb(col)
-    rgb(red = colMat[1, ] / 255, 
-        green = colMat[2, ] / 255, 
+    rgb(red = colMat[1, ] / 255,
+        green = colMat[2, ] / 255,
         blue = colMat[3, ] / 255)
 }
 
