@@ -12,11 +12,11 @@ heatmaply 1.1.0 (2020-03-27)
 ## BUGFIX
 - heatmaply
   - Correctly hide dendrogram axes when plot_method="plotly"
-- Revert heatmaply axis patch from 1.1.1
 - Make behaviour match docs for custom_hovertext when plot_method="plotly" (#231)
 
 ### OTHER NOTES
 - Improve the README with link to stackoverflow.
+- Updated pkgdown
 
 
 heatmaply 1.0.0 (2019-12-05)
