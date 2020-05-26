@@ -1009,6 +1009,8 @@ heatmaply.heatmapr <- function(x,
       fontsize_row = fontsize_row, fontsize_col = fontsize_col,
       colorbar_yanchor = colorbar_yanchor, colorbar_xanchor = colorbar_xanchor,
       colorbar_xpos = colorbar_xpos, colorbar_ypos = colorbar_ypos,
+      point_size_mat = point_size_mat,
+      point_size_name = point_size_name,
       colorbar_len = colorbar_len,
       colorbar_thickness = colorbar_thickness,
       custom_hovertext = custom_hovertext
@@ -1122,14 +1124,12 @@ heatmaply.heatmapr <- function(x,
     if (cellnote_color == "auto") {
       cellnote_color <- predict_colors(p, plot_method = plot_method)
     }
-
     df <- as.data.frame(x[["matrix"]][["cellnote"]])
     df[["_row"]] <- seq_len(nrow(df))
     mdf <- reshape2::melt(df, id.vars = "_row")
     ## TODO: Enforce same dimnames to ensure it's not scrambled?
     # mdf$variable <- factor(mdf$variable, levels = p$x$layout$xaxis$ticktext)
-    mdf$variable <- as.factor(mdf$variable)
-    mdf$variable <- as.numeric(mdf$variable)
+    mdf$variable <- as.numeric(as.factor(mdf$variable))
     mdf$value <- factor(mdf$value)
     p <- p %>% add_trace(
       data = mdf,

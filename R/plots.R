@@ -57,8 +57,8 @@ ggplot_heatmap <- function(xx,
                            type = c("heatmap", "scatter"),
                            pointsize = 5,
                            point_size_mat = NULL,
-                           label_format_fun = function(...) format(..., digits = 4),
                            point_size_name = "Point size",
+                           label_format_fun = function(...) format(..., digits = 4),
                            custom_hovertext = NULL,
                            ...) {
 
@@ -243,6 +243,8 @@ plotly_heatmap <- function(x,
                            colorbar_len = 0.3,
                            colorbar_thickness = 30,
                            custom_hovertext = NULL,
+                           point_size_mat = NULL,
+                           point_size_name = "Point size",
                            showticklabels = c(TRUE, TRUE)) {
 
   if (is.function(colors)) colors <- colors(256)
@@ -272,16 +274,45 @@ plotly_heatmap <- function(x,
       }
     )
     text_mat <- as.matrix(text_mat)
+    if (!is.null(point_size_mat)) {
+      point_size_name
+    }
   }
 
-  p <- plot_ly(
-    z = x, x = 1:ncol(x), y = 1:nrow(x), text = text_mat,
-    type = "heatmap",
-    showlegend = FALSE,
-    colors = colors,
-    hoverinfo = "text",
-    zmin = limits[1], zmax = limits[2]
-  ) %>%
+  if (is.null(point_size_mat)) {
+    p <- plot_ly(
+      z = x, x = 1:ncol(x), y = 1:nrow(x), text = text_mat,
+      type = "heatmap",
+      showlegend = FALSE,
+      colors = colors,
+      hoverinfo = "text",
+      zmin = limits[1], zmax = limits[2]
+    )    
+  } else {
+    melt <- function(x, cn, rn) {
+      xdf <- reshape2::melt(x)
+      xdf$Var1 <- factor(xdf$Var1, levels = colnames(x))
+      xdf$Var2 <- factor(xdf$Var2, levels = rownames(x))
+      xdf
+    }
+    xdf <- melt(x)
+    tdf <- melt(text_mat)
+    pdf <- melt(point_size_mat)
+    
+    p <- plot_ly(
+      x = as.numeric(xdf$Var1),
+      y = as.numeric(xdf$Var2),
+      text = tdf$value,
+      color = xdf$value,
+      size = pdf$value,
+      type = "scatter",
+      mode = "markers",
+      showlegend = FALSE,
+      colors = colors,
+      hoverinfo = "text"
+    )
+  }
+  p <- p  %>%
     layout(
       xaxis = list(
         tickfont = list(size = fontsize_col),
@@ -532,14 +563,26 @@ default_side_colors <- function(n) {
 ## Predict luminosity of cells and change text based on that
 ## http://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
 predict_colors <- function(p,
-                           colorscale_df = p$x$data[[1]]$colorscale,
+                           colorscale_df = p$x$data[[1]]$colorscale %||% p$x$data[[2]]$marker$colorscale,
                            cell_values = p$x$data[[1]]$z,
                            plot_method = c("ggplot", "plotly")) {
 
   plot_method <- match.arg(plot_method)
 
+  if (is.null(cell_values)) {
+    cell_values <- as.data.frame(
+      matrix(
+        p$x$data[[1]]$marker$size,
+        ncol = length(unique(p$x$data[[1]]$x)),
+        nrow = length(unique(p$x$data[[1]]$y))
+      )
+    )
+  }
+  if (is.null(colorscale_df)) {
+    stop("Internal error in predicting colours!")
+  }
   cell_values <- as.data.frame(cell_values)
-  cell_values$row <- 1:nrow(cell_values)
+  cell_values$row <- seq_len(nrow(cell_values))
   cell_values_m <- reshape2::melt(cell_values, id.vars = "row")
   cell_values_vector <- cell_values_m$value
 
