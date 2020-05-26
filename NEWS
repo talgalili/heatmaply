@@ -1,50 +1,28 @@
-heatmaply 1.1.4 (2020-05-26)
+heatmaply 1.1.1 (2020-05-26)
 ===============
 ## BUGFIX
 - Cellnote did not work when using point size mapping.
 - `point_size_mat` did not work when `plot_method="plotly"`
 
-
-heatmaply 1.1.3 (2020-02-29)
-===============
-## BUGFIX
-- Make behaviour match docs for custom_hovertext when plot_method="plotly" (#231)
-
-
-heatmaply 1.1.2 (2020-02-15)
-===============
-## BUGFIX
-- Revert heatmaply axis patch from 1.1.1
-
-
-heatmaply 1.1.1 (2020-02-13)
+heatmaply 1.1.0 (2020-03-27)
 ===============
 
 ## NEW FEATURE
 * heatmaply
+  - Add dendrogram_layers argument to allow users to arbitrarily customise
+    dendrograms using ggplot2 themes/scales etc before conversion to plotly
+    objects.
   - Add colorbar_thickness argument to control colorbar width/thickness.
     Only effective when plot_method="plotly"
 
-## BUGFIXES
-* heatmaply
+## BUGFIX
+- heatmaply
   - Correctly hide dendrogram axes when plot_method="plotly"
-
-
-heatmaply 1.1.0 (2020-01-06)
-===============
-
-### NEW FEATURE
-* heatmaply
-  - Add dendrogram_layers argument to allow users to arbitrarily customise
-    dendrograms using ggplot2 themes/scales etc before conversion to plotly 
-    objects.
-
-
-heatmaply 1.0.1 (2019-12-06)
-===============
+- Make behaviour match docs for custom_hovertext when plot_method="plotly" (#231)
 
 ### OTHER NOTES
 - Improve the README with link to stackoverflow.
+- Updated pkgdown
 
 
 heatmaply 1.0.0 (2019-12-05)

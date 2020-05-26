@@ -1,3 +1,96 @@
+* 2020-02-29(Alan O'Callaghan) Bump description/news |53577d5| 
+|  DESCRIPTION | 4 ++--
+|  NEWS        | 6 ++++++
+|  2 files changed, 8 insertions(+), 2 deletions(-)
+
+* 2020-02-29(Huzefa Khalil) Fix for #231 (#232) |16890f5| 
+|  R/plots.R | 74 +++++++++++++++++++++++++++++++------------------------------
+|  1 file changed, 38 insertions(+), 36 deletions(-)
+
+*   2020-02-15(Alan O'Callaghan) Merge branch 'master' of github.com:talgalili/heatmaply |ded426c
+|\  
+| * 2020-02-13(Alan O'Callaghan) Correct version and add colorbar_thickness arg |4076c69| | 
+| |  DESCRIPTION      |  2 +-
+| |  NEWS             | 13 +++++++++++++
+| |  NEWS.md          |  7 -------
+| |  R/heatmaply.R    | 55 ++++++++++++++++++++++++++--------------------------
+| |  R/plots.R        | 18 +++++++++++++----
+| |  man/heatmaply.Rd |  5 +++++
+| |  6 files changed, 61 insertions(+), 39 deletions(-)
+
+| * 2020-02-13(Alan O'Callaghan) Wrong semver |b8e3c9c| | 
+| |  DESCRIPTION | 2 +-
+| |  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* | 2020-02-15(Alan O'Callaghan) Revert "Resolve #229" |aefcb44
+|/  |   
+|    DESCRIPTION |  4 ++--
+|    NEWS        | 19 +++++++++++++++++++
+|    NEWS.md     |  7 -------
+|    R/plots.R   |  2 --
+|    4 files changed, 21 insertions(+), 11 deletions(-)
+
+* 2020-02-13(Alan O'Callaghan) Resolve #229 |e84da51| 
+|  DESCRIPTION | 4 ++--
+|  NEWS.md     | 7 +++++++
+|  R/plots.R   | 2 ++
+|  3 files changed, 11 insertions(+), 2 deletions(-)
+
+* 2020-01-06(Alan O'Callaghan) Docs |57abdb8| 
+|  DESCRIPTION      |  2 +-
+|  man/heatmaply.Rd | 11 ++++++++---
+|  2 files changed, 9 insertions(+), 4 deletions(-)
+
+* 2020-01-06(Alan O'Callaghan) Wrong semver |4073b08| 
+|  DESCRIPTION | 2 +-
+|  NEWS        | 2 +-
+|  2 files changed, 2 insertions(+), 2 deletions(-)
+
+* 2020-01-06(Alan O'Callaghan) add dendrogram_layers argument |1299fd2| 
+|  DESCRIPTION   |  4 ++--
+|  NEWS          | 10 ++++++++++
+|  R/heatmaply.R | 18 ++++++++++++------
+|  3 files changed, 24 insertions(+), 8 deletions(-)
+
+* 2019-12-07(Tal Galili) Update issue templates |3a626ad| 
+|  .github/ISSUE_TEMPLATE/bug_report.md      | 10 +++++-----
+|  .github/ISSUE_TEMPLATE/feature_request.md |  8 ++++----
+|  2 files changed, 9 insertions(+), 9 deletions(-)
+
+* 2019-12-06(Tal Galili) Improve the README with link to stackoverflow. |6ea9c1e| 
+|  DESCRIPTION       |  4 ++--
+|  NEWS              |  7 +++++++
+|  R/zzz.R           |  1 +
+|  README.md         |  7 ++++---
+|  docs/CONDUCT.html |  2 +-
+|  docs/authors.html |  2 +-
+|  docs/index.html   | 10 ++++++----
+|  7 files changed, 22 insertions(+), 11 deletions(-)
+
+* 2019-12-05(Tal Galili) Fix wrong url (again...) |f4e9a8a| 
+|  DESCRIPTION                        |  2 +-
+|  NEWS                               |  2 +-
+|  NEWS.md                            |  2 +-
+|  docs/articles/heatmaply.html       | 78 ++++++++++++++++++------------------
+|  docs/news/index.html               |  6 +--
+|  docs/reference/heatmaply.html      |  2 +-
+|  docs/reference/heatmaply_iris.html |  2 +-
+|  vignettes/heatmaply.Rmd            |  2 +-
+|  8 files changed, 48 insertions(+), 48 deletions(-)
+
+* 2019-12-03(Tal Galili) Fixed a few canonical URL issues in the vignette |1b0e356| 
+|  ChangeLog                          | 51 +++++++++++++++++++++
+|  DESCRIPTION                        |  2 +-
+|  NEWS                               |  3 +-
+|  NEWS.md                            |  3 +-
+|  README.md                          |  2 +-
+|  docs/articles/heatmaply.html       | 86 ++++++++++++++++++------------------
+|  docs/index.html                    |  2 +-
+|  docs/news/index.html               |  7 +--
+|  docs/reference/heatmaply_iris.html |  2 +-
+|  vignettes/heatmaply.Rmd            | 12 ++---
+|  10 files changed, 112 insertions(+), 58 deletions(-)
+
 * 2019-11-23(Tal Galili) Update docs before release to CRAN |69b42ae| 
 |  ChangeLog                                         | 115 +++
 |  DESCRIPTION                                       |   6 +-
