@@ -69,7 +69,8 @@
 #' @param hclust_method default is NULL (which results in "complete" to be used).
 #' Can accept alternative character strings indicating the
 #' method to be passed to hclustfun By default hclustfun is \link{hclust} hence
-#' this can be one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).
+#' this can be one of "ward.D", "ward.D2", "single", "complete", "average" 
+#' (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).
 #' Specifying hclust_method=NA causes heatmaply to use 
 #' \code{\link[dendextend]{find_dend}} to find the "optimal" dendrogram for
 #' the data.
@@ -106,12 +107,12 @@
 #' @param scale character indicating if the values should be centered and scaled
 #' in either the row direction or the column direction, or none. The default is
 #' "none".
-#' @param na.rm logical (default is TRUE) indicating whether NA's should be removed when scaling
-#' (i.e.: when using rowMeans/colMeans). Generally it should always be kept as TRUE, and is included
-#' here mainly to stay backward compatible with gplots::heatmap.2.
-#' This argument does not effect the presence of NA values in the matrix itself.
-#' For removing rows/columns with NAs you should pre-process your matrix using na.omit
-#' (or some form of imputation).
+#' @param na.rm logical (default is TRUE) indicating whether NA's should be 
+#' removed when scaling (i.e.: when using rowMeans/colMeans). Generally it 
+#' should always be kept as TRUE, and is included here mainly to stay backward 
+#' compatible with gplots::heatmap.2. This argument does not effect the presence
+#' of NA values in the matrix itself. For removing rows/columns with NAs you 
+#' should pre-process your matrix using na.omit (or some form of imputation).
 #'
 #' @param row_dend_left logical (default is FALSE). Should the row dendrogram be
 #' plotted on the left side of the heatmap. If false then it will be plotted on
@@ -166,8 +167,6 @@
 #'
 #' @param row_side_colors,col_side_colors data.frame of factors to produce
 #'    row/column side colors in the style of heatmap.2/heatmap.3.
-#'    col_side_colors should be "wide", ie be the same dimensions
-#'    as the column side colors it will produce.
 #'    When a data.frame is provided, the column names are used as the label names for each of the newly added row_side_colors.
 #'    When a vector is provided it is coerced into a data.frame and the name of the side color will be just row_side_colors.
 #'
@@ -829,8 +828,8 @@ heatmaply.heatmapr <- function(x,
                                col_side_colors = x[["col_side_colors"]],
                                col_side_palette = NULL,
                                plot_method = c("ggplot", "plotly"),
-                               ColSideColors,
-                               RowSideColors,
+                               ColSideColors = NULL,
+                               RowSideColors = NULL,
                                heatmap_layers = NULL,
                                side_color_layers = NULL,
                                dendrogram_layers = NULL,

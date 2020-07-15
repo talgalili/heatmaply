@@ -1,3 +1,8 @@
+heatmaply 1.1.2 (2020-07-15)
+===============
+## BUGFIX
+- RowSideColors/ColSideColors used default colour mapping
+
 heatmaply 1.1.1 (2020-05-26)
 ===============
 ## BUGFIX

@@ -514,6 +514,10 @@ ggplot_side_color_plot <- function(df,
   }
   theme <- list(common_theme, specific_theme)
 
+  if (is_colors) {
+    palette <- setNames(unique(df[["value"]]), unique(df[["value"]]))
+  }
+
   if (is.function(palette)) {
     palette <- setNames(palette(nlevels(df[["value"]])), levels(df[["value"]]))
   } else if (!all(levels(factor(df[["value"]])) %in% names(palette))) {
@@ -530,7 +534,7 @@ ggplot_side_color_plot <- function(df,
     scale_fill_manual(
       name = scale_title,
       breaks = levels(df[["value"]]),
-      values = palette[levels(df[["value"]])]
+      values = as.character(palette[levels(df[["value"]])])
     ) +
     theme
   return(g)
