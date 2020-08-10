@@ -60,8 +60,8 @@ ggplot_heatmap <- function(xx,
                            point_size_name = "Point size",
                            label_format_fun = function(...) format(..., digits = 4),
                            custom_hovertext = NULL,
+                           showticklabels = c(TRUE, TRUE),
                            ...) {
-
   theme_clear_grid_heatmap <- theme(
     axis.line = element_line(color = "black"),
     panel.grid.major = element_blank(),
@@ -151,17 +151,15 @@ ggplot_heatmap <- function(xx,
     theme_bw() +
     theme_clear_grid_heatmap +
     theme(
-      axis.text.x = element_text(
-        angle = column_text_angle,
-        size = fontsize_col,
-        hjust = 1
-      ),
-      axis.text.y = element_text(
-        angle = row_text_angle,
-        size = fontsize_row,
-        hjust = 1
-      ),
-      axis.title = element_blank()
+      axis.title = element_blank(),
+      axis.text.x = if (showticklabels[[1]]) {
+        element_text(angle = column_text_angle, size = fontsize_col, hjust = 1)
+      } else element_blank(),
+      axis.ticks.x = if (showticklabels[[1]]) element_line() else element_blank(),
+      axis.text.y = if (showticklabels[[2]]) {
+        element_text(angle = row_text_angle, size = fontsize_row, hjust = 1)
+      } else element_blank(),
+      axis.ticks.y = if (showticklabels[[2]]) element_line() else element_blank(),
     )
 
   if (type == "scatter") {

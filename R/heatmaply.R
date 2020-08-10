@@ -995,7 +995,8 @@ heatmaply.heatmapr <- function(x,
       point_size_mat = point_size_mat,
       point_size_name = point_size_name,
       label_format_fun = label_format_fun,
-      custom_hovertext = custom_hovertext
+      custom_hovertext = custom_hovertext,
+      showticklabels = showticklabels
     )
   } else if (plot_method == "plotly") {
     p <- plotly_heatmap(

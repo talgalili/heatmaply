@@ -1,3 +1,9 @@
+heatmaply 1.1.3 (2020-08-10)
+===============
+## BUGFIX
+- showticklabels did not function as expected for ggheatmap.
+
+
 heatmaply 1.1.2 (2020-07-15)
 ===============
 ## BUGFIX
