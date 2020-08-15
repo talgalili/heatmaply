@@ -662,7 +662,6 @@ heatmaply.default <- function(x,
     }
     x <- x[, ss_c_numeric]
   }
-
   if (!is.null(labRow)) {
     if (all(is.na(labRow))) {
       showticklabels[[2]] <- FALSE
@@ -676,6 +675,12 @@ heatmaply.default <- function(x,
     }
   } else {
     labCol <- colnames(x)
+  }
+  if (!is.logical(showticklabels)) {
+    stop("showticklabels must be a logical vector of length 2 or 1")
+  }
+  if (length(showticklabels) == 1) {
+    showticklabels <- rep(showticklabels, 2)
   }
 
   # help dendrogram work again:
@@ -1206,8 +1211,6 @@ heatmaply.heatmapr <- function(x,
 
 
   if (!all(showticklabels)) {
-    if (!is.logical(showticklabels)) stop("showticklabels must be a logical vector of length 2 or 1")
-    if (length(showticklabels) == 1) showticklabels <- rep(showticklabels, 2)
     if (!showticklabels[[1]]) {
       p <- p %>%
         layout(xaxis = list(
@@ -1285,7 +1288,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
                                           titleX = TRUE, titleY = TRUE,
                                           widths=NULL, heights=NULL,
                                           plot_method,
-                                          showticklabels=c(TRUE, TRUE)) {
+                                          showticklabels = c(TRUE, TRUE)) {
   widths <- widths %||% default_dims(px, pr)
   if (row_dend_left) {
     widths <- rev(widths)

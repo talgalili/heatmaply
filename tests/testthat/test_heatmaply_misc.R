@@ -74,7 +74,10 @@ test_that("showticklabels", {
   expect_is(h, "plotly")
   h <- heatmaply(mtcars, showticklabels = c(FALSE, FALSE))
   expect_is(h, "plotly")
-  expect_warning(expect_error(heatmaply(mtcars, showticklabels = "a")))
+  expect_error(
+    heatmaply(mtcars, showticklabels = "a"),
+    "showticklabels must be a logical vector of length 2 or 1"
+  )
 })
 
 ## This relies on PhantomJS... it's failing a lot so comment it
