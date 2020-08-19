@@ -79,11 +79,11 @@ fix_not_all_unique <- function(x, ...) {
 #' @param hclustfun_col hclustfun for col dendrogram only.
 #'
 #' @param dendrogram character string indicating whether to compute 'none',
-#' 'row', 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv 
+#' 'row', 'column' or 'both' dendrograms. Defaults to 'both'. However, if Rowv
 #' (or Colv) is FALSE or NULL and dendrogram is 'both', then a warning is issued
 #' and Rowv (or Colv) arguments are honoured.
-#' @param show_dendrogram Logical vector of length controlling whether the row 
-#' and column dendrograms are displayed. If a logical scalar is 
+#' @param show_dendrogram Logical vector of length controlling whether the row
+#' and column dendrograms are displayed. If a logical scalar is
 #' provided, it is repeated to become a logical vector of length two.
 #' @param reorderfun function(d, w) of dendrogram and weights for reordering the row and column dendrograms. The default uses stats{reorder.dendrogram}
 #'
@@ -133,7 +133,7 @@ fix_not_all_unique <- function(x, ...) {
 #' The interface was designed based on \link{heatmap}, \link[gplots]{heatmap.2}, and \link[d3heatmap]{d3heatmap}.
 #'
 #' @seealso
-#' \link{heatmap}, \link[gplots]{heatmap.2},  \link[d3heatmap]{d3heatmap}
+#' \link{heatmap}, \link[gplots]{heatmap.2}
 #'
 #' @examples
 #'
@@ -218,7 +218,7 @@ heatmapr <- function(x,
         hclustfun_old(x, method = hclust_method)
       }
     }
-  } 
+  }
 
   if (!(is.logical(show_dendrogram) & length(show_dendrogram) %in% c(1, 2))) {
     stop("show_dendrogram must be a logical vector of length 1 or 2")

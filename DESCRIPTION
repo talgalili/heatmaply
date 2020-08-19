@@ -20,7 +20,7 @@ Description: Create interactive cluster 'heatmaps' that can be saved as a stand-
     of specific value by hovering the mouse over a cell, as well as zooming into
     a region of the 'heatmap' by dragging a rectangle around the relevant area.
     This work is based on the 'ggplot2' and 'plotly.js' engine. It produces
-    similar 'heatmaps' as 'heatmap.2' or 'd3heatmap', with the advantage of speed
+    similar 'heatmaps' as 'heatmap.2' with the advantage of speed
     ('plotly.js' is able to handle larger size matrix), the ability to zoom from
     the 'dendrogram' panes, and the placing of factor variables in the sides of the
     'heatmap'.
