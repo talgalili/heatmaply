@@ -1,3 +1,13 @@
+
+heatmaply 1.1.1 (2020-08-19)
+===============
+## BUGFIX
+- Cellnote did not work when using point size mapping.
+- `point_size_mat` did not work when `plot_method="plotly"`
+- RowSideColors/ColSideColors used default colour mapping
+- showticklabels did not function as expected for ggheatmap.
+- showticklabels did not function as expected when of length 1.
+
 heatmaply 1.1.0 (2020-03-27)
 ===============
 
