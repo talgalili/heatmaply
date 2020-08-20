@@ -8,11 +8,13 @@
 
 <title>RColorBrewer color Ramp Palette — RColorBrewer_colors • heatmaply</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
@@ -36,8 +38,8 @@
 
 
 
-<meta property="og:title" content="RColorBrewer color Ramp Palette — RColorBrewer_colors" />
 
+<meta property="og:title" content="RColorBrewer color Ramp Palette — RColorBrewer_colors" />
 <meta property="og:description" content="Functions for getting the colors of RColorBrewer (i.e.: brewer.pal) without the limitation of only 9/11
 color values, based on colorRampPalette.
 For sequential palettes this is not essential since we have viridis. But for diverging palettes
@@ -48,7 +50,6 @@ The diverging palettes are
 BrBG PiYG PRGn PuOr RdBu RdGy RdYlBu RdYlGn Spectral
 And also cool_warm. The cool_warm palette is based on Kenneth Moreland's proposal (see ref).
 It goes from blue (cool) to ref (warm), based on well thought-out design elements." />
-
 
 
 
@@ -80,7 +81,7 @@ It goes from blue (cool) to ref (warm), based on well thought-out design element
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heatmaply</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
       </span>
     </div>
 
@@ -102,7 +103,6 @@ It goes from blue (cool) to ref (warm), based on well thought-out design element
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/talgalili/heatmaply/">
@@ -129,7 +129,6 @@ It goes from blue (cool) to ref (warm), based on well thought-out design element
     </div>
 
     <div class="ref-description">
-    
     <p>Functions for getting the colors of RColorBrewer (i.e.: brewer.pal) without the limitation of only 9/11
 color values, based on <a href='https://rdrr.io/r/grDevices/colorRamp.html'>colorRampPalette</a>.</p>
 <p>For sequential palettes this is not essential since we have viridis. But for diverging palettes
@@ -140,7 +139,6 @@ Blues BuGn BuPu GnBu Greens Greys Oranges OrRd PuBu PuBuGn PuRd Purples RdPu Red
 BrBG PiYG PRGn PuOr RdBu RdGy RdYlBu RdYlGn Spectral
 And also cool_warm. The cool_warm palette is based on Kenneth Moreland's proposal (see ref).
 It goes from blue (cool) to ref (warm), based on well thought-out design elements.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>BrBG</span>(<span class='no'>n</span>)
@@ -198,7 +196,7 @@ It goes from blue (cool) to ref (warm), based on well thought-out design element
 <span class='fu'>YlOrRd</span>(<span class='no'>n</span>)
 
 <span class='fu'>cool_warm</span>(<span class='no'>n</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -207,11 +205,10 @@ It goes from blue (cool) to ref (warm), based on well thought-out design element
       <td><p>the number of colors (&gt;= 1) to be in the palette.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A character vector of color names.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>* Moreland, Kenneth. "Diverging color maps for scientific visualization." Advances in Visual Computing (2009): 92-103.
@@ -219,13 +216,14 @@ url: http://www.kennethmoreland.com/color-maps/
 The code was provided here: http://stackoverflow.com/a/44073011/256662
 Thanks to the user YAK, who relied on the code from the Rgnuplot package
 (which is duplicated here, in order to save the need to import the entire package)</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \dontrun{</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>RColorBrewer</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html'>display.brewer.all</a></span>(<span class='kw'>n</span><span class='kw'>=</span><span class='fl'>11</span>,<span class='kw'>type</span><span class='kw'>=</span><span class='st'>"div"</span>); <span class='fu'><a href='https://rdrr.io/r/graphics/title.html'>title</a></span>(<span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Divergent color palette"</span>)</div><div class='img'><img src='RColorBrewer_colors-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html'>display.brewer.all</a></span>(<span class='kw'>n</span><span class='kw'>=</span><span class='fl'>9</span>,<span class='kw'>type</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"seq"</span>)); <span class='fu'><a href='https://rdrr.io/r/graphics/title.html'>title</a></span>(<span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Sequential color palette"</span>)</div><div class='img'><img src='RColorBrewer_colors-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html'>display.brewer.all</a></span>(<span class='kw'>n</span><span class='kw'>=</span><span class='fl'>11</span>,<span class='kw'>type</span><span class='kw'>=</span><span class='st'>"div"</span>); <span class='fu'><a href='https://rdrr.io/r/graphics/title.html'>title</a></span>(<span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Divergent color palette"</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html'>display.brewer.all</a></span>(<span class='kw'>n</span><span class='kw'>=</span><span class='fl'>9</span>,<span class='kw'>type</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"seq"</span>)); <span class='fu'><a href='https://rdrr.io/r/graphics/title.html'>title</a></span>(<span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Sequential color palette"</span>)
+
 
 
 <span class='no'>img</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>obj</span>, <span class='no'>nam</span>) {
@@ -234,19 +232,23 @@ Thanks to the user YAK, who relied on the code from the Rgnuplot package
 }
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>1</span>))
-<span class='fu'>img</span>(<span class='fu'><a href='https://rdrr.io/r/base/rev.html'>rev</a></span>(<span class='fu'>cool_warm</span>(<span class='fl'>500</span>)), <span class='st'>"cool_warm, (Moreland 2009)"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>RdBu</span>(<span class='fl'>500</span>), <span class='st'>"RdBu"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>BrBG</span>(<span class='fl'>500</span>), <span class='st'>"BrBG"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>PiYG</span>(<span class='fl'>500</span>), <span class='st'>"PiYG"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>PRGn</span>(<span class='fl'>500</span>), <span class='st'>"PRGn"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>PuOr</span>(<span class='fl'>500</span>), <span class='st'>"PuOr"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>RdGy</span>(<span class='fl'>500</span>), <span class='st'>"RdGy"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>RdYlBu</span>(<span class='fl'>500</span>), <span class='st'>"RdYlBu"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>RdYlGn</span>(<span class='fl'>500</span>), <span class='st'>"RdYlGn"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'><span class='fu'>img</span>(<span class='fu'>Spectral</span>(<span class='fl'>500</span>), <span class='st'>"Spectral"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot.new(): figure margins too large</span></div><div class='input'>
+<span class='fu'>img</span>(<span class='fu'><a href='https://rdrr.io/r/base/rev.html'>rev</a></span>(<span class='fu'>cool_warm</span>(<span class='fl'>500</span>)), <span class='st'>"cool_warm, (Moreland 2009)"</span>)
+<span class='fu'>img</span>(<span class='fu'>RdBu</span>(<span class='fl'>500</span>), <span class='st'>"RdBu"</span>)
+<span class='fu'>img</span>(<span class='fu'>BrBG</span>(<span class='fl'>500</span>), <span class='st'>"BrBG"</span>)
+<span class='fu'>img</span>(<span class='fu'>PiYG</span>(<span class='fl'>500</span>), <span class='st'>"PiYG"</span>)
+<span class='fu'>img</span>(<span class='fu'>PRGn</span>(<span class='fl'>500</span>), <span class='st'>"PRGn"</span>)
+<span class='fu'>img</span>(<span class='fu'>PuOr</span>(<span class='fl'>500</span>), <span class='st'>"PuOr"</span>)
+<span class='fu'>img</span>(<span class='fu'>RdGy</span>(<span class='fl'>500</span>), <span class='st'>"RdGy"</span>)
+<span class='fu'>img</span>(<span class='fu'>RdYlBu</span>(<span class='fl'>500</span>), <span class='st'>"RdYlBu"</span>)
+<span class='fu'>img</span>(<span class='fu'>RdYlGn</span>(<span class='fl'>500</span>), <span class='st'>"RdYlGn"</span>)
+<span class='fu'>img</span>(<span class='fu'>Spectral</span>(<span class='fl'>500</span>), <span class='st'>"Spectral"</span>)
+
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>heatmaply</span>)
-<span class='fu'><a href='heatmaply.html'>heatmaply</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>mtcars</span>), <span class='kw'>colors</span> <span class='kw'>=</span> <span class='no'>PiYG</span>, <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1</span>,<span class='fl'>1</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: unable to load shared object '/Library/Frameworks/R.framework/Resources/modules//R_X11.so':</span>
-#&gt; <span class='warning'>  dlopen(/Library/Frameworks/R.framework/Resources/modules//R_X11.so, 6): Library not loaded: /opt/X11/lib/libfontconfig.1.dylib</span>
-#&gt; <span class='warning'>  Referenced from: /Library/Frameworks/R.framework/Resources/modules//R_X11.so</span>
-#&gt; <span class='warning'>  Reason: Incompatible library version: R_X11.so requires version 11.0.0 or later, but libfontconfig.1.dylib provides version 10.0.0</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'heatmap' objects don't have these attributes: 'showlegend'</span>
-#&gt; <span class='warning'>Valid attributes include:</span>
-#&gt; <span class='warning'>'type', 'visible', 'opacity', 'name', 'uid', 'ids', 'customdata', 'meta', 'hoverinfo', 'hoverlabel', 'stream', 'transforms', 'uirevision', 'z', 'x', 'x0', 'dx', 'y', 'y0', 'dy', 'text', 'hovertext', 'transpose', 'xtype', 'ytype', 'zsmooth', 'connectgaps', 'xgap', 'ygap', 'zhoverformat', 'hovertemplate', 'zauto', 'zmin', 'zmax', 'zmid', 'colorscale', 'autocolorscale', 'reversescale', 'showscale', 'colorbar', 'coloraxis', 'xcalendar', 'ycalendar', 'xaxis', 'yaxis', 'idssrc', 'customdatasrc', 'metasrc', 'hoverinfosrc', 'zsrc', 'xsrc', 'ysrc', 'textsrc', 'hovertextsrc', 'hovertemplatesrc', 'key', 'set', 'frame', 'transforms', '_isNestedKey', '_isSimpleKey', '_isGraticule', '_bbox'</span></div><div class='input'><span class='fu'><a href='heatmaply.html'>heatmaply</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>mtcars</span>), <span class='kw'>colors</span> <span class='kw'>=</span> <span class='no'>RdBu</span>, <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1</span>,<span class='fl'>1</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: 'heatmap' objects don't have these attributes: 'showlegend'</span>
-#&gt; <span class='warning'>Valid attributes include:</span>
-#&gt; <span class='warning'>'type', 'visible', 'opacity', 'name', 'uid', 'ids', 'customdata', 'meta', 'hoverinfo', 'hoverlabel', 'stream', 'transforms', 'uirevision', 'z', 'x', 'x0', 'dx', 'y', 'y0', 'dy', 'text', 'hovertext', 'transpose', 'xtype', 'ytype', 'zsmooth', 'connectgaps', 'xgap', 'ygap', 'zhoverformat', 'hovertemplate', 'zauto', 'zmin', 'zmax', 'zmid', 'colorscale', 'autocolorscale', 'reversescale', 'showscale', 'colorbar', 'coloraxis', 'xcalendar', 'ycalendar', 'xaxis', 'yaxis', 'idssrc', 'customdatasrc', 'metasrc', 'hoverinfosrc', 'zsrc', 'xsrc', 'ysrc', 'textsrc', 'hovertextsrc', 'hovertemplatesrc', 'key', 'set', 'frame', 'transforms', '_isNestedKey', '_isSimpleKey', '_isGraticule', '_bbox'</span></div><div class='input'>
-# }
-</div></pre>
+<span class='fu'><a href='heatmaply.html'>heatmaply</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>mtcars</span>), <span class='kw'>colors</span> <span class='kw'>=</span> <span class='no'>PiYG</span>, <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1</span>,<span class='fl'>1</span>))
+<span class='fu'><a href='heatmaply.html'>heatmaply</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>mtcars</span>), <span class='kw'>colors</span> <span class='kw'>=</span> <span class='no'>RdBu</span>, <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1</span>,<span class='fl'>1</span>))
+
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -262,7 +264,7 @@ Thanks to the user YAK, who relied on the code from the Rgnuplot package
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

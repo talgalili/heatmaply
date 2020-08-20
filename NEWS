@@ -1,5 +1,5 @@
 
-heatmaply 1.1.1 (2020-08-19)
+heatmaply 1.1.1 (2020-08-20)
 ===============
 ## BUGFIX
 - Cellnote did not work when using point size mapping.
@@ -8,6 +8,7 @@ heatmaply 1.1.1 (2020-08-19)
 - showticklabels did not function as expected for ggheatmap.
 - showticklabels did not function as expected when of length 1.
 - Remove "\link[d3heatmap]{d3heatmap}" from .Rd since d3heatmap was removed from CRAN
+- Fix "Found the following (possibly) invalid URLs:"
 
 heatmaply 1.1.0 (2020-03-27)
 ===============
@@ -216,7 +217,7 @@ heatmaply 0.10.1 (2017-05-27)
 * heatmaply
 	- Add "auto" cellnote colouring, which predicts the luminosity of cells and switches between black and white text as 	       appropriate, for readability
 	- Add `cellnote_textposition` argument, which controls the justification of cellnote within a cell.
-	  See [the plotly documentation](https://plot.ly/javascript/reference/#scatter-textposition) for more details.
+	  See [the plotly documentation](https://plotly.com/javascript/reference/#scatter-textposition) for more details.
   - dendrogram parameter can now accept TRUE/FALSE as synonyms for "both"/"none".
 	- showticklabels = c(TRUE, TRUE) - a 2d parameter to allow turning off of tick labels in the rows/columns - thus making the rendering of the plot much faster for larger matrix.
 * heatmaply_cor now uses cool_warm instead of RdBu.

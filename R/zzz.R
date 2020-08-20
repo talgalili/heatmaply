@@ -305,5 +305,5 @@ heatmaplyWelcomeMessage <- function() {
 # file.copy("NEWS", "NEWS.md",overwrite = TRUE)
 # devtools::check_win_devel()
 # pkgdown::build_home()
-# pkgdown::build_site(run_dont_run = TRUE)
+# pkgdown::build_site(run_dont_run = F)
 # release()

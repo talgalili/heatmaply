@@ -1,3 +1,88 @@
+* 2020-08-19(Tal Galili) Remove "\link[d3heatmap]{d3heatmap}" from .Rd since d3heatmap was removed from CRAN |50540e1| 
+|  DESCRIPTION     |  2 +-
+|  NEWS            |  1 +
+|  NEWS.md         |  1 +
+|  R/heatmapr.R    | 10 +++++-----
+|  man/heatmapr.Rd |  8 ++++----
+|  5 files changed, 12 insertions(+), 10 deletions(-)
+
+* 2020-08-19(Tal Galili) Combine all fixes, and prepare to release to CRAN |5ab5e8b| 
+|  DESCRIPTION       |  4 ++--
+|  NEWS              | 21 ++++-------------
+|  NEWS.md           | 10 +++++++++
+|  docs/CONDUCT.html |  9 +++++---
+|  docs/authors.html | 10 ++++++---
+|  docs/index.html   | 65 +++++++++++++++++++++++++++++++----------------------
+|  6 files changed, 67 insertions(+), 52 deletions(-)
+
+* 2020-08-15(Alan O'Callaghan) Resolve #250 |49ab03e| 
+|  DESCRIPTION                          |  6 +++---
+|  NEWS                                 |  6 ++++++
+|  R/heatmaply.R                        | 11 +++++++----
+|  man/heatmaply.Rd                     | 21 ++++++++++-----------
+|  tests/testthat/test_heatmaply_misc.R |  5 ++++-
+|  5 files changed, 30 insertions(+), 19 deletions(-)
+
+* 2020-08-10(Alan O'Callaghan) Fix label handling for ggheatmap, resolve #248 |75821d3| 
+|  DESCRIPTION   |  4 ++--
+|  NEWS          |  6 ++++++
+|  R/heatmaply.R |  3 ++-
+|  R/plots.R     | 22 ++++++++++------------
+|  4 files changed, 20 insertions(+), 15 deletions(-)
+
+* 2020-07-15(Alan O'Callaghan) Resolve #246 |9556347| 
+|  DESCRIPTION   |  4 ++--
+|  NEWS          |  5 +++++
+|  R/heatmaply.R | 21 ++++++++++-----------
+|  R/plots.R     |  6 +++++-
+|  4 files changed, 22 insertions(+), 14 deletions(-)
+
+*   2020-05-26(Alan O'Callaghan) Merge branch 'master' of github.com:talgalili/heatmaply |920648c
+|\  
+| * 2020-03-27(Tal Galili) minor fix to NEWS |9048892| | 
+| |  NEWS    | 1 -
+| |  NEWS.md | 2 +-
+| |  2 files changed, 1 insertion(+), 2 deletions(-)
+
+| * 2020-03-27(Tal Galili) fix version number, pkgdown, preparing for CRAN (version 1.1.0) |13e389c| | 
+| |  ChangeLog                                  |  93 +++++
+| |  DESCRIPTION                                |   4 +-
+| |  NEWS                                       |  38 +-
+| |  NEWS.md                                    |  21 +
+| |  docs/404.html                              |  34 +-
+| |  docs/CONDUCT.html                          |  34 +-
+| |  docs/articles/heatmaply.html               | 558 ++++++++++++-------------
+| |  docs/articles/index.html                   |  35 +-
+| |  docs/authors.html                          |  34 +-
+| |  docs/bootstrap-toc.css                     |  60 +++
+| |  docs/bootstrap-toc.js                      | 159 +++++++
+| |  docs/index.html                            |  70 ++--
+| |  docs/news/index.html                       | 152 +++----
+| |  docs/pkgdown.css                           | 121 +++++-
+| |  docs/pkgdown.js                            |   5 -
+| |  docs/pkgdown.yml                           |   3 +-
+| |  docs/reference/RColorBrewer_colors.html    |  47 +--
+| |  docs/reference/ggheatmap.html              |  43 +-
+| |  docs/reference/ggplot_side_color_plot.html |  43 +-
+| |  docs/reference/heatmaply.html              |  67 +--
+| |  docs/reference/heatmaply_iris.html         |   2 +-
+| |  docs/reference/heatmapr.html               |  47 +--
+| |  docs/reference/index.html                  |  42 +-
+| |  docs/reference/is.heatmapr.html            |  43 +-
+| |  docs/reference/is.na10.html                |  47 +--
+| |  docs/reference/is.plotly.html              |  43 +-
+| |  docs/reference/normalize.html              |  47 +--
+| |  docs/reference/percentize.html             |  47 +--
+| |  28 files changed, 1187 insertions(+), 752 deletions(-)
+
+* | 2020-05-26(Alan O'Callaghan) Resolve #241 |b856358
+|/  |   
+|    DESCRIPTION   |  4 ++--
+|    NEWS          |  7 ++++++
+|    R/heatmaply.R |  6 ++---
+|    R/plots.R     | 65 +++++++++++++++++++++++++++++++++++++++++++++----------
+|    4 files changed, 66 insertions(+), 16 deletions(-)
+
 * 2020-02-29(Alan O'Callaghan) Bump description/news |53577d5| 
 |  DESCRIPTION | 4 ++--
 |  NEWS        | 6 ++++++
@@ -104,8 +189,8 @@
 |  .../figure-html/unnamed-chunk-21-1.png            | Bin 0 -> 50131 bytes
 |  .../figure-html/unnamed-chunk-24-1.png            | Bin 0 -> 44299 bytes
 |  .../figure-html/unnamed-chunk-29-1.png            | Bin 0 -> 86294 bytes
-|  .../htmlwidgets-1.5.1/htmlwidgets.js              | 903 +++++++++++++++++++
-|  .../plotly-binding-4.9.1/plotly.js                | 935 ++++++++++++++++++++
+|  .../htmlwidgets-1.5.1}/htmlwidgets.js             |  74 +-
+|  .../plotly-binding-4.9.1}/plotly.js               |  30 +-
 |  .../plotly-htmlwidgets.css                        |   0
 |  .../plotly-main-1.49.4/plotly-latest.min.js       |   7 +
 |  docs/articles/index.html                          |  20 +-
@@ -124,8 +209,8 @@
 |  docs/reference/heatmaply-1.png                    | Bin 32964 -> 75746 bytes
 |  docs/reference/heatmaply.html                     | 531 +++++++----
 |  docs/reference/heatmaply_iris.html                |  17 +-
-|  .../htmlwidgets.js                                |  74 +-
-|  .../plotly.js                                     |  30 +-
+|  .../htmlwidgets-1.5.1/htmlwidgets.js              | 903 +++++++++++++++++++
+|  .../plotly-binding-4.9.1/plotly.js                | 935 ++++++++++++++++++++
 |  .../plotly-htmlwidgets.css                        |   9 +
 |  .../plotly-main-1.46.1/plotly-latest.min.js       |   7 -
 |  .../plotly-main-1.49.4/plotly-latest.min.js       |   7 +

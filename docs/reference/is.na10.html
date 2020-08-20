@@ -8,11 +8,13 @@
 
 <title>Indicates which elements are missing (either 1 and 0) — is.na10 • heatmaply</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
@@ -36,12 +38,11 @@
 
 
 
-<meta property="og:title" content="Indicates which elements are missing (either 1 and 0) — is.na10" />
 
+<meta property="og:title" content="Indicates which elements are missing (either 1 and 0) — is.na10" />
 <meta property="og:description" content="is.na10 is a helper function for creating heatmaps to diagnose missing value patterns.
 It is similar to is.na but instead of returning a logical TRUE/FALSE vector (or matrix) it
 returns a numeric 1/0 output. This enables the heatmaply function to be used on the data." />
-
 
 
 
@@ -73,7 +74,7 @@ returns a numeric 1/0 output. This enables the heatmaply function to be used on 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heatmaply</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
       </span>
     </div>
 
@@ -95,7 +96,6 @@ returns a numeric 1/0 output. This enables the heatmaply function to be used on 
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/talgalili/heatmaply/">
@@ -122,15 +122,13 @@ returns a numeric 1/0 output. This enables the heatmaply function to be used on 
     </div>
 
     <div class="ref-description">
-    
     <p>is.na10 is a helper function for creating heatmaps to diagnose missing value patterns.
 It is similar to <a href='https://rdrr.io/r/base/NA.html'>is.na</a> but instead of returning a logical TRUE/FALSE vector (or matrix) it
 returns a numeric 1/0 output. This enables the <a href='heatmaply.html'>heatmaply</a> function to be used on the data.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>is.na10</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -143,20 +141,18 @@ returns a numeric 1/0 output. This enables the <a href='heatmaply.html'>heatmapl
       <td><p>not used.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Returns a numeric (instead of a logical) variable/matrix of 1 (missing) or 0 (not missing) values (hence the name is.na10)
 while still preserving the attributes resulted from running <a href='https://rdrr.io/r/base/NA.html'>is.na</a>.</p>
 <p>These are useful for funnelling into a heatmap (see the examples).</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://rdrr.io/r/base/NA.html'>is.na</a>, the grid_gap parameter in <a href='heatmaply.html'>heatmaply</a>.</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \dontrun{</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>mtcars</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='no'>x</span>)
 <span class='no'>x</span>$<span class='no'>am</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>x</span>$<span class='no'>am</span>)
@@ -166,19 +162,13 @@ while still preserving the attributes resulted from running <a href='https://rdr
 
 
 <span class='co'># nice grey colors from here: https://github.com/njtierney/visdat/blob/master/R/vis_miss_ly.R</span>
-<span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='no'>is.na10</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='heatmaply.html'>heatmaply</a></span>( <span class='kw'>colors</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"grey80"</span>, <span class='st'>"grey20"</span>), <span class='kw'>dendrogram</span> <span class='kw'>=</span> <span class='st'>"none"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: 'heatmap' objects don't have these attributes: 'showlegend'</span>
-#&gt; <span class='warning'>Valid attributes include:</span>
-#&gt; <span class='warning'>'type', 'visible', 'opacity', 'name', 'uid', 'ids', 'customdata', 'meta', 'hoverinfo', 'hoverlabel', 'stream', 'transforms', 'uirevision', 'z', 'x', 'x0', 'dx', 'y', 'y0', 'dy', 'text', 'hovertext', 'transpose', 'xtype', 'ytype', 'zsmooth', 'connectgaps', 'xgap', 'ygap', 'zhoverformat', 'hovertemplate', 'zauto', 'zmin', 'zmax', 'zmid', 'colorscale', 'autocolorscale', 'reversescale', 'showscale', 'colorbar', 'coloraxis', 'xcalendar', 'ycalendar', 'xaxis', 'yaxis', 'idssrc', 'customdatasrc', 'metasrc', 'hoverinfosrc', 'zsrc', 'xsrc', 'ysrc', 'textsrc', 'hovertextsrc', 'hovertemplatesrc', 'key', 'set', 'frame', 'transforms', '_isNestedKey', '_isSimpleKey', '_isGraticule', '_bbox'</span></div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='no'>is.na10</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='heatmaply.html'>heatmaply</a></span>( <span class='kw'>colors</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"grey80"</span>, <span class='st'>"grey20"</span>), <span class='kw'>k_col</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>k_row</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: 'heatmap' objects don't have these attributes: 'showlegend'</span>
-#&gt; <span class='warning'>Valid attributes include:</span>
-#&gt; <span class='warning'>'type', 'visible', 'opacity', 'name', 'uid', 'ids', 'customdata', 'meta', 'hoverinfo', 'hoverlabel', 'stream', 'transforms', 'uirevision', 'z', 'x', 'x0', 'dx', 'y', 'y0', 'dy', 'text', 'hovertext', 'transpose', 'xtype', 'ytype', 'zsmooth', 'connectgaps', 'xgap', 'ygap', 'zhoverformat', 'hovertemplate', 'zauto', 'zmin', 'zmax', 'zmid', 'colorscale', 'autocolorscale', 'reversescale', 'showscale', 'colorbar', 'coloraxis', 'xcalendar', 'ycalendar', 'xaxis', 'yaxis', 'idssrc', 'customdatasrc', 'metasrc', 'hoverinfosrc', 'zsrc', 'xsrc', 'ysrc', 'textsrc', 'hovertextsrc', 'hovertemplatesrc', 'key', 'set', 'frame', 'transforms', '_isNestedKey', '_isSimpleKey', '_isGraticule', '_bbox'</span></div><div class='input'>
+<span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='no'>is.na10</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='heatmaply.html'>heatmaply</a></span>( <span class='kw'>colors</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"grey80"</span>, <span class='st'>"grey20"</span>), <span class='kw'>dendrogram</span> <span class='kw'>=</span> <span class='st'>"none"</span>)
+<span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='no'>is.na10</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='heatmaply.html'>heatmaply</a></span>( <span class='kw'>colors</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"grey80"</span>, <span class='st'>"grey20"</span>), <span class='kw'>k_col</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>k_row</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+
 <span class='fu'><a href='heatmaply.html'>heatmaply</a></span>(<span class='fu'>is.na10</span>(<span class='no'>airquality</span>), <span class='kw'>grid_gap</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-         <span class='kw'>colors</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"grey80"</span>, <span class='st'>"grey20"</span>), <span class='kw'>k_col</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>k_row</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: 'heatmap' objects don't have these attributes: 'showlegend'</span>
-#&gt; <span class='warning'>Valid attributes include:</span>
-#&gt; <span class='warning'>'type', 'visible', 'opacity', 'name', 'uid', 'ids', 'customdata', 'meta', 'hoverinfo', 'hoverlabel', 'stream', 'transforms', 'uirevision', 'z', 'x', 'x0', 'dx', 'y', 'y0', 'dy', 'text', 'hovertext', 'transpose', 'xtype', 'ytype', 'zsmooth', 'connectgaps', 'xgap', 'ygap', 'zhoverformat', 'hovertemplate', 'zauto', 'zmin', 'zmax', 'zmid', 'colorscale', 'autocolorscale', 'reversescale', 'showscale', 'colorbar', 'coloraxis', 'xcalendar', 'ycalendar', 'xaxis', 'yaxis', 'idssrc', 'customdatasrc', 'metasrc', 'hoverinfosrc', 'zsrc', 'xsrc', 'ysrc', 'textsrc', 'hovertextsrc', 'hovertemplatesrc', 'key', 'set', 'frame', 'transforms', '_isNestedKey', '_isSimpleKey', '_isGraticule', '_bbox'</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'heatmap' objects don't have these attributes: 'showlegend'</span>
-#&gt; <span class='warning'>Valid attributes include:</span>
-#&gt; <span class='warning'>'type', 'visible', 'opacity', 'name', 'uid', 'ids', 'customdata', 'meta', 'hoverinfo', 'hoverlabel', 'stream', 'transforms', 'uirevision', 'z', 'x', 'x0', 'dx', 'y', 'y0', 'dy', 'text', 'hovertext', 'transpose', 'xtype', 'ytype', 'zsmooth', 'connectgaps', 'xgap', 'ygap', 'zhoverformat', 'hovertemplate', 'zauto', 'zmin', 'zmax', 'zmid', 'colorscale', 'autocolorscale', 'reversescale', 'showscale', 'colorbar', 'coloraxis', 'xcalendar', 'ycalendar', 'xaxis', 'yaxis', 'idssrc', 'customdatasrc', 'metasrc', 'hoverinfosrc', 'zsrc', 'xsrc', 'ysrc', 'textsrc', 'hovertextsrc', 'hovertemplatesrc', 'key', 'set', 'frame', 'transforms', '_isNestedKey', '_isSimpleKey', '_isGraticule', '_bbox'</span></div><div class='input'>
-# }
-</div></pre>
+         <span class='kw'>colors</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"grey80"</span>, <span class='st'>"grey20"</span>), <span class='kw'>k_col</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>k_row</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -194,7 +184,7 @@ while still preserving the attributes resulted from running <a href='https://rdr
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
