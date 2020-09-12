@@ -1,9 +1,9 @@
 
 [![Build Status](https://travis-ci.org/talgalili/heatmaply.png?branch=master)](https://travis-ci.org/talgalili/heatmaply)
 [![codecov.io](https://codecov.io/github/talgalili/heatmaply/coverage.svg?branch=master)](https://codecov.io/github/talgalili/heatmaply?branch=master)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/heatmaply)](https://cran.r-project.org/package=heatmaply)
-![](http://cranlogs.r-pkg.org/badges/heatmaply?color=yellow)
-![](http://cranlogs.r-pkg.org/badges/grand-total/heatmaply?color=yellowgreen)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/heatmaply)](https://cran.r-project.org/package=heatmaply)
+![](https://cranlogs.r-pkg.org/badges/heatmaply?color=yellow)
+![](https://cranlogs.r-pkg.org/badges/grand-total/heatmaply?color=yellowgreen)
 
 # heatmaply
 
@@ -19,7 +19,7 @@
 
 ## Screenshot demo
 
-![](http://i.imgur.com/qdUCKlg.gif)
+![](https://i.imgur.com/qdUCKlg.gif)
 
 
 
@@ -165,7 +165,7 @@ A BibTeX entry for LaTeX users is
       journal = {Bioinformatics},
       year = {2017},
       doi = {10.1093/bioinformatics/btx657},
-      url = {http://dx.doi.org/10.1093/bioinformatics/btx657},
+      url = {https://dx.doi.org/10.1093/bioinformatics/btx657},
       eprint = {https://academic.oup.com/bioinformatics/article-pdf/doi/10.1093/bioinformatics/btx657/21358327/btx657.pdf},
     }
 
