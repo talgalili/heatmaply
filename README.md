@@ -113,6 +113,7 @@ There are also more complex biological examples of using heatmaply in the R pack
   - [Using heatmaply for visualizing glmnet coefficient path](https://cdn.rawgit.com/talgalili/heatmaplyExamples/master/inst/doc/glmnet.html)
 
 
+
 ### Saving your heatmaply into a file
 
 You can save an interactive version of your heatmaply into an HTML file using the following code:
@@ -135,6 +136,16 @@ heatmaply(mtcars, file = "folder/heatmaply_plot.png")
 browseURL("folder/heatmaply_plot.png")
 ```
 
+### Replacing d3heatmap with heatmaply
+
+The package [d3heatmap](https://github.com/rstudio/d3heatmap) is no longer actively maintained. 
+
+If users are interested in replacing their `d3heatmap` functions, this is easily done with `heatmaply`:
+
+* Function calls `d3heatmap::d3heatmap()` can be replaced with `heatmaply::heatmaply()`
+* Users of `d3heatmap` for `shiny` applications can use the following functions:
+    * `d3heatmap::d3heatmapOutput()` can be replaced with `plotly::plotlyOutput()`
+    * `d3heatmap::renderD3heatmap()` can be replaced with `plotly::renderPlotly()`
 
 
 ## Acknowledgements
