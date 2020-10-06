@@ -339,7 +339,7 @@ heatmapr <- function(x,
     Colv <- Rowv
   }
   if (isTRUE(Colv)) {
-    Colv <- create_dend(t(x), seriate, distfun_row, hclustfun_row, na.rm)
+    Colv <- create_dend(t(x), seriate, distfun_col, hclustfun_col, na.rm)
   }
   if (is.numeric(Colv)) {
     Colv <- reorderfun(as.dendrogram(hclustfun_col(distfun_col(t(x)))), rev(Colv))
