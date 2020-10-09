@@ -1,3 +1,14 @@
+heatmaply 1.1.2 (2020-10-07)
+===============
+## BUGFIX
+- Fix incorrect use of distfun_row and hclustfun_row #254
+
+### OTHER NOTES
+- Update README to include information how to port d3heatmap functions
+
+
+
+
 
 heatmaply 1.1.1 (2020-08-24)
 ===============
