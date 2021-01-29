@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactive Cluster Heat Maps Using plotly • heatmaply</title>
+<title>Interactive Cluster Heat Maps Using plotly and ggplot2 • heatmaply</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Interactive Cluster Heat Maps Using plotly">
+<script src="pkgdown.js"></script><meta property="og:title" content="Interactive Cluster Heat Maps Using plotly and ggplot2">
 <meta property="og:description" content="Create interactive cluster heatmaps that can be saved as a stand-
     alone HTML file, embedded in R Markdown documents or in a Shiny app, and
     available in the RStudio viewer pane. Hover the mouse pointer over a cell to
@@ -24,7 +24,7 @@
     of specific value by hovering the mouse over a cell, as well as zooming into
     a region of the heatmap by dragging a rectangle around the relevant area.
     This work is based on the ggplot2 and plotly.js engine. It produces
-    similar heatmaps as heatmap.2 with the advantage of speed
+    similar heatmaps to heatmap.2 with the advantage of speed
     (plotly.js is able to handle larger size matrix), the ability to zoom from
     the dendrogram panes, and the placing of factor variables in the sides of the
     heatmap.">
@@ -46,7 +46,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">heatmaply</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
       </span>
     </div>
 
@@ -204,6 +204,26 @@
 <span class="fu"><a href="reference/heatmaply.html">heatmaply</a></span>(<span class="no">mtcars</span>, <span class="kw">file</span> <span class="kw">=</span> <span class="st">"folder/heatmaply_plot.png"</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/browseURL.html">browseURL</a></span>(<span class="st">"folder/heatmaply_plot.png"</span>)</pre></div>
 </div>
+<div id="replacing-d3heatmap-with-heatmaply" class="section level3">
+<h3 class="hasAnchor">
+<a href="#replacing-d3heatmap-with-heatmaply" class="anchor"></a>Replacing d3heatmap with heatmaply</h3>
+<p>The package <a href="https://github.com/rstudio/d3heatmap">d3heatmap</a> is no longer actively maintained.</p>
+<p>If users are interested in replacing their <code>d3heatmap</code> functions, this is easily done with <code>heatmaply</code>:</p>
+<ul>
+<li>Function calls <code><a href="https://rdrr.io/pkg/d3heatmap/man/d3heatmap.html">d3heatmap::d3heatmap()</a></code> can be replaced with <code><a href="reference/heatmaply.html">heatmaply::heatmaply()</a></code>
+</li>
+<li>Users of <code>d3heatmap</code> for <code>shiny</code> applications can use the following functions:
+<ul>
+<li>
+<code><a href="https://rdrr.io/pkg/d3heatmap/man/d3heatmapOutput.html">d3heatmap::d3heatmapOutput()</a></code> can be replaced with <code><a href="https://rdrr.io/pkg/plotly/man/plotly-shiny.html">plotly::plotlyOutput()</a></code>
+</li>
+<li>
+<code><a href="https://rdrr.io/pkg/d3heatmap/man/d3heatmapOutput.html">d3heatmap::renderD3heatmap()</a></code> can be replaced with <code><a href="https://rdrr.io/pkg/plotly/man/plotly-shiny.html">plotly::renderPlotly()</a></code>
+</li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div id="acknowledgements" class="section level2">
 <h2 class="hasAnchor">
@@ -216,19 +236,19 @@
 <h2 class="hasAnchor">
 <a href="#how-to-cite-the-heatmaply-package" class="anchor"></a>How to cite the heatmaply package</h2>
 <p>The methods within the package can be cited as:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">Tal Galili, Alan O<span class="st">'Callaghan, Jonathan Sidi, Carson Sievert; heatmaply: an R package for creating</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">interactive cluster heatmaps for online publishing, Bioinformatics, , btx657,</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">https://doi.org/10.1093/bioinformatics/btx657</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>Tal Galili, Alan O<span class="st">'Callaghan, Jonathan Sidi, Carson Sievert; heatmaply: an R package for creating</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="st">interactive cluster heatmaps for online publishing, Bioinformatics, , btx657,</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="st">https://doi.org/10.1093/bioinformatics/btx657</span></span></code></pre></div>
 <p>A BibTeX entry for LaTeX users is</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="op">@</span>Article{,</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">  author =<span class="st"> </span>{{Galili} and {Tal} and {O<span class="st">'Callaghan} and {Alan} and {Sidi} and {Jonathan} and {Sievert} and {Carson}},</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  title = {heatmaply: an R package for creating interactive cluster heatmaps for online publishing},</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  journal = {Bioinformatics},</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  year = {2017},</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  doi = {10.1093/bioinformatics/btx657},</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  url = {https://dx.doi.org/10.1093/bioinformatics/btx657},</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="st">  eprint = {https://academic.oup.com/bioinformatics/article-pdf/doi/10.1093/bioinformatics/btx657/21358327/btx657.pdf},</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="st">}</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="op">@</span>Article{,</span>
+<span id="cb8-2"><a href="#cb8-2"></a>  author =<span class="st"> </span>{{Galili} and {Tal} and {O<span class="st">'Callaghan} and {Alan} and {Sidi} and {Jonathan} and {Sievert} and {Carson}},</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="st">  title = {heatmaply: an R package for creating interactive cluster heatmaps for online publishing},</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="st">  journal = {Bioinformatics},</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="st">  year = {2017},</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="st">  doi = {10.1093/bioinformatics/btx657},</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="st">  url = {https://dx.doi.org/10.1093/bioinformatics/btx657},</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="st">  eprint = {https://academic.oup.com/bioinformatics/article-pdf/doi/10.1093/bioinformatics/btx657/21358327/btx657.pdf},</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="st">}</span></span></code></pre></div>
 <p>This free open-source software implements academic research by the authors and co-workers. If you use it, please support the project by citing the appropriate journal articles.</p>
 </div>
 <div id="contact" class="section level2">

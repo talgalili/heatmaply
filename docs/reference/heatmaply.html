@@ -80,7 +80,7 @@ for correlation matrixes. Specifically, the limits are set from -1 to 1, and the
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heatmaply</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
       </span>
     </div>
 
@@ -425,9 +425,9 @@ or "minkowski".</p></td>
       <td><p>default is NULL (which results in "complete" to be used).
 Can accept alternative character strings indicating the
 method to be passed to hclustfun By default hclustfun is <a href='https://rdrr.io/r/stats/hclust.html'>hclust</a> hence
-this can be one of "ward.D", "ward.D2", "single", "complete", "average" 
+this can be one of "ward.D", "ward.D2", "single", "complete", "average"
 (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).
-Specifying hclust_method=NA causes heatmaply to use 
+Specifying hclust_method=NA causes heatmaply to use
 <code><a href='https://rdrr.io/pkg/dendextend/man/find_dend.html'>find_dend</a></code> to find the "optimal" dendrogram for
 the data.</p></td>
     </tr>
@@ -449,16 +449,16 @@ the data.</p></td>
     </tr>
     <tr>
       <th>dendrogram</th>
-      <td><p>character string indicating whether to compute 'none', 
-'row', 'column' or 'both' dendrograms. Defaults to 'both'. 
-However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', 
+      <td><p>character string indicating whether to compute 'none',
+'row', 'column' or 'both' dendrograms. Defaults to 'both'.
+However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both',
 then a warning is issued and Rowv (or Colv) arguments are honoured.
 It also accepts TRUE/FALSE as synonyms for "both"/"none".</p></td>
     </tr>
     <tr>
       <th>show_dendrogram</th>
-      <td><p>Logical vector of length two, controlling whether 
-the row and/or column dendrograms are displayed. If a logical scalar is 
+      <td><p>Logical vector of length two, controlling whether
+the row and/or column dendrograms are displayed. If a logical scalar is
 provided, it is repeated to become a logical vector of length two.</p></td>
     </tr>
     <tr>
@@ -497,11 +497,11 @@ in either the row direction or the column direction, or none. The default is
     </tr>
     <tr>
       <th>na.rm</th>
-      <td><p>logical (default is TRUE) indicating whether NA's should be 
-removed when scaling (i.e.: when using rowMeans/colMeans). Generally it 
-should always be kept as TRUE, and is included here mainly to stay backward 
+      <td><p>logical (default is TRUE) indicating whether NA's should be
+removed when scaling (i.e.: when using rowMeans/colMeans). Generally it
+should always be kept as TRUE, and is included here mainly to stay backward
 compatible with gplots::heatmap.2. This argument does not effect the presence
-of NA values in the matrix itself. For removing rows/columns with NAs you 
+of NA values in the matrix itself. For removing rows/columns with NAs you
 should pre-process your matrix using na.omit (or some form of imputation).</p></td>
     </tr>
     <tr>
@@ -751,14 +751,14 @@ if "ggplot" then it is appended to the existing text.</p></td>
     </tr>
     <tr>
       <th>dend_hoverinfo</th>
-      <td><p>Boolean value which controls whether mouseover text 
+      <td><p>Boolean value which controls whether mouseover text
 is shown for the row and column dendrograms.</p></td>
     </tr>
     <tr>
       <th>side_color_colorbar_len</th>
       <td><p>As with colorbar_len, this controls the
-length of the colorbar/color key relative to the total plot height. 
-This argument controls the colorbar_len of the side colour plots. 
+length of the colorbar/color key relative to the total plot height.
+This argument controls the colorbar_len of the side colour plots.
 Only used if plot_method = "plotly".</p></td>
     </tr>
     </table>
