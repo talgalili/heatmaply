@@ -791,6 +791,7 @@ heatmaply.default <- function(x,
   }
 
   # TODO: consider removing this if https://github.com/ropensci/plotly/issues/1670 is solved.
+  # the following is so to solve: https://github.com/talgalili/heatmaply/issues/226
   class(hmly) <- c("heatmaply", class(hmly))
 
   hmly
@@ -798,6 +799,7 @@ heatmaply.default <- function(x,
 
 
 # TODO: consider removing this if https://github.com/ropensci/plotly/issues/1670 is solved.
+# the following is so to solve: https://github.com/talgalili/heatmaply/issues/226
 #' @export
 print.heatmaply <- function(x) {
   class(x) <- c("plotly", "htmlwidget")
