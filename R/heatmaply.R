@@ -803,7 +803,7 @@ heatmaply.default <- function(x,
 #' @export
 print.heatmaply <- function(x) {
   class(x) <- c("plotly", "htmlwidget")
-  suppressWarnings(htmlwidgets:::print.htmlwidget(x))
+  suppressWarnings(print(x))
 }
 
 #' @export
