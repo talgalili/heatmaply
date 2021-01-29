@@ -4,7 +4,7 @@
 \alias{heatmapr}
 \title{Creates a heatmapr object}
 \source{
-The interface was designed based on \link{heatmap}, \link[gplots]{heatmap.2}, and \link[d3heatmap]{d3heatmap}.
+The interface was designed based on \link{heatmap}, \link[gplots]{heatmap.2}, and (the also d3heatmap).
 }
 \usage{
 heatmapr(
