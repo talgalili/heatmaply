@@ -8,6 +8,8 @@ output:
   fig_height: 9
   self_contained: yes
   toc: true
+editor_options: 
+  chunk_output_type: console
 ---
 <!--
 %\VignetteEngine{knitr::rmarkdown}
@@ -76,13 +78,10 @@ To install the GitHub version:
 ```{r, eval = FALSE}
 # You'll need devtools
 install.packages.2 <- function (pkg) if (!require(pkg)) install.packages(pkg);
-install.packages.2('devtools')
-# make sure you have Rtools installed first! if not, then run:
-#install.packages('installr'); install.Rtools()
+install.packages.2('remotes')
 
-devtools::install_github("ropensci/plotly") 
-devtools::install_github('talgalili/heatmaply')
-
+remotes::install_github("ropensci/plotly") 
+remotes::install_github('talgalili/heatmaply')
 ```
 
 
@@ -189,7 +188,9 @@ value would reflect the distance from the mean in units of standard deviation.
 The "scale" parameter in heatmaply supports column and row scaling, and can be 
 used as follows:
 
-```{r}
+(not evaluated so to reduce vignette size)
+
+```{r, eval = F}
 heatmaply(
   mtcars, 
   xlab = "Features",
@@ -218,8 +219,9 @@ mtcars easily reveals columns with only two (`am`, `vs`) or three (`gear`,
 `cyl`) variables compared with variables that have a higher resolution of 
 possible values:
 
+(not evaluated so to reduce vignette size)
 
-```{r}
+```{r, eval = F}
 heatmaply(
   normalize(mtcars),
   xlab = "Features",
@@ -300,10 +302,11 @@ provide a number of excellent options for continuous and discrete colour
 palettes. These are generally designed to be perceptually uniform, and often
 also colorblind-friendly.
 
-For example, we may want to use other color palettes in order to get divergent colors for the correlations (these will, sadly, often be less useful for 
-colorblind people):
+For example, we may want to use other color palettes in order to get divergent colors for the correlations (these will, sadly, often be less useful for colorblind people). These come by default when using `heatmaply_cor`
 
-```{r}
+(not evaluated so to reduce vignette size)
+
+```{r, eval = F}
 heatmaply_cor(
   cor(mtcars),
   k_col = 2, 
@@ -378,7 +381,8 @@ heatmaply(
 )
 ```
 
-```{r}
+(not evaluated so to reduce vignette size)
+```{r, eval = F}
 # the default by gplots::heatmaply.2
 heatmaply(
   percentize(mtcars)[1:10, ],
@@ -386,7 +390,8 @@ heatmaply(
 )
 ```
 
-```{r}
+
+```{r, eval = F}
 # the default output from hclust
 heatmaply(
   percentize(mtcars)[1:10, ],

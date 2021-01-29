@@ -6,7 +6,7 @@ heatmaply 1.1.2 (2021-01-29)
 
 ### OTHER NOTES
 - Update README to include information how to port d3heatmap functions
-
+- vignette: eval=F for some examples (so to reduce file size)
 
 
 
