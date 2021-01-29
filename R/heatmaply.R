@@ -69,9 +69,9 @@
 #' @param hclust_method default is NULL (which results in "complete" to be used).
 #' Can accept alternative character strings indicating the
 #' method to be passed to hclustfun By default hclustfun is \link{hclust} hence
-#' this can be one of "ward.D", "ward.D2", "single", "complete", "average" 
+#' this can be one of "ward.D", "ward.D2", "single", "complete", "average"
 #' (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).
-#' Specifying hclust_method=NA causes heatmaply to use 
+#' Specifying hclust_method=NA causes heatmaply to use
 #' \code{\link[dendextend]{find_dend}} to find the "optimal" dendrogram for
 #' the data.
 #'
@@ -80,13 +80,13 @@
 #' @param distfun_col distfun for row dendrogram only.
 #' @param hclustfun_col hclustfun for col dendrogram only.
 #'
-#' @param dendrogram character string indicating whether to compute 'none', 
-#' 'row', 'column' or 'both' dendrograms. Defaults to 'both'. 
-#' However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', 
+#' @param dendrogram character string indicating whether to compute 'none',
+#' 'row', 'column' or 'both' dendrograms. Defaults to 'both'.
+#' However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both',
 #' then a warning is issued and Rowv (or Colv) arguments are honoured.
 #' It also accepts TRUE/FALSE as synonyms for "both"/"none".
-#' @param show_dendrogram Logical vector of length two, controlling whether 
-#' the row and/or column dendrograms are displayed. If a logical scalar is 
+#' @param show_dendrogram Logical vector of length two, controlling whether
+#' the row and/or column dendrograms are displayed. If a logical scalar is
 #' provided, it is repeated to become a logical vector of length two.
 #' @param reorderfun function(d, w) of dendrogram and weights for reordering the
 #' row and column dendrograms. The default uses stats{reorder.dendrogram}
@@ -107,11 +107,11 @@
 #' @param scale character indicating if the values should be centered and scaled
 #' in either the row direction or the column direction, or none. The default is
 #' "none".
-#' @param na.rm logical (default is TRUE) indicating whether NA's should be 
-#' removed when scaling (i.e.: when using rowMeans/colMeans). Generally it 
-#' should always be kept as TRUE, and is included here mainly to stay backward 
+#' @param na.rm logical (default is TRUE) indicating whether NA's should be
+#' removed when scaling (i.e.: when using rowMeans/colMeans). Generally it
+#' should always be kept as TRUE, and is included here mainly to stay backward
 #' compatible with gplots::heatmap.2. This argument does not effect the presence
-#' of NA values in the matrix itself. For removing rows/columns with NAs you 
+#' of NA values in the matrix itself. For removing rows/columns with NAs you
 #' should pre-process your matrix using na.omit (or some form of imputation).
 #'
 #' @param row_dend_left logical (default is FALSE). Should the row dendrogram be
@@ -272,11 +272,11 @@
 #' these default to rownames(x) or colnames(x), respectively.
 #' if set to NA, they change the value in showticklabels to be FALSE. This is mainly to keep
 #' backward compatibility with gplots::heatmap.2.
-#' @param dend_hoverinfo Boolean value which controls whether mouseover text 
+#' @param dend_hoverinfo Boolean value which controls whether mouseover text
 #' is shown for the row and column dendrograms.
 #' @param side_color_colorbar_len As with colorbar_len, this controls the
-#' length of the colorbar/color key relative to the total plot height. 
-#' This argument controls the colorbar_len of the side colour plots. 
+#' length of the colorbar/color key relative to the total plot height.
+#' This argument controls the colorbar_len of the side colour plots.
 #' Only used if plot_method = "plotly".
 #'
 #' @export
@@ -734,7 +734,7 @@ heatmaply.default <- function(x,
     ...
   )
   hmly <- heatmaply(
-    hm, 
+    hm,
     colors = colors, limits = limits,
     scale_fill_gradient_fun = scale_fill_gradient_fun,
     grid_color = grid_color,
@@ -790,9 +790,19 @@ heatmaply.default <- function(x,
     hmly_to_file(hmly = hmly, file = file, width = width, height = height)
   }
 
+  # TODO: consider removing this if https://github.com/ropensci/plotly/issues/1670 is solved.
+  class(hmly) <- c("heatmaply", class(hmly))
+
   hmly
 }
 
+
+# TODO: consider removing this if https://github.com/ropensci/plotly/issues/1670 is solved.
+#' @export
+print.heatmaply <- function(x) {
+  class(x) <- c("plotly", "htmlwidget")
+  suppressWarnings(htmlwidgets:::print.htmlwidget(x))
+}
 
 #' @export
 #' @rdname heatmaply
@@ -911,17 +921,17 @@ heatmaply.heatmapr <- function(x,
   # x <- heatmapr(mtcars)
   # source: http://stackoverflow.com/questions/6528180/ggplot2-plot-without-axes-legends-etc
   theme_clear_grid_dends <- theme(
-    axis.line = element_blank(), 
+    axis.line = element_blank(),
     axis.text.x = element_blank(),
-    axis.text.y = element_blank(), 
+    axis.text.y = element_blank(),
     axis.ticks = element_blank(),
     axis.title.x = element_blank(),
-    axis.title.y = element_blank(), 
+    axis.title.y = element_blank(),
     legend.position = "none",
-    panel.background = element_blank(), 
-    panel.border = element_blank(), 
+    panel.background = element_blank(),
+    panel.border = element_blank(),
     panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(), 
+    panel.grid.minor = element_blank(),
     plot.background = element_blank()
   )
   # dendrograms:
@@ -946,14 +956,14 @@ heatmaply.heatmapr <- function(x,
     if (plot_method == "ggplot") {
       col_ggdend <- as.ggdend(cols)
       xlims <- c(0.5, nrow(col_ggdend$labels) + 0.5)
-      py <- ggplot(cols, labels = FALSE, na.rm = TRUE) + 
+      py <- ggplot(cols, labels = FALSE, na.rm = TRUE) +
         theme_bw() +
         coord_cartesian(expand = FALSE, xlim = xlims) +
         theme_clear_grid_dends +
         dendrogram_layers
     } else {
-      py <- plotly_dend(cols, 
-                        side = "col", 
+      py <- plotly_dend(cols,
+                        side = "col",
                         dend_hoverinfo = dend_hoverinfo)
     }
   }
@@ -973,8 +983,8 @@ heatmaply.heatmapr <- function(x,
         px <- px + scale_y_reverse()
       }
     } else {
-      px <- plotly_dend(rows, 
-                        flip = row_dend_left, 
+      px <- plotly_dend(rows,
+                        flip = row_dend_left,
                         side = "row",
                         dend_hoverinfo = dend_hoverinfo)
     }
@@ -995,7 +1005,7 @@ heatmaply.heatmapr <- function(x,
       row_dend_left = row_dend_left,
       label_names = label_names,
       type = node_type,
-      fontsize_row = fontsize_row, 
+      fontsize_row = fontsize_row,
       fontsize_col = fontsize_col,
       point_size_mat = point_size_mat,
       point_size_name = point_size_name,
@@ -1005,10 +1015,10 @@ heatmaply.heatmapr <- function(x,
     )
   } else if (plot_method == "plotly") {
     p <- plotly_heatmap(
-      data_mat, 
-      limits = limits, 
+      data_mat,
+      limits = limits,
       colors = colors,
-      key_title = key.title, 
+      key_title = key.title,
       label_names = label_names,
       row_text_angle = row_text_angle, column_text_angle = column_text_angle,
       fontsize_row = fontsize_row, fontsize_col = fontsize_col,
@@ -1152,14 +1162,14 @@ heatmaply.heatmapr <- function(x,
   }
 
   if (!is.null(px) && !is.plotly(px)) {
-    px <- ggplotly(px, 
-                   tooltip = if (dend_hoverinfo) "y" else "none", 
+    px <- ggplotly(px,
+                   tooltip = if (dend_hoverinfo) "y" else "none",
                    dynamicTicks = dynamicTicks) %>%
       layout(showlegend = FALSE)
   }
   if (!is.null(py) && !is.plotly(py)) {
-    py <- ggplotly(py, 
-                   tooltip = if (dend_hoverinfo) "y" else "none", 
+    py <- ggplotly(py,
+                   tooltip = if (dend_hoverinfo) "y" else "none",
                    dynamicTicks = dynamicTicks) %>%
       layout(showlegend = FALSE)
   }
@@ -1231,17 +1241,17 @@ heatmaply.heatmapr <- function(x,
   }
 
   heatmap_subplot <- heatmap_subplot_from_ggplotly(
-    p = p, 
-    px = px, 
+    p = p,
+    px = px,
     py = py,
-    row_dend_left = row_dend_left, 
+    row_dend_left = row_dend_left,
     subplot_margin = subplot_margin,
-    widths = subplot_widths, 
+    widths = subplot_widths,
     heights = subplot_heights,
-    titleX = titleX, 
-    titleY = titleY, 
-    pr = pr, 
-    pc = pc, 
+    titleX = titleX,
+    titleY = titleY,
+    pr = pr,
+    pc = pc,
     plot_method = plot_method,
     showticklabels = showticklabels
   )
@@ -1344,9 +1354,9 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
         plots,
         nrows = nrows,
         widths = widths,
-        shareX = TRUE, 
+        shareX = TRUE,
         shareY = TRUE,
-        titleX = titleX, 
+        titleX = titleX,
         titleY = titleY,
         margin = subplot_margin,
         heights = heights

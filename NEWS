@@ -1,8 +1,9 @@
-heatmaply 1.1.2 (2021-01-29)
+heatmaply 1.2.0 (2021-01-29)
 ===============
 ## BUGFIX
 - Fix incorrect use of distfun_row and hclustfun_row #254
 - remove d3heatmap links from Rd
+- fix issue #226 by creting print.heatmaply function to enable us to supresswarning. This is a hack, and if https://github.com/talgalili/heatmaply/issues/226 will get resolved - then this should probably be reverted.
 
 ### OTHER NOTES
 - Update README to include information how to port d3heatmap functions
