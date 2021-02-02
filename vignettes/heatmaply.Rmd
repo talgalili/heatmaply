@@ -21,6 +21,8 @@ editor_options:
 library("heatmaply")
 library("knitr")
 knitr::opts_chunk$set(
+  warning=FALSE, # because of a bug in plotly: https://github.com/ropensci/plotly/issues/1670
+  # see also: https://github.com/talgalili/heatmaply/issues/226
   # cache = TRUE,
   dpi = 60,
   comment = "#>",
@@ -373,7 +375,8 @@ heatmaply(
 )
 ```
 
-```{r}
+(not evaluated so to reduce vignette size)
+```{r, eval = F}
 # Similar to OLO but less optimal (since it is a heuristic)
 heatmaply(
   percentize(mtcars)[1:10, ],

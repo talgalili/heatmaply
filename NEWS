@@ -1,3 +1,10 @@
+heatmaply 1.2.1 (2021-02-02)
+===============
+## BUGFIX
+- heatmaply wasn't printing properly in rmarkdown. Reverted back the new print method, and now it's working fine (but we get back the warning message from issue #226: https://github.com/talgalili/heatmaply/issues/226  )
+- added warning = FALSE to vignette, to make it cleaner.
+
+
 heatmaply 1.2.0 (2021-01-29)
 ===============
 ## BUGFIX
