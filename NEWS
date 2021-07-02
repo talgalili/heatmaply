@@ -1,11 +1,10 @@
-heatmaply 1.2.3 (2021-07-01)
+
+heatmaply 1.2.2 (2021-07-01)
 ===============
 ###BUGFIX
 - Fix bug with handling of point size matrix in plotly
   See github issue #266
 
-heatmaply 1.2.2 (2021-05-23)
-===============
 ###OTHER NOTES
 - update startup message to include stackoverflow.
 - add github actions (GHA)
