@@ -1,3 +1,8 @@
+heatmaply 1.2.3 (2021-08-04)
+============================
+##OTHER NOTES
+
+- Changed order of hovertext when plot_method="plotly" to match ggplot equivalent
 
 heatmaply 1.2.2 (2021-07-01)
 ===============
