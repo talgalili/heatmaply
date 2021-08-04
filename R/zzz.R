@@ -114,7 +114,7 @@ heatmaplyWelcomeMessage <- function() {
     "\n",
     "The github page is: https://github.com/talgalili/heatmaply/\n",
     "Please submit your suggestions and bug-reports at: https://github.com/talgalili/heatmaply/issues\n",
-    "Or contact: <tal.galili@gmail.com>\n",
+    "You may ask questions at stackoverflow, use the r and heatmaply tags: \n\t https://stackoverflow.com/questions/tagged/heatmaply\n",
     # "\n",
     # "\tTo suppress this message use:  ", "suppressPackageStartupMessages(library(heatmaply))\n",
     "======================\n"

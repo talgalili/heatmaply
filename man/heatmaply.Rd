@@ -250,9 +250,9 @@ or "minkowski".}
 \item{hclust_method}{default is NULL (which results in "complete" to be used).
 Can accept alternative character strings indicating the
 method to be passed to hclustfun By default hclustfun is \link{hclust} hence
-this can be one of "ward.D", "ward.D2", "single", "complete", "average" 
+this can be one of "ward.D", "ward.D2", "single", "complete", "average"
 (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).
-Specifying hclust_method=NA causes heatmaply to use 
+Specifying hclust_method=NA causes heatmaply to use
 \code{\link[dendextend]{find_dend}} to find the "optimal" dendrogram for
 the data.}
 
@@ -264,14 +264,14 @@ the data.}
 
 \item{hclustfun_col}{hclustfun for col dendrogram only.}
 
-\item{dendrogram}{character string indicating whether to compute 'none', 
-'row', 'column' or 'both' dendrograms. Defaults to 'both'. 
-However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both', 
+\item{dendrogram}{character string indicating whether to compute 'none',
+'row', 'column' or 'both' dendrograms. Defaults to 'both'.
+However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both',
 then a warning is issued and Rowv (or Colv) arguments are honoured.
 It also accepts TRUE/FALSE as synonyms for "both"/"none".}
 
-\item{show_dendrogram}{Logical vector of length two, controlling whether 
-the row and/or column dendrograms are displayed. If a logical scalar is 
+\item{show_dendrogram}{Logical vector of length two, controlling whether
+the row and/or column dendrograms are displayed. If a logical scalar is
 provided, it is repeated to become a logical vector of length two.}
 
 \item{reorderfun}{function(d, w) of dendrogram and weights for reordering the
@@ -296,11 +296,11 @@ This is useful for cor matrix.}
 in either the row direction or the column direction, or none. The default is
 "none".}
 
-\item{na.rm}{logical (default is TRUE) indicating whether NA's should be 
-removed when scaling (i.e.: when using rowMeans/colMeans). Generally it 
-should always be kept as TRUE, and is included here mainly to stay backward 
+\item{na.rm}{logical (default is TRUE) indicating whether NA's should be
+removed when scaling (i.e.: when using rowMeans/colMeans). Generally it
+should always be kept as TRUE, and is included here mainly to stay backward
 compatible with gplots::heatmap.2. This argument does not effect the presence
-of NA values in the matrix itself. For removing rows/columns with NAs you 
+of NA values in the matrix itself. For removing rows/columns with NAs you
 should pre-process your matrix using na.omit (or some form of imputation).}
 
 \item{row_dend_left}{logical (default is FALSE). Should the row dendrogram be
@@ -467,12 +467,12 @@ backward compatibility with gplots::heatmap.2.}
 If plot_method is "plotly" then just this text is displayed; if plot_method
 if "ggplot" then it is appended to the existing text.}
 
-\item{dend_hoverinfo}{Boolean value which controls whether mouseover text 
+\item{dend_hoverinfo}{Boolean value which controls whether mouseover text
 is shown for the row and column dendrograms.}
 
 \item{side_color_colorbar_len}{As with colorbar_len, this controls the
-length of the colorbar/color key relative to the total plot height. 
-This argument controls the colorbar_len of the side colour plots. 
+length of the colorbar/color key relative to the total plot height.
+This argument controls the colorbar_len of the side colour plots.
 Only used if plot_method = "plotly".}
 }
 \description{

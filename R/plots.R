@@ -287,16 +287,17 @@ plotly_heatmap <- function(x,
       zmin = limits[1], zmax = limits[2]
     )    
   } else {
-    melt <- function(x, cn, rn) {
+
+    melt <- function(x, cn=colnames(x), rn=rownames(x)) {
       xdf <- reshape2::melt(x)
-      xdf$Var1 <- factor(xdf$Var1, levels = colnames(x))
-      xdf$Var2 <- factor(xdf$Var2, levels = rownames(x))
+      xdf$Var1 <- factor(xdf$Var1, levels = rn)
+      xdf$Var2 <- factor(xdf$Var2, levels = cn)
       xdf
     }
     xdf <- melt(x)
     tdf <- melt(text_mat)
     pdf <- melt(point_size_mat)
-    
+
     p <- plot_ly(
       x = as.numeric(xdf$Var1),
       y = as.numeric(xdf$Var2),

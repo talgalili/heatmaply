@@ -130,7 +130,7 @@ fix_not_all_unique <- function(x, ...) {
 #'
 #' @export
 #' @source
-#' The interface was designed based on \link{heatmap}, \link[gplots]{heatmap.2}, and \link[d3heatmap]{d3heatmap}.
+#' The interface was designed based on \link{heatmap}, \link[gplots]{heatmap.2}, and (the also d3heatmap).
 #'
 #' @seealso
 #' \link{heatmap}, \link[gplots]{heatmap.2}

@@ -138,7 +138,7 @@ browseURL("folder/heatmaply_plot.png")
 
 ### Replacing d3heatmap with heatmaply
 
-The package [d3heatmap](https://github.com/rstudio/d3heatmap) is no longer actively maintained. 
+The package d3heatmap (https://github.com/talgalili/d3heatmap) is no not actively maintained.
 
 If users are interested in replacing their `d3heatmap` functions, this is easily done with `heatmaply`:
 
