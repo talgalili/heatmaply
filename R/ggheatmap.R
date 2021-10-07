@@ -76,10 +76,14 @@ arrange_plots <- function(
   ind_remove_row <- rep(ind_null_row, length.out = length(plotlist))
   plotlist <- plotlist[!(ind_remove_row | ind_remove_col)]
 
+  widths <- widths %||% default_dims(plots$px, plots$pr)
+  if (row_dend_left) {
+    widths <- rev(widths)
+  }
   egg::ggarrange(
     plots = plotlist,
     ncol = ncols,
-    widths = widths %||% default_dims(plots$px, plots$pr),
+    widths = widths,
     heights = heights %||% rev(default_dims(plots$py, plots$pc))
   )
 }
