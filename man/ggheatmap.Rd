@@ -4,7 +4,13 @@
 \alias{ggheatmap}
 \title{ggplot heatmap equivalent to heatmaply}
 \usage{
-ggheatmap(..., widths = NULL, heights = NULL, row_dend_left = FALSE)
+ggheatmap(
+  ...,
+  widths = NULL,
+  heights = NULL,
+  row_dend_left = FALSE,
+  hide_colorbar = FALSE
+)
 }
 \arguments{
 \item{...}{Passed to \link{heatmaply}}
@@ -13,6 +19,9 @@ ggheatmap(..., widths = NULL, heights = NULL, row_dend_left = FALSE)
 
 \item{row_dend_left}{Logical argument controlling whether the row 
 dendrogram is placed on the left of the plot.}
+
+\item{hide_colobar}{Logical argument controlling whether the color bar (i.e.:
+the legend) is hidden.}
 }
 \description{
 This function produces a ggplot analogue of heatmaply figures 

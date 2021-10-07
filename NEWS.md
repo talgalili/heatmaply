@@ -1,3 +1,11 @@
+heatmaply 1.2.4 (2021-10-07)
+===============
+## NEW FEATURE
+
+ggheatmap now accepts `hide_colorbar` argument. Also, when `row_dend_left`
+is set to `TRUE`, the subplot widths are correctly reversed. (Credit jaehyunjoo,
+PR #273)
+
 
 heatmaply 1.1.1 (2020-08-20)
 ===============
