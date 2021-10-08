@@ -306,4 +306,6 @@ heatmaplyWelcomeMessage <- function() {
 # devtools::check_win_devel()
 # pkgdown::build_home()
 # pkgdown::build_site(run_dont_run = F)
+# pkgdown::build_news()
 # release()
+

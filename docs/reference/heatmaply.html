@@ -80,7 +80,7 @@ for correlation matrixes. Specifically, the limits are set from -1 to 1, and the
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heatmaply</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ for correlation matrixes. Specifically, the limits are set from -1 to 1, and the
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -105,7 +105,7 @@ for correlation matrixes. Specifically, the limits are set from -1 to 1, and the
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/talgalili/heatmaply/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -139,168 +139,168 @@ colors include two shades of grey. It also calculates the <a href='is.na10.html'
 for correlation matrixes. Specifically, the limits are set from -1 to 1, and the color palette is <a href='RColorBrewer_colors.html'>RdBu</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>heatmaply</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>heatmaply_na</span>(<span class='no'>x</span>, <span class='kw'>grid_gap</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>colors</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"grey80"</span>, <span class='st'>"grey20"</span>), <span class='no'>...</span>)
+<span class='fu'>heatmaply_na</span><span class='op'>(</span><span class='va'>x</span>, grid_gap <span class='op'>=</span> <span class='fl'>1</span>, colors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"grey80"</span>, <span class='st'>"grey20"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>heatmaply_cor</span>(<span class='no'>x</span>, <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>colors</span> <span class='kw'>=</span> <span class='no'>cool_warm</span>, <span class='no'>...</span>)
+<span class='fu'>heatmaply_cor</span><span class='op'>(</span><span class='va'>x</span>, limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, colors <span class='op'>=</span> <span class='va'>cool_warm</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>heatmaply</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>colors</span> <span class='kw'>=</span> <span class='fu'>viridis</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>256</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>begin</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>),
-  <span class='kw'>limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>na.value</span> <span class='kw'>=</span> <span class='st'>"grey50"</span>,
-  <span class='kw'>row_text_angle</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>column_text_angle</span> <span class='kw'>=</span> <span class='fl'>45</span>,
-  <span class='kw'>subplot_margin</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>cellnote</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>draw_cellnote</span> <span class='kw'>=</span> !<span class='fu'><a href='https://rdrr.io/r/base/NULL.html'>is.null</a></span>(<span class='no'>cellnote</span>),
-  <span class='kw'>cellnote_color</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
-  <span class='kw'>cellnote_textposition</span> <span class='kw'>=</span> <span class='st'>"middle right"</span>,
-  <span class='kw'>cellnote_size</span> <span class='kw'>=</span> <span class='fl'>12</span>,
-  <span class='no'>Rowv</span>,
-  <span class='no'>Colv</span>,
-  <span class='kw'>distfun</span> <span class='kw'>=</span> <span class='no'>dist</span>,
-  <span class='kw'>hclustfun</span> <span class='kw'>=</span> <span class='no'>hclust</span>,
-  <span class='kw'>dist_method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>hclust_method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>distfun_row</span>,
-  <span class='no'>hclustfun_row</span>,
-  <span class='no'>distfun_col</span>,
-  <span class='no'>hclustfun_col</span>,
-  <span class='kw'>dendrogram</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"both"</span>, <span class='st'>"row"</span>, <span class='st'>"column"</span>, <span class='st'>"none"</span>),
-  <span class='kw'>show_dendrogram</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>TRUE</span>),
-  <span class='kw'>reorderfun</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>d</span>, <span class='no'>w</span>) <span class='fu'><a href='https://rdrr.io/r/stats/reorder.factor.html'>reorder</a></span>(<span class='no'>d</span>, <span class='no'>w</span>),
-  <span class='kw'>k_row</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>k_col</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>symm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>revC</span>,
-  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"row"</span>, <span class='st'>"column"</span>),
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>row_dend_left</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>margins</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>NA</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>),
-  <span class='no'>...</span>,
-  <span class='kw'>scale_fill_gradient_fun</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>grid_color</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>grid_gap</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='no'>srtRow</span>,
-  <span class='no'>srtCol</span>,
-  <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>titleX</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>titleY</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>hide_colorbar</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>key.title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>return_ppxpy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>row_side_colors</span>,
-  <span class='kw'>row_side_palette</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>col_side_colors</span>,
-  <span class='kw'>col_side_palette</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ColSideColors</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>RowSideColors</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>seriate</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"OLO"</span>, <span class='st'>"mean"</span>, <span class='st'>"none"</span>, <span class='st'>"GW"</span>),
-  <span class='kw'>heatmap_layers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>side_color_layers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dendrogram_layers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>branches_lwd</span> <span class='kw'>=</span> <span class='fl'>0.6</span>,
-  <span class='no'>file</span>,
-  <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>height</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>long_data</span>,
-  <span class='kw'>plot_method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ggplot"</span>, <span class='st'>"plotly"</span>),
-  <span class='kw'>label_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>fontsize_row</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>fontsize_col</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='no'>cexRow</span>,
-  <span class='no'>cexCol</span>,
-  <span class='kw'>subplot_widths</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>subplot_heights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>colorbar_len</span> <span class='kw'>=</span> <span class='fl'>0.3</span>,
-  <span class='kw'>colorbar_thickness</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>colorbar_xanchor</span> <span class='kw'>=</span> <span class='kw'>if</span> (<span class='no'>row_dend_left</span>) <span class='st'>"right"</span> <span class='kw'>else</span> <span class='st'>"left"</span>,
-  <span class='kw'>colorbar_yanchor</span> <span class='kw'>=</span> <span class='st'>"bottom"</span>,
-  <span class='kw'>colorbar_xpos</span> <span class='kw'>=</span> <span class='kw'>if</span> (<span class='no'>row_dend_left</span>) -<span class='fl'>0.1</span> <span class='kw'>else</span> <span class='fl'>1.1</span>,
-  <span class='kw'>colorbar_ypos</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>showticklabels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>TRUE</span>),
-  <span class='kw'>dynamicTicks</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>grid_size</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-  <span class='kw'>node_type</span> <span class='kw'>=</span> <span class='st'>"heatmap"</span>,
-  <span class='kw'>point_size_mat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>point_size_name</span> <span class='kw'>=</span> <span class='st'>"Point size"</span>,
-  <span class='kw'>label_format_fun</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>...</span>) <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='no'>...</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>4</span>),
-  <span class='kw'>labRow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>labCol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>custom_hovertext</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dend_hoverinfo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>side_color_colorbar_len</span> <span class='kw'>=</span> <span class='fl'>0.3</span>
-)
+<span class='fu'>heatmaply</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  colors <span class='op'>=</span> <span class='fu'>viridis</span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>256</span>, alpha <span class='op'>=</span> <span class='fl'>1</span>, begin <span class='op'>=</span> <span class='fl'>0</span>, end <span class='op'>=</span> <span class='fl'>1</span>, option <span class='op'>=</span> <span class='st'>"viridis"</span><span class='op'>)</span>,
+  limits <span class='op'>=</span> <span class='cn'>NULL</span>,
+  na.value <span class='op'>=</span> <span class='st'>"grey50"</span>,
+  row_text_angle <span class='op'>=</span> <span class='fl'>0</span>,
+  column_text_angle <span class='op'>=</span> <span class='fl'>45</span>,
+  subplot_margin <span class='op'>=</span> <span class='fl'>0</span>,
+  cellnote <span class='op'>=</span> <span class='cn'>NULL</span>,
+  draw_cellnote <span class='op'>=</span> <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NULL.html'>is.null</a></span><span class='op'>(</span><span class='va'>cellnote</span><span class='op'>)</span>,
+  cellnote_color <span class='op'>=</span> <span class='st'>"auto"</span>,
+  cellnote_textposition <span class='op'>=</span> <span class='st'>"middle right"</span>,
+  cellnote_size <span class='op'>=</span> <span class='fl'>12</span>,
+  <span class='va'>Rowv</span>,
+  <span class='va'>Colv</span>,
+  distfun <span class='op'>=</span> <span class='va'>dist</span>,
+  hclustfun <span class='op'>=</span> <span class='va'>hclust</span>,
+  dist_method <span class='op'>=</span> <span class='cn'>NULL</span>,
+  hclust_method <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>distfun_row</span>,
+  <span class='va'>hclustfun_row</span>,
+  <span class='va'>distfun_col</span>,
+  <span class='va'>hclustfun_col</span>,
+  dendrogram <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"both"</span>, <span class='st'>"row"</span>, <span class='st'>"column"</span>, <span class='st'>"none"</span><span class='op'>)</span>,
+  show_dendrogram <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>TRUE</span><span class='op'>)</span>,
+  reorderfun <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>w</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/stats/reorder.factor.html'>reorder</a></span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>w</span><span class='op'>)</span>,
+  k_row <span class='op'>=</span> <span class='fl'>1</span>,
+  k_col <span class='op'>=</span> <span class='fl'>1</span>,
+  symm <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>revC</span>,
+  scale <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"row"</span>, <span class='st'>"column"</span><span class='op'>)</span>,
+  na.rm <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  row_dend_left <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  margins <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span><span class='op'>)</span>,
+  <span class='va'>...</span>,
+  scale_fill_gradient_fun <span class='op'>=</span> <span class='cn'>NULL</span>,
+  grid_color <span class='op'>=</span> <span class='cn'>NA</span>,
+  grid_gap <span class='op'>=</span> <span class='fl'>0</span>,
+  <span class='va'>srtRow</span>,
+  <span class='va'>srtCol</span>,
+  xlab <span class='op'>=</span> <span class='st'>""</span>,
+  ylab <span class='op'>=</span> <span class='st'>""</span>,
+  main <span class='op'>=</span> <span class='st'>""</span>,
+  titleX <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  titleY <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  hide_colorbar <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  key.title <span class='op'>=</span> <span class='cn'>NULL</span>,
+  return_ppxpy <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>row_side_colors</span>,
+  row_side_palette <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>col_side_colors</span>,
+  col_side_palette <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ColSideColors <span class='op'>=</span> <span class='cn'>NULL</span>,
+  RowSideColors <span class='op'>=</span> <span class='cn'>NULL</span>,
+  seriate <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"OLO"</span>, <span class='st'>"mean"</span>, <span class='st'>"none"</span>, <span class='st'>"GW"</span><span class='op'>)</span>,
+  heatmap_layers <span class='op'>=</span> <span class='cn'>NULL</span>,
+  side_color_layers <span class='op'>=</span> <span class='cn'>NULL</span>,
+  dendrogram_layers <span class='op'>=</span> <span class='cn'>NULL</span>,
+  branches_lwd <span class='op'>=</span> <span class='fl'>0.6</span>,
+  <span class='va'>file</span>,
+  width <span class='op'>=</span> <span class='cn'>NULL</span>,
+  height <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>long_data</span>,
+  plot_method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ggplot"</span>, <span class='st'>"plotly"</span><span class='op'>)</span>,
+  label_names <span class='op'>=</span> <span class='cn'>NULL</span>,
+  fontsize_row <span class='op'>=</span> <span class='fl'>10</span>,
+  fontsize_col <span class='op'>=</span> <span class='fl'>10</span>,
+  <span class='va'>cexRow</span>,
+  <span class='va'>cexCol</span>,
+  subplot_widths <span class='op'>=</span> <span class='cn'>NULL</span>,
+  subplot_heights <span class='op'>=</span> <span class='cn'>NULL</span>,
+  colorbar_len <span class='op'>=</span> <span class='fl'>0.3</span>,
+  colorbar_thickness <span class='op'>=</span> <span class='fl'>30</span>,
+  colorbar_xanchor <span class='op'>=</span> <span class='kw'>if</span> <span class='op'>(</span><span class='va'>row_dend_left</span><span class='op'>)</span> <span class='st'>"right"</span> <span class='kw'>else</span> <span class='st'>"left"</span>,
+  colorbar_yanchor <span class='op'>=</span> <span class='st'>"bottom"</span>,
+  colorbar_xpos <span class='op'>=</span> <span class='kw'>if</span> <span class='op'>(</span><span class='va'>row_dend_left</span><span class='op'>)</span> <span class='op'>-</span><span class='fl'>0.1</span> <span class='kw'>else</span> <span class='fl'>1.1</span>,
+  colorbar_ypos <span class='op'>=</span> <span class='fl'>0</span>,
+  showticklabels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>TRUE</span><span class='op'>)</span>,
+  dynamicTicks <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  grid_size <span class='op'>=</span> <span class='fl'>0.1</span>,
+  node_type <span class='op'>=</span> <span class='st'>"heatmap"</span>,
+  point_size_mat <span class='op'>=</span> <span class='cn'>NULL</span>,
+  point_size_name <span class='op'>=</span> <span class='st'>"Point size"</span>,
+  label_format_fun <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='va'>...</span>, digits <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>,
+  labRow <span class='op'>=</span> <span class='cn'>NULL</span>,
+  labCol <span class='op'>=</span> <span class='cn'>NULL</span>,
+  custom_hovertext <span class='op'>=</span> <span class='cn'>NULL</span>,
+  col <span class='op'>=</span> <span class='cn'>NULL</span>,
+  dend_hoverinfo <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  side_color_colorbar_len <span class='op'>=</span> <span class='fl'>0.3</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for heatmapr</span>
-<span class='fu'>heatmaply</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>colors</span> <span class='kw'>=</span> <span class='fu'>viridis</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>256</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>begin</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"viridis"</span>),
-  <span class='kw'>limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>na.value</span> <span class='kw'>=</span> <span class='st'>"grey50"</span>,
-  <span class='kw'>row_text_angle</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>column_text_angle</span> <span class='kw'>=</span> <span class='fl'>45</span>,
-  <span class='kw'>subplot_margin</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>row_dend_left</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>margins</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>NA</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>),
-  <span class='no'>...</span>,
-  <span class='kw'>scale_fill_gradient_fun</span> <span class='kw'>=</span> <span class='fu'>scale_fill_gradientn</span>(<span class='kw'>colors</span> <span class='kw'>=</span> <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/is.function.html'>is.function</a></span>(<span class='no'>colors</span>))
-    <span class='fu'><a href='https://rdrr.io/r/grDevices/colors.html'>colors</a></span>(<span class='fl'>256</span>) <span class='kw'>else</span> <span class='no'>colors</span>, <span class='kw'>na.value</span> <span class='kw'>=</span> <span class='no'>na.value</span>, <span class='kw'>limits</span> <span class='kw'>=</span> <span class='no'>limits</span>),
-  <span class='kw'>grid_color</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>grid_gap</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='no'>srtRow</span>,
-  <span class='no'>srtCol</span>,
-  <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>titleX</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>titleY</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>hide_colorbar</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>key.title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>return_ppxpy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>draw_cellnote</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>cellnote_color</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
-  <span class='kw'>cellnote_textposition</span> <span class='kw'>=</span> <span class='st'>"middle right"</span>,
-  <span class='kw'>cellnote_size</span> <span class='kw'>=</span> <span class='fl'>12</span>,
-  <span class='kw'>row_side_colors</span> <span class='kw'>=</span> <span class='no'>x</span><span class='kw'>[[</span><span class='st'>"row_side_colors"</span>]],
-  <span class='kw'>row_side_palette</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>col_side_colors</span> <span class='kw'>=</span> <span class='no'>x</span><span class='kw'>[[</span><span class='st'>"col_side_colors"</span>]],
-  <span class='kw'>col_side_palette</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>plot_method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ggplot"</span>, <span class='st'>"plotly"</span>),
-  <span class='kw'>ColSideColors</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>RowSideColors</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>heatmap_layers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>side_color_layers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dendrogram_layers</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>branches_lwd</span> <span class='kw'>=</span> <span class='fl'>0.6</span>,
-  <span class='kw'>label_names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"row"</span>, <span class='st'>"column"</span>, <span class='st'>"value"</span>),
-  <span class='kw'>fontsize_row</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>fontsize_col</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>subplot_widths</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>subplot_heights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>colorbar_xanchor</span> <span class='kw'>=</span> <span class='kw'>if</span> (<span class='no'>row_dend_left</span>) <span class='st'>"right"</span> <span class='kw'>else</span> <span class='st'>"left"</span>,
-  <span class='kw'>colorbar_yanchor</span> <span class='kw'>=</span> <span class='st'>"bottom"</span>,
-  <span class='kw'>colorbar_xpos</span> <span class='kw'>=</span> <span class='kw'>if</span> (<span class='no'>row_dend_left</span>) -<span class='fl'>0.1</span> <span class='kw'>else</span> <span class='fl'>1.1</span>,
-  <span class='kw'>colorbar_ypos</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>colorbar_len</span> <span class='kw'>=</span> <span class='fl'>0.3</span>,
-  <span class='kw'>colorbar_thickness</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>showticklabels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>TRUE</span>),
-  <span class='kw'>dynamicTicks</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>node_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"scatter"</span>, <span class='st'>"heatmap"</span>),
-  <span class='kw'>grid_size</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-  <span class='kw'>point_size_mat</span> <span class='kw'>=</span> <span class='no'>x</span><span class='kw'>[[</span><span class='st'>"matrix"</span>]]<span class='kw'>[[</span><span class='st'>"point_size_mat"</span>]],
-  <span class='kw'>point_size_name</span> <span class='kw'>=</span> <span class='st'>"Point size"</span>,
-  <span class='kw'>label_format_fun</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>...</span>) <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span>(<span class='no'>...</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>4</span>),
-  <span class='kw'>custom_hovertext</span> <span class='kw'>=</span> <span class='no'>x</span><span class='kw'>[[</span><span class='st'>"matrix"</span>]]<span class='kw'>[[</span><span class='st'>"custom_hovertext"</span>]],
-  <span class='kw'>dend_hoverinfo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>side_color_colorbar_len</span> <span class='kw'>=</span> <span class='fl'>0.3</span>
-)</pre>
+<span class='fu'>heatmaply</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  colors <span class='op'>=</span> <span class='fu'>viridis</span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>256</span>, alpha <span class='op'>=</span> <span class='fl'>1</span>, begin <span class='op'>=</span> <span class='fl'>0</span>, end <span class='op'>=</span> <span class='fl'>1</span>, option <span class='op'>=</span> <span class='st'>"viridis"</span><span class='op'>)</span>,
+  limits <span class='op'>=</span> <span class='cn'>NULL</span>,
+  na.value <span class='op'>=</span> <span class='st'>"grey50"</span>,
+  row_text_angle <span class='op'>=</span> <span class='fl'>0</span>,
+  column_text_angle <span class='op'>=</span> <span class='fl'>45</span>,
+  subplot_margin <span class='op'>=</span> <span class='fl'>0</span>,
+  row_dend_left <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  margins <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span><span class='op'>)</span>,
+  <span class='va'>...</span>,
+  scale_fill_gradient_fun <span class='op'>=</span> <span class='fu'>scale_fill_gradientn</span><span class='op'>(</span>colors <span class='op'>=</span> <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/is.function.html'>is.function</a></span><span class='op'>(</span><span class='va'>colors</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html'>colors</a></span><span class='op'>(</span><span class='fl'>256</span><span class='op'>)</span> <span class='kw'>else</span> <span class='va'>colors</span>, na.value <span class='op'>=</span> <span class='va'>na.value</span>, limits <span class='op'>=</span> <span class='va'>limits</span><span class='op'>)</span>,
+  grid_color <span class='op'>=</span> <span class='cn'>NA</span>,
+  grid_gap <span class='op'>=</span> <span class='fl'>0</span>,
+  <span class='va'>srtRow</span>,
+  <span class='va'>srtCol</span>,
+  xlab <span class='op'>=</span> <span class='st'>""</span>,
+  ylab <span class='op'>=</span> <span class='st'>""</span>,
+  main <span class='op'>=</span> <span class='st'>""</span>,
+  titleX <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  titleY <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  hide_colorbar <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  key.title <span class='op'>=</span> <span class='cn'>NULL</span>,
+  return_ppxpy <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  draw_cellnote <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  cellnote_color <span class='op'>=</span> <span class='st'>"auto"</span>,
+  cellnote_textposition <span class='op'>=</span> <span class='st'>"middle right"</span>,
+  cellnote_size <span class='op'>=</span> <span class='fl'>12</span>,
+  row_side_colors <span class='op'>=</span> <span class='va'>x</span><span class='op'>[[</span><span class='st'>"row_side_colors"</span><span class='op'>]</span><span class='op'>]</span>,
+  row_side_palette <span class='op'>=</span> <span class='cn'>NULL</span>,
+  col_side_colors <span class='op'>=</span> <span class='va'>x</span><span class='op'>[[</span><span class='st'>"col_side_colors"</span><span class='op'>]</span><span class='op'>]</span>,
+  col_side_palette <span class='op'>=</span> <span class='cn'>NULL</span>,
+  plot_method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ggplot"</span>, <span class='st'>"plotly"</span><span class='op'>)</span>,
+  ColSideColors <span class='op'>=</span> <span class='cn'>NULL</span>,
+  RowSideColors <span class='op'>=</span> <span class='cn'>NULL</span>,
+  heatmap_layers <span class='op'>=</span> <span class='cn'>NULL</span>,
+  side_color_layers <span class='op'>=</span> <span class='cn'>NULL</span>,
+  dendrogram_layers <span class='op'>=</span> <span class='cn'>NULL</span>,
+  branches_lwd <span class='op'>=</span> <span class='fl'>0.6</span>,
+  label_names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"row"</span>, <span class='st'>"column"</span>, <span class='st'>"value"</span><span class='op'>)</span>,
+  fontsize_row <span class='op'>=</span> <span class='fl'>10</span>,
+  fontsize_col <span class='op'>=</span> <span class='fl'>10</span>,
+  subplot_widths <span class='op'>=</span> <span class='cn'>NULL</span>,
+  subplot_heights <span class='op'>=</span> <span class='cn'>NULL</span>,
+  colorbar_xanchor <span class='op'>=</span> <span class='kw'>if</span> <span class='op'>(</span><span class='va'>row_dend_left</span><span class='op'>)</span> <span class='st'>"right"</span> <span class='kw'>else</span> <span class='st'>"left"</span>,
+  colorbar_yanchor <span class='op'>=</span> <span class='st'>"bottom"</span>,
+  colorbar_xpos <span class='op'>=</span> <span class='kw'>if</span> <span class='op'>(</span><span class='va'>row_dend_left</span><span class='op'>)</span> <span class='op'>-</span><span class='fl'>0.1</span> <span class='kw'>else</span> <span class='fl'>1.1</span>,
+  colorbar_ypos <span class='op'>=</span> <span class='fl'>0</span>,
+  colorbar_len <span class='op'>=</span> <span class='fl'>0.3</span>,
+  colorbar_thickness <span class='op'>=</span> <span class='fl'>30</span>,
+  showticklabels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>TRUE</span><span class='op'>)</span>,
+  dynamicTicks <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  node_type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"scatter"</span>, <span class='st'>"heatmap"</span><span class='op'>)</span>,
+  grid_size <span class='op'>=</span> <span class='fl'>0.1</span>,
+  point_size_mat <span class='op'>=</span> <span class='va'>x</span><span class='op'>[[</span><span class='st'>"matrix"</span><span class='op'>]</span><span class='op'>]</span><span class='op'>[[</span><span class='st'>"point_size_mat"</span><span class='op'>]</span><span class='op'>]</span>,
+  point_size_name <span class='op'>=</span> <span class='st'>"Point size"</span>,
+  label_format_fun <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='va'>...</span>, digits <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>,
+  custom_hovertext <span class='op'>=</span> <span class='va'>x</span><span class='op'>[[</span><span class='st'>"matrix"</span><span class='op'>]</span><span class='op'>]</span><span class='op'>[[</span><span class='st'>"custom_hovertext"</span><span class='op'>]</span><span class='op'>]</span>,
+  dend_hoverinfo <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  side_color_colorbar_len <span class='op'>=</span> <span class='fl'>0.3</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -325,8 +325,8 @@ help identify different cells. This is implemented using <a href='https://rdrr.i
       <th>colors, col</th>
       <td><p>a vector of colors to use for heatmap color.
 The default uses
-<code><a href='https://rdrr.io/pkg/viridis/man/reexports.html'>viridis</a>(n=256, alpha = 1, begin = 0, end = 1, option = "viridis")</code>
-It is passed to <a href='https://ggplot2.tidyverse.org/reference/scale_gradient.html'>scale_fill_gradientn</a>.
+<code><a href='https://rdrr.io/pkg/viridisLite/man/viridis.html'>viridis</a>(n=256, alpha = 1, begin = 0, end = 1, option = "viridis")</code>
+It is passed to <a href='https://rdrr.io/pkg/ggplot2/man/scale_gradient.html'>scale_fill_gradientn</a>.
 If colors is a color function (with the first argument being `n` = the number of colors),
 it will be used to create 256 colors from that function.
 (col is there to stay compatible with <a href='https://rdrr.io/pkg/gplots/man/heatmap.2.html'>heatmap.2</a>)</p></td>
@@ -428,7 +428,7 @@ method to be passed to hclustfun By default hclustfun is <a href='https://rdrr.i
 this can be one of "ward.D", "ward.D2", "single", "complete", "average"
 (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).
 Specifying hclust_method=NA causes heatmaply to use
-<code><a href='https://rdrr.io/pkg/dendextend/man/find_dend.html'>find_dend</a></code> to find the "optimal" dendrogram for
+<code><a href='http://talgalili.github.io/dendextend/reference/find_dend.html'>find_dend</a></code> to find the "optimal" dendrogram for
 the data.</p></td>
     </tr>
     <tr>
@@ -469,14 +469,14 @@ row and column dendrograms. The default uses statsreorder.dendrogram</p></td>
     <tr>
       <th>k_row</th>
       <td><p>an integer scalar with the desired number of groups by which to
-color the dendrogram's branches in the rows (uses <a href='https://rdrr.io/pkg/dendextend/man/color_branches.html'>color_branches</a>)
-If NA then <a href='https://rdrr.io/pkg/dendextend/man/find_k.html'>find_k</a> is used to deduce the optimal number of clusters.</p></td>
+color the dendrogram's branches in the rows (uses <a href='http://talgalili.github.io/dendextend/reference/color_branches.html'>color_branches</a>)
+If NA then <a href='http://talgalili.github.io/dendextend/reference/find_k.html'>find_k</a> is used to deduce the optimal number of clusters.</p></td>
     </tr>
     <tr>
       <th>k_col</th>
       <td><p>an integer scalar with the desired number of groups by which to
-color the dendrogram's branches in the columns (uses <a href='https://rdrr.io/pkg/dendextend/man/color_branches.html'>color_branches</a>)
-If NA then <a href='https://rdrr.io/pkg/dendextend/man/find_k.html'>find_k</a> is used to deduce the optimal number of clusters.</p></td>
+color the dendrogram's branches in the columns (uses <a href='http://talgalili.github.io/dendextend/reference/color_branches.html'>color_branches</a>)
+If NA then <a href='http://talgalili.github.io/dendextend/reference/find_k.html'>find_k</a> is used to deduce the optimal number of clusters.</p></td>
     </tr>
     <tr>
       <th>symm</th>
@@ -523,7 +523,7 @@ is FALSE, or 100 if row_dend_left is TRUE.</p></td>
     <tr>
       <th>scale_fill_gradient_fun</th>
       <td><p>A function that creates a smooth gradient for the heatmap.
-The default uses <a href='https://ggplot2.tidyverse.org/reference/scale_gradient.html'>scale_fill_gradientn</a> with the values of colors, limits, and
+The default uses <a href='https://rdrr.io/pkg/ggplot2/man/scale_gradient.html'>scale_fill_gradientn</a> with the values of colors, limits, and
 na.value that are supplied by the user. The user can input a customized function, such as
 scale_color_gradient() in order to get other results (although the virids default
 is quite recommended)</p></td>
@@ -531,7 +531,7 @@ is quite recommended)</p></td>
     <tr>
       <th>grid_color</th>
       <td><p>control the color of the heatmap grid. Default is NA.
-Value passed to <a href='https://ggplot2.tidyverse.org/reference/geom_tile.html'>geom_tile</a>. Do not use this parameter on
+Value passed to <a href='https://rdrr.io/pkg/ggplot2/man/geom_tile.html'>geom_tile</a>. Do not use this parameter on
 larger matrix sizes, as it can dramatically prolong the build time of the heatmap.
 (another parameter, grid_color, will be added in the future - once it is implemented in plotly)
 In the meantime it is MUCH better to use the grid_gap argument.</p></td>
@@ -626,7 +626,7 @@ similar to heatmap_layers and side_color_layers.</p></td>
       <th>branches_lwd</th>
       <td><p>numeric (default is 0.6). The width of the dendrograms' branches.
 If NULL then it is ignored. If the "lwd" is already defined in Rowv/Colv then this
-parameter is ignored (it is checked using <a href='https://rdrr.io/pkg/dendextend/man/has_component_in_attribute.html'>has_edgePar</a>("lwd")).</p></td>
+parameter is ignored (it is checked using <a href='http://talgalili.github.io/dendextend/reference/has_component_in_attribute.html'>has_edgePar</a>("lwd")).</p></td>
     </tr>
     <tr>
       <th>file</th>
@@ -766,144 +766,145 @@ Only used if plot_method = "plotly".</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 
 <span class='co'># mtcars</span>
 <span class='co'># x &lt;- heatmapr(mtcars)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>heatmaply</span>)
-<span class='fu'>heatmaply</span>(<span class='no'>iris</span>[,-<span class='fl'>5</span>], <span class='kw'>k_row</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>k_col</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-<span class='fu'>heatmaply</span>(<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>iris</span>[,-<span class='fl'>5</span>]))
-<span class='fu'>heatmaply</span>(<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>iris</span>[,-<span class='fl'>5</span>]), <span class='kw'>limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1</span>,<span class='fl'>1</span>))
-<span class='fu'>heatmaply</span>(<span class='no'>mtcars</span>, <span class='kw'>k_row</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>k_col</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://talgalili.github.io/heatmaply/'>heatmaply</a></span><span class='op'>)</span>
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span>, k_row <span class='op'>=</span> <span class='fl'>3</span>, k_col <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span>, limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>mtcars</span>, k_row <span class='op'>=</span> <span class='fl'>3</span>, k_col <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 <span class='co'># heatmaply(mtcars, k_row = 3, k_col = 2, grid_color = "white")</span>
-<span class='fu'>heatmaply</span>(<span class='no'>mtcars</span>, <span class='kw'>k_row</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>k_col</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>grid_gap</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>mtcars</span>, k_row <span class='op'>=</span> <span class='fl'>3</span>, k_col <span class='op'>=</span> <span class='fl'>2</span>, grid_gap <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 
 <span class='co'># make sure there is enough room for the labels:</span>
-<span class='fu'>heatmaply</span>(<span class='no'>mtcars</span>, <span class='kw'>margins</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>40</span>, <span class='fl'>130</span>))
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>mtcars</span>, margins <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>40</span>, <span class='fl'>130</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># this is the same as using:</span>
-<span class='fu'>heatmaply</span>(<span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/graphics/layout.html'>layout</a></span>(<span class='kw'>margin</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>l</span> <span class='kw'>=</span> <span class='fl'>130</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>40</span>))
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/graphics/layout.html'>layout</a></span><span class='op'>(</span>margin <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>l <span class='op'>=</span> <span class='fl'>130</span>, b <span class='op'>=</span> <span class='fl'>40</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># control text angle</span>
-<span class='fu'>heatmaply</span>(<span class='no'>mtcars</span>, <span class='kw'>column_text_angle</span> <span class='kw'>=</span> <span class='fl'>90</span>, <span class='kw'>margins</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>40</span>, <span class='fl'>130</span>))
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>mtcars</span>, column_text_angle <span class='op'>=</span> <span class='fl'>90</span>, margins <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>40</span>, <span class='fl'>130</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># the same as using srtCol:</span>
 <span class='co'># heatmaply(mtcars, srtCol = 90) %&gt;% layout(margin = list(l = 130, b = 40))</span>
 
 
 
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>mtcars</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'>mtcars</span>
 <span class='co'># different colors</span>
-<span class='fu'>heatmaply</span>(<span class='no'>x</span>, <span class='kw'>colors</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>heat.colors</a></span>(<span class='fl'>200</span>))
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>x</span>, colors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>heat.colors</a></span><span class='op'>(</span><span class='fl'>200</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># using special scale_fill_gradient_fun colors</span>
-<span class='fu'>heatmaply</span>(<span class='no'>x</span>, <span class='kw'>scale_fill_gradient_fun</span> <span class='kw'>=</span> <span class='fu'>scale_color_gradient</span>())
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>x</span>, scale_fill_gradient_fun <span class='op'>=</span> <span class='fu'>scale_color_gradient</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
 
 <span class='co'># We can join two heatmaps together:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>heatmaply</span>)
-<span class='no'>hm1</span> <span class='kw'>&lt;-</span> <span class='fu'>heatmaply</span>(<span class='no'>mtcars</span>, <span class='kw'>margins</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>40</span>, <span class='fl'>130</span>))
-<span class='no'>hm2</span> <span class='kw'>&lt;-</span> <span class='fu'>heatmaply</span>(<span class='no'>mtcars</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='st'>"col"</span>, <span class='kw'>margins</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>40</span>, <span class='fl'>130</span>))
-<span class='fu'>subplot</span>(<span class='no'>hm1</span>, <span class='no'>hm2</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>.2</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://talgalili.github.io/heatmaply/'>heatmaply</a></span><span class='op'>)</span>
+<span class='va'>hm1</span> <span class='op'>&lt;-</span> <span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>mtcars</span>, margins <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>40</span>, <span class='fl'>130</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>hm2</span> <span class='op'>&lt;-</span> <span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>mtcars</span>, scale <span class='op'>=</span> <span class='st'>"col"</span>, margins <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>40</span>, <span class='fl'>130</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>subplot</span><span class='op'>(</span><span class='va'>hm1</span>, <span class='va'>hm2</span>, margin <span class='op'>=</span> <span class='fl'>.2</span><span class='op'>)</span>
 
 <span class='co'># If we want to share the Y axis, then it is risky to keep any of the dendrograms:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>heatmaply</span>)
-<span class='no'>hm1</span> <span class='kw'>&lt;-</span> <span class='fu'>heatmaply</span>(<span class='no'>mtcars</span>, <span class='kw'>Colv</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>Rowv</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>margins</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>40</span>, <span class='fl'>130</span>))
-<span class='no'>hm2</span> <span class='kw'>&lt;-</span> <span class='fu'>heatmaply</span>(<span class='no'>mtcars</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='st'>"col"</span> , <span class='kw'>Colv</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>Rowv</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-             <span class='kw'>margins</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>40</span>, <span class='fl'>130</span>))
-<span class='fu'>subplot</span>(<span class='no'>hm1</span>, <span class='no'>hm2</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fl'>.02</span>, <span class='kw'>shareY</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://talgalili.github.io/heatmaply/'>heatmaply</a></span><span class='op'>)</span>
+<span class='va'>hm1</span> <span class='op'>&lt;-</span> <span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>mtcars</span>, Colv <span class='op'>=</span> <span class='cn'>FALSE</span>, Rowv <span class='op'>=</span> <span class='cn'>FALSE</span>, margins <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>40</span>, <span class='fl'>130</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>hm2</span> <span class='op'>&lt;-</span> <span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>mtcars</span>, scale <span class='op'>=</span> <span class='st'>"col"</span> , Colv <span class='op'>=</span> <span class='cn'>FALSE</span>, Rowv <span class='op'>=</span> <span class='cn'>FALSE</span>,
+             margins <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>40</span>, <span class='fl'>130</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>subplot</span><span class='op'>(</span><span class='va'>hm1</span>, <span class='va'>hm2</span>, margin <span class='op'>=</span> <span class='fl'>.02</span>, shareY <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 
 <span class='co'># We can save heatmaply as an HTML file by using:</span>
-<span class='fu'>heatmaply</span>(<span class='no'>iris</span>[,-<span class='fl'>5</span>], <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"heatmaply_iris.html"</span>)
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span>, file <span class='op'>=</span> <span class='st'>"heatmaply_iris.html"</span><span class='op'>)</span>
 <span class='co'># or a png/pdf/jpeg file using:</span>
-<span class='fu'>heatmaply</span>(<span class='no'>iris</span>[,-<span class='fl'>5</span>], <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"heatmaply_iris.png"</span>)
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span>, file <span class='op'>=</span> <span class='st'>"heatmaply_iris.png"</span><span class='op'>)</span>
 <span class='co'># or just doing it in one go:</span>
-<span class='fu'>heatmaply</span>(<span class='no'>iris</span>[,-<span class='fl'>5</span>], <span class='kw'>file</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"heatmaply_iris.html"</span>, <span class='st'>"heatmaply_iris.png"</span>) )
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span>, file <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"heatmaply_iris.html"</span>, <span class='st'>"heatmaply_iris.png"</span><span class='op'>)</span> <span class='op'>)</span>
 
 
 
 <span class='co'># If we don't want the HTML to be selfcontained, we can use the following:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>heatmaply</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>htmlwidgets</span>)
-<span class='fu'>heatmaply</span>(<span class='no'>iris</span>[,-<span class='fl'>5</span>]) <span class='kw'>%&gt;%</span>
-   <span class='fu'><a href='https://rdrr.io/pkg/htmlwidgets/man/saveWidget.html'>saveWidget</a></span>(<span class='kw'>file</span><span class='kw'>=</span><span class='st'>"heatmaply_iris.html"</span>,<span class='kw'>selfcontained</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://talgalili.github.io/heatmaply/'>heatmaply</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/ramnathv/htmlwidgets'>htmlwidgets</a></span><span class='op'>)</span>
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>,<span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+   <span class='fu'><a href='https://rdrr.io/pkg/htmlwidgets/man/saveWidget.html'>saveWidget</a></span><span class='op'>(</span>file<span class='op'>=</span><span class='st'>"heatmaply_iris.html"</span>,selfcontained <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 
 <span class='co'># Example for using RowSideColors</span>
 
-<span class='no'>x</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='kw pkg'>datasets</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/r/datasets/mtcars.html'>mtcars</a></span>)
-<span class='no'>rc</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>colorspace</span><span class='kw ns'>::</span><span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/rainbow_hcl.html'>rainbow_hcl</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>x</span>))
+<span class='va'>x</span>  <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='fu'>datasets</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/r/datasets/mtcars.html'>mtcars</a></span><span class='op'>)</span>
+<span class='va'>rc</span> <span class='op'>&lt;-</span> <span class='fu'>colorspace</span><span class='fu'>::</span><span class='fu'><a href='https://colorspace.R-Forge.R-project.org//reference/rainbow_hcl.html'>rainbow_hcl</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>gplots</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>viridis</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/gplots/man/heatmap.2.html'>heatmap.2</a></span>(<span class='no'>x</span>, <span class='kw'>trace</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/viridis/man/reexports.html'>viridis</a></span>(<span class='fl'>100</span>),
-          <span class='kw'>RowSideColors</span><span class='kw'>=</span><span class='no'>rc</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/talgalili/gplots'>gplots</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/sjmgarnier/viridis'>viridis</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/gplots/man/heatmap.2.html'>heatmap.2</a></span><span class='op'>(</span><span class='va'>x</span>, trace <span class='op'>=</span> <span class='st'>"none"</span>, col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/viridisLite/man/viridis.html'>viridis</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span>,
+          RowSideColors<span class='op'>=</span><span class='va'>rc</span><span class='op'>)</span>
 
-<span class='fu'>heatmaply</span>(<span class='no'>x</span>, <span class='kw'>seriate</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
-          <span class='kw'>RowSideColors</span><span class='kw'>=</span><span class='no'>rc</span>)
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>x</span>, seriate <span class='op'>=</span> <span class='st'>"mean"</span>,
+          RowSideColors<span class='op'>=</span><span class='va'>rc</span><span class='op'>)</span>
 
 
-<span class='fu'>heatmaply</span>(<span class='no'>x</span>[,-<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>8</span>,<span class='fl'>9</span>)], <span class='kw'>seriate</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
-          <span class='kw'>col_side_colors</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0</span>,<span class='fl'>5</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>)),
-          <span class='kw'>row_side_colors</span> <span class='kw'>=</span> <span class='no'>x</span>[,<span class='fl'>8</span>:<span class='fl'>9</span>])
-<span class='fu'>heatmaply</span>(<span class='no'>x</span>[,-<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>8</span>,<span class='fl'>9</span>)], <span class='kw'>seriate</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
-          <span class='kw'>col_side_colors</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>a</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0</span>,<span class='fl'>5</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>,<span class='fl'>4</span>))),
-          <span class='kw'>row_side_colors</span> <span class='kw'>=</span> <span class='no'>x</span>[,<span class='fl'>8</span>:<span class='fl'>9</span>])
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>x</span><span class='op'>[</span>,<span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>8</span>,<span class='fl'>9</span><span class='op'>)</span><span class='op'>]</span>, seriate <span class='op'>=</span> <span class='st'>"mean"</span>,
+          col_side_colors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>5</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>,
+          row_side_colors <span class='op'>=</span> <span class='va'>x</span><span class='op'>[</span>,<span class='fl'>8</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>]</span><span class='op'>)</span>
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>x</span><span class='op'>[</span>,<span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>8</span>,<span class='fl'>9</span><span class='op'>)</span><span class='op'>]</span>, seriate <span class='op'>=</span> <span class='st'>"mean"</span>,
+          col_side_colors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>a<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>5</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
+          row_side_colors <span class='op'>=</span> <span class='va'>x</span><span class='op'>[</span>,<span class='fl'>8</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>]</span><span class='op'>)</span>
 
 
 <span class='co'>## Example of using Rowv And Colv for custumized dendrograms.</span>
 
 
-<span class='no'>x</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='kw pkg'>datasets</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/r/datasets/mtcars.html'>mtcars</a></span>)
+<span class='va'>x</span>  <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='fu'>datasets</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/r/datasets/mtcars.html'>mtcars</a></span><span class='op'>)</span>
 
 <span class='co'># now let's spice up the dendrograms a bit:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dendextend</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://talgalili.github.io/dendextend/'>dendextend</a></span><span class='op'>)</span>
 
-<span class='no'>row_dend</span>  <span class='kw'>&lt;-</span> <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='no'>dist</span> <span class='kw'>%&gt;%</span> <span class='no'>hclust</span> <span class='kw'>%&gt;%</span> <span class='no'>as.dendrogram</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/dendextend/man/set.html'>set</a></span>(<span class='st'>"branches_k_color"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>3</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/pkg/dendextend/man/set.html'>set</a></span>(<span class='st'>"branches_lwd"</span>, <span class='fl'>4</span>) <span class='kw'>%&gt;%</span>
-  <span class='no'>ladderize</span>
+<span class='va'>row_dend</span>  <span class='op'>&lt;-</span> <span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='va'>dist</span> <span class='op'>%&gt;%</span> <span class='va'>hclust</span> <span class='op'>%&gt;%</span> <span class='va'>as.dendrogram</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='http://talgalili.github.io/dendextend/reference/set.html'>set</a></span><span class='op'>(</span><span class='st'>"branches_k_color"</span>, k <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='http://talgalili.github.io/dendextend/reference/set.html'>set</a></span><span class='op'>(</span><span class='st'>"branches_lwd"</span>, <span class='fl'>4</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='va'>ladderize</span>
 <span class='co'>#    rotate_DendSer(ser_weight = dist(x))</span>
-<span class='no'>col_dend</span>  <span class='kw'>&lt;-</span> <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='no'>t</span> <span class='kw'>%&gt;%</span> <span class='no'>dist</span> <span class='kw'>%&gt;%</span> <span class='no'>hclust</span> <span class='kw'>%&gt;%</span> <span class='no'>as.dendrogram</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/dendextend/man/set.html'>set</a></span>(<span class='st'>"branches_k_color"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>2</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/pkg/dendextend/man/set.html'>set</a></span>(<span class='st'>"branches_lwd"</span>, <span class='fl'>4</span>) <span class='kw'>%&gt;%</span>
-  <span class='no'>ladderize</span>
+<span class='va'>col_dend</span>  <span class='op'>&lt;-</span> <span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='va'>t</span> <span class='op'>%&gt;%</span> <span class='va'>dist</span> <span class='op'>%&gt;%</span> <span class='va'>hclust</span> <span class='op'>%&gt;%</span> <span class='va'>as.dendrogram</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='http://talgalili.github.io/dendextend/reference/set.html'>set</a></span><span class='op'>(</span><span class='st'>"branches_k_color"</span>, k <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='http://talgalili.github.io/dendextend/reference/set.html'>set</a></span><span class='op'>(</span><span class='st'>"branches_lwd"</span>, <span class='fl'>4</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='va'>ladderize</span>
 <span class='co'>#    rotate_DendSer(ser_weight = dist(t(x)))</span>
 
-<span class='fu'>heatmaply</span>(<span class='no'>x</span>, <span class='kw'>Rowv</span> <span class='kw'>=</span> <span class='no'>row_dend</span>, <span class='kw'>Colv</span> <span class='kw'>=</span> <span class='no'>col_dend</span>)
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>x</span>, Rowv <span class='op'>=</span> <span class='va'>row_dend</span>, Colv <span class='op'>=</span> <span class='va'>col_dend</span><span class='op'>)</span>
 
 
-<span class='fu'>heatmaply</span>(<span class='fu'><a href='is.na10.html'>is.na10</a></span>(<span class='no'>airquality</span>))
-<span class='fu'>heatmaply</span>(<span class='fu'><a href='is.na10.html'>is.na10</a></span>(<span class='no'>airquality</span>), <span class='kw'>grid_gap</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='fu'><a href='is.na10.html'>is.na10</a></span><span class='op'>(</span><span class='va'>airquality</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='fu'><a href='is.na10.html'>is.na10</a></span><span class='op'>(</span><span class='va'>airquality</span><span class='op'>)</span>, grid_gap <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 
 <span class='co'># grid_gap can handle quite large data matrix</span>
-<span class='fu'>heatmaply</span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1</span>:<span class='fl'>10000</span>,<span class='fl'>100</span>,<span class='fl'>100</span>), <span class='kw'>k_row</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>k_col</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>grid_gap</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10000</span>,<span class='fl'>100</span>,<span class='fl'>100</span><span class='op'>)</span>, k_row <span class='op'>=</span> <span class='fl'>3</span>, k_col <span class='op'>=</span> <span class='fl'>3</span>, grid_gap <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 
 <span class='co'># Examples of playing with font size:</span>
-<span class='fu'>heatmaply</span>(<span class='no'>mtcars</span>, <span class='kw'>fontsize_col</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>fontsize_row</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>100</span>,<span class='fl'>90</span>))
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>mtcars</span>, fontsize_col <span class='op'>=</span> <span class='fl'>20</span>, fontsize_row <span class='op'>=</span> <span class='fl'>5</span>, margin <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>,<span class='fl'>90</span><span class='op'>)</span><span class='op'>)</span>
 
 
 
 <span class='co'># Example for using subplot_width/subplot_height</span>
 
-<span class='fu'>heatmaply</span>(<span class='fu'><a href='percentize.html'>percentize</a></span>(<span class='no'>mtcars</span>),
-     <span class='kw'>subplot_widths</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.6</span>, <span class='fl'>0.4</span>),
-     <span class='kw'>subplot_heights</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.05</span>, <span class='fl'>0.95</span>))
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='fu'><a href='percentize.html'>percentize</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>,
+     subplot_widths<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.6</span>, <span class='fl'>0.4</span><span class='op'>)</span>,
+     subplot_heights<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.05</span>, <span class='fl'>0.95</span><span class='op'>)</span><span class='op'>)</span>
 
 
 
 <span class='co'># Example of removing labels and thus making the plot faster</span>
-<span class='fu'>heatmaply</span>(<span class='no'>iris</span>, <span class='kw'>showticklabels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>T</span>,<span class='no'>F</span>), <span class='kw'>margins</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>,<span class='fl'>10</span>))
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>iris</span>, showticklabels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>T</span>,<span class='cn'>F</span><span class='op'>)</span>, margins <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>80</span>,<span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># this is what allows for a much larger matrix to be printed:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>2017</span>-<span class='fl'>05</span>-<span class='fl'>18</span>)
-<span class='no'>large_x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>19</span>), <span class='fl'>1000</span>,<span class='fl'>100</span>)
-<span class='fu'>heatmaply</span>(<span class='no'>large_x</span>, <span class='kw'>dendrogram</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>showticklabels</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>margins</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>2017</span><span class='op'>-</span><span class='fl'>05</span><span class='op'>-</span><span class='fl'>18</span><span class='op'>)</span>
+<span class='va'>large_x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>19</span><span class='op'>)</span>, <span class='fl'>1000</span>,<span class='fl'>100</span><span class='op'>)</span>
+<span class='fu'>heatmaply</span><span class='op'>(</span><span class='va'>large_x</span>, dendrogram <span class='op'>=</span> <span class='cn'>F</span>, showticklabels <span class='op'>=</span> <span class='cn'>F</span>, margins <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 
 
-}
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>heatmaply_na</span>(<span class='no'>airquality</span>)
-}
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>heatmaply_cor</span>(<span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span>(<span class='no'>mtcars</span>))
-}</div></pre>
+<span class='op'>}</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>heatmaply_na</span><span class='op'>(</span><span class='va'>airquality</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>heatmaply_cor</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -919,7 +920,7 @@ Only used if plot_method = "plotly".</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -1,3 +1,190 @@
+* 2021-10-07(Alan O'Callaghan) Bump and document version |86cb219| 
+|  DESCRIPTION      |  6 +++---
+|  NEWS.md          |  8 ++++++++
+|  man/ggheatmap.Rd | 11 ++++++++++-
+|  3 files changed, 21 insertions(+), 4 deletions(-)
+
+*   2021-10-07(Alan O'Callaghan) Merge branch 'jaehyunjoo-master' |274ae60
+|\  
+| * 2021-10-07(Jaehyun Joo) Better widths default when row_dend_left = TRUE. |5e98482| | 
+| |  R/ggheatmap.R | 6 +++++-
+| |  1 file changed, 5 insertions(+), 1 deletion(-)
+
+| * 2021-10-07(Jaehyun Joo) Add hide_colorbar option to the ggheatmap function. |686c20b
+|/  |   
+|    R/ggheatmap.R | 15 ++++++++++++---
+|    1 file changed, 12 insertions(+), 3 deletions(-)
+
+* 2021-08-04(Alan O'Callaghan) Change order of hovertext when plot_method=plotly |4a127cb| 
+|  DESCRIPTION |  4 ++--
+|  NEWS        |  5 +++++
+|  R/plots.R   | 19 ++++++++++++-------
+|  3 files changed, 19 insertions(+), 9 deletions(-)
+
+*   2021-08-04(Alan O'Callaghan) Merge branch 'master' of github.com:talgalili/heatmaply |28ef576
+|\  
+| * 2021-07-02(Tal Galili) merging recent changes into 1.2.2 |8b0b38c| | 
+| |  DESCRIPTION | 2 +-
+| |  NEWS        | 5 ++---
+| |  2 files changed, 3 insertions(+), 4 deletions(-)
+
+| * 2021-07-01(Alan O'Callaghan) Resolve issue with point size matrix in heatmaply when plot_method=plotly |2eb5d9e| | 
+| |  DESCRIPTION | 4 ++--
+| |  NEWS        | 6 ++++++
+| |  R/plots.R   | 9 +++++----
+| |  3 files changed, 13 insertions(+), 6 deletions(-)
+
+| * 2021-05-23(Tal Galili) update NEWS with new GA |b647afc| | 
+| |  NEWS | 2 +-
+| |  1 file changed, 1 insertion(+), 1 deletion(-)
+
+| *   2021-05-23(Tal Galili) Merge branch 'master' of github.com:talgalili/heatmaply |2327fd9
+| |\  
+| | * 2021-05-17(Alan O'Callaghan) Add GHA (#261) |2a75c62| | | 
+| | |  .github/workflows/R-CMD-check.yaml | 115 +++++++++++++++++++++++++++++++
+| | |  1 file changed, 115 insertions(+)
+
+| * | 2021-05-23(Tal Galili) update startup message to include stackoverflow. |42286e0
+| |/  | |   
+| |    DESCRIPTION | 4 ++--
+| |    NEWS        | 6 ++++++
+| |    R/zzz.R     | 2 +-
+| |    3 files changed, 9 insertions(+), 3 deletions(-)
+
+| * 2021-02-02(Tal Galili) heatmaply wasn't printing properly in rmarkdown. Reverted back the new print method, and now it's working fine (but we get back the warning message from issue #226: https://github.com/talgalili/heatmaply/issues/226  ) |1aea560| | 
+| |  DESCRIPTION             |  4 ++--
+| |  NAMESPACE               |  1 -
+| |  NEWS                    |  7 +++++++
+| |  R/heatmaply.R           | 13 -------------
+| |  vignettes/heatmaply.Rmd |  5 ++++-
+| |  5 files changed, 13 insertions(+), 17 deletions(-)
+
+| * 2021-01-29(Tal Galili) fix * checking S3 generic/method consistency ... WARNING |c550716| | 
+| |  R/heatmaply.R | 2 +-
+| |  1 file changed, 1 insertion(+), 1 deletion(-)
+
+| * 2021-01-29(Tal Galili) minr update to pkgdown |43bda9b| | 
+| |  docs/articles/heatmaply.html | 56 ++++++++++++++++++++--------------------
+| |  docs/index.html              |  2 +-
+| |  docs/pkgdown.yml             |  2 +-
+| |  3 files changed, 30 insertions(+), 30 deletions(-)
+
+| * 2021-01-29(Tal Galili) Fix 'Unexported object imported by a ':::' call: 'htmlwidgets:::print.htmlwidget'' |ffaf9cc| | 
+| |  R/heatmaply.R | 2 +-
+| |  README.md     | 2 +-
+| |  2 files changed, 2 insertions(+), 2 deletions(-)
+
+| * 2021-01-29(Tal Galili) update pkgdown |0b24e70| | 
+| |  docs/404.html                              |   2 +-
+| |  docs/CONDUCT.html                          |   2 +-
+| |  docs/articles/heatmaply.html               | 186 +++++++++++--------------
+| |  docs/articles/index.html                   |   2 +-
+| |  docs/authors.html                          |   2 +-
+| |  docs/index.html                            |  52 ++++---
+| |  docs/news/index.html                       | 119 ++++++++--------
+| |  docs/pkgdown.yml                           |   4 +-
+| |  docs/reference/RColorBrewer_colors.html    |   2 +-
+| |  docs/reference/ggheatmap.html              |   2 +-
+| |  docs/reference/ggplot_side_color_plot.html |   2 +-
+| |  docs/reference/heatmaply.html              |  30 ++--
+| |  docs/reference/heatmapr.html               |   4 +-
+| |  docs/reference/index.html                  |   2 +-
+| |  docs/reference/is.heatmapr.html            |   2 +-
+| |  docs/reference/is.na10.html                |   2 +-
+| |  docs/reference/is.plotly.html              |   2 +-
+| |  docs/reference/normalize.html              |   2 +-
+| |  docs/reference/percentize.html             |   2 +-
+| |  19 files changed, 211 insertions(+), 210 deletions(-)
+
+| * 2021-01-29(Tal Galili) add ref to https://github.com/talgalili/heatmaply/issues/226 |407260c| | 
+| |  R/heatmaply.R | 2 ++
+| |  1 file changed, 2 insertions(+)
+
+| * 2021-01-29(Tal Galili) fix issue #226 by creting print.heatmaply function to enable us to supresswarning. This is a hack, and may be referted in the future. |66514f0| | 
+| |  DESCRIPTION      |  2 +-
+| |  NAMESPACE        |  1 +
+| |  NEWS             |  3 +-
+| |  R/heatmaply.R    | 98 +++++++++++++++++++++++++++++-----------------------
+| |  man/heatmaply.Rd | 28 +++++++--------
+| |  5 files changed, 72 insertions(+), 60 deletions(-)
+
+| * 2021-01-29(Tal Galili) vignette: eval=F for some examples (so to reduce file size) |adb4d4c| | 
+| |  NEWS                    |  2 +-
+| |  vignettes/heatmaply.Rmd | 31 ++++++++++++++++++-------------
+| |  2 files changed, 19 insertions(+), 14 deletions(-)
+
+| * 2021-01-29(Tal Galili) - update date for version (1.1.2) - remove d3heatmap links from Rd files |9af5eb4| | 
+| |  DESCRIPTION     | 6 +++---
+| |  NEWS            | 3 ++-
+| |  R/heatmapr.R    | 2 +-
+| |  man/heatmapr.Rd | 2 +-
+| |  4 files changed, 7 insertions(+), 6 deletions(-)
+
+* | 2021-01-26(Alan O'Callaghan) Add GHA |9898ebc
+|/  |   
+|    .github/workflows/R-CMD-check.yaml | 115 +++++++++++++++++++++++++++++++++
+|    1 file changed, 115 insertions(+)
+
+* 2020-10-09(Tal Galili) Update NEWS/version to reflect two small fixes. |77e8f9f| 
+|  DESCRIPTION |  4 ++--
+|  NEWS        | 11 +++++++++++
+|  2 files changed, 13 insertions(+), 2 deletions(-)
+
+*   2020-10-09(Tal Galili) Merge pull request #254 from manor/patch-1 |d4bf770
+|\  
+| * 2020-10-06(Manor Askenazi) Fix incorrect use of distfun_row and hclustfun_row |6ff305c| | 
+| |  R/heatmapr.R | 2 +-
+| |  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* |   2020-10-09(Tal Galili) Merge pull request #252 from evanbiederstedt/feature/d3heatmap_replace |b5fc000
+|\ \  
+| |/  
+|/|   
+| * 2020-10-01(evanbiederstedt) README edits |384888a
+|/  |   
+|    README.md | 11 +++++++++++
+|    1 file changed, 11 insertions(+)
+
+* 2020-09-12(Tal Galili) Fix http to be https - so to keep the homepage secure. |3f9bcf8| 
+|  README.md       | 10 +++++-----
+|  docs/index.html |  6 +++---
+|  2 files changed, 8 insertions(+), 8 deletions(-)
+
+* 2020-08-24(Tal Galili) bump date |a19b721| 
+|  DESCRIPTION | 2 +-
+|  NEWS        | 2 +-
+|  2 files changed, 2 insertions(+), 2 deletions(-)
+
+* 2020-08-20(Tal Galili) Fix "Found the following (possibly) invalid URLs:" |3845262| 
+|  ChangeLog                                         |  93 ++++++-
+|  DESCRIPTION                                       |   2 +-
+|  NEWS                                              |   5 +-
+|  NEWS.md                                           |   5 +-
+|  R/zzz.R                                           |   2 +-
+|  docs/404.html                                     |   9 +-
+|  docs/articles/heatmaply.html                      | 226 +++++++++--------
+|  .../figure-html/unnamed-chunk-21-1.png            | Bin 50131 -> 34737 bytes
+|  .../figure-html/unnamed-chunk-24-1.png            | Bin 44299 -> 28142 bytes
+|  .../figure-html/unnamed-chunk-29-1.png            | Bin 86294 -> 60607 bytes
+|  docs/articles/index.html                          |   9 +-
+|  docs/index.html                                   |   2 +-
+|  docs/news/index.html                              | 227 ++++++++++++------
+|  docs/pkgdown.yml                                  |   6 +-
+|  docs/reference/RColorBrewer_colors.html           |  50 ++--
+|  docs/reference/ggheatmap-1.png                    | Bin 158702 -> 126400 bytes
+|  docs/reference/ggheatmap.html                     |  16 +-
+|  docs/reference/ggplot_side_color_plot.html        |  17 +-
+|  docs/reference/heatmaply.html                     | 253 +++++++-------------
+|  docs/reference/heatmapr.html                      |  30 +--
+|  docs/reference/index.html                         |   9 +-
+|  docs/reference/is.heatmapr.html                   |  17 +-
+|  docs/reference/is.na10.html                       |  38 ++-
+|  docs/reference/is.plotly.html                     |  17 +-
+|  docs/reference/normalize.html                     |  46 ++--
+|  docs/reference/percentize.html                    |  43 ++--
+|  vignettes/heatmaply.Rmd                           |   4 +-
+|  27 files changed, 582 insertions(+), 544 deletions(-)
+
 * 2020-08-19(Tal Galili) Remove "\link[d3heatmap]{d3heatmap}" from .Rd since d3heatmap was removed from CRAN |50540e1| 
 |  DESCRIPTION     |  2 +-
 |  NEWS            |  1 +

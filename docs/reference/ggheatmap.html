@@ -75,7 +75,7 @@ orca or heatmaply(mtcars, file = &quot;foo.png&quot;)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heatmaply</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@ orca or heatmaply(mtcars, file = &quot;foo.png&quot;)." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -100,7 +100,7 @@ orca or heatmaply(mtcars, file = &quot;foo.png&quot;)." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/talgalili/heatmaply/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -129,7 +129,13 @@ set of features as , and exporting the heatmaply object with, for example,
 <a href='https://rdrr.io/pkg/plotly/man/orca.html'>orca</a> or <code><a href='heatmaply.html'>heatmaply(mtcars, file = "foo.png")</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ggheatmap</span>(<span class='no'>...</span>, <span class='kw'>widths</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>heights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>row_dend_left</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>ggheatmap</span><span class='op'>(</span>
+  <span class='va'>...</span>,
+  widths <span class='op'>=</span> <span class='cn'>NULL</span>,
+  heights <span class='op'>=</span> <span class='cn'>NULL</span>,
+  row_dend_left <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  hide_colorbar <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -147,11 +153,17 @@ set of features as , and exporting the heatmaply object with, for example,
       <td><p>Logical argument controlling whether the row 
 dendrogram is placed on the left of the plot.</p></td>
     </tr>
+    <tr>
+      <th>hide_colobar</th>
+      <td><p>Logical argument controlling whether the color bar (i.e.:
+the legend) is hidden.</p></td>
+    </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>ggheatmap</span>(<span class='no'>mtcars</span>)</div><div class='img'><img src='ggheatmap-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>ggheatmap</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>
+</div><div class='img'><img src='ggheatmap-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -167,7 +179,7 @@ dendrogram is placed on the left of the plot.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

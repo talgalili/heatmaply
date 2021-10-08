@@ -1,13 +1,41 @@
-heatmaply 1.2.4 (2021-10-07)
+heatmaply 1.3.0 (2021-10-08)
 ===============
 ## NEW FEATURE
-
-ggheatmap now accepts `hide_colorbar` argument. Also, when `row_dend_left`
+- ggheatmap now accepts `hide_colorbar` argument. Also, when `row_dend_left`
 is set to `TRUE`, the subplot widths are correctly reversed. (Credit jaehyunjoo,
 PR #273)
 
+## BUGFIX
+- Fix bug with handling of point size matrix in plotly
+  See github issue #266
 
-heatmaply 1.1.1 (2020-08-20)
+## OTHER NOTES
+- Changed order of hovertext when plot_method="plotly" to match ggplot equivalent
+- update startup message to include stackoverflow.
+- add github actions (GHA)
+
+heatmaply 1.2.1 (2021-02-02)
+===============
+## BUGFIX
+- heatmaply wasn't printing properly in rmarkdown. Reverted back the new print method, and now it's working fine (but we get back the warning message from issue #226: https://github.com/talgalili/heatmaply/issues/226  )
+- added warning = FALSE to vignette, to make it cleaner.
+
+
+heatmaply 1.2.0 (2021-01-29)
+===============
+## BUGFIX
+- Fix incorrect use of distfun_row and hclustfun_row #254
+- remove d3heatmap links from Rd
+- fix issue #226 by creting print.heatmaply function to enable us to supresswarning. This is a hack, and if https://github.com/talgalili/heatmaply/issues/226 will get resolved - then this should probably be reverted.
+
+### OTHER NOTES
+- Update README to include information how to port d3heatmap functions
+- vignette: eval=F for some examples (so to reduce file size)
+
+
+
+
+heatmaply 1.1.1 (2020-08-24)
 ===============
 ## BUGFIX
 - Cellnote did not work when using point size mapping.

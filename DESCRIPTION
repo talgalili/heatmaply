@@ -1,12 +1,13 @@
 Package: heatmaply
 Type: Package
 Title: Interactive Cluster Heat Maps Using 'plotly' and 'ggplot2'
-Version: 1.2.4
-Date: 2021-10-07
+Version: 1.3.0
+Date: 2021-10-08
 Authors@R: c(
     person("Tal", "Galili", role = c("aut", "cre", "cph"), email = "tal.galili@gmail.com", comment = "https://www.r-statistics.com"),
     person("Alan", "O'Callaghan", comment = "https://github.com/Alanocallaghan",role = "aut"),
     person("Jonathan", "Sidi", email = "yonis@metrumrg.com", comment = "https://github.com/yonicd",role = "ctb"),
+    person("Jaehyun", "Joo", comment = "https://github.com/jaehyunjoo",role = "ctb"),
     person("Yoav", "Benjamini", email = "ybenja@tau.ac.il",role = "ths"))
 Description: Create interactive cluster 'heatmaps' that can be saved as a stand-
     alone HTML file, embedded in 'R Markdown' documents or in a 'Shiny' app, and
