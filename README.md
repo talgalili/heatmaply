@@ -105,9 +105,9 @@ There are also more complex biological examples of using heatmaply in the R pack
   - [Using heatmaply to reproduce Nature (2015) Kotsyfakis et al.](https://cdn.jsdelivr.net/gh/talgalili/heatmaplyExamples@master/inst/doc/reproducing_Nature_2015_Kotsyfakis.html)
   - [Using heatmaply to reproduce Nature (2015) Alfano et al.](https://cdn.jsdelivr.net/gh/talgalili/heatmaplyExamples@master/inst/doc/reproducing_Nature_2015_Alfano.html)
 * Using heatmaply with gene expression data  
-  - [Visualization of raw and voom-transformed data (all genes)](https://cdn.jsdelivr.net/gh/talgalili/heatmaplyExamples@master/inst/doc/biological_data.html)
-  - [Visualization of raw data (median-centered data, PAM50 genes only)](https://cdn.jsdelivr.net/gh/talgalili/heatmaplyExamples@master/inst/doc/biological_data_2.html)
-  - [Visualization of voom-transformed data (median-centered data, PAM50 genes only)](https://cdn.jsdelivr.net/gh/talgalili/heatmaplyExamples@master/inst/doc/biological_data_3.html)
+  - Visualization of raw and voom-transformed data (all genes) (url offline, you could combile this on your own)
+  - Visualization of raw data (median-centered data, PAM50 genes only) (url offline, you could combile this on your own)
+  - Visualization of voom-transformed data (median-centered data, PAM50 genes only) (url offline, you could combile this on your own)
   - [Using heatmaply with non-centred RNAseq heatmaps (PAM50 genes) ](https://cdn.jsdelivr.net/gh/talgalili/heatmaplyExamples@master/inst/doc/non_centred_heatmaps.html)
 * General examples
   - [Using heatmaply for visualizing glmnet coefficient path](https://cdn.jsdelivr.net/gh/talgalili/heatmaplyExamples@master/inst/doc/glmnet.html)
