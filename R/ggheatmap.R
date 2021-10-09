@@ -1,15 +1,15 @@
 #' ggplot heatmap equivalent to heatmaply
-#' 
-#' This function produces a ggplot analogue of heatmaply figures 
+#'
+#' This function produces a ggplot analogue of heatmaply figures
 #' using \link[egg]{ggarrange}. This function may not always support the same
 #' set of features as , and exporting the heatmaply object with, for example,
 #' \link[plotly]{orca} or \code{heatmaply(mtcars, file = "foo.png")}.
-#' 
+#'
 #' @param ... Passed to \link{heatmaply}
 #' @param widths,heights Relative widths and heights of plots.
-#' @param row_dend_left Logical argument controlling whether the row 
+#' @param row_dend_left Logical argument controlling whether the row
 #'  dendrogram is placed on the left of the plot.
-#' @param hide_colobar Logical argument controlling whether the color bar (i.e.:
+#' @param hide_colorbar Logical argument controlling whether the color bar (i.e.:
 #'   the legend) is hidden.
 #' @examples
 #' ggheatmap(mtcars)
@@ -17,14 +17,14 @@
 ggheatmap <- function(..., widths = NULL, heights = NULL,
                       row_dend_left = FALSE, hide_colorbar = FALSE) {
   plots <- heatmaply(
-    ..., 
-    row_dend_left = row_dend_left, 
+    ...,
+    row_dend_left = row_dend_left,
     hide_colorbar = hide_colorbar,
     return_ppxpy = TRUE,
     plot_method = "ggplot"
   )
   arrange_plots(
-    plots, 
+    plots,
     widths = widths,
     heights = heights,
     row_dend_left = row_dend_left,
@@ -35,9 +35,9 @@ ggheatmap <- function(..., widths = NULL, heights = NULL,
 
 ## TODO: duplication with heatmap_subplot_from_ggplotly
 arrange_plots <- function(
-    plots, 
-    widths = NULL, 
-    heights = NULL, 
+    plots,
+    widths = NULL,
+    heights = NULL,
     row_dend_left = FALSE,
     hide_colorbar = FALSE) {
 

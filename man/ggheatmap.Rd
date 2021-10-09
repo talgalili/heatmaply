@@ -17,14 +17,14 @@ ggheatmap(
 
 \item{widths, heights}{Relative widths and heights of plots.}
 
-\item{row_dend_left}{Logical argument controlling whether the row 
+\item{row_dend_left}{Logical argument controlling whether the row
 dendrogram is placed on the left of the plot.}
 
-\item{hide_colobar}{Logical argument controlling whether the color bar (i.e.:
+\item{hide_colorbar}{Logical argument controlling whether the color bar (i.e.:
 the legend) is hidden.}
 }
 \description{
-This function produces a ggplot analogue of heatmaply figures 
+This function produces a ggplot analogue of heatmaply figures
 using \link[egg]{ggarrange}. This function may not always support the same
 set of features as , and exporting the heatmaply object with, for example,
 \link[plotly]{orca} or \code{heatmaply(mtcars, file = "foo.png")}.
