@@ -1,6 +1,12 @@
 
 [![Build Status](https://travis-ci.org/talgalili/heatmaply.png?branch=master)](https://travis-ci.org/talgalili/heatmaply)
-[![codecov.io](https://codecov.io/github/talgalili/heatmaply/coverage.svg?branch=master)](https://codecov.io/github/talgalili/heatmaply?branch=master)
+[![codecov.io](https://codecov.io/gh/talgalili/heatmaply/branch/main/graph/badge.svg)](https://codecov.io/gh/talgalili/heatmaply?branch=main)
+
+<a href="https://github.com/talgalili/heatmaply/actions"
+class="pkgdown-devel"><img
+src="https://github.com/talgalili/heatmaply/workflows/R-CMD-check/badge.svg"
+alt="R-CMD-check" /></a> 
+
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/heatmaply)](https://cran.r-project.org/package=heatmaply)
 ![](https://cranlogs.r-pkg.org/badges/heatmaply?color=yellow)
 ![](https://cranlogs.r-pkg.org/badges/grand-total/heatmaply?color=yellowgreen)
