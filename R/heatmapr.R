@@ -94,7 +94,7 @@ fix_not_all_unique <- function(x, ...) {
 #'
 #' @param symm logical indicating if x should be treated symmetrically; can only be true when x is a square matrix.
 #' @param revC logical indicating if the column order should be reversed for plotting.
-#' Default (when missing) - is FALSE, unless symm is TRUE.
+#' Default (when NULL) - is FALSE, unless symm is TRUE.
 #' This is useful for cor matrix.
 #'
 #' @param scale character indicating if the values should be centered and scaled in either the row direction or the column direction, or none. The default is "none".
@@ -105,9 +105,9 @@ fix_not_all_unique <- function(x, ...) {
 #' that has the human-readable version of each value,
 #' for displaying on top of the heatmap cells.
 #'
-#' @param cexRow positive numbers. If not missing, it will override \code{xaxis_font_size}
+#' @param cexRow positive numbers. If not NULL, it will override \code{xaxis_font_size}
 #' and will give it a value cexRow*14
-#' @param cexCol positive numbers. If not missing, it will override \code{yaxis_font_size}
+#' @param cexCol positive numbers. If not NULL, it will override \code{yaxis_font_size}
 #' and will give it a value cexCol*14
 #'
 #' @param labRow character vectors with row labels to use (from top to bottom); default to rownames(x).
@@ -146,17 +146,17 @@ fix_not_all_unique <- function(x, ...) {
 heatmapr <- function(x,
 
                      ## dendrogram control
-                     Rowv,
-                     Colv,
+                     Rowv = NULL,
+                     Colv = NULL,
                      distfun = dist,
                      hclustfun = hclust,
                      dist_method = NULL,
                      hclust_method = NULL,
 
-                     distfun_row,
-                     hclustfun_row,
-                     distfun_col,
-                     hclustfun_col,
+                     distfun_row = distfun,
+                     hclustfun_row = hclustfun,
+                     distfun_col = distfun,
+                     hclustfun_col = hclustfun,
 
                      dendrogram = c("both", "row", "column", "none"),
                      show_dendrogram = c(TRUE, TRUE),
@@ -166,7 +166,7 @@ heatmapr <- function(x,
                      k_col = 1,
 
                      symm = FALSE,
-                     revC,
+                     revC = symm,
 
                      ## data scaling
                      scale = c("none", "row", "column"),
@@ -175,8 +175,8 @@ heatmapr <- function(x,
                      labRow = rownames(x),
                      labCol = colnames(x),
 
-                     cexRow,
-                     cexCol,
+                     cexRow = NULL,
+                     cexCol = NULL,
 
                      ## value formatting
                      digits = 3L,
@@ -193,8 +193,8 @@ heatmapr <- function(x,
                      brush_color = "#0000FF",
                      show_grid = TRUE,
                      anim_duration = 500,
-                     row_side_colors,
-                     col_side_colors,
+                     row_side_colors = NULL,
+                     col_side_colors = NULL,
                      seriate = c("OLO", "mean", "none", "GW"),
                      point_size_mat = NULL,
                      custom_hovertext = NULL,
@@ -227,10 +227,10 @@ heatmapr <- function(x,
     show_dendrogram <- rep(show_dendrogram, 2)
   }
 
-  if (missing(distfun_row)) distfun_row <- distfun
-  if (missing(hclustfun_row)) hclustfun_row <- hclustfun
-  if (missing(distfun_col)) distfun_col <- distfun
-  if (missing(hclustfun_col)) hclustfun_col <- hclustfun
+  if (is.null(distfun_row)) distfun_row <- distfun
+  if (is.null(hclustfun_row)) hclustfun_row <- hclustfun
+  if (is.null(distfun_col)) distfun_col <- distfun
+  if (is.null(hclustfun_col)) hclustfun_col <- hclustfun
 
   distfun_row <- match.fun(distfun_row)
   distfun_col <- match.fun(distfun_col)
@@ -262,14 +262,14 @@ heatmapr <- function(x,
   rownames(x) <- fix_not_all_unique(rownames(x))
   colnames(x) <- fix_not_all_unique(colnames(x))
 
-  if (!missing(cexRow)) {
+  if (!is.null(cexRow)) {
     if (is.numeric(cexRow)) {
       xaxis_font_size <- cexRow * 14
     } else {
       warning("cexRow is not numeric. It is ignored")
     }
   }
-  if (!missing(cexCol)) {
+  if (!is.null(cexCol)) {
     if (is.numeric(cexCol)) {
       yaxis_font_size <- cexCol * 14
     } else {
@@ -295,10 +295,10 @@ heatmapr <- function(x,
   dendrogram <- match.arg(dendrogram)
 
   # Use dendrogram argument to set defaults for Rowv/Colv
-  if (missing(Rowv)) {
+  if (is.null(Rowv)) {
     Rowv <- dendrogram %in% c("both", "row")
   }
-  if (missing(Colv)) {
+  if (is.null(Colv)) {
     if (dendrogram %in% c("both", "column")) {
       Colv <- if (symm) "Rowv" else TRUE
     } else {
@@ -365,7 +365,7 @@ heatmapr <- function(x,
   # TODO:  We may wish to change the defaults a bit in the future
   ## revC
   ## =======================
-  if (missing(revC)) {
+  if (is.null(revC)) {
     if (symm) {
       revC <- TRUE
     } else if (is.dendrogram(Colv) & is.dendrogram(Rowv) & identical(Rowv, rev(Colv))) {
@@ -393,14 +393,14 @@ heatmapr <- function(x,
   if (!is.null(custom_hovertext)) {
     custom_hovertext <- custom_hovertext[rowInd, colInd, drop = FALSE]
   }
-  if (!missing(row_side_colors)) {
+  if (!is.null(row_side_colors)) {
     if (!(is.data.frame(row_side_colors) | is.matrix(row_side_colors))) {
       row_side_colors <- data.frame("row_side_colors" = row_side_colors)
     }
     assert_that(nrow(row_side_colors) == nrow(x))
     row_side_colors <- row_side_colors[rowInd, , drop = FALSE]
   }
-  if (!missing(col_side_colors)) {
+  if (!is.null(col_side_colors)) {
     if (!(is.data.frame(col_side_colors) | is.matrix(col_side_colors))) {
       col_side_colors <- data.frame(col_side_colors)
       colnames(col_side_colors) <- "col_side_colors"
@@ -515,8 +515,8 @@ heatmapr <- function(x,
     theme = theme, options = options
   )
 
-  if (!missing(row_side_colors)) heatmapr[["row_side_colors"]] <- row_side_colors
-  if (!missing(col_side_colors)) heatmapr[["col_side_colors"]] <- col_side_colors
+  if (!is.null(row_side_colors)) heatmapr[["row_side_colors"]] <- row_side_colors
+  if (!is.null(col_side_colors)) heatmapr[["col_side_colors"]] <- col_side_colors
 
   class(heatmapr) <- "heatmapr"
 

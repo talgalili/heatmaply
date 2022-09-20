@@ -484,17 +484,17 @@ heatmaply.default <- function(x,
                               cellnote_size = 12,
 
                               ## dendrogram control
-                              Rowv,
-                              Colv,
-                              distfun = dist,
-                              hclustfun = hclust,
+                              Rowv = NULL,
+                              Colv = NULL,
+                              distfun = stats::dist,
+                              hclustfun = stats::hclust,
                               dist_method = NULL,
                               hclust_method = NULL,
 
-                              distfun_row,
-                              hclustfun_row,
-                              distfun_col,
-                              hclustfun_col,
+                              distfun_row = distfun,
+                              hclustfun_row = hclustfun,
+                              distfun_col = distfun,
+                              hclustfun_col = hclustfun,
 
                               dendrogram = c("both", "row", "column", "none"),
                               show_dendrogram = c(TRUE, TRUE),
@@ -504,7 +504,7 @@ heatmaply.default <- function(x,
                               k_col = 1,
 
                               symm = FALSE,
-                              revC,
+                              revC = symm,
 
                               ## data scaling
                               scale = c("none", "row", "column"),
@@ -516,16 +516,16 @@ heatmaply.default <- function(x,
                               scale_fill_gradient_fun = NULL,
                               grid_color = NA,
                               grid_gap = 0,
-                              srtRow, srtCol,
+                              srtRow = NULL, srtCol = NULL,
                               xlab = "", ylab = "",
                               main = "",
                               titleX = TRUE, titleY = TRUE,
                               hide_colorbar = FALSE,
                               key.title = NULL,
                               return_ppxpy = FALSE,
-                              row_side_colors,
+                              row_side_colors = NULL,
                               row_side_palette = NULL,
-                              col_side_colors,
+                              col_side_colors = NULL,
                               col_side_palette = NULL,
                               ColSideColors = NULL,
                               RowSideColors = NULL,
@@ -534,15 +534,15 @@ heatmaply.default <- function(x,
                               side_color_layers = NULL,
                               dendrogram_layers = NULL,
                               branches_lwd = 0.6,
-                              file,
+                              file = NULL,
                               width = NULL,
                               height = NULL,
-                              long_data,
+                              long_data = NULL,
                               plot_method = c("ggplot", "plotly"),
-                              label_names = NULL,
+                              label_names = c("row", "column", "value"),
                               fontsize_row = 10,
                               fontsize_col = 10,
-                              cexRow, cexCol,
+                              cexRow = NULL, cexCol = NULL,
                               subplot_widths = NULL,
                               subplot_heights = NULL,
                               colorbar_len = 0.3,
@@ -563,7 +563,7 @@ heatmaply.default <- function(x,
                               col = NULL,
                               dend_hoverinfo = TRUE,
                               side_color_colorbar_len = 0.3) {
-  if (!missing(long_data)) {
+  if (!is.null(long_data)) {
     if (!missing(x)) {
       stop("x and long_data should not be used together")
     }
@@ -618,10 +618,10 @@ heatmaply.default <- function(x,
     stop("x must be either a data.frame or a matrix.")
   }
 
-  if (!missing(srtRow)) {
+  if (!is.null(srtRow)) {
     row_text_angle <- srtRow
   }
-  if (!missing(srtCol)) {
+  if (!is.null(srtCol)) {
     column_text_angle <- srtCol
   }
   if (!is.null(ColSideColors)) {
@@ -631,10 +631,10 @@ heatmaply.default <- function(x,
     row_side_colors <- RowSideColors
   }
 
-  if (!missing(cexRow)) {
+  if (!is.null(cexRow)) {
     fontsize_row <- if (is.numeric(cexRow)) cexRow * 10 else cexRow
   }
-  if (!missing(cexCol)) {
+  if (!is.null(cexCol)) {
     fontsize_col <- if (is.numeric(cexCol)) cexCol * 10 else cexCol
   }
 
@@ -655,7 +655,7 @@ heatmaply.default <- function(x,
   # If we have non-numeric columns, we should move them to row_side_colors
   # TODO: add a parameter to control removing of non-numeric columns without moving them to row_side_colors
   if (!all(ss_c_numeric)) {
-    row_side_colors <- if (missing(row_side_colors)) {
+    row_side_colors <- if (is.null(row_side_colors)) {
       data.frame(x[, !ss_c_numeric, drop = FALSE])
     } else {
       data.frame(row_side_colors, x[, !ss_c_numeric, drop = FALSE])
@@ -786,7 +786,7 @@ heatmaply.default <- function(x,
   # TODO: think more on what should be passed in "..."
 
 
-  if (!missing(file)) {
+  if (!is.null(file)) {
     hmly_to_file(hmly = hmly, file = file, width = width, height = height)
   }
 
@@ -816,7 +816,7 @@ heatmaply.heatmapr <- function(x,
                                ),
                                grid_color = NA,
                                grid_gap = 0,
-                               srtRow, srtCol,
+                               srtRow = NULL, srtCol = NULL,
                                xlab = "", ylab = "",
                                main = "",
                                titleX = TRUE, titleY = TRUE,
@@ -899,8 +899,8 @@ heatmaply.heatmapr <- function(x,
       warning("Upper limit is not >= highest value in x, max of limits is set to the max of the range (otherwise, colors will be broken!)")
     }
   }
-  if (!missing(srtRow)) row_text_angle <- srtRow
-  if (!missing(srtCol)) column_text_angle <- srtCol
+  if (!is.null(srtRow)) row_text_angle <- srtRow
+  if (!is.null(srtCol)) column_text_angle <- srtCol
 
 
 
@@ -1022,11 +1022,6 @@ heatmaply.heatmapr <- function(x,
   }
 
 
-
-
-
-
-  # TODO: Add native plotly sidecolor function.
   # TODO: Possibly use function to generate all 3 plots to prevent complex logic here
   if (is.null(row_side_colors)) {
     pr <- NULL
@@ -1128,23 +1123,34 @@ heatmaply.heatmapr <- function(x,
     if (cellnote_color == "auto") {
       cellnote_color <- predict_colors(p, plot_method = plot_method)
     }
-    df <- as.data.frame(x[["matrix"]][["cellnote"]])
-    df[["_row"]] <- seq_len(nrow(df))
-    mdf <- reshape2::melt(df, id.vars = "_row")
+    data_mdf <- melt_df(x[["matrix"]][["data"]], label_names)
+
+    cellnote_df <- as.data.frame(x[["matrix"]][["cellnote"]])
+    cellnote_df[["_row"]] <- seq_len(nrow(cellnote_df))
+    cellnote_mdf <- reshape2::melt(cellnote_df, id.vars = "_row")
+    cellnote_mdf[["__data_value"]] <- data_mdf[[label_names[[3]]]]
+
     ## TODO: Enforce same dimnames to ensure it's not scrambled?
-    # mdf$variable <- factor(mdf$variable, levels = p$x$layout$xaxis$ticktext)
-    mdf$variable <- as.numeric(as.factor(mdf$variable))
-    mdf$value <- factor(mdf$value)
+    # cellnote_mdf$variable <- factor(cellnote_mdf$variable, levels = p$x$layout$xaxis$ticktext)
+    cellnote_mdf$variable <- as.numeric(as.factor(cellnote_mdf$variable))
+    cellnote_mdf$value <- factor(cellnote_mdf$value)
+
     p <- p %>% add_trace(
-      data = mdf,
+      data = cellnote_mdf,
       x = ~ variable,
       y = ~ `_row`,
       text = ~ value,
+      customdata = ~ `__data_value`,
       inherit = FALSE,
       type = "scatter",
       mode = "text",
       textposition = cellnote_textposition,
-      hoverinfo = "none",
+      # hoverinfo = "none",
+      hovertemplate = paste0(
+        label_names[[1]], ": %{y}\n", 
+        label_names[[2]], ": %{x}\n", 
+        label_names[[3]], ": %{customdata}<extra></extra>" ## see here for extra tag https://plotly.com/python/reference/#scatter-hovertemplate
+      ),
       showlegend = FALSE,
       textfont = list(color = plotly::toRGB(cellnote_color), size = cellnote_size)
     )
