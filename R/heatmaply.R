@@ -984,10 +984,14 @@ heatmaply.heatmapr <- function(x,
   if (plot_method == "ggplot") {
     p <- ggplot_heatmap(
       data_mat,
-      row_text_angle,
-      column_text_angle,
-      scale_fill_gradient_fun,
-      grid_color,
+      cellnote = x[["matrix"]][["cellnote"]],
+      cellnote_textposition = cellnote_textposition,
+      cellnote_size = cellnote_size,
+      cellnote_color = cellnote_color,
+      row_text_angle = row_text_angle,
+      column_text_angle = column_text_angle,
+      scale_fill_gradient_fun = scale_fill_gradient_fun,
+      grid_color = grid_color,
       grid_size = grid_size,
       key.title = key.title,
       layers = heatmap_layers,
@@ -1123,7 +1127,7 @@ heatmaply.heatmapr <- function(x,
       # )
   }
 
-  if (draw_cellnote) {
+  if (draw_cellnote && plot_method == "plotly") {
     ## Predict cell color luminosity based on colorscale
     if (cellnote_color == "auto") {
       cellnote_color <- predict_colors(p, plot_method = plot_method)

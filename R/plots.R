@@ -1,45 +1,8 @@
-
-
-# heatmaply:::ggplot_heatmap(as.matrix(mtcars))
-# heatmaply:::plotly_heatmap(as.matrix(mtcars))
-# style(plotly_heatmap(as.matrix(mtcars)), xgap = 5, ygap = 5)
-
-
-
-
-#
-# library(ggplot2)
-# library(plotly)
-# # library(heatmaply)
-# ggplot_heatmap <- heatmaply:::ggplot_heatmap
-# class_to <- function(x, new_class) {
-#   class(x) <- new_class
-#   x
-# }
-# na_mat <- function(x) {
-#   x %>% is.na %>% class_to("numeric")
-# }
-#
-# p <- heatmaply:::ggplot_heatmap(na_mat(airquality),
-#                     scale_fill_gradient_fun = scale_fill_gradientn(colors= c("white","black")) ,
-#                     grid_color = "grey", grid_size = 1)
-# plot(p)
-# ggplotly(p)
-# p <- ggplot_heatmap(mtcars,
-#                     grid_color = "white")
-# p
-#
-
-
-# heatmaply:::ggplot_heatmap(as.matrix(mtcars))
-
-
 # xx is a data matrix
 ggplot_heatmap <- function(xx,
                            row_text_angle = 0,
                            column_text_angle = 45,
-                           scale_fill_gradient_fun =
-                           scale_fill_gradientn(
+                           scale_fill_gradient_fun = scale_fill_gradientn(
                              colors = viridis(
                                n = 256, alpha = 1, begin = 0,
                                end = 1, option = "viridis"
@@ -49,7 +12,7 @@ ggplot_heatmap <- function(xx,
                            grid_color = NA,
                            grid_size = 0.1,
                            key.title = NULL,
-                           layers,
+                           layers = NULL,
                            row_dend_left = FALSE,
                            label_names = NULL,
                            fontsize_row = 10,
@@ -61,6 +24,10 @@ ggplot_heatmap <- function(xx,
                            label_format_fun = function(...) format(..., digits = 4),
                            custom_hovertext = NULL,
                            showticklabels = c(TRUE, TRUE),
+                           cellnote = NULL,
+                           cellnote_color = "auto",
+                           cellnote_size = 10,
+                           cellnote_textposition = "middle center",
                            ...) {
   theme_clear_grid_heatmap <- theme(
     axis.line = element_line(color = "black"),
@@ -169,10 +136,8 @@ ggplot_heatmap <- function(xx,
     p <- p + coord_cartesian(expand = FALSE)
   }
   ## Passed in to allow users to alter (courtesy of GenVisR)
-  if (!missing(layers)) {
-    p <- p + layers
-  }
-
+  p <- p + layers
+  
   # p <- p + scale_x_discrete(limits = unique(mdf))
   # http://stats.stackexchange.com/questions/5007/how-can-i-change-the-title-of-a-legend-in-ggplot2
   p <- p + labs(fill = key.title)
@@ -187,7 +152,34 @@ ggplot_heatmap <- function(xx,
   if (row_dend_left) {
     p <- p + scale_y_discrete(position = "right") # possible as of ggplot 2.1.0 !
   }
-
+  if (!is.null(cellnote)) {
+    mdf_cellnote <- melt_df(cellnote, label_names)
+    if (cellnote_color == "auto") {
+      mdf_cellnote$cellnote_color <- predict_colors(ggplotly(p), plot_method = "ggplot")
+    }
+    pos2hjust <- function(x) {
+      hpart <- strsplit(x, " ")[[1]][[2]]
+      if (hpart == "left") 0 else if (hpart == "center") 0.5 else if(hpart == "right") 1
+    }
+    pos2vjust <- function(x) {
+      vpart <- strsplit(x, " ")[[1]][[1]]
+      if (vpart == "top") 0 else if (vpart == "middle") 0.5 else if (vpart == "bottom") 1
+    }
+    p <- p +
+      geom_text(
+        data = mdf_cellnote,
+        aes_string(
+          x = paste_aes(col),
+          y = paste_aes(row),
+          label = "value",
+          colour = "cellnote_color"
+        ),
+        size = cellnote_size,
+        hjust = pos2hjust(cellnote_textposition),
+        vjust = pos2vjust(cellnote_textposition)
+      ) +
+      scale_color_identity()
+  }
   p
 }
 
