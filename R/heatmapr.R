@@ -166,7 +166,7 @@ heatmapr <- function(x,
                      k_col = 1,
 
                      symm = FALSE,
-                     revC = symm,
+                     revC = symm || (is.dendrogram(Colv) & is.dendrogram(Rowv) & identical(Rowv, rev(Colv))),
 
                      ## data scaling
                      scale = c("none", "row", "column"),
@@ -226,11 +226,6 @@ heatmapr <- function(x,
   if (length(show_dendrogram) == 1) {
     show_dendrogram <- rep(show_dendrogram, 2)
   }
-
-  if (is.null(distfun_row)) distfun_row <- distfun
-  if (is.null(hclustfun_row)) hclustfun_row <- hclustfun
-  if (is.null(distfun_col)) distfun_col <- distfun
-  if (is.null(hclustfun_col)) hclustfun_col <- hclustfun
 
   distfun_row <- match.fun(distfun_row)
   distfun_col <- match.fun(distfun_col)
@@ -365,15 +360,6 @@ heatmapr <- function(x,
   # TODO:  We may wish to change the defaults a bit in the future
   ## revC
   ## =======================
-  if (is.null(revC)) {
-    if (symm) {
-      revC <- TRUE
-    } else if (is.dendrogram(Colv) & is.dendrogram(Rowv) & identical(Rowv, rev(Colv))) {
-      revC <- TRUE
-    } else {
-      revC <- FALSE
-    }
-  }
   if (revC) {
     Colv <- rev(Colv)
     colInd <- rev(colInd)

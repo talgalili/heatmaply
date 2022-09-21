@@ -504,7 +504,7 @@ heatmaply.default <- function(x,
                               k_col = 1,
 
                               symm = FALSE,
-                              revC = symm,
+                              revC = symm || (is.dendrogram(Colv) & is.dendrogram(Rowv) & identical(Rowv, rev(Colv))),
 
                               ## data scaling
                               scale = c("none", "row", "column"),

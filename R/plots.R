@@ -258,6 +258,9 @@ plotly_heatmap <- function(x,
   } else {
     assert_that(length(label_names) == 3)
   }
+  if (!is.null(point_size_mat)) {
+    point_size_mat <- as.matrix(point_size_mat)
+  }
 
   if (!is.null(custom_hovertext)) {
     text_mat <- custom_hovertext
@@ -266,20 +269,20 @@ plotly_heatmap <- function(x,
     text_mat[] <- lapply(
       seq_along(text_mat),
       function(i) {
-        paste0(
+        lab <- paste0(
           label_names[1], ": ", rownames(x), "<br>",
           label_names[2], ": ", colnames(x)[i], "<br>",
           label_names[3], ": ", label_format_fun(x[, i])
         )
+        if (!is.null(point_size_mat)) {
+          lab <- paste0(lab, "<br>",
+            point_size_name, ": ", label_format_fun(point_size_mat[, i])
+          )
+        }
+        lab
       }
     )
     text_mat <- as.matrix(text_mat)
-    if (!is.null(point_size_mat)) {
-      text_mat <- paste0(
-        text_mat, "<br>",
-        point_size_name, ": ", label_format_fun(point_size_mat)
-      )
-    }
   }
 
   if (is.null(point_size_mat)) {

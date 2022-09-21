@@ -24,6 +24,24 @@ test_that("non-numerics moved to row_side_colors", {
   expect_is(h, "plotly")
 })
 
+test_that("colors as fun", {
+  h <- heatmaply(mtcars, colors = RdBu)
+  expect_is(h, "plotly")
+})
+
+test_that("label format fun", {
+  for (plot_method in c("ggplot", "plotly")) {
+    h <- heatmaply(mtcars, label_format_fun = function(x) x,
+      plot_method = plot_method
+    )
+    expect_is(h, "plotly")
+    h <- heatmaply(mtcars, label_format_fun = function(x) x,
+      plot_method = plot_method, node_type = "scatter", point_size_mat = mtcars
+    )
+    expect_is(h, "plotly")
+  }
+})
+
 
 test_that("heatmaply on matrix, and cexRow/Col", {
   mtcars <- as.matrix(mtcars)
