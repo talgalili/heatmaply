@@ -1017,7 +1017,8 @@ heatmaply.heatmapr <- function(x,
       point_size_name = point_size_name,
       colorbar_len = colorbar_len,
       colorbar_thickness = colorbar_thickness,
-      custom_hovertext = custom_hovertext
+      custom_hovertext = custom_hovertext,
+      label_format_fun = label_format_fun
     )
   }
 

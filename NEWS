@@ -2,6 +2,7 @@ heatmaply 1.3.1 (2022-09-20)
 ============================
 ## BUGFIX
 - hoverinfo now works correctly when cellnote is displayed; see issue 76.
+- Add label_format_fun to plotly heatmap mode
 
 heatmaply 1.3.0 (2021-10-09)
 ===============

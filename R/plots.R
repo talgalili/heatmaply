@@ -243,7 +243,9 @@ plotly_heatmap <- function(x,
                            custom_hovertext = NULL,
                            point_size_mat = NULL,
                            point_size_name = "Point size",
-                           showticklabels = c(TRUE, TRUE)) {
+                           showticklabels = c(TRUE, TRUE)
+                           label_format_fun = function(...) format(..., digits = 4)
+                           ) {
 
   if (is.function(colors)) colors <- colors(256)
 
@@ -267,13 +269,16 @@ plotly_heatmap <- function(x,
         paste0(
           label_names[1], ": ", rownames(x), "<br>",
           label_names[2], ": ", colnames(x)[i], "<br>",
-          label_names[3], ": ", x[, i]
+          label_names[3], ": ", label_format_fun(x[, i])
         )
       }
     )
     text_mat <- as.matrix(text_mat)
     if (!is.null(point_size_mat)) {
-      point_size_name
+      text_mat <- paste0(
+        text_mat, "<br>",
+        point_size_name, ": ", label_format_fun(point_size_mat)
+      )
     }
   }
 
