@@ -243,7 +243,7 @@ plotly_heatmap <- function(x,
                            custom_hovertext = NULL,
                            point_size_mat = NULL,
                            point_size_name = "Point size",
-                           showticklabels = c(TRUE, TRUE)
+                           showticklabels = c(TRUE, TRUE),
                            label_format_fun = function(...) format(..., digits = 4)
                            ) {
 

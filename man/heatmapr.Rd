@@ -9,29 +9,29 @@ The interface was designed based on \link{heatmap}, \link[gplots]{heatmap.2}, an
 \usage{
 heatmapr(
   x,
-  Rowv,
-  Colv,
+  Rowv = NULL,
+  Colv = NULL,
   distfun = dist,
   hclustfun = hclust,
   dist_method = NULL,
   hclust_method = NULL,
-  distfun_row,
-  hclustfun_row,
-  distfun_col,
-  hclustfun_col,
+  distfun_row = distfun,
+  hclustfun_row = hclustfun,
+  distfun_col = distfun,
+  hclustfun_col = hclustfun,
   dendrogram = c("both", "row", "column", "none"),
   show_dendrogram = c(TRUE, TRUE),
   reorderfun = function(d, w) reorder(d, w),
   k_row = 1,
   k_col = 1,
   symm = FALSE,
-  revC,
+  revC = symm,
   scale = c("none", "row", "column"),
   na.rm = TRUE,
   labRow = rownames(x),
   labCol = colnames(x),
-  cexRow,
-  cexCol,
+  cexRow = NULL,
+  cexCol = NULL,
   digits = 3L,
   cellnote = NULL,
   theme = NULL,
@@ -45,8 +45,8 @@ heatmapr(
   brush_color = "#0000FF",
   show_grid = TRUE,
   anim_duration = 500,
-  row_side_colors,
-  col_side_colors,
+  row_side_colors = NULL,
+  col_side_colors = NULL,
   seriate = c("OLO", "mean", "none", "GW"),
   point_size_mat = NULL,
   custom_hovertext = NULL,
@@ -101,7 +101,7 @@ If NA then \link[dendextend]{find_k} is used to deduce the optimal number of clu
 \item{symm}{logical indicating if x should be treated symmetrically; can only be true when x is a square matrix.}
 
 \item{revC}{logical indicating if the column order should be reversed for plotting.
-Default (when missing) - is FALSE, unless symm is TRUE.
+Default (when NULL) - is FALSE, unless symm is TRUE.
 This is useful for cor matrix.}
 
 \item{scale}{character indicating if the values should be centered and scaled in either the row direction or the column direction, or none. The default is "none".}
@@ -112,10 +112,10 @@ This is useful for cor matrix.}
 
 \item{labCol}{character vectors with column labels to use (from left to right); default to colnames(x).}
 
-\item{cexRow}{positive numbers. If not missing, it will override \code{xaxis_font_size}
+\item{cexRow}{positive numbers. If not NULL, it will override \code{xaxis_font_size}
 and will give it a value cexRow*14}
 
-\item{cexCol}{positive numbers. If not missing, it will override \code{yaxis_font_size}
+\item{cexCol}{positive numbers. If not NULL, it will override \code{yaxis_font_size}
 and will give it a value cexCol*14}
 
 \item{digits}{integer indicating the number of decimal places to be used by \link{round} for 'label'.}

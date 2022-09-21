@@ -60,5 +60,5 @@ URL: https://talgalili.github.io/heatmaply/,
     https://github.com/talgalili/heatmaply/,
     https://www.r-statistics.com/tag/heatmaply/
 BugReports: https://github.com/talgalili/heatmaply/issues
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Encoding: UTF-8
