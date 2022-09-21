@@ -25,7 +25,7 @@ heatmapr(
   k_row = 1,
   k_col = 1,
   symm = FALSE,
-  revC = symm,
+  revC = symm || (is.dendrogram(Colv) & is.dendrogram(Rowv) & identical(Rowv, rev(Colv))),
   scale = c("none", "row", "column"),
   na.rm = TRUE,
   labRow = rownames(x),
