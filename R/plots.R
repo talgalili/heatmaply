@@ -747,15 +747,15 @@ plotly_side_color_plot <- function(df,
     function(i) {
       if (type == "row") {
         paste0(
-          "value: ", data[, i], "<br>",
           "variable: ", colnames(data)[i], "<br>",
+          "value: ", data[, i], "<br>",
           label_name, ": ", rownames(data)
         )
       } else {
         paste0(
+          "variable: ", rownames(data),
           "value: ", data[, i], "<br>",
-          label_name, ": ", colnames(data)[i], "<br>",
-          "variable: ", rownames(data)
+          label_name, ": ", colnames(data)[i], "<br>"
         )
       }
     }
