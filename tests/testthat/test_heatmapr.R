@@ -29,7 +29,6 @@ test_that("show_dendrogram error conditions", {
   expect_error(heatmapr(mtcars, show_dendrogram = NULL))
   expect_error(heatmapr(mtcars, show_dendrogram = TRUE), NA)
   expect_error(heatmapr(mtcars, show_dendrogram = c(TRUE, FALSE)), NA)
-
 })
 
 

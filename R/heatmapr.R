@@ -16,7 +16,7 @@ all_unique <- function(x, ...) {
 }
 
 fix_not_all_unique <- function(x, ...) {
-  if(all_unique(x)) {
+  if (all_unique(x)) {
     return(x)
   } else {
     warning("Not all the values are unique - manually added prefix numbers")
@@ -136,7 +136,6 @@ fix_not_all_unique <- function(x, ...) {
 #' \link{heatmap}, \link[gplots]{heatmap.2}
 #'
 #' @examples
-#'
 #' \dontrun{
 #' library(heatmaply)
 #' hm <- heatmapr(mtcars, scale = "column", colors = "Blues")
@@ -144,7 +143,6 @@ fix_not_all_unique <- function(x, ...) {
 #' }
 #'
 heatmapr <- function(x,
-
                      ## dendrogram control
                      Rowv = NULL,
                      Colv = NULL,
@@ -152,36 +150,27 @@ heatmapr <- function(x,
                      hclustfun = hclust,
                      dist_method = NULL,
                      hclust_method = NULL,
-
                      distfun_row = distfun,
                      hclustfun_row = hclustfun,
                      distfun_col = distfun,
                      hclustfun_col = hclustfun,
-
                      dendrogram = c("both", "row", "column", "none"),
                      show_dendrogram = c(TRUE, TRUE),
                      reorderfun = function(d, w) reorder(d, w),
-
                      k_row = 1,
                      k_col = 1,
-
                      symm = FALSE,
                      revC = symm || (is.dendrogram(Colv) & is.dendrogram(Rowv) & identical(Rowv, rev(Colv))),
-
                      ## data scaling
                      scale = c("none", "row", "column"),
                      na.rm = TRUE,
-
                      labRow = rownames(x),
                      labCol = colnames(x),
-
                      cexRow = NULL,
                      cexCol = NULL,
-
                      ## value formatting
                      digits = 3L,
                      cellnote = NULL,
-
                      ## TODO: decide later which names/conventions to keep
                      theme = NULL,
                      colors = "RdYlBu",
@@ -279,8 +268,7 @@ heatmapr <- function(x,
   if (scale == "row") {
     x <- sweep(x, 1, rowMeans(x, na.rm = na.rm))
     x <- sweep(x, 1, apply(x, 1, sd, na.rm = na.rm), "/")
-  }
-  else if (scale == "column") {
+  } else if (scale == "column") {
     x <- sweep(x, 2, colMeans(x, na.rm = na.rm))
     x <- sweep(x, 2, apply(x, 2, sd, na.rm = na.rm), "/")
   }
@@ -410,7 +398,8 @@ heatmapr <- function(x,
 
     if (k_row > 1) {
       Rowv <- color_branches(
-        Rowv, k = k_row,
+        Rowv,
+        k = k_row,
         col = k_colors(k_row)
       )
     }
@@ -420,7 +409,8 @@ heatmapr <- function(x,
 
     if (k_col > 1) {
       Colv <- color_branches(
-        Colv, k = k_col,
+        Colv,
+        k = k_col,
         col = k_colors(k_col)
       )
     }
@@ -449,8 +439,8 @@ heatmapr <- function(x,
   ## =======================
 
   # if(!is.null(custom_hovertext) && !is.matrix(custom_hovertext)) {
-  if(is.data.frame(custom_hovertext)) {
-      custom_hovertext <- as.matrix(custom_hovertext)
+  if (is.data.frame(custom_hovertext)) {
+    custom_hovertext <- as.matrix(custom_hovertext)
   }
 
   mtx <- list(
