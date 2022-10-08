@@ -1,3 +1,163 @@
+*   2022-10-08(Tal Galili) Merge pull request #279 from talgalili/cellnote-hoverinfo |8d5dc75
+|\  
+| * 2022-10-03(Alan O'Callaghan) Add k_col/row tests |fcc35c7| | 
+| |  tests/testthat/test_heatmapr.R | 10 ++++++++++
+| |  1 file changed, 10 insertions(+)
+
+| * 2022-09-27(Alan O'Callaghan) Restyle |83d0b86| | 
+| |  R/RColorBrewer.R                     |  28 +++---
+| |  R/ggheatmap.R                        |  16 +--
+| |  R/heatmaply.R                        | 168 ++++++++++++++++---------------
+| |  R/heatmapr.R                         |  26 ++---
+| |  R/is.na10.R                          |  21 ++--
+| |  R/percentize.R                       |   6 +-
+| |  R/plots.R                            |  64 ++++++------
+| |  R/zzz.R                              |   1 -
+| |  tests/testthat/test_heatmaply.R      |  38 ++++---
+| |  tests/testthat/test_heatmaply_misc.R |  25 +++--
+| |  tests/testthat/test_heatmapr.R       |   1 -
+| |  11 files changed, 211 insertions(+), 183 deletions(-)
+
+| * 2022-09-21(Alan O'Callaghan) Change order of side_color labels |fd93a09| | 
+| |  R/plots.R | 6 +++---
+| |  1 file changed, 3 insertions(+), 3 deletions(-)
+
+| * 2022-09-21(Alan O'Callaghan) redock |7be324a| | 
+| |  man/heatmaply.Rd | 2 +-
+| |  man/heatmapr.Rd  | 2 +-
+| |  2 files changed, 2 insertions(+), 2 deletions(-)
+
+| * 2022-09-21(Alan O'Callaghan) Tests and cov |ba6a2b2| | 
+| |  R/heatmaply.R                        |  2 +-
+| |  R/heatmapr.R                         | 16 +---------------
+| |  R/plots.R                            | 17 ++++++++++-------
+| |  tests/testthat/test_heatmaply_misc.R | 18 ++++++++++++++++++
+| |  4 files changed, 30 insertions(+), 23 deletions(-)
+
+| *   2022-09-21(Alan O'Callaghan) Merge branch 'master' of github.com:talgalili/heatmaply into cellnote-hoverinfo |bbf6d80
+| |\  
+| |/  
+|/|   
+* | 2022-08-06(Tal Galili) updating badges |eb1d709| | 
+| |  README.md | 8 +++++++-
+| |  1 file changed, 7 insertions(+), 1 deletion(-)
+
+* | 2022-08-06(Tal Galili) fix release dates |78baffc| | 
+| |  DESCRIPTION | 4 ++--
+| |  NEWS        | 2 +-
+| |  2 files changed, 3 insertions(+), 3 deletions(-)
+
+* | 2022-08-06(Tal Galili) added github actions |79e0a8a| | 
+| |  .github/.gitignore                    |  1 +
+| |  .github/workflows/check-release.yaml  | 40 +++++++++++++++++
+| |  .github/workflows/check-standard.yaml | 58 ++++++++++++++++++++++++
+| |  .github/workflows/lint.yaml           | 29 ++++++++++++
+| |  .github/workflows/pkgdown.yaml        | 35 +++++++++++++++
+| |  .github/workflows/pr-commands.yaml    | 75 +++++++++++++++++++++++++++++++
+| |  .github/workflows/test-coverage.yaml  | 30 +++++++++++++
+| |  NEWS                                  |  6 +++
+| |  8 files changed, 274 insertions(+)
+
+| * 2022-09-21(Alan O'Callaghan) Redock |91a2f1f| | 
+| |  DESCRIPTION      |  2 +-
+| |  R/plots.R        |  2 +-
+| |  man/heatmaply.Rd | 40 ++++++++++++++++++++--------------------
+| |  man/heatmapr.Rd  | 28 ++++++++++++++--------------
+| |  4 files changed, 36 insertions(+), 36 deletions(-)
+
+| * 2022-09-21(Alan O'Callaghan) Add label_format_fun to plotly |ad2009d| | 
+| |  NEWS          |  1 +
+| |  R/heatmaply.R |  3 ++-
+| |  R/plots.R     | 11 ++++++++---
+| |  3 files changed, 11 insertions(+), 4 deletions(-)
+
+| * 2022-09-20(Alan O'Callaghan) Hoverinfo bodge for cellnote; resolve #76 |4b2c592
+|/  |   
+|    DESCRIPTION   |  4 +--
+|    NEWS          |  5 ++++
+|    R/heatmaply.R | 84 +++++++++++++++++++++++++++++--------------------------
+|    R/heatmapr.R  | 54 +++++++++++++++++------------------
+|    4 files changed, 79 insertions(+), 68 deletions(-)
+
+* 2021-10-09(Tal Galili) date update |cbe478a| 
+|  DESCRIPTION | 2 +-
+|  NEWS        | 3 ++-
+|  2 files changed, 3 insertions(+), 2 deletions(-)
+
+* 2021-10-09(Tal Galili) Fix (removing) forbiden url (due to file size exceeding 20mb) |985ce92| 
+|  README.md       |  6 +++---
+|  docs/index.html | 10 +++++-----
+|  2 files changed, 8 insertions(+), 8 deletions(-)
+
+* 2021-10-09(Tal Galili) Fix: "  'LazyData' is specified without a 'data' directory" |3ef8564| 
+|  DESCRIPTION | 1 -
+|  1 file changed, 1 deletion(-)
+
+* 2021-10-09(Tal Galili) Refresh pkgdown website with recent fixes |9ececff| 
+|  docs/articles/heatmaply.html  | 54 ++++++++++++++++++++---------------------
+|  docs/index.html               | 18 +++++++-------
+|  docs/news/index.html          |  2 +-
+|  docs/pkgdown.yml              |  2 +-
+|  docs/reference/ggheatmap.html |  8 +++---
+|  5 files changed, 42 insertions(+), 42 deletions(-)
+
+* 2021-10-09(Tal Galili) Fix URL move in README.md |8f66adc| 
+|  README.md | 18 +++++++++---------
+|  1 file changed, 9 insertions(+), 9 deletions(-)
+
+* 2021-10-09(Tal Galili) Fix hide_colorbar documentation: |a8987bf| 
+|  R/ggheatmap.R    | 22 +++++++++++-----------
+|  man/ggheatmap.Rd |  6 +++---
+|  2 files changed, 14 insertions(+), 14 deletions(-)
+
+* 2021-10-08(Tal Galili) Bump to 1.3.0 (and fix the various NEWS files) |d36128f| 
+|  ChangeLog                                         |   187 +
+|  DESCRIPTION                                       |     5 +-
+|  NEWS                                              |    18 +-
+|  NEWS.md                                           |    36 +-
+|  R/zzz.R                                           |     2 +
+|  docs/404.html                                     |     8 +-
+|  docs/CONDUCT.html                                 |     8 +-
+|  docs/articles/heatmaply.html                      |   623 +-
+|  .../accessible-code-block-0.0.1/empty-anchor.js   |    15 +
+|  .../crosstalk-1.1.1/css/crosstalk.css             |    27 +
+|  .../crosstalk-1.1.1/js/crosstalk.js               |  1474 +++
+|  .../crosstalk-1.1.1/js/crosstalk.js.map           |    37 +
+|  .../crosstalk-1.1.1/js/crosstalk.min.js           |     2 +
+|  .../crosstalk-1.1.1/js/crosstalk.min.js.map       |     1 +
+|  .../figure-html/unnamed-chunk-21-1.png            |   Bin 34737 -> 23280 bytes
+|  .../figure-html/unnamed-chunk-24-1.png            |   Bin 28142 -> 19635 bytes
+|  .../figure-html/unnamed-chunk-29-1.png            |   Bin 60607 -> 78976 bytes
+|  .../htmlwidgets-1.5.3/htmlwidgets.js              |   903 ++
+|  .../jquery-3.5.1/jquery-AUTHORS.txt               |   357 +
+|  .../heatmaply_files/jquery-3.5.1/jquery.js        | 10872 ++++++++++++++++++
+|  .../heatmaply_files/jquery-3.5.1/jquery.min.js    |     2 +
+|  .../heatmaply_files/jquery-3.5.1/jquery.min.map   |     1 +
+|  .../plotly-binding-4.9.3/plotly.js                |   935 ++
+|  .../plotly-htmlwidgets.css                        |     9 +
+|  .../plotly-main-1.57.1/plotly-latest.min.js       |    61 +
+|  docs/articles/index.html                          |     8 +-
+|  docs/authors.html                                 |    12 +-
+|  docs/index.html                                   |    52 +-
+|  docs/news/index.html                              |    93 +-
+|  docs/pkgdown.css                                  |     4 +-
+|  docs/pkgdown.yml                                  |     4 +-
+|  docs/reference/RColorBrewer_colors.html           |   111 +-
+|  docs/reference/Rplot001.png                       |   Bin 0 -> 1011 bytes
+|  docs/reference/Rplot002.png                       |   Bin 0 -> 35438 bytes
+|  docs/reference/ggheatmap-1.png                    |   Bin 126400 -> 131761 bytes
+|  docs/reference/ggheatmap.html                     |    24 +-
+|  docs/reference/ggplot_side_color_plot.html        |    28 +-
+|  docs/reference/heatmaply.html                     |   485 +-
+|  docs/reference/heatmapr.html                      |   118 +-
+|  docs/reference/index.html                         |     8 +-
+|  docs/reference/is.heatmapr.html                   |    10 +-
+|  docs/reference/is.na10.html                       |    35 +-
+|  docs/reference/is.plotly.html                     |    10 +-
+|  docs/reference/normalize.html                     |    41 +-
+|  docs/reference/percentize.html                    |    33 +-
+|  45 files changed, 15826 insertions(+), 833 deletions(-)
+
 * 2021-10-07(Alan O'Callaghan) Bump and document version |86cb219| 
 |  DESCRIPTION      |  6 +++---
 |  NEWS.md          |  8 ++++++++

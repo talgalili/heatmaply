@@ -1,4 +1,14 @@
-heatmaply 1.3.0 (2021-10-08)
+heatmaply 1.4.0 (2022-10-08)
+===============
+## OTHER NOTES
+- added github actions
+
+## BUGFIX
+- hoverinfo now works correctly when cellnote is displayed; see issue 76.
+- Add label_format_fun to plotly heatmap mode
+
+
+heatmaply 1.3.0 (2021-10-09)
 ===============
 ## NEW FEATURE
 - ggheatmap now accepts `hide_colorbar` argument. Also, when `row_dend_left`
@@ -13,6 +23,7 @@ PR #273)
 - Changed order of hovertext when plot_method="plotly" to match ggplot equivalent
 - update startup message to include stackoverflow.
 - add github actions (GHA)
+- minor fixes to doc so to release to CRAN.
 
 heatmaply 1.2.1 (2021-02-02)
 ===============
