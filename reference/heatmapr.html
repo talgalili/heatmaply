@@ -20,7 +20,7 @@ using plotly (but potentially also with other graphical devices)."><!-- mathjax 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">heatmaply</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4.1</span>
       </span>
     </div>
 
@@ -64,29 +64,29 @@ using plotly (but potentially also with other graphical devices).</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">heatmapr</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
-<span>  <span class="va">Rowv</span>,</span>
-<span>  <span class="va">Colv</span>,</span>
+<span>  Rowv <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  Colv <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  distfun <span class="op">=</span> <span class="va">dist</span>,</span>
 <span>  hclustfun <span class="op">=</span> <span class="va">hclust</span>,</span>
 <span>  dist_method <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hclust_method <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">distfun_row</span>,</span>
-<span>  <span class="va">hclustfun_row</span>,</span>
-<span>  <span class="va">distfun_col</span>,</span>
-<span>  <span class="va">hclustfun_col</span>,</span>
+<span>  distfun_row <span class="op">=</span> <span class="va">distfun</span>,</span>
+<span>  hclustfun_row <span class="op">=</span> <span class="va">hclustfun</span>,</span>
+<span>  distfun_col <span class="op">=</span> <span class="va">distfun</span>,</span>
+<span>  hclustfun_col <span class="op">=</span> <span class="va">hclustfun</span>,</span>
 <span>  dendrogram <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"both"</span>, <span class="st">"row"</span>, <span class="st">"column"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
 <span>  show_dendrogram <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  reorderfun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">d</span>, <span class="va">w</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html" class="external-link">reorder</a></span><span class="op">(</span><span class="va">d</span>, <span class="va">w</span><span class="op">)</span>,</span>
 <span>  k_row <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  k_col <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  symm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  <span class="va">revC</span>,</span>
+<span>  revC <span class="op">=</span> <span class="va">symm</span> <span class="op">||</span> <span class="op">(</span><span class="fu"><a href="http://talgalili.github.io/dendextend/reference/is_some_class.html" class="external-link">is.dendrogram</a></span><span class="op">(</span><span class="va">Colv</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="http://talgalili.github.io/dendextend/reference/is_some_class.html" class="external-link">is.dendrogram</a></span><span class="op">(</span><span class="va">Rowv</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">Rowv</span>, <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">Colv</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"row"</span>, <span class="st">"column"</span><span class="op">)</span>,</span>
 <span>  na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  labRow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
 <span>  labCol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
-<span>  <span class="va">cexRow</span>,</span>
-<span>  <span class="va">cexCol</span>,</span>
+<span>  cexRow <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  cexCol <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  digits <span class="op">=</span> <span class="fl">3L</span>,</span>
 <span>  cellnote <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  theme <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -100,8 +100,8 @@ using plotly (but potentially also with other graphical devices).</p>
 <span>  brush_color <span class="op">=</span> <span class="st">"#0000FF"</span>,</span>
 <span>  show_grid <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  anim_duration <span class="op">=</span> <span class="fl">500</span>,</span>
-<span>  <span class="va">row_side_colors</span>,</span>
-<span>  <span class="va">col_side_colors</span>,</span>
+<span>  row_side_colors <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  col_side_colors <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  seriate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OLO"</span>, <span class="st">"mean"</span>, <span class="st">"none"</span>, <span class="st">"GW"</span><span class="op">)</span>,</span>
 <span>  point_size_mat <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  custom_hovertext <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -197,7 +197,7 @@ If NA then <a href="http://talgalili.github.io/dendextend/reference/find_k.html"
 
 <dt>revC</dt>
 <dd><p>logical indicating if the column order should be reversed for plotting.
-Default (when missing) - is FALSE, unless symm is TRUE.
+Default (when NULL) - is FALSE, unless symm is TRUE.
 This is useful for cor matrix.</p></dd>
 
 
@@ -218,12 +218,12 @@ This is useful for cor matrix.</p></dd>
 
 
 <dt>cexRow</dt>
-<dd><p>positive numbers. If not missing, it will override <code>xaxis_font_size</code>
+<dd><p>positive numbers. If not NULL, it will override <code>xaxis_font_size</code>
 and will give it a value cexRow*14</p></dd>
 
 
 <dt>cexCol</dt>
-<dd><p>positive numbers. If not missing, it will override <code>yaxis_font_size</code>
+<dd><p>positive numbers. If not NULL, it will override <code>yaxis_font_size</code>
 and will give it a value cexCol*14</p></dd>
 
 
