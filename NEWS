@@ -4,8 +4,14 @@ heatmaply 1.4.0 (2022-10-08)
 - added github actions
 
 ## BUGFIX
-- hoverinfo now works correctly when cellnote is displayed; see issue 76.
 - Add label_format_fun to plotly heatmap mode
+- hoverinfo now works correctly when cellnote is displayed; see issue #76.
+For example, run:
+```
+library("heatmaply")
+heatmaply(mtcars, draw_cellnote = TRUE)
+```
+You can see that now the hover info is properly displayed.
 
 
 heatmaply 1.3.0 (2021-10-09)
