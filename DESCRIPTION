@@ -1,8 +1,8 @@
 Package: heatmaply
 Type: Package
 Title: Interactive Cluster Heat Maps Using 'plotly' and 'ggplot2'
-Version: 1.4.0
-Date: 2022-08-06
+Version: 1.4.1
+Date: 2022-09-21
 Authors@R: c(
     person("Tal", "Galili", role = c("aut", "cre", "cph"), email = "tal.galili@gmail.com", comment = "https://www.r-statistics.com"),
     person("Alan", "O'Callaghan", comment = "https://github.com/Alanocallaghan",role = "aut"),
@@ -60,5 +60,5 @@ URL: https://talgalili.github.io/heatmaply/,
     https://github.com/talgalili/heatmaply/,
     https://www.r-statistics.com/tag/heatmaply/
 BugReports: https://github.com/talgalili/heatmaply/issues
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Encoding: UTF-8

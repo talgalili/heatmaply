@@ -75,8 +75,7 @@ percentize_predict <- function(x, ecdf_fun = ecdf, ...) {
 #' x <- data.frame(a = 1:10, b = 11:20)
 #' x[4:6, 1:2] <- NA
 #' percentize(x)
-#' percentize(x[,1])
-#'
+#' percentize(x[, 1])
 #' }
 percentize <- function(x, ...) {
   UseMethod("percentize")
@@ -145,8 +144,7 @@ percentize.matrix <- function(x, ...) {
 #' x <- data.frame(a = 1:10, b = 11:20)
 #' x[4:6, 1:2] <- NA
 #' normalize(x)
-#' normalize(x[,1])
-#'
+#' normalize(x[, 1])
 #' }
 normalize <- function(x, ...) {
   UseMethod("normalize")

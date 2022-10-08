@@ -34,13 +34,11 @@ ggheatmap <- function(..., widths = NULL, heights = NULL,
 
 
 ## TODO: duplication with heatmap_subplot_from_ggplotly
-arrange_plots <- function(
-    plots,
-    widths = NULL,
-    heights = NULL,
-    row_dend_left = FALSE,
-    hide_colorbar = FALSE) {
-
+arrange_plots <- function(plots,
+                          widths = NULL,
+                          heights = NULL,
+                          row_dend_left = FALSE,
+                          hide_colorbar = FALSE) {
   plots <- plots[!sapply(plots, is.null)]
   if (!row_dend_left) {
     plots$p <- plots$p + theme(legend.position = "left")
@@ -89,5 +87,7 @@ arrange_plots <- function(
 }
 
 ggplot_empty <- function() {
-  ggplot() + theme_void() + theme(plot.margin = unit(c(0, 0, 0, 0), "npc"))
+  ggplot() +
+    theme_void() +
+    theme(plot.margin = unit(c(0, 0, 0, 0), "npc"))
 }

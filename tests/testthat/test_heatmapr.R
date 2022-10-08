@@ -29,7 +29,6 @@ test_that("show_dendrogram error conditions", {
   expect_error(heatmapr(mtcars, show_dendrogram = NULL))
   expect_error(heatmapr(mtcars, show_dendrogram = TRUE), NA)
   expect_error(heatmapr(mtcars, show_dendrogram = c(TRUE, FALSE)), NA)
-
 })
 
 
@@ -38,4 +37,14 @@ test_that("create_dend works", {
     expect_error(create_dend(as.matrix(mtcars), ser, dist, hclust, TRUE), NA)
     expect_error(create_dend(as.matrix(mtcars), ser, dist, hclust, FALSE), NA)
   }
+})
+
+test_that("fix_not_all_unique works", {
+  expect_equal(fix_not_all_unique(1:10), 1:10)
+  expect_warning(fix_not_all_unique(rep(1, 3)), "Not all")
+})
+
+test_that("k_row/col works", {
+  expect_equal(attr(heatmapr(mtcars, k_col=5)$cols[[2]][[2]], "edgePar")$col, "#C29DDE")
+  expect_equal(attr(heatmapr(mtcars, k_row=5)$rows[[2]][[2]][[2]][[2]], "edgePar")$col, "#C29DDE")
 })

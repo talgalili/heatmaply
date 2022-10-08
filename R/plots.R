@@ -39,13 +39,13 @@ ggplot_heatmap <- function(xx,
                            row_text_angle = 0,
                            column_text_angle = 45,
                            scale_fill_gradient_fun =
-                           scale_fill_gradientn(
-                             colors = viridis(
-                               n = 256, alpha = 1, begin = 0,
-                               end = 1, option = "viridis"
+                             scale_fill_gradientn(
+                               colors = viridis(
+                                 n = 256, alpha = 1, begin = 0,
+                                 end = 1, option = "viridis"
+                               ),
+                               na.value = "grey50", limits = NULL
                              ),
-                             na.value = "grey50", limits = NULL
-                           ),
                            grid_color = NA,
                            grid_size = 0.1,
                            key.title = NULL,
@@ -120,9 +120,11 @@ ggplot_heatmap <- function(xx,
         mdf[["text"]], "<br>",
         point_size_name, ": ", label_format_fun(mdf[[4]])
       )
-      aes_args <- list(color = paste_aes(val),
+      aes_args <- list(
+        color = paste_aes(val),
         text = "text",
-        size = paste_aes(point_size_name))
+        size = paste_aes(point_size_name)
+      )
 
       # geom_args[["mapping"]] <- aes_string(
       #   color = paste_aes(val),
@@ -131,8 +133,10 @@ ggplot_heatmap <- function(xx,
       # )
     } else {
       geom_args[["size"]] <- grid_size
-      aes_args <- list(color = paste_aes(val),
-        text = "text")
+      aes_args <- list(
+        color = paste_aes(val),
+        text = "text"
+      )
       # geom_args[["mapping"]] <- aes_string(color = paste_aes(val), text = "text")
     }
   }
@@ -154,11 +158,15 @@ ggplot_heatmap <- function(xx,
       axis.title = element_blank(),
       axis.text.x = if (showticklabels[[1]]) {
         element_text(angle = column_text_angle, size = fontsize_col, hjust = 1)
-      } else element_blank(),
+      } else {
+        element_blank()
+      },
       axis.ticks.x = if (showticklabels[[1]]) element_line() else element_blank(),
       axis.text.y = if (showticklabels[[2]]) {
         element_text(angle = row_text_angle, size = fontsize_row, hjust = 1)
-      } else element_blank(),
+      } else {
+        element_blank()
+      },
       axis.ticks.y = if (showticklabels[[2]]) element_line() else element_blank(),
     )
 
@@ -243,8 +251,8 @@ plotly_heatmap <- function(x,
                            custom_hovertext = NULL,
                            point_size_mat = NULL,
                            point_size_name = "Point size",
-                           showticklabels = c(TRUE, TRUE)) {
-
+                           showticklabels = c(TRUE, TRUE),
+                           label_format_fun = function(...) format(..., digits = 4)) {
   if (is.function(colors)) colors <- colors(256)
 
   if (is.null(label_names)) {
@@ -256,6 +264,9 @@ plotly_heatmap <- function(x,
   } else {
     assert_that(length(label_names) == 3)
   }
+  if (!is.null(point_size_mat)) {
+    point_size_mat <- as.matrix(point_size_mat)
+  }
 
   if (!is.null(custom_hovertext)) {
     text_mat <- custom_hovertext
@@ -264,17 +275,21 @@ plotly_heatmap <- function(x,
     text_mat[] <- lapply(
       seq_along(text_mat),
       function(i) {
-        paste0(
+        lab <- paste0(
           label_names[1], ": ", rownames(x), "<br>",
           label_names[2], ": ", colnames(x)[i], "<br>",
-          label_names[3], ": ", x[, i]
+          label_names[3], ": ", label_format_fun(x[, i])
         )
+        if (!is.null(point_size_mat)) {
+          lab <- paste0(
+            lab, "<br>",
+            point_size_name, ": ", label_format_fun(point_size_mat[, i])
+          )
+        }
+        lab
       }
     )
     text_mat <- as.matrix(text_mat)
-    if (!is.null(point_size_mat)) {
-      point_size_name
-    }
   }
 
   if (is.null(point_size_mat)) {
@@ -287,8 +302,7 @@ plotly_heatmap <- function(x,
       zmin = limits[1], zmax = limits[2]
     )
   } else {
-
-    melt <- function(x, cn=colnames(x), rn=rownames(x)) {
+    melt <- function(x, cn = colnames(x), rn = rownames(x)) {
       xdf <- reshape2::melt(x)
       xdf$Var1 <- factor(xdf$Var1, levels = rn)
       xdf$Var2 <- factor(xdf$Var2, levels = cn)
@@ -311,7 +325,7 @@ plotly_heatmap <- function(x,
       hoverinfo = "text"
     )
   }
-  p <- p  %>%
+  p <- p %>%
     layout(
       xaxis = list(
         tickfont = list(size = fontsize_col),
@@ -349,7 +363,6 @@ plotly_dend <- function(dend,
                         side = c("row", "col"),
                         flip = FALSE,
                         dend_hoverinfo = TRUE) {
-
   if (is.hclust(dend)) {
     dend <- as.dendrogram(dend)
   }
@@ -408,8 +421,7 @@ plotly_dend <- function(dend,
           yaxis = axis2
         )
     }
-  }
-  else {
+  } else {
     add_plot_lines <- function(p) {
       p %>%
         add_segments(
@@ -459,7 +471,6 @@ ggplot_side_color_plot <- function(df,
                                    is_colors = FALSE,
                                    fontsize = 10,
                                    label_name = NULL) {
-
   type <- match.arg(type)
   if (is.matrix(df)) df <- as.data.frame(df)
   assert_that(is.data.frame(df))
@@ -569,7 +580,6 @@ predict_colors <- function(p,
                            colorscale_df = p$x$data[[1]]$colorscale %||% p$x$data[[2]]$marker$colorscale,
                            cell_values = p$x$data[[1]]$z,
                            plot_method = c("ggplot", "plotly")) {
-
   plot_method <- match.arg(plot_method)
 
   if (is.null(cell_values)) {
@@ -684,7 +694,6 @@ plotly_side_color_plot <- function(df,
                                    colorbar_len = 0.3,
                                    fontsize = 10,
                                    show_legend = TRUE) {
-
   type <- match.arg(type)
 
   if (is.null(label_name)) label_name <- type
@@ -739,15 +748,15 @@ plotly_side_color_plot <- function(df,
     function(i) {
       if (type == "row") {
         paste0(
-          "value: ", data[, i], "<br>",
           "variable: ", colnames(data)[i], "<br>",
+          "value: ", data[, i], "<br>",
           label_name, ": ", rownames(data)
         )
       } else {
         paste0(
+          "variable: ", rownames(data),
           "value: ", data[, i], "<br>",
-          label_name, ": ", colnames(data)[i], "<br>",
-          "variable: ", rownames(data)
+          label_name, ": ", colnames(data)[i], "<br>"
         )
       }
     }
@@ -878,7 +887,7 @@ export <- function(x, file, width, height) {
   )
 }
 
-size_default <- function(file_extension, direction=c("width", "height")) {
+size_default <- function(file_extension, direction = c("width", "height")) {
   direction <- match.arg(direction)
   ## webshot uses viewport size in pixels to control file size, so
   ## all sizes in pixels
@@ -900,9 +909,10 @@ hmly_to_file <- Vectorize(hmly_to_file_1file, vectorize.args = "file")
 ## Copied from gplots
 #' @importFrom grDevices col2rgb
 col2hex <- function(col) {
-    colMat <- col2rgb(col)
-    rgb(red = colMat[1, ] / 255,
-        green = colMat[2, ] / 255,
-        blue = colMat[3, ] / 255)
+  colMat <- col2rgb(col)
+  rgb(
+    red = colMat[1, ] / 255,
+    green = colMat[2, ] / 255,
+    blue = colMat[3, ] / 255
+  )
 }
-

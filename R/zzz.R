@@ -308,4 +308,3 @@ heatmaplyWelcomeMessage <- function() {
 # pkgdown::build_site(run_dont_run = F)
 # pkgdown::build_news()
 # release()
-

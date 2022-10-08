@@ -1,15 +1,20 @@
 context("heatmaply misc")
 
 test_that("node argument works", {
-  rrapply <- function(A, FUN, ...) mapply(function(a, B) lapply(
+  rrapply <- function(A, FUN, ...) {
+    mapply(function(a, B) {
+      lapply(
         B,
         function(x) FUN(a, x, ...)
-      ), a = A, MoreArgs = list(B = A))
+      )
+    }, a = A, MoreArgs = list(B = A))
+  }
   cor.tests <- rrapply(mtcars, cor.test) # a matrix of cor.tests
   p <- apply(cor.tests, 1:2, function(x) x[[1]]$p.value) # and it's there
   r <- cor(mtcars)
   h <- heatmaply(
-    r, node_type = "scatter",
+    r,
+    node_type = "scatter",
     point_size_name = "p",
     point_size_mat = -log10(p)
   )
@@ -22,6 +27,26 @@ test_that("non-numerics moved to row_side_colors", {
   expect_is(h, "plotly")
   h <- heatmaply(mtcars)
   expect_is(h, "plotly")
+})
+
+test_that("colors as fun", {
+  h <- heatmaply(mtcars, colors = RdBu)
+  expect_is(h, "plotly")
+})
+
+test_that("label format fun", {
+  for (plot_method in c("ggplot", "plotly")) {
+    h <- heatmaply(mtcars,
+      label_format_fun = function(x) x,
+      plot_method = plot_method
+    )
+    expect_is(h, "plotly")
+    h <- heatmaply(mtcars,
+      label_format_fun = function(x) x,
+      plot_method = plot_method, node_type = "scatter", point_size_mat = mtcars
+    )
+    expect_is(h, "plotly")
+  }
 })
 
 
@@ -103,8 +128,10 @@ test_that("long_data works", {
   mdf <- reshape2::melt(as.matrix(mtcars))
   colnames(mdf) <- c("name", "variable", "value")
   expect_is(heatmaply(long_data = mdf), "plotly")
-  expect_error(heatmaply(mtcars, long_data = mdf),
-    "x and long_data should not be used together")
+  expect_error(
+    heatmaply(mtcars, long_data = mdf),
+    "x and long_data should not be used together"
+  )
 })
 
 test_that("heatmaply_na works", {
@@ -149,5 +176,5 @@ test_that("custom_hovertext works", {
 })
 
 test_that("hclust_method=NA works", {
-  expect_error(heatmaply(mtcars, hclust_method=NA), NA)
+  expect_error(heatmaply(mtcars, hclust_method = NA), NA)
 })
