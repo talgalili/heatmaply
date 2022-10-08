@@ -74,6 +74,7 @@ jobs:
           local_deps <- remotes::local_package_deps(dependencies = TRUE)
           deps <- remotes::dev_package_deps(dependencies = TRUE)
           install.packages(local_deps[local_deps %in% deps$package[deps$diff != 0]], Ncpu = 2L)
+          install.packages("curl")  # manually install it for windows check to work.
           remotes::install_cran('rcmdcheck', Ncpu = 2L)
         shell: Rscript {0}
 
