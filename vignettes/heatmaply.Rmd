@@ -361,7 +361,7 @@ travelling salesman problem.
 
 The default options is `"OLO"` (Optimal leaf ordering) which optimizes the 
 above criterion (in O(n^4)). Another option is `"GW"`
-([Gruvaeus and Wainer](https://bpspsychub.onlinelibrary.wiley.com/doi/10.1111/j.2044-8317.1972.tb00491.x)) 
+([Gruvaeus and Wainer](https://doi.org/10.1111/j.2044-8317.1972.tb00491.x)) 
 which aims for the same goal but uses a potentially faster heuristic. The 
 option `"mean"` gives the output we would get by default from heatmap functions 
 in other packages such as `gplots::heatmap.2`. The option `"none"` gives us 
