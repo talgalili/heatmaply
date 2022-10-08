@@ -43,7 +43,8 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   k_row = 1,
   k_col = 1,
   symm = FALSE,
-  revC = symm || (is.dendrogram(Colv) & is.dendrogram(Rowv) & identical(Rowv, rev(Colv))),
+  revC = symm || (is.dendrogram(Colv) & is.dendrogram(Rowv) & identical(Rowv,
+    rev(Colv))),
   scale = c("none", "row", "column"),
   na.rm = TRUE,
   row_dend_left = FALSE,
@@ -490,15 +491,14 @@ heatmaply_cor is a wrapper for `heatmaply` which comes with defaults that are be
 for correlation matrixes. Specifically, the limits are set from -1 to 1, and the color palette is \link{RdBu}.
 }
 \examples{
-
 \dontrun{
 
 # mtcars
 # x <- heatmapr(mtcars)
 library(heatmaply)
-heatmaply(iris[,-5], k_row = 3, k_col = 2)
-heatmaply(cor(iris[,-5]))
-heatmaply(cor(iris[,-5]), limits = c(-1,1))
+heatmaply(iris[, -5], k_row = 3, k_col = 2)
+heatmaply(cor(iris[, -5]))
+heatmaply(cor(iris[, -5]), limits = c(-1, 1))
 heatmaply(mtcars, k_row = 3, k_col = 2)
 # heatmaply(mtcars, k_row = 3, k_col = 2, grid_color = "white")
 heatmaply(mtcars, k_row = 3, k_col = 2, grid_gap = 1)
@@ -531,64 +531,83 @@ subplot(hm1, hm2, margin = .2)
 # If we want to share the Y axis, then it is risky to keep any of the dendrograms:
 library(heatmaply)
 hm1 <- heatmaply(mtcars, Colv = FALSE, Rowv = FALSE, margins = c(40, 130))
-hm2 <- heatmaply(mtcars, scale = "col" , Colv = FALSE, Rowv = FALSE,
-             margins = c(40, 130))
+hm2 <- heatmaply(mtcars,
+  scale = "col", Colv = FALSE, Rowv = FALSE,
+  margins = c(40, 130)
+)
 subplot(hm1, hm2, margin = .02, shareY = TRUE)
 
 
 # We can save heatmaply as an HTML file by using:
-heatmaply(iris[,-5], file = "heatmaply_iris.html")
+heatmaply(iris[, -5], file = "heatmaply_iris.html")
 # or a png/pdf/jpeg file using:
-heatmaply(iris[,-5], file = "heatmaply_iris.png")
+heatmaply(iris[, -5], file = "heatmaply_iris.png")
 # or just doing it in one go:
-heatmaply(iris[,-5], file = c("heatmaply_iris.html", "heatmaply_iris.png") )
+heatmaply(iris[, -5], file = c("heatmaply_iris.html", "heatmaply_iris.png"))
 
 
 
 # If we don't want the HTML to be selfcontained, we can use the following:
 library(heatmaply)
 library(htmlwidgets)
-heatmaply(iris[,-5]) \%>\%
-   saveWidget(file="heatmaply_iris.html",selfcontained = FALSE)
+heatmaply(iris[, -5]) \%>\%
+  saveWidget(file = "heatmaply_iris.html", selfcontained = FALSE)
 
 
 # Example for using RowSideColors
 
-x  <- as.matrix(datasets::mtcars)
+x <- as.matrix(datasets::mtcars)
 rc <- colorspace::rainbow_hcl(nrow(x))
 
 library(gplots)
 library(viridis)
-heatmap.2(x, trace = "none", col = viridis(100),
-          RowSideColors=rc)
+heatmap.2(x,
+  trace = "none", col = viridis(100),
+  RowSideColors = rc
+)
 
-heatmaply(x, seriate = "mean",
-          RowSideColors=rc)
+heatmaply(x,
+  seriate = "mean",
+  RowSideColors = rc
+)
 
 
-heatmaply(x[,-c(8,9)], seriate = "mean",
-          col_side_colors = c(rep(0,5), rep(1,4)),
-          row_side_colors = x[,8:9])
-heatmaply(x[,-c(8,9)], seriate = "mean",
-          col_side_colors = data.frame(a=c(rep(0,5), rep(1,4))),
-          row_side_colors = x[,8:9])
+heatmaply(x[, -c(8, 9)],
+  seriate = "mean",
+  col_side_colors = c(rep(0, 5), rep(1, 4)),
+  row_side_colors = x[, 8:9]
+)
+heatmaply(x[, -c(8, 9)],
+  seriate = "mean",
+  col_side_colors = data.frame(a = c(rep(0, 5), rep(1, 4))),
+  row_side_colors = x[, 8:9]
+)
 
 
 ## Example of using Rowv And Colv for custumized dendrograms.
 
 
-x  <- as.matrix(datasets::mtcars)
+x <- as.matrix(datasets::mtcars)
 
 # now let's spice up the dendrograms a bit:
 library(dendextend)
 
-row_dend  <- x \%>\% dist \%>\% hclust \%>\% as.dendrogram \%>\%
-  set("branches_k_color", k = 3) \%>\% set("branches_lwd", 4) \%>\%
-  ladderize
+row_dend <- x \%>\%
+  dist() \%>\%
+  hclust() \%>\%
+  as.dendrogram() \%>\%
+  set("branches_k_color", k = 3) \%>\%
+  set("branches_lwd", 4) \%>\%
+  ladderize()
 #    rotate_DendSer(ser_weight = dist(x))
-col_dend  <- x \%>\% t \%>\% dist \%>\% hclust \%>\% as.dendrogram \%>\%
-  set("branches_k_color", k = 2) \%>\% set("branches_lwd", 4) \%>\%
-  ladderize
+col_dend <- x \%>\%
+  t() \%>\%
+  dist() \%>\%
+  hclust() \%>\%
+  as.dendrogram() \%>\%
+  set("branches_k_color", k = 2) \%>\%
+  set("branches_lwd", 4) \%>\%
+  ladderize()
 #    rotate_DendSer(ser_weight = dist(t(x)))
 
 heatmaply(x, Rowv = row_dend, Colv = col_dend)
@@ -598,30 +617,29 @@ heatmaply(is.na10(airquality))
 heatmaply(is.na10(airquality), grid_gap = 1)
 
 # grid_gap can handle quite large data matrix
-heatmaply(matrix(1:10000,100,100), k_row = 3, k_col = 3, grid_gap = 1)
+heatmaply(matrix(1:10000, 100, 100), k_row = 3, k_col = 3, grid_gap = 1)
 
 # Examples of playing with font size:
-heatmaply(mtcars, fontsize_col = 20, fontsize_row = 5, margin = c(100,90))
+heatmaply(mtcars, fontsize_col = 20, fontsize_row = 5, margin = c(100, 90))
 
 
 
 # Example for using subplot_width/subplot_height
 
 heatmaply(percentize(mtcars),
-     subplot_widths=c(0.6, 0.4),
-     subplot_heights=c(0.05, 0.95))
+  subplot_widths = c(0.6, 0.4),
+  subplot_heights = c(0.05, 0.95)
+)
 
 
 
 # Example of removing labels and thus making the plot faster
-heatmaply(iris, showticklabels = c(T,F), margins = c(80,10))
+heatmaply(iris, showticklabels = c(T, F), margins = c(80, 10))
 
 # this is what allows for a much larger matrix to be printed:
-set.seed(2017-05-18)
-large_x <- matrix(rnorm(19), 1000,100)
-heatmaply(large_x, dendrogram = F, showticklabels = F, margins = c(1,1))
-
-
+set.seed(2017 - 05 - 18)
+large_x <- matrix(rnorm(19), 1000, 100)
+heatmaply(large_x, dendrogram = F, showticklabels = F, margins = c(1, 1))
 }
 \dontrun{
 heatmaply_na(airquality)

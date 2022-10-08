@@ -28,17 +28,22 @@ x <- mtcars
 x <- data.frame(x)
 x$am <- factor(x$am)
 x$vs <- factor(x$vs)
-set.seed(2017-01-19)
-x[sample(nrow(x))[1:6],sample(ncol(x))[1:6]] <- NA
+set.seed(2017 - 01 - 19)
+x[sample(nrow(x))[1:6], sample(ncol(x))[1:6]] <- NA
 
 
 # nice grey colors from here: https://github.com/njtierney/visdat/blob/master/R/vis_miss_ly.R
-x \%>\% is.na10 \%>\% heatmaply( colors = c("grey80", "grey20"), dendrogram = "none")
-x \%>\% is.na10 \%>\% heatmaply( colors = c("grey80", "grey20"), k_col = 2, k_row = 2)
+x \%>\%
+  is.na10() \%>\%
+  heatmaply(colors = c("grey80", "grey20"), dendrogram = "none")
+x \%>\%
+  is.na10() \%>\%
+  heatmaply(colors = c("grey80", "grey20"), k_col = 2, k_row = 2)
 
-heatmaply(is.na10(airquality), grid_gap = 1,
-         colors = c("grey80", "grey20"), k_col = 2, k_row = 2)
-
+heatmaply(is.na10(airquality),
+  grid_gap = 1,
+  colors = c("grey80", "grey20"), k_col = 2, k_row = 2
+)
 }
 }
 \seealso{

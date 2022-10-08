@@ -36,8 +36,7 @@ heatmaply(normalize(x))
 x <- data.frame(a = 1:10, b = 11:20)
 x[4:6, 1:2] <- NA
 normalize(x)
-normalize(x[,1])
-
+normalize(x[, 1])
 }
 }
 \seealso{

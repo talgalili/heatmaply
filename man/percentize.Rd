@@ -37,8 +37,7 @@ heatmaply(percentize(x))
 x <- data.frame(a = 1:10, b = 11:20)
 x[4:6, 1:2] <- NA
 percentize(x)
-percentize(x[,1])
-
+percentize(x[, 1])
 }
 }
 \seealso{
