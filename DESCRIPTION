@@ -45,7 +45,8 @@ Imports:
     htmlwidgets,
     webshot,
     assertthat,
-    egg
+    egg,
+    tibble
 Suggests:
     knitr,
     covr,
