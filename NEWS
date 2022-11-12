@@ -2,7 +2,7 @@ heatmaply 1.4.1 (2022-11-12)
 ===============
 
 ## BUGFIX
-- Fix "keep annotation names without adding dots" issue #281
+- Fix "keep annotation names without adding dots" issue #281. Props to @colejohanson.
 
 
 
