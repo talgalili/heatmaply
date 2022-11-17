@@ -252,7 +252,10 @@ plotly_heatmap <- function(x,
                            point_size_mat = NULL,
                            point_size_name = "Point size",
                            showticklabels = c(TRUE, TRUE),
-                           label_format_fun = function(...) format(..., digits = 4)) {
+                           label_format_fun = function(...) format(..., digits = 4),
+                           height = NULL,
+                           width = NULL
+                           ) {
   if (is.function(colors)) colors <- colors(256)
 
   if (is.null(label_names)) {
@@ -299,7 +302,9 @@ plotly_heatmap <- function(x,
       showlegend = FALSE,
       colors = colors,
       hoverinfo = "text",
-      zmin = limits[1], zmax = limits[2]
+      zmin = limits[1], zmax = limits[2],
+      height = height,
+      width = width
     )
   } else {
     melt <- function(x, cn = colnames(x), rn = rownames(x)) {
