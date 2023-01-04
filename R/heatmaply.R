@@ -864,7 +864,8 @@ heatmaply.heatmapr <- function(x,
                                label_format_fun = function(...) format(..., digits = 4),
                                custom_hovertext = x[["matrix"]][["custom_hovertext"]],
                                dend_hoverinfo = TRUE,
-                               side_color_colorbar_len = 0.3) {
+                               side_color_colorbar_len = 0.3,
+                               force.limits = FALSE) {
   node_type <- match.arg(node_type)
   plot_method <- match.arg(plot_method)
   cellnote_textposition <- match.arg(
@@ -894,14 +895,18 @@ heatmaply.heatmapr <- function(x,
     r <- range(as.matrix(x$matrix$data), na.rm = TRUE)
     limits <- sort(limits)
 
+    
+    
+    if (!force.limits) {
     ## Warn for broken heatmap colors
-    if (limits[1] > r[1]) {
-      limits[1] <- r[1]
-      warning("Lower limit is not <= lowest value in x, min of limits is set to the min of the range (otherwise, colors will be broken!)")
-    }
-    if (limits[2] < r[2]) {
-      limits[2] <- r[2]
-      warning("Upper limit is not >= highest value in x, max of limits is set to the max of the range (otherwise, colors will be broken!)")
+      if (limits[1] > r[1]) {
+        limits[1] <- r[1]
+        warning("Lower limit is not <= lowest value in x, min of limits is set to the min of the range (otherwise, colors will be broken!)")
+      }
+      if (limits[2] < r[2]) {
+        limits[2] <- r[2]
+        warning("Upper limit is not >= highest value in x, max of limits is set to the max of the range (otherwise, colors will be broken!)")
+      }
     }
   }
   if (!is.null(srtRow)) row_text_angle <- srtRow
