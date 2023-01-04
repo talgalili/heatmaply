@@ -43,8 +43,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   k_row = 1,
   k_col = 1,
   symm = FALSE,
-  revC = symm || (is.dendrogram(Colv) & is.dendrogram(Rowv) & identical(Rowv,
-    rev(Colv))),
+  revC = symm || (is.dendrogram(Colv) & is.dendrogram(Rowv) & identical(Rowv, rev(Colv))),
   scale = c("none", "row", "column"),
   na.rm = TRUE,
   row_dend_left = FALSE,
@@ -167,7 +166,8 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   label_format_fun = function(...) format(..., digits = 4),
   custom_hovertext = x[["matrix"]][["custom_hovertext"]],
   dend_hoverinfo = TRUE,
-  side_color_colorbar_len = 0.3
+  side_color_colorbar_len = 0.3,
+  force.limits = FALSE
 )
 }
 \arguments{
@@ -475,6 +475,9 @@ is shown for the row and column dendrograms.}
 length of the colorbar/color key relative to the total plot height.
 This argument controls the colorbar_len of the side colour plots.
 Only used if plot_method = "plotly".}
+
+\item{force.limits}{Boolean value which controls forcing the limits even if the max
+and min values of data are out of the range}
 }
 \description{
 An object of class heatmapr includes all the needed information

@@ -278,6 +278,8 @@
 #' length of the colorbar/color key relative to the total plot height.
 #' This argument controls the colorbar_len of the side colour plots.
 #' Only used if plot_method = "plotly".
+#' @param force.limits Boolean value which controls forcing the limits even if the max
+#' and min values of data are out of the range
 #'
 #' @export
 #' @examples
