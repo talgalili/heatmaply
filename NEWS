@@ -2,9 +2,14 @@ heatmaply 1.4.1 (2022-11-12)
 ===============
 
 ## BUGFIX
+- Fix transpose issue when using scatter mode with `plot_method="plotly"`.
+
+
+heatmaply 1.4.1 (2022-11-12)
+===============
+
+## BUGFIX
 - Fix "keep annotation names without adding dots" issue #281. Props to @colejohanson.
-
-
 
 heatmaply 1.4.0 (2022-10-08)
 ===============

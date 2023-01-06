@@ -311,10 +311,9 @@ plotly_heatmap <- function(x,
     xdf <- melt(x)
     tdf <- melt(text_mat)
     pdf <- melt(point_size_mat)
-
     p <- plot_ly(
-      x = as.numeric(xdf$Var1),
-      y = as.numeric(xdf$Var2),
+      x = as.numeric(xdf$Var2),
+      y = as.numeric(xdf$Var1),
       text = tdf$value,
       color = xdf$value,
       size = pdf$value,
