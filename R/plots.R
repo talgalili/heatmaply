@@ -106,9 +106,8 @@ ggplot_heatmap <- function(xx,
 
   if (type == "heatmap") {
     geom <- "geom_tile"
-    aes_args <- list(fill = paste_aes(val), text = "text")
+    aes_mapping <- aes(fill = .data[[val]], text = text)
     geom_args <- list(
-      # mapping = aes_string(fill = paste_aes(val)),
       color = grid_color,
       size = grid_size
     )
@@ -120,35 +119,28 @@ ggplot_heatmap <- function(xx,
         mdf[["text"]], "<br>",
         point_size_name, ": ", label_format_fun(mdf[[4]])
       )
-      aes_args <- list(
-        color = paste_aes(val),
-        text = "text",
-        size = paste_aes(point_size_name)
+      aes_mapping <- aes(
+        color = .data[[val]],
+        text = text,
+        size = .data[[point_size_name]]
       )
-
-      # geom_args[["mapping"]] <- aes_string(
-      #   color = paste_aes(val),
-      #   text = "text",
-      #   size = paste_aes(point_size_name)
-      # )
     } else {
       geom_args[["size"]] <- grid_size
-      aes_args <- list(
-        color = paste_aes(val),
-        text = "text"
+      aes_mapping <- aes(
+        color = .data[[val]],
+        text = text
       )
-      # geom_args[["mapping"]] <- aes_string(color = paste_aes(val), text = "text")
     }
   }
   if (!is.null(custom_hovertext)) {
     mdf[["text"]] <- paste0(mdf[["text"]], "<br>", custom_hovertext)
   }
-  geom_args[["mapping"]] <- do.call(aes_string, aes_args)
-
+  geom_args[["mapping"]] <- aes_mapping
+  
   # TODO:
   # http://stackoverflow.com/questions/15921799/draw-lines-around-specific-areas-in-geom-tile
   # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
-  p <- ggplot(mdf, aes_string(x = paste_aes(col), y = paste_aes(row))) +
+  p <- ggplot(mdf, aes(x = .data[[col]], y = .data[[row]])) +
     ## Using the text aes produces a warning... Not ideal!
     suppressWarnings(do.call(geom, geom_args)) +
     scale_fill_gradient_fun +
@@ -509,13 +501,13 @@ ggplot_side_color_plot <- function(df,
   # } else text_element <- element_blank()
 
   if (type == "column") {
-    mapping <- aes_string(x = paste_aes(id_var), y = "variable", fill = "value")
+    mapping <- aes(x = .data[[id_var]], y = variable, fill = value)
     specific_theme <- theme(
       axis.text.x = element_blank(),
       axis.text.y = text_element
     )
   } else {
-    mapping <- aes_string(x = "variable", y = paste_aes(id_var), fill = "value")
+    mapping <- aes(x = variable, y = .data[[id_var]], fill = value)
     specific_theme <- theme(
       axis.text.x = text_element,
       axis.text.y = element_blank(),
