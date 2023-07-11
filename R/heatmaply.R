@@ -212,9 +212,11 @@
 #' arguments you want based on the ones in \link[webshot]{webshot}.
 #'
 #' Another example: heatmaply(x, file = c("heatmaply_plot.html", "heatmaply_plot.png"))
-#'
-#' @param width,height The width and height of the image saved. Default is
-#' which uses 800 x 500 pixels.
+#' @param width,height The width and height of the output htmlwidget, or the
+#' output file if exporting to png/pdf/etc. Presumed to be in pixels, but
+#' if a plotly internal function decides it's in other units you may end up
+#' with a huge file! Default is 800x500 when exporting to a file, and 100% width
+#' as a htmlwidget.
 #' @param long_data Data in long format. Replaces x, so both should not be used.
 #'  Colnames must be c("name", "variable", "value"). If you do not have a names
 #'  column you can simply use a sequence of numbers from 1 to the number of "rows"

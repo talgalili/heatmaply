@@ -3,7 +3,7 @@ heatmaply 1.4.3 (2023-07-11)
 
 ## OTHER NOTES
 
-- Setting `width` and `height` arguments now controls the size of the output plots, to some extent at least.
+- `width` and `height` arguments now control the size of the output plots, to some extent at least.
 - Improved error message when using `scale` argument with zero variance rows/columns.
 
 heatmaply 1.4.2 (2023-01-06)

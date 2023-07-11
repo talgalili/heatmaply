@@ -166,7 +166,9 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   label_format_fun = function(...) format(..., digits = 4),
   custom_hovertext = x[["matrix"]][["custom_hovertext"]],
   dend_hoverinfo = TRUE,
-  side_color_colorbar_len = 0.3
+  side_color_colorbar_len = 0.3,
+  height = NULL,
+  width = NULL
 )
 }
 \arguments{
@@ -397,8 +399,11 @@ arguments you want based on the ones in \link[webshot]{webshot}.
 
 Another example: heatmaply(x, file = c("heatmaply_plot.html", "heatmaply_plot.png"))}
 
-\item{width, height}{The width and height of the image saved. Default is
-which uses 800 x 500 pixels.}
+\item{width, height}{The width and height of the output htmlwidget, or the
+output file if exporting to png/pdf/etc. Presumed to be in pixels, but
+if a plotly internal function decides it's in other units you may end up
+with a huge file! Default is 800x500 when exporting to a file, and 100% width
+as a htmlwidget.}
 
 \item{long_data}{Data in long format. Replaces x, so both should not be used.
 Colnames must be c("name", "variable", "value"). If you do not have a names
