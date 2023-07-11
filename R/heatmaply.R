@@ -808,7 +808,9 @@ heatmaply.default <- function(x,
     point_size_name = point_size_name,
     label_format_fun = label_format_fun,
     dend_hoverinfo = dend_hoverinfo,
-    side_color_colorbar_len = side_color_colorbar_len
+    side_color_colorbar_len = side_color_colorbar_len,
+    height = height,
+    width = width
   )
 
   # TODO: think more on what should be passed in "..."
@@ -885,7 +887,9 @@ heatmaply.heatmapr <- function(x,
                                label_format_fun = function(...) format(..., digits = 4),
                                custom_hovertext = x[["matrix"]][["custom_hovertext"]],
                                dend_hoverinfo = TRUE,
-                               side_color_colorbar_len = 0.3) {
+                               side_color_colorbar_len = 0.3,
+                               height = NULL,
+                               width = NULL) {
   node_type <- match.arg(node_type)
   plot_method <- match.arg(plot_method)
   cellnote_textposition <- match.arg(
@@ -1028,7 +1032,9 @@ heatmaply.heatmapr <- function(x,
       colorbar_len = colorbar_len,
       colorbar_thickness = colorbar_thickness,
       custom_hovertext = custom_hovertext,
-      label_format_fun = label_format_fun
+      label_format_fun = label_format_fun,
+      height = height,
+      width = width
     )
   }
 
@@ -1118,15 +1124,21 @@ heatmaply.heatmapr <- function(x,
   ## plotly:
   # turn p, px, and py to plotly objects if necessary
   if (!is.plotly(p)) {
-    p <- ggplotly(p, dynamicTicks = dynamicTicks, tooltip = "text") %>%
-      layout(showlegend = FALSE)
-    ## Currently broken, see:
-    ##  https://github.com/ropensci/plotly/issues/1701
-    # %>%
-    # colorbar(
-    #   len = colorbar_len,
-    #   thickness = colorbar_thickness
-    # )
+    p <- ggplotly(
+        p,
+        dynamicTicks = dynamicTicks,
+        tooltip = "text",
+        height = height,
+        width = width
+      ) %>%
+        layout(showlegend = FALSE)
+      ## Currently broken, see:
+      ##  https://github.com/ropensci/plotly/issues/1701
+      # %>%
+      # colorbar(
+      #   len = colorbar_len,
+      #   thickness = colorbar_thickness
+      # )
   }
 
   if (draw_cellnote) {
