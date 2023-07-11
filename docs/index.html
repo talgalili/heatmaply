@@ -48,7 +48,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">heatmaply</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4.3</span>
       </span>
     </div>
 
@@ -162,30 +162,24 @@
 <p>There are also more complex biological examples of using heatmaply in the R package <a href="https://github.com/talgalili/heatmaplyExamples" class="external-link">heatmaplyExamples</a> (hosted on github). Here are direct links for available examples:</p>
 <ul>
 <li><a href="https://CRAN.R-project.org/package=heatmaply/vignettes/heatmaply.html" class="external-link">Introduction to heatmaply</a></li>
-<li>General biological examples
-<ul>
+<li>General biological examples<ul>
 <li><a href="https://cdn.jsdelivr.net/gh/talgalili/heatmaplyExamples@master/inst/doc/measles.html" class="external-link">Using heatmaply with the measles data set</a></li>
 <li><a href="https://cdn.jsdelivr.net/gh/talgalili/heatmaplyExamples@master/inst/doc/heatmaply_examples.html" class="external-link">Using heatmaply with famous data sets</a></li>
 </ul>
 </li>
-<li>Reproducing heatmaps from papers published in Nature
-<ul>
+<li>Reproducing heatmaps from papers published in Nature<ul>
 <li><a href="https://cdn.jsdelivr.net/gh/talgalili/heatmaplyExamples@master/inst/doc/reproducing_Nature_2015_Kotsyfakis.html" class="external-link">Using heatmaply to reproduce Nature (2015) Kotsyfakis et al.</a></li>
 <li><a href="https://cdn.jsdelivr.net/gh/talgalili/heatmaplyExamples@master/inst/doc/reproducing_Nature_2015_Alfano.html" class="external-link">Using heatmaply to reproduce Nature (2015) Alfano et al.</a></li>
 </ul>
 </li>
-<li>Using heatmaply with gene expression data
-<ul>
+<li>Using heatmaply with gene expression data<ul>
 <li>Visualization of raw and voom-transformed data (all genes) (url offline, you could combile this on your own)</li>
 <li>Visualization of raw data (median-centered data, PAM50 genes only) (url offline, you could combile this on your own)</li>
 <li>Visualization of voom-transformed data (median-centered data, PAM50 genes only) (url offline, you could combile this on your own)</li>
 <li><a href="https://cdn.jsdelivr.net/gh/talgalili/heatmaplyExamples@master/inst/doc/non_centred_heatmaps.html" class="external-link">Using heatmaply with non-centred RNAseq heatmaps (PAM50 genes)</a></li>
 </ul>
 </li>
-<li>General examples
-<ul>
-<li><a href="https://cdn.jsdelivr.net/gh/talgalili/heatmaplyExamples@master/inst/doc/glmnet.html" class="external-link">Using heatmaply for visualizing glmnet coefficient path</a></li>
-</ul>
+<li>General examples<ul><li><a href="https://cdn.jsdelivr.net/gh/talgalili/heatmaplyExamples@master/inst/doc/glmnet.html" class="external-link">Using heatmaply for visualizing glmnet coefficient path</a></li></ul>
 </li>
 </ul>
 <div class="section level3">
@@ -212,15 +206,14 @@
 <p>The package d3heatmap (<a href="https://github.com/talgalili/d3heatmap" class="external-link uri">https://github.com/talgalili/d3heatmap</a>) is no not actively maintained.</p>
 <p>If users are interested in replacing their <code>d3heatmap</code> functions, this is easily done with <code>heatmaply</code>:</p>
 <ul>
-<li>Function calls <code><a href="https://rdrr.io/pkg/d3heatmap/man/d3heatmap.html" class="external-link">d3heatmap::d3heatmap()</a></code> can be replaced with <code><a href="reference/heatmaply.html">heatmaply::heatmaply()</a></code>
+<li>Function calls <code>d3heatmap::d3heatmap()</code> can be replaced with <code><a href="reference/heatmaply.html">heatmaply::heatmaply()</a></code>
 </li>
-<li>Users of <code>d3heatmap</code> for <code>shiny</code> applications can use the following functions:
-<ul>
+<li>Users of <code>d3heatmap</code> for <code>shiny</code> applications can use the following functions:<ul>
 <li>
-<code><a href="https://rdrr.io/pkg/d3heatmap/man/d3heatmapOutput.html" class="external-link">d3heatmap::d3heatmapOutput()</a></code> can be replaced with <code><a href="https://rdrr.io/pkg/plotly/man/plotly-shiny.html" class="external-link">plotly::plotlyOutput()</a></code>
+<code>d3heatmap::d3heatmapOutput()</code> can be replaced with <code><a href="https://rdrr.io/pkg/plotly/man/plotly-shiny.html" class="external-link">plotly::plotlyOutput()</a></code>
 </li>
 <li>
-<code><a href="https://rdrr.io/pkg/d3heatmap/man/d3heatmapOutput.html" class="external-link">d3heatmap::renderD3heatmap()</a></code> can be replaced with <code><a href="https://rdrr.io/pkg/plotly/man/plotly-shiny.html" class="external-link">plotly::renderPlotly()</a></code>
+<code>d3heatmap::renderD3heatmap()</code> can be replaced with <code><a href="https://rdrr.io/pkg/plotly/man/plotly-shiny.html" class="external-link">plotly::renderPlotly()</a></code>
 </li>
 </ul>
 </li>
@@ -238,19 +231,19 @@
 <h2 id="how-to-cite-the-heatmaply-package">How to cite the heatmaply package<a class="anchor" aria-label="anchor" href="#how-to-cite-the-heatmaply-package"></a>
 </h2>
 <p>The methods within the package can be cited as:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Tal Galili, Alan O<span class="st">'Callaghan, Jonathan Sidi, Carson Sievert; heatmaply: an R package for creating</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">interactive cluster heatmaps for online publishing, Bioinformatics, , btx657,</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">https://doi.org/10.1093/bioinformatics/btx657</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>Tal Galili, Alan O<span class="st">'Callaghan, Jonathan Sidi, Carson Sievert; heatmaply: an R package for creating</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="st">interactive cluster heatmaps for online publishing, Bioinformatics, , btx657,</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="st">https://doi.org/10.1093/bioinformatics/btx657</span></span></code></pre></div>
 <p>A BibTeX entry for LaTeX users is</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">@</span>Article{,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  author <span class="ot">=</span> {{Galili} and {Tal} and {O<span class="st">'Callaghan} and {Alan} and {Sidi} and {Jonathan} and {Sievert} and {Carson}},</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">  title = {heatmaply: an R package for creating interactive cluster heatmaps for online publishing},</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">  journal = {Bioinformatics},</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">  year = {2017},</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="st">  doi = {10.1093/bioinformatics/btx657},</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="st">  url = {https://dx.doi.org/10.1093/bioinformatics/btx657},</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="st">  eprint = {https://academic.oup.com/bioinformatics/article-pdf/doi/10.1093/bioinformatics/btx657/21358327/btx657.pdf},</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="op">@</span>Article{,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>  author =<span class="st"> </span>{{Galili} and {Tal} and {O<span class="st">'Callaghan} and {Alan} and {Sidi} and {Jonathan} and {Sievert} and {Carson}},</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="st">  title = {heatmaply: an R package for creating interactive cluster heatmaps for online publishing},</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="st">  journal = {Bioinformatics},</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="st">  year = {2017},</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="st">  doi = {10.1093/bioinformatics/btx657},</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a><span class="st">  url = {https://dx.doi.org/10.1093/bioinformatics/btx657},</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a><span class="st">  eprint = {https://academic.oup.com/bioinformatics/article-pdf/doi/10.1093/bioinformatics/btx657/21358327/btx657.pdf},</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a><span class="st">}</span></span></code></pre></div>
 <p>This free open-source software implements academic research by the authors and co-workers. If you use it, please support the project by citing the appropriate journal articles.</p>
 </div>
 <div class="section level2">
@@ -313,7 +306,7 @@
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/talgalili/heatmaply" class="external-link"><img src="https://travis-ci.org/talgalili/heatmaply.png?branch=master" alt="Build Status"></a></li>
 <li><a href="https://github.com/talgalili/heatmaply/actions" class="external-link pkgdown-devel"><img src="https://github.com/talgalili/heatmaply/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://codecov.io/gh/talgalili/heatmaply" class="external-link"><img src="https://codecov.io/gh/talgalili/heatmaply/branch/master/graph/badge.svg?token=cl7mOAKWTI" alt="codecov"></a></li>
+<li><a href="https://app.codecov.io/gh/talgalili/heatmaply" class="external-link"><img src="https://codecov.io/gh/talgalili/heatmaply/branch/master/graph/badge.svg?token=cl7mOAKWTI" alt="codecov"></a></li>
 <li><a href="https://cran.r-project.org/package=heatmaply" class="external-link"><img src="https://www.r-pkg.org/badges/version/heatmaply" alt="CRAN_Status_Badge"></a></li>
 </ul>
 </div>
@@ -329,7 +322,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
