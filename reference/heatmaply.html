@@ -232,7 +232,9 @@ for correlation matrixes. Specifically, the limits are set from -1 to 1, and the
 <span>  label_format_fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">...</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,</span>
 <span>  custom_hovertext <span class="op">=</span> <span class="va">x</span><span class="op">[[</span><span class="st">"matrix"</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="st">"custom_hovertext"</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>  dend_hoverinfo <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  side_color_colorbar_len <span class="op">=</span> <span class="fl">0.3</span></span>
+<span>  side_color_colorbar_len <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span>  height <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  width <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -575,8 +577,11 @@ arguments you want based on the ones in <a href="http://wch.github.io/webshot/re
 
 
 <dt>width, height</dt>
-<dd><p>The width and height of the image saved. Default is
-which uses 800 x 500 pixels.</p></dd>
+<dd><p>The width and height of the output htmlwidget, or the
+output file if exporting to png/pdf/etc. Presumed to be in pixels, but
+if a plotly internal function decides it's in other units you may end up
+with a huge file! Default is 800x500 when exporting to a file, and 100<!-- % width -->
+as a htmlwidget.</p></dd>
 
 
 <dt>long_data</dt>
