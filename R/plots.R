@@ -1,39 +1,3 @@
-
-
-# heatmaply:::ggplot_heatmap(as.matrix(mtcars))
-# heatmaply:::plotly_heatmap(as.matrix(mtcars))
-# style(plotly_heatmap(as.matrix(mtcars)), xgap = 5, ygap = 5)
-
-
-
-
-#
-# library(ggplot2)
-# library(plotly)
-# # library(heatmaply)
-# ggplot_heatmap <- heatmaply:::ggplot_heatmap
-# class_to <- function(x, new_class) {
-#   class(x) <- new_class
-#   x
-# }
-# na_mat <- function(x) {
-#   x %>% is.na %>% class_to("numeric")
-# }
-#
-# p <- heatmaply:::ggplot_heatmap(na_mat(airquality),
-#                     scale_fill_gradient_fun = scale_fill_gradientn(colors= c("white","black")) ,
-#                     grid_color = "grey", grid_size = 1)
-# plot(p)
-# ggplotly(p)
-# p <- ggplot_heatmap(mtcars,
-#                     grid_color = "white")
-# p
-#
-
-
-# heatmaply:::ggplot_heatmap(as.matrix(mtcars))
-
-
 # xx is a data matrix
 ggplot_heatmap <- function(xx,
                            row_text_angle = 0,
@@ -106,7 +70,7 @@ ggplot_heatmap <- function(xx,
 
   if (type == "heatmap") {
     geom <- "geom_tile"
-    aes_mapping <- aes(fill = .data[[val]], text = text)
+    aes_mapping <- aes(fill = .data[[val]], text = .data$text)
     geom_args <- list(
       color = grid_color,
       size = grid_size
@@ -121,14 +85,14 @@ ggplot_heatmap <- function(xx,
       )
       aes_mapping <- aes(
         color = .data[[val]],
-        text = text,
+        text = .data$text,
         size = .data[[point_size_name]]
       )
     } else {
       geom_args[["size"]] <- grid_size
       aes_mapping <- aes(
         color = .data[[val]],
-        text = text
+        text = .data$text
       )
     }
   }
@@ -500,13 +464,13 @@ ggplot_side_color_plot <- function(df,
   # } else text_element <- element_blank()
 
   if (type == "column") {
-    mapping <- aes(x = .data[[id_var]], y = variable, fill = value)
+    mapping <- aes(x = .data[[id_var]], y = .data$variable, fill = .data$value)
     specific_theme <- theme(
       axis.text.x = element_blank(),
       axis.text.y = text_element
     )
   } else {
-    mapping <- aes(x = variable, y = .data[[id_var]], fill = value)
+    mapping <- aes(x = .data$value, y = .data[[id_var]], fill = .data$value)
     specific_theme <- theme(
       axis.text.x = text_element,
       axis.text.y = element_blank(),

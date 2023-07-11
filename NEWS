@@ -1,18 +1,3 @@
-heatmaply 1.4.4 (2023-06-11)
-===============
-
-## OTHER NOTES
-
-- Improved error message when using `scale` argument with zero variance rows/columns.
-
-heatmaply 1.4.3 (2023-03-22)
-===============
-
-## BUGFIX
-
-- Fix behaviour when the data fall outside the range of the specified colour scales.
-
-
 heatmaply 1.4.2 (2023-01-06)
 ===============
 
