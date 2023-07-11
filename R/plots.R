@@ -470,7 +470,7 @@ ggplot_side_color_plot <- function(df,
       axis.text.y = text_element
     )
   } else {
-    mapping <- aes(x = .data$value, y = .data[[id_var]], fill = .data$value)
+    mapping <- aes(x = .data$variable, y = .data[[id_var]], fill = .data$value)
     specific_theme <- theme(
       axis.text.x = text_element,
       axis.text.y = element_blank(),

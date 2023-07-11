@@ -277,7 +277,7 @@ heatmapr <- function(x,
   if (scale == "row") {
     x <- scaler(x, "rows")
   } else if (scale == "column") {
-    x <- scaler(t(x), "columns")
+    x <- t(scaler(t(x), "columns"))
   }
 
   ## Dendrograms for Row/Column
