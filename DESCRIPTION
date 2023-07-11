@@ -2,7 +2,7 @@ Package: heatmaply
 Type: Package
 Title: Interactive Cluster Heat Maps Using 'plotly' and 'ggplot2'
 Version: 1.4.3
-Date: 2023-06-11
+Date: 2023-07-11
 Authors@R: c(
     person("Tal", "Galili", role = c("aut", "cre", "cph"), email = "tal.galili@gmail.com", comment = "https://www.r-statistics.com"),
     person("Alan", "O'Callaghan", comment = "https://github.com/Alanocallaghan",role = "aut"),
