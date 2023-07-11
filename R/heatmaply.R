@@ -592,6 +592,27 @@ heatmaply.default <- function(x,
   # this is to fix the error: "argument * matches multiple formal arguments"
   if (!is.null(col)) colors <- col
 
+
+  # informative errors for mis-specified limits
+  if (!is.null(limits)) {
+    if (!is.numeric(limits)) stop("limits must be numeric")
+    if (length(limits) != 2L) stop("limits must be of length 2 (i.e.: two dimensional)")
+
+    r <- range(as.matrix(x), na.rm = TRUE)
+    limits <- sort(limits)
+
+  
+    ## Warn for broken heatmap colors
+    if (limits[1] > r[1]) {
+      limits[1] <- r[1]
+      warning("Lower limit is not <= lowest value in x, min of limits is set to the min of the range (otherwise, colors will be broken!)")
+    }
+    if (limits[2] < r[2]) {
+      limits[2] <- r[2]
+      warning("Upper limit is not >= highest value in x, max of limits is set to the max of the range (otherwise, colors will be broken!)")
+    }
+  }
+
   if (is.null(scale_fill_gradient_fun)) {
     if (node_type == "heatmap") {
       scale_fill_gradient_fun <- scale_fill_gradientn(
@@ -886,24 +907,6 @@ heatmaply.heatmapr <- function(x,
   }
 
 
-  # informative errors for mis-specified limits
-  if (!is.null(limits)) {
-    if (!is.numeric(limits)) stop("limits must be numeric")
-    if (length(limits) != 2L) stop("limits must be of length 2 (i.e.: two dimensional)")
-
-    r <- range(as.matrix(x$matrix$data), na.rm = TRUE)
-    limits <- sort(limits)
-
-    ## Warn for broken heatmap colors
-    if (limits[1] > r[1]) {
-      limits[1] <- r[1]
-      warning("Lower limit is not <= lowest value in x, min of limits is set to the min of the range (otherwise, colors will be broken!)")
-    }
-    if (limits[2] < r[2]) {
-      limits[2] <- r[2]
-      warning("Upper limit is not >= highest value in x, max of limits is set to the max of the range (otherwise, colors will be broken!)")
-    }
-  }
   if (!is.null(srtRow)) row_text_angle <- srtRow
   if (!is.null(srtCol)) column_text_angle <- srtCol
 
