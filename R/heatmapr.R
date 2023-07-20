@@ -265,19 +265,20 @@ heatmapr <- function(x,
   ## ====================
   scale <- match.arg(scale)
 
-  scaler <- function(x, dim) {
-    x <- sweep(x, 1, rowMeans(x, na.rm = na.rm))
-    sds <- apply(x, 1, sd, na.rm = na.rm)
+  scaler <- function(x, dim = c(1, 2)) {
+    x <- sweep(x, dim, apply(x, dim, mean, na.rm=na.rm))
+    sds <- apply(x, dim, sd, na.rm = na.rm)
     if (any(sds == 0)) {
-      stop(paste0("Some ", dim, " have zero variance."))
+      dn <- if (dim == 1) "row(s)" else "column(s)"
+      stop(paste0("Some ", dn, " have zero variance."))
     }
-    sweep(x, 1, sds, "/")
+    sweep(x, dim, sds, "/")
   }
 
   if (scale == "row") {
-    x <- scaler(x, "rows")
+    x <- scaler(x, 1)
   } else if (scale == "column") {
-    x <- t(scaler(t(x), "columns"))
+    x <- scaler(x, 2)
   }
 
   ## Dendrograms for Row/Column
