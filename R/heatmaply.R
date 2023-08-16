@@ -280,6 +280,8 @@
 #' length of the colorbar/color key relative to the total plot height.
 #' This argument controls the colorbar_len of the side colour plots.
 #' Only used if plot_method = "plotly".
+#' @param source a string which will be added to the final heatmap plotly object. 
+#' Important in Rshiny to differentiate between multiple plots.
 #'
 #' @export
 #' @examples
@@ -576,7 +578,8 @@ heatmaply.default <- function(x,
                               custom_hovertext = NULL,
                               col = NULL,
                               dend_hoverinfo = TRUE,
-                              side_color_colorbar_len = 0.3) {
+                              side_color_colorbar_len = 0.3,
+                              source = "A") {
   if (!is.null(long_data)) {
     if (!missing(x)) {
       stop("x and long_data should not be used together")
@@ -589,21 +592,21 @@ heatmaply.default <- function(x,
     rownames(x) <- x$name
     x$name <- NULL
   }
-
-
+  
+  
   # this is to fix the error: "argument * matches multiple formal arguments"
   if (!is.null(col)) colors <- col
-
-
+  
+  
   # informative errors for mis-specified limits
   if (!is.null(limits)) {
     if (!is.numeric(limits)) stop("limits must be numeric")
     if (length(limits) != 2L) stop("limits must be of length 2 (i.e.: two dimensional)")
-
+    
     r <- range(as.matrix(x), na.rm = TRUE)
     limits <- sort(limits)
-
-  
+    
+    
     ## Warn for broken heatmap colors
     if (limits[1] > r[1]) {
       limits[1] <- r[1]
@@ -614,7 +617,7 @@ heatmaply.default <- function(x,
       warning("Upper limit is not >= highest value in x, max of limits is set to the max of the range (otherwise, colors will be broken!)")
     }
   }
-
+  
   if (is.null(scale_fill_gradient_fun)) {
     if (node_type == "heatmap") {
       scale_fill_gradient_fun <- scale_fill_gradientn(
@@ -628,19 +631,19 @@ heatmaply.default <- function(x,
       )
     }
   }
-
+  
   plot_method <- match.arg(plot_method)
-
+  
   if (plot_method == "ggplot") {
-
+    
     ## Suppress creation of new graphcis device, but on exit replace it.
     ## TODO: Avoid this or find better method
     old_dev <- options()[["device"]]
     on.exit(options(device = old_dev))
     options(device = names(capabilities()[which(capabilities())])[1])
   }
-
-
+  
+  
   if (is.logical(dendrogram)) {
     # Using if and not ifelse to make sure the output is a "scalar".
     dendrogram <- if (dendrogram) "both" else "none"
@@ -648,11 +651,11 @@ heatmaply.default <- function(x,
     # if(F) "both" else "none"
   }
   dendrogram <- match.arg(dendrogram)
-
+  
   if (!(is.data.frame(x) | is.matrix(x))) {
     stop("x must be either a data.frame or a matrix.")
   }
-
+  
   if (!is.null(srtRow)) {
     row_text_angle <- srtRow
   }
@@ -665,14 +668,14 @@ heatmaply.default <- function(x,
   if (!is.null(RowSideColors)) {
     row_side_colors <- RowSideColors
   }
-
+  
   if (!is.null(cexRow)) {
     fontsize_row <- if (is.numeric(cexRow)) cexRow * 10 else cexRow
   }
   if (!is.null(cexCol)) {
     fontsize_col <- if (is.numeric(cexCol)) cexCol * 10 else cexCol
   }
-
+  
   # TODO: maybe create heatmaply.data.frame heatmaply.matrix instead.
   #       But right now I am not sure this would be needed.
   if (is.data.frame(x)) {
@@ -681,12 +684,12 @@ heatmaply.default <- function(x,
   if (is.matrix(x)) {
     ss_c_numeric <- apply(x, 2, is.numeric)
   }
-
+  
   # We must have some numeric values to be able to make a heatmap
   if (!any(ss_c_numeric)) {
     stop("heatmaply only works for data.frame/matrix which includes some numeric columns.")
   }
-
+  
   # If we have non-numeric columns, we should move them to row_side_colors
   # TODO: add a parameter to control removing of non-numeric columns without moving them to row_side_colors
   if (!all(ss_c_numeric)) {
@@ -717,17 +720,17 @@ heatmaply.default <- function(x,
   if (length(showticklabels) == 1) {
     showticklabels <- rep(showticklabels, 2)
   }
-
+  
   # help dendrogram work again:
   if (dendrogram == "row") Colv <- FALSE
   if (dendrogram == "column") Rowv <- FALSE
   if (dendrogram == "none") Rowv <- Colv <- FALSE
-
+  
   # this also occurs in heatmapr, so it may be o.k. to remove the following line.
   seriate <- match.arg(seriate)
-
+  
   if (is.numeric(cellnote_color)) cellnote_color <- grDevices::palette()[cellnote_color]
-
+  
   hm <- heatmapr(
     x,
     row_side_colors = row_side_colors,
@@ -735,7 +738,7 @@ heatmaply.default <- function(x,
     point_size_mat = point_size_mat,
     seriate = seriate,
     cellnote = cellnote,
-
+    
     ## dendrogram control
     Rowv = Rowv,
     Colv = Colv,
@@ -754,13 +757,14 @@ heatmaply.default <- function(x,
     k_col = k_col,
     symm = symm,
     revC = revC,
-
+    
     ## data scaling
     scale = scale,
     na.rm = na.rm,
     custom_hovertext = custom_hovertext,
     labRow = labRow,
     labCol = labCol,
+    source = source,
     ...
   )
   hmly <- heatmaply(
@@ -812,16 +816,17 @@ heatmaply.default <- function(x,
     dend_hoverinfo = dend_hoverinfo,
     side_color_colorbar_len = side_color_colorbar_len,
     height = height,
-    width = width
+    width = width,
+    source = source
   )
-
+  
   # TODO: think more on what should be passed in "..."
-
-
+  
+  
   if (!is.null(file)) {
     hmly_to_file(hmly = hmly, file = file, width = width, height = height)
   }
-
+  
   hmly
 }
 
@@ -891,7 +896,8 @@ heatmaply.heatmapr <- function(x,
                                dend_hoverinfo = TRUE,
                                side_color_colorbar_len = 0.3,
                                height = NULL,
-                               width = NULL) {
+                               width = NULL,
+                               source = "A") {
   node_type <- match.arg(node_type)
   plot_method <- match.arg(plot_method)
   cellnote_textposition <- match.arg(
@@ -902,22 +908,22 @@ heatmaply.heatmapr <- function(x,
       "bottom right"
     )
   )
-
+  
   is.Rgui <- function(...) {
     .Platform$GUI == "Rgui" # if running on MAC OS, this would likely be "AQUA"
   }
-
+  
   if (is.Rgui()) {
     # print(p) # solves R crashes - not sure why...
     dev.new() # it seems we need just some device to be open...
   }
-
-
+  
+  
   if (!is.null(srtRow)) row_text_angle <- srtRow
   if (!is.null(srtCol)) column_text_angle <- srtCol
-
-
-
+  
+  
+  
   # x is a heatmapr object.
   # heatmapr <- list(rows = rowDend, cols = colDend, matrix = mtx, image = imgUri,
   #                  theme = theme, options = options)
@@ -940,7 +946,7 @@ heatmaply.heatmapr <- function(x,
   # dendrograms:
   rows <- x$rows
   cols <- x$cols
-
+  
   if (!is.null(branches_lwd) && branches_lwd != 1) {
     if (is.dendrogram(rows) && !has_edgePar(rows, "lwd")) {
       rows <- set(rows, "branches_lwd", branches_lwd)
@@ -949,9 +955,9 @@ heatmaply.heatmapr <- function(x,
       cols <- set(cols, "branches_lwd", branches_lwd)
     }
   }
-
-
-
+  
+  
+  
   # this is using dendextend
   if (is.null(cols)) {
     py <- NULL
@@ -966,8 +972,8 @@ heatmaply.heatmapr <- function(x,
         dendrogram_layers
     } else {
       py <- plotly_dend(cols,
-        side = "col",
-        dend_hoverinfo = dend_hoverinfo
+                        side = "col",
+                        dend_hoverinfo = dend_hoverinfo
       )
     }
   }
@@ -977,7 +983,7 @@ heatmaply.heatmapr <- function(x,
     if (plot_method == "ggplot") {
       row_ggdend <- as.ggdend(rows)
       ylims <- c(0.5, nrow(row_ggdend$labels) + 0.5)
-
+      
       px <- ggplot(row_ggdend, labels = FALSE, na.rm = TRUE) +
         theme_bw() +
         coord_flip(expand = FALSE, xlim = ylims) +
@@ -988,15 +994,15 @@ heatmaply.heatmapr <- function(x,
       }
     } else {
       px <- plotly_dend(rows,
-        flip = row_dend_left,
-        side = "row",
-        dend_hoverinfo = dend_hoverinfo
+                        flip = row_dend_left,
+                        side = "row",
+                        dend_hoverinfo = dend_hoverinfo
       )
     }
   }
   # create the heatmap
   data_mat <- x$matrix$data
-
+  
   if (plot_method == "ggplot") {
     p <- ggplot_heatmap(
       data_mat,
@@ -1039,8 +1045,8 @@ heatmaply.heatmapr <- function(x,
       width = width
     )
   }
-
-
+  
+  
   # TODO: Possibly use function to generate all 3 plots to prevent complex logic here
   if (is.null(row_side_colors)) {
     pr <- NULL
@@ -1076,7 +1082,7 @@ heatmaply.heatmapr <- function(x,
       )
     }
   }
-
+  
   if (is.null(col_side_colors)) {
     pc <- NULL
   } else {
@@ -1109,7 +1115,7 @@ heatmaply.heatmapr <- function(x,
       )
     }
   }
-
+  
   if (return_ppxpy) {
     return(list(p = p, px = px, py = py, pr = pr, pc = pc))
   } else {
@@ -1122,44 +1128,44 @@ heatmaply.heatmapr <- function(x,
       pr <- layout(pr, showlegend = TRUE)
     }
   }
-
+  
   ## plotly:
   # turn p, px, and py to plotly objects if necessary
   if (!is.plotly(p)) {
     p <- ggplotly(
-        p,
-        dynamicTicks = dynamicTicks,
-        tooltip = "text",
-        height = height,
-        width = width
-      ) %>%
-        layout(showlegend = FALSE)
-      ## Currently broken, see:
-      ##  https://github.com/ropensci/plotly/issues/1701
-      # %>%
-      # colorbar(
-      #   len = colorbar_len,
-      #   thickness = colorbar_thickness
-      # )
+      p,
+      dynamicTicks = dynamicTicks,
+      tooltip = "text",
+      height = height,
+      width = width
+    ) %>%
+      layout(showlegend = FALSE)
+    ## Currently broken, see:
+    ##  https://github.com/ropensci/plotly/issues/1701
+    # %>%
+    # colorbar(
+    #   len = colorbar_len,
+    #   thickness = colorbar_thickness
+    # )
   }
-
+  
   if (draw_cellnote) {
     ## Predict cell color luminosity based on colorscale
     if (cellnote_color == "auto") {
       cellnote_color <- predict_colors(p, plot_method = plot_method)
     }
     data_mdf <- melt_df(x[["matrix"]][["data"]], label_names)
-
+    
     cellnote_df <- as.data.frame(x[["matrix"]][["cellnote"]])
     cellnote_df[["_row"]] <- seq_len(nrow(cellnote_df))
     cellnote_mdf <- reshape2::melt(cellnote_df, id.vars = "_row")
     cellnote_mdf[["__data_value"]] <- data_mdf[[label_names[[3]]]]
-
+    
     ## TODO: Enforce same dimnames to ensure it's not scrambled?
     # cellnote_mdf$variable <- factor(cellnote_mdf$variable, levels = p$x$layout$xaxis$ticktext)
     cellnote_mdf$variable <- as.numeric(as.factor(cellnote_mdf$variable))
     cellnote_mdf$value <- factor(cellnote_mdf$value)
-
+    
     p <- p %>% add_trace(
       data = cellnote_mdf,
       x = ~variable,
@@ -1180,22 +1186,22 @@ heatmaply.heatmapr <- function(x,
       textfont = list(color = plotly::toRGB(cellnote_color), size = cellnote_size)
     )
   }
-
+  
   if (!is.null(px) && !is.plotly(px)) {
     px <- ggplotly(px,
-      tooltip = if (dend_hoverinfo) "y" else "none",
-      dynamicTicks = dynamicTicks
+                   tooltip = if (dend_hoverinfo) "y" else "none",
+                   dynamicTicks = dynamicTicks
     ) %>%
       layout(showlegend = FALSE)
   }
   if (!is.null(py) && !is.plotly(py)) {
     py <- ggplotly(py,
-      tooltip = if (dend_hoverinfo) "y" else "none",
-      dynamicTicks = dynamicTicks
+                   tooltip = if (dend_hoverinfo) "y" else "none",
+                   dynamicTicks = dynamicTicks
     ) %>%
       layout(showlegend = FALSE)
   }
-
+  
   # https://plot.ly/r/reference/#Layout_and_layout_style_objects
   p <- layout(
     p, # all of layout's properties: /r/reference/#layout
@@ -1211,10 +1217,10 @@ heatmaply.heatmapr <- function(x,
   if (hide_colorbar) {
     p <- hide_colorbar(p)
   }
-
+  
   # Adjust top based on whether main is empty or not.
   if (is.na(margins[3])) margins[3] <- ifelse(main == "", 0, 30)
-
+  
   rn <- c(rownames(data_mat), colnames(x[["col_side_colors"]]))
   min_marg_row <- calc_margin(rn, fontsize = p$x$layout$yaxis$tickfont$size)
   if (row_dend_left && is.na(margins[4])) {
@@ -1226,7 +1232,7 @@ heatmaply.heatmapr <- function(x,
     cn <- c(colnames(data_mat), colnames(x[["row_side_colors"]]))
     margins[1] <- calc_margin(cn, fontsize = p$x$layout$yaxis$tickfont$size)
   }
-
+  
   # add a white grid
   if (grid_gap > 0) {
     p <- style(p, xgap = grid_gap, ygap = grid_gap, traces = 1)
@@ -1240,8 +1246,8 @@ heatmaply.heatmapr <- function(x,
       }
     }
   }
-
-
+  
+  
   if (!all(showticklabels)) {
     if (!showticklabels[[1]]) {
       p <- p %>%
@@ -1261,7 +1267,7 @@ heatmaply.heatmapr <- function(x,
     # layout(yaxis = list(tickmode='auto'),
     #        xaxis = list(tickmode='auto'))
   }
-
+  
   heatmap_subplot <- heatmap_subplot_from_ggplotly(
     p = p,
     px = px,
@@ -1282,14 +1288,24 @@ heatmaply.heatmapr <- function(x,
     margin = list(l = margins[2], b = margins[1], t = margins[3], r = margins[4]),
     legend = list(y = 1, yanchor = "top")
   )
-
+  
   # keep only relevant plotly options
   l <- config(
     l,
     displaylogo = FALSE,
     modeBarButtonsToRemove = c("sendDataToCloud", "select2d", "lasso2d", "autoScale2d", "hoverClosestCartesian", "hoverCompareCartesian", "sendDataToCloud")
   )
-
+  
+  # Change the source of the combined plot, if source != "A"
+  if (!source == "A"){
+    
+    if (!is.character(source)){
+      stop("Source was not a string.")
+    }
+    
+    l$x$source <- source
+  }
+  
   l
 }
 
@@ -1327,13 +1343,13 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
     widths <- rev(widths)
   }
   heights <- heights %||% rev(default_dims(py, pc))
-
-
+  
+  
   # make different plots based on which dendrogram and sidecolors we have
   row1_list <- list(py, plotly_empty(), plotly_empty())
   row2_list <- list(pc, plotly_empty(), plotly_empty())
   row3_list <- list(p, pr, px)
-
+  
   if (row_dend_left) {
     row3_list <- rev(row3_list)
     row2_list <- rev(row2_list)
@@ -1344,16 +1360,16 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
     row2_list,
     row3_list
   )
-
+  
   column_list <- list(py, pc, p)
   ind_null_col <- sapply(column_list, is.null)
   ## number of rows depends on vertically aligned components
   nrows <- sum(!ind_null_col)
   ind_remove_col <- rep(ind_null_col, each = length(plots) / 3)
-
+  
   ind_null_row <- sapply(row3_list, is.null)
   ind_remove_row <- rep(ind_null_row, length.out = length(plots))
-
+  
   if (sum(!ind_null_col) != length(heights)) {
     stop(paste(
       "Number of subplot_heights supplied is not correct; should be",
@@ -1366,10 +1382,10 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
       sum(!ind_null_row), "but is", length(widths)
     ))
   }
-
+  
   ## Remove all null plots
   plots <- plots[!(ind_remove_row | ind_remove_col)]
-
+  
   ## Interim solution before removing warnings in documented way
   suppressMessages(
     suppressWarnings(
@@ -1386,7 +1402,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
       )
     )
   )
-
+  
   if (plot_method == "plotly") {
     if (row_dend_left) {
       num_rows <- sum(!ind_null_row)
@@ -1407,8 +1423,8 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
       s <- lay(s)
     }
   }
-
-
+  
+  
   # s <- subplot(plots,
   #   nrows = nrows,
   #   widths = if(row_dend_left) rev(widths) else widths,
@@ -1416,8 +1432,8 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
   #   titleX = titleX, titleY = titleY,
   #   margin = subplot_margin,
   #   heights = heights)
-
-
+  
+  
   return(s)
 }
 
