@@ -103,7 +103,8 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   custom_hovertext = NULL,
   col = NULL,
   dend_hoverinfo = TRUE,
-  side_color_colorbar_len = 0.3
+  side_color_colorbar_len = 0.3,
+  plotly_source = "A"
 )
 
 \method{heatmaply}{heatmapr}(
@@ -167,6 +168,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   custom_hovertext = x[["matrix"]][["custom_hovertext"]],
   dend_hoverinfo = TRUE,
   side_color_colorbar_len = 0.3,
+  plotly_source = "A",
   height = NULL,
   width = NULL
 )
@@ -479,6 +481,8 @@ is shown for the row and column dendrograms.}
 length of the colorbar/color key relative to the total plot height.
 This argument controls the colorbar_len of the side colour plots.
 Only used if plot_method = "plotly".}
+
+\item{plotly_source}{See \code{source} argument in \code{\link[plotly]{plot_ly}}}
 }
 \description{
 An object of class heatmapr includes all the needed information

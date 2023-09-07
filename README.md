@@ -1,5 +1,3 @@
-
-[![Build Status](https://travis-ci.org/talgalili/heatmaply.png?branch=master)](https://travis-ci.org/talgalili/heatmaply)
 <a href="https://github.com/talgalili/heatmaply/actions"
 class="pkgdown-devel"><img
 src="https://github.com/talgalili/heatmaply/workflows/R-CMD-check/badge.svg"
@@ -13,12 +11,19 @@ alt="R-CMD-check" /></a>
 
 **Table of contents:**
 
-* [Introduction](#introduction)
-* [Installation](#installation)
-* [Usage](#usage)
-* [Acknowledgements](#acknowledgements)
-* [How to cite the heatmaply package](#how-to-cite-the-heatmaply-package)
-* [Contact](#contact)
+- [heatmaply](#heatmaply)
+  - [Screenshot demo](#screenshot-demo)
+  - [Introduction](#introduction)
+    - [Please submit features requests](#please-submit-features-requests)
+    - [Latest news](#latest-news)
+    - [Code of conduct](#code-of-conduct)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Saving your heatmaply into a file](#saving-your-heatmaply-into-a-file)
+    - [Replacing d3heatmap with heatmaply](#replacing-d3heatmap-with-heatmaply)
+  - [Acknowledgements](#acknowledgements)
+  - [How to cite the heatmaply package](#how-to-cite-the-heatmaply-package)
+  - [Contact](#contact)
 
 
 ## Screenshot demo

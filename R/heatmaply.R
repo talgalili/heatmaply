@@ -280,6 +280,7 @@
 #' length of the colorbar/color key relative to the total plot height.
 #' This argument controls the colorbar_len of the side colour plots.
 #' Only used if plot_method = "plotly".
+#' @param plotly_source See \code{source} argument in \code{\link[plotly]{plot_ly}}
 #'
 #' @export
 #' @examples
