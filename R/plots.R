@@ -35,8 +35,6 @@ ggplot_heatmap <- function(xx,
   )
 
   type <- match.arg(type)
-  # heatmap
-  # xx <- x$matrix$data
 
   df <- xx
   if (!is.data.frame(df)) df <- as.data.frame(df, check.rows = FALSE)
@@ -210,8 +208,8 @@ plotly_heatmap <- function(x,
                            showticklabels = c(TRUE, TRUE),
                            label_format_fun = function(...) format(..., digits = 4),
                            height = NULL,
-                           width = NULL
-                           ) {
+                           width = NULL,
+                           plotly_source = "A") {
   if (is.function(colors)) colors <- colors(256)
 
   if (is.null(label_names)) {
@@ -260,7 +258,8 @@ plotly_heatmap <- function(x,
       hoverinfo = "text",
       zmin = limits[1], zmax = limits[2],
       height = height,
-      width = width
+      width = width,
+      source = plotly_source
     )
   } else {
     melt <- function(x, cn = colnames(x), rn = rownames(x)) {
@@ -282,7 +281,8 @@ plotly_heatmap <- function(x,
       mode = "markers",
       showlegend = FALSE,
       colors = colors,
-      hoverinfo = "text"
+      hoverinfo = "text",
+      source = plotly_source
     )
   }
   p <- p %>%
@@ -322,7 +322,8 @@ plotly_heatmap <- function(x,
 plotly_dend <- function(dend,
                         side = c("row", "col"),
                         flip = FALSE,
-                        dend_hoverinfo = TRUE) {
+                        dend_hoverinfo = TRUE,
+                        plotly_source = "A") {
   if (is.hclust(dend)) {
     dend <- as.dendrogram(dend)
   }
@@ -398,7 +399,7 @@ plotly_dend <- function(dend,
     }
   }
 
-  p <- plot_ly(segs) %>% add_plot_lines()
+  p <- plot_ly(segs, source = plotly_source) %>% add_plot_lines()
 
   if (flip) {
     p <- layout(p, xaxis = list(autorange = "reversed"))
@@ -653,7 +654,8 @@ plotly_side_color_plot <- function(df,
                                    label_name = NULL,
                                    colorbar_len = 0.3,
                                    fontsize = 10,
-                                   show_legend = TRUE) {
+                                   show_legend = TRUE,
+                                   plotly_source = "A") {
   type <- match.arg(type)
 
   if (is.null(label_name)) label_name <- type
@@ -743,7 +745,8 @@ plotly_side_color_plot <- function(df,
       ),
       ticktext = levels,
       len = colorbar_len
-    )
+    ),
+    source = plotly_source
   )
   if (type == "row") {
     p <- p %>% layout(

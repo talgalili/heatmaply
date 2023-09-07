@@ -481,10 +481,6 @@ heatmaply_cor <- function(x,
 
 
 
-
-
-
-
 #' @export
 #' @rdname heatmaply
 heatmaply.default <- function(x,
@@ -576,7 +572,8 @@ heatmaply.default <- function(x,
                               custom_hovertext = NULL,
                               col = NULL,
                               dend_hoverinfo = TRUE,
-                              side_color_colorbar_len = 0.3) {
+                              side_color_colorbar_len = 0.3,
+                              plotly_source = "A") {
   if (!is.null(long_data)) {
     if (!missing(x)) {
       stop("x and long_data should not be used together")
@@ -811,6 +808,7 @@ heatmaply.default <- function(x,
     label_format_fun = label_format_fun,
     dend_hoverinfo = dend_hoverinfo,
     side_color_colorbar_len = side_color_colorbar_len,
+    plotly_source = plotly_source,
     height = height,
     width = width
   )
@@ -890,8 +888,10 @@ heatmaply.heatmapr <- function(x,
                                custom_hovertext = x[["matrix"]][["custom_hovertext"]],
                                dend_hoverinfo = TRUE,
                                side_color_colorbar_len = 0.3,
+                               plotly_source = "A",
                                height = NULL,
                                width = NULL) {
+
   node_type <- match.arg(node_type)
   plot_method <- match.arg(plot_method)
   cellnote_textposition <- match.arg(
@@ -915,8 +915,6 @@ heatmaply.heatmapr <- function(x,
 
   if (!is.null(srtRow)) row_text_angle <- srtRow
   if (!is.null(srtCol)) column_text_angle <- srtCol
-
-
 
   # x is a heatmapr object.
   # heatmapr <- list(rows = rowDend, cols = colDend, matrix = mtx, image = imgUri,
@@ -967,7 +965,8 @@ heatmaply.heatmapr <- function(x,
     } else {
       py <- plotly_dend(cols,
         side = "col",
-        dend_hoverinfo = dend_hoverinfo
+        dend_hoverinfo = dend_hoverinfo,
+        plotly_source = plotly_source
       )
     }
   }
@@ -990,7 +989,8 @@ heatmaply.heatmapr <- function(x,
       px <- plotly_dend(rows,
         flip = row_dend_left,
         side = "row",
-        dend_hoverinfo = dend_hoverinfo
+        dend_hoverinfo = dend_hoverinfo,
+        plotly_source = plotly_source
       )
     }
   }
@@ -1036,7 +1036,8 @@ heatmaply.heatmapr <- function(x,
       custom_hovertext = custom_hovertext,
       label_format_fun = label_format_fun,
       height = height,
-      width = width
+      width = width,
+      plotly_source = plotly_source
     )
   }
 
@@ -1072,7 +1073,8 @@ heatmaply.heatmapr <- function(x,
         fontsize = fontsize_col,
         is_colors = !is.null(RowSideColors),
         colorbar_len = side_color_colorbar_len,
-        label_name = label_names[[1]]
+        label_name = label_names[[1]],
+        plotly_source = plotly_source
       )
     }
   }
@@ -1105,7 +1107,8 @@ heatmaply.heatmapr <- function(x,
         fontsize = fontsize_row,
         is_colors = !is.null(ColSideColors),
         colorbar_len = side_color_colorbar_len,
-        label_name = label_names[[2]]
+        label_name = label_names[[2]],
+        plotly_source = plotly_source
       )
     }
   }
@@ -1114,11 +1117,11 @@ heatmaply.heatmapr <- function(x,
     return(list(p = p, px = px, py = py, pr = pr, pc = pc))
   } else {
     if (!is.null(pc)) {
-      pc <- ggplotly(pc)
+      pc <- ggplotly(pc, source = plotly_source)
       pc <- layout(pc, showlegend = TRUE)
     }
     if (!is.null(pr)) {
-      pr <- ggplotly(pr)
+      pr <- ggplotly(pr, source = plotly_source)
       pr <- layout(pr, showlegend = TRUE)
     }
   }
@@ -1131,8 +1134,8 @@ heatmaply.heatmapr <- function(x,
         dynamicTicks = dynamicTicks,
         tooltip = "text",
         height = height,
-        width = width
-      ) %>%
+        width = width,
+        source = plotly_source) %>%
         layout(showlegend = FALSE)
       ## Currently broken, see:
       ##  https://github.com/ropensci/plotly/issues/1701
@@ -1184,14 +1187,16 @@ heatmaply.heatmapr <- function(x,
   if (!is.null(px) && !is.plotly(px)) {
     px <- ggplotly(px,
       tooltip = if (dend_hoverinfo) "y" else "none",
-      dynamicTicks = dynamicTicks
+      dynamicTicks = dynamicTicks,
+      source = plotly_source
     ) %>%
       layout(showlegend = FALSE)
   }
   if (!is.null(py) && !is.plotly(py)) {
     py <- ggplotly(py,
       tooltip = if (dend_hoverinfo) "y" else "none",
-      dynamicTicks = dynamicTicks
+      dynamicTicks = dynamicTicks,
+      source = plotly_source
     ) %>%
       layout(showlegend = FALSE)
   }
@@ -1257,9 +1262,6 @@ heatmaply.heatmapr <- function(x,
           ticklen = 0
         ))
     }
-    # ggplotly() %>%
-    # layout(yaxis = list(tickmode='auto'),
-    #        xaxis = list(tickmode='auto'))
   }
 
   heatmap_subplot <- heatmap_subplot_from_ggplotly(
@@ -1275,7 +1277,8 @@ heatmaply.heatmapr <- function(x,
     pr = pr,
     pc = pc,
     plot_method = plot_method,
-    showticklabels = showticklabels
+    showticklabels = showticklabels,
+    empty = plotly_empty(source = plotly_source)
   )
   l <- layout(
     heatmap_subplot,
@@ -1321,7 +1324,8 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
                                           titleX = TRUE, titleY = TRUE,
                                           widths = NULL, heights = NULL,
                                           plot_method,
-                                          showticklabels = c(TRUE, TRUE)) {
+                                          showticklabels = c(TRUE, TRUE),
+                                          empty = plotly_empty(source = "A")) {
   widths <- widths %||% default_dims(px, pr)
   if (row_dend_left) {
     widths <- rev(widths)
@@ -1330,8 +1334,8 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
 
 
   # make different plots based on which dendrogram and sidecolors we have
-  row1_list <- list(py, plotly_empty(), plotly_empty())
-  row2_list <- list(pc, plotly_empty(), plotly_empty())
+  row1_list <- list(py, empty, empty)
+  row2_list <- list(pc, empty, empty)
   row3_list <- list(p, pr, px)
 
   if (row_dend_left) {
