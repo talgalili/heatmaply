@@ -1,3 +1,274 @@
+* 2023-09-07(Alan O'Callaghan) R cmd check notes |aa2e2bb| 
+|  .Rbuildignore    |  1 +
+|  R/heatmaply.R    |  1 +
+|  README.md        | 21 +++++++++++++--------
+|  inst/CITATION    |  8 +++-----
+|  man/heatmaply.Rd |  6 +++++-
+|  5 files changed, 23 insertions(+), 14 deletions(-)
+
+* 2023-09-07(Alan O'Callaghan) Resolve #295 |17c5526| 
+|  DESCRIPTION   |  2 +-
+|  NEWS          |  1 +
+|  R/heatmaply.R | 54 +++++++++++++++++++++++++++++-------------------------
+|  R/plots.R     | 23 +++++++++++++----------
+|  4 files changed, 44 insertions(+), 36 deletions(-)
+
+* 2023-07-20(Alan O'Callaghan) Avoid expensive transpose |817b566| 
+|  R/heatmapr.R | 15 ++++++++-------
+|  1 file changed, 8 insertions(+), 7 deletions(-)
+
+* 2023-07-11(Alan O'Callaghan) Remove old docs |71458a2| 
+|  docs/articles/heatmaply.html                      |    52 +-
+|  .../crosstalk-1.0.0/css/crosstalk.css             |    27 -
+|  .../crosstalk-1.0.0/js/crosstalk.js               |  1471 ---
+|  .../crosstalk-1.0.0/js/crosstalk.js.map           |    37 -
+|  .../crosstalk-1.0.0/js/crosstalk.min.js           |     2 -
+|  .../crosstalk-1.0.0/js/crosstalk.min.js.map       |     1 -
+|  .../crosstalk-1.1.1/css/crosstalk.css             |    27 -
+|  .../crosstalk-1.1.1/js/crosstalk.js               |  1474 ---
+|  .../crosstalk-1.1.1/js/crosstalk.js.map           |    37 -
+|  .../crosstalk-1.1.1/js/crosstalk.min.js           |     2 -
+|  .../crosstalk-1.1.1/js/crosstalk.min.js.map       |     1 -
+|  .../figure-html/unnamed-chunk-20-1.png            |   Bin 10157 -> 0 bytes
+|  .../figure-html/unnamed-chunk-23-1.png            |   Bin 9430 -> 0 bytes
+|  .../htmlwidgets-1.3/htmlwidgets.js                |   839 --
+|  .../htmlwidgets-1.5.1/htmlwidgets.js              |   903 --
+|  .../htmlwidgets-1.5.3/htmlwidgets.js              |   903 --
+|  .../jquery-1.11.3/jquery-AUTHORS.txt              |   217 -
+|  .../heatmaply_files/jquery-1.11.3/jquery.js       | 10351 -----------------
+|  .../heatmaply_files/jquery-1.11.3/jquery.min.js   |     5 -
+|  .../heatmaply_files/jquery-1.11.3/jquery.min.map  |     1 -
+|  .../jquery-3.5.1/jquery-AUTHORS.txt               |   357 -
+|  .../heatmaply_files/jquery-3.5.1/jquery.js        | 10872 ------------------
+|  .../heatmaply_files/jquery-3.5.1/jquery.min.js    |     2 -
+|  .../heatmaply_files/jquery-3.5.1/jquery.min.map   |     1 -
+|  .../plotly-binding-4.9.0/plotly.js                |   931 --
+|  .../plotly-binding-4.9.1/plotly.js                |   935 --
+|  .../plotly-binding-4.9.3/plotly.js                |   935 --
+|  .../plotly-htmlwidgets.css                        |     9 -
+|  .../plotly-htmlwidgets.css                        |     9 -
+|  .../plotly-htmlwidgets.css                        |     9 -
+|  .../plotly-main-1.46.1/plotly-latest.min.js       |     7 -
+|  .../plotly-main-1.49.4/plotly-latest.min.js       |     7 -
+|  .../plotly-main-1.57.1/plotly-latest.min.js       |    61 -
+|  docs/pkgdown.yml                                  |     2 +-
+|  docs/reference/RColorBrewer_colors-1.png          |   Bin 54380 -> 0 bytes
+|  docs/reference/RColorBrewer_colors-2.png          |   Bin 74571 -> 0 bytes
+|  docs/reference/heatmaply-1.png                    |   Bin 75746 -> 0 bytes
+|  docs/reference/heatmaply.html                     |    11 +-
+|  docs/reference/heatmaply_iris.html                |    23 -
+|  docs/reference/heatmaply_iris.png                 |   Bin 39646 -> 0 bytes
+|  .../crosstalk-1.0.0/css/crosstalk.css             |    27 -
+|  .../crosstalk-1.0.0/js/crosstalk.js               |  1471 ---
+|  .../crosstalk-1.0.0/js/crosstalk.js.map           |    37 -
+|  .../crosstalk-1.0.0/js/crosstalk.min.js           |     2 -
+|  .../crosstalk-1.0.0/js/crosstalk.min.js.map       |     1 -
+|  .../htmlwidgets-1.5.1/htmlwidgets.js              |   903 --
+|  .../jquery-1.11.3/jquery-AUTHORS.txt              |   217 -
+|  .../heatmaply_iris_files/jquery-1.11.3/jquery.js  | 10351 -----------------
+|  .../jquery-1.11.3/jquery.min.js                   |     5 -
+|  .../jquery-1.11.3/jquery.min.map                  |     1 -
+|  .../plotly-binding-4.9.1/plotly.js                |   935 --
+|  .../plotly-htmlwidgets.css                        |     9 -
+|  .../plotly-main-1.49.4/plotly-latest.min.js       |     7 -
+|  .../typedarray-0.1/typedarray.min.js              |     1 -
+|  docs/sitemap.xml                                  |     3 -
+|  55 files changed, 35 insertions(+), 44456 deletions(-)
+
+* 2023-07-11(Alan O'Callaghan) Document |f8c4bbb| 
+|  .Rbuildignore    |  1 +
+|  NEWS             |  2 +-
+|  R/heatmaply.R    |  8 +++++---
+|  man/heatmaply.Rd | 11 ++++++++---
+|  4 files changed, 15 insertions(+), 7 deletions(-)
+
+* 2023-07-11(Alan O'Callaghan) Update pkgdown |6f67dcd| 
+|  docs/404.html                                     |    4 +-
+|  docs/CONDUCT.html                                 |    5 +-
+|  docs/articles/heatmaply.html                      |  883 +++++------
+|  .../crosstalk-1.2.0/css/crosstalk.min.css         |    1 +
+|  .../crosstalk-1.2.0/js/crosstalk.js               | 1474 +++++++++++++++++++
+|  .../crosstalk-1.2.0/js/crosstalk.js.map           |   37 +
+|  .../crosstalk-1.2.0/js/crosstalk.min.js           |    2 +
+|  .../crosstalk-1.2.0/js/crosstalk.min.js.map       |    1 +
+|  .../crosstalk-1.2.0/scss/crosstalk.scss           |   75 +
+|  .../figure-html/unnamed-chunk-21-1.png            |  Bin 23280 -> 28473 bytes
+|  .../figure-html/unnamed-chunk-24-1.png            |  Bin 19635 -> 25759 bytes
+|  .../figure-html/unnamed-chunk-29-1.png            |  Bin 78976 -> 89695 bytes
+|  .../htmlwidgets-1.6.2/htmlwidgets.js              |  901 ++++++++++++
+|  .../plotly-binding-4.10.2/plotly.js               |  941 ++++++++++++
+|  .../plotly-htmlwidgets.css                        |    9 +
+|  .../plotly-main-2.11.1/plotly-latest.min.js       |   69 +
+|  docs/articles/index.html                          |  109 +-
+|  docs/authors.html                                 |    4 +-
+|  docs/index.html                                   |   53 +-
+|  docs/news/index.html                              | 1128 +++++---------
+|  docs/pkgdown.css                                  |   83 +-
+|  docs/pkgdown.js                                   |    4 +-
+|  docs/pkgdown.yml                                  |    6 +-
+|  docs/reference/RColorBrewer_colors.html           |  324 ++--
+|  docs/reference/Rplot002.png                       |  Bin 35438 -> 40671 bytes
+|  docs/reference/ggheatmap-1.png                    |  Bin 131761 -> 136603 bytes
+|  docs/reference/ggheatmap.html                     |  188 +--
+|  docs/reference/ggplot_side_color_plot.html        |  218 +--
+|  docs/reference/heatmaply.html                     | 1468 +++++++++---------
+|  docs/reference/heatmapr.html                      |  628 ++++----
+|  docs/reference/index.html                         |  172 +--
+|  docs/reference/is.heatmapr.html                   |  134 +-
+|  docs/reference/is.na10.html                       |  202 +--
+|  docs/reference/is.plotly.html                     |  134 +-
+|  docs/reference/normalize.html                     |  196 +--
+|  docs/reference/percentize.html                    |  196 +--
+|  docs/sitemap.xml                                  |   60 +
+|  37 files changed, 6008 insertions(+), 3701 deletions(-)
+
+* 2023-07-11(Alan O'Callaghan) Update news/desc |039dc56| 
+|  DESCRIPTION | 2 +-
+|  NEWS        | 4 +++-
+|  2 files changed, 4 insertions(+), 2 deletions(-)
+
+* 2023-07-11(cole-johanson) Adds height/width arguments to plotly methods (#282) |b7d9b66| 
+|  R/heatmaply.R | 36 ++++++++++++++++++++++++------------
+|  R/plots.R     |  9 +++++++--
+|  2 files changed, 31 insertions(+), 14 deletions(-)
+
+* 2023-07-11(Alan O'Callaghan) Bugfix in scaling fun |a808467| 
+|  NEWS         | 2 +-
+|  R/heatmapr.R | 2 +-
+|  R/plots.R    | 2 +-
+|  3 files changed, 3 insertions(+), 3 deletions(-)
+
+* 2023-07-11(Alan O'Callaghan) #292 |c94b17f| 
+|  DESCRIPTION  |  4 ++--
+|  NEWS         |  6 ++++++
+|  R/heatmapr.R | 15 +++++++++++----
+|  3 files changed, 19 insertions(+), 6 deletions(-)
+
+* 2023-07-11(Alan O'Callaghan) Revert "#292" |b5295ba| 
+|  DESCRIPTION  |  4 ++--
+|  NEWS         | 15 ---------------
+|  R/heatmapr.R | 15 ++++-----------
+|  R/plots.R    | 46 +++++-----------------------------------------
+|  4 files changed, 11 insertions(+), 69 deletions(-)
+
+* 2023-07-11(Alan O'Callaghan) Doc |7142a74| 
+|  DESCRIPTION      | 2 +-
+|  man/heatmaply.Rd | 3 +--
+|  man/heatmapr.Rd  | 3 +--
+|  3 files changed, 3 insertions(+), 5 deletions(-)
+
+*   2023-07-11(Alan O'Callaghan) Merge branch 'master' of github.com:talgalili/heatmaply |d26488b
+|\  
+| * 2023-03-22(Alan O'Callaghan) Use local heatmaply for pkgdown |c44dde0| | 
+| |  .github/workflows/pkgdown.yaml | 2 +-
+| |  1 file changed, 1 insertion(+), 1 deletion(-)
+
+| * 2023-03-22(Alan O'Callaghan) Spec R deps for pkgdown |df73096| | 
+| |  .github/workflows/pkgdown.yaml | 2 +-
+| |  1 file changed, 1 insertion(+), 1 deletion(-)
+
+| * 2023-03-22(Alan O'Callaghan) Bump another version |c5ef909| | 
+| |  .github/workflows/pkgdown.yaml | 2 +-
+| |  1 file changed, 1 insertion(+), 1 deletion(-)
+
+| * 2023-03-22(Alan O'Callaghan) Bump GHA versions |1d8713a| | 
+| |  .github/workflows/check-release.yaml  | 6 +++---
+| |  .github/workflows/check-standard.yaml | 8 ++++----
+| |  .github/workflows/lint.yaml           | 4 ++--
+| |  .github/workflows/pkgdown.yaml        | 4 ++--
+| |  .github/workflows/test-coverage.yaml  | 4 ++--
+| |  5 files changed, 13 insertions(+), 13 deletions(-)
+
+| *   2023-03-22(Alan O'Callaghan) Merge branch 'master' of github.com:talgalili/heatmaply |95f9ac4
+| |\  
+| * | 2023-03-22(Alan O'Callaghan) Fix behaviour when limits don't contain the data range |b8e1219| | | 
+| | |  DESCRIPTION   |  4 ++--
+| | |  NEWS          |  8 ++++++++
+| | |  R/heatmaply.R | 39 +++++++++++++++++++++------------------
+| | |  R/plots.R     | 34 +++++++++++++---------------------
+| | |  4 files changed, 44 insertions(+), 41 deletions(-)
+
+* | | 2023-07-11(Alan O'Callaghan) #292 |17dfbac
+| |/  
+|/|   | |   
+| |    DESCRIPTION  |  4 ++--
+| |    NEWS         |  6 ++++++
+| |    R/heatmapr.R | 15 +++++++++++----
+| |    3 files changed, 19 insertions(+), 6 deletions(-)
+
+* | 2023-01-06(Alan O'Callaghan) Correct date |73bfa04| | 
+| |  DESCRIPTION | 2 +-
+| |  NEWS        | 2 +-
+| |  2 files changed, 2 insertions(+), 2 deletions(-)
+
+* | 2023-01-06(Alan O'Callaghan) Resolve issue flagged in #266 |f663ea6
+|/  |   
+|    DESCRIPTION | 4 ++--
+|    NEWS        | 7 ++++++-
+|    R/plots.R   | 5 ++---
+|    3 files changed, 10 insertions(+), 6 deletions(-)
+
+* 2022-11-12(Tal Galili) add props |a978eb6| 
+|  NEWS | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2022-11-12(Tal Galili) Fix "keep annotation names without adding dots" issue #281 |133d2df| 
+|  DESCRIPTION   | 4 ++--
+|  NEWS          | 8 ++++++++
+|  R/heatmaply.R | 4 ++--
+|  3 files changed, 12 insertions(+), 4 deletions(-)
+
+* 2022-10-08(Tal Galili) trying another url that CRAN might like. |4a6b920| 
+|  vignettes/heatmaply.Rmd | 2 +-
+|  1 file changed, 1 insertion(+), 1 deletion(-)
+
+* 2022-10-08(Tal Galili) simplify github action using the latest usethis package (2.1.6) |8015d41| 
+|  .github/workflows/R-CMD-check.yaml | 111 +++++++----------------------------
+|  .github/workflows/pr-commands.yaml |  28 +++++----
+|  2 files changed, 38 insertions(+), 101 deletions(-)
+
+* 2022-10-08(Tal Galili) Fix for CRAN release: 1. bad url 2. unneeded text in NEWS |bb80cd7| 
+|  NEWS                    | 56 -----------------------------------------------
+|  NEWS.md                 | 56 -----------------------------------------------
+|  README.md               |  2 +-
+|  vignettes/heatmaply.Rmd |  2 +-
+|  4 files changed, 2 insertions(+), 114 deletions(-)
+
+* 2022-10-08(Tal Galili) attempt to fix missing curl package for windows run |bf1015d| 
+|  .github/workflows/R-CMD-check.yaml | 1 +
+|  1 file changed, 1 insertion(+)
+
+* 2022-10-08(Tal Galili) update homepage re-roder banners in README |d888d8d| 
+|  README.md       | 8 ++++----
+|  docs/index.html | 6 +++---
+|  2 files changed, 7 insertions(+), 7 deletions(-)
+
+* 2022-10-08(Tal Galili) Update README.md (and misc .Rd updates) |260c186| 
+|  README.md                  | 10 ++---
+|  man/RColorBrewer_colors.Rd | 19 +++++----
+|  man/heatmaply.Rd           | 98 ++++++++++++++++++++++++++------------------
+|  man/heatmapr.Rd            |  4 +-
+|  man/is.na10.Rd             | 19 +++++----
+|  man/normalize.Rd           |  3 +-
+|  man/percentize.Rd          |  3 +-
+|  7 files changed, 89 insertions(+), 67 deletions(-)
+
+* 2022-10-08(Tal Galili) Add details to the new bug fix. |7f10968| 
+|  NEWS    | 8 +++++++-
+|  NEWS.md | 8 +++++++-
+|  2 files changed, 14 insertions(+), 2 deletions(-)
+
+* 2022-10-08(Tal Galili) Refresh DESCRIPTION and NEWS docs before release |5d2fad4| 
+|  ChangeLog         | 160 +++++++++++++++++++++++++++++++
+|  DESCRIPTION       |   4 +-
+|  NEWS              |  12 +--
+|  NEWS.md           |  13 ++-
+|  docs/404.html     | 117 +++++++----------------
+|  docs/CONDUCT.html | 109 ++++-----------------
+|  docs/authors.html | 164 ++++++++++----------------------
+|  docs/index.html   | 265 ++++++++++++++++++++++++++--------------------------
+|  8 files changed, 416 insertions(+), 428 deletions(-)
+
 *   2022-10-08(Tal Galili) Merge pull request #279 from talgalili/cellnote-hoverinfo |8d5dc75
 |\  
 | * 2022-10-03(Alan O'Callaghan) Add k_col/row tests |fcc35c7| | 

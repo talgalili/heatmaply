@@ -1,11 +1,12 @@
-heatmaply 1.4.3 (2023-07-11)
+heatmaply 1.5.0 (2023-10-06)
 ===============
+## NEW FEATURE
+- heatmaply: Add `plotly_source` argument for handling multiple heatmaply instances in a shiny page (see #295)
+- heatmaply: add `width` and `height` arguments to the plotly method, it now control the size of the output plots, to some extent at least.
 
 ## OTHER NOTES
-
-- `width` and `height` arguments now control the size of the output plots, to some extent at least.
 - Improved error message when using `scale` argument with zero variance rows/columns.
-- Add `plotly_source` argument for handling multiple heatmaply instances in a shiny page (see #295)
+- Fix misc CRAN notes.
 
 heatmaply 1.4.2 (2023-01-06)
 ===============

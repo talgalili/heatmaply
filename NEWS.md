@@ -1,3 +1,26 @@
+heatmaply 1.5.0 (2023-10-06)
+===============
+## NEW FEATURE
+- heatmaply: Add `plotly_source` argument for handling multiple heatmaply instances in a shiny page (see #295)
+- heatmaply: add `width` and `height` arguments to the plotly method, it now control the size of the output plots, to some extent at least.
+
+## OTHER NOTES
+- Improved error message when using `scale` argument with zero variance rows/columns.
+- Fix misc CRAN notes.
+
+heatmaply 1.4.2 (2023-01-06)
+===============
+
+## BUGFIX
+- Fix transpose issue when using scatter mode with `plot_method="plotly"`.
+
+
+heatmaply 1.4.1 (2022-11-12)
+===============
+
+## BUGFIX
+- Fix "keep annotation names without adding dots" issue #281. Props to @colejohanson.
+
 heatmaply 1.4.0 (2022-10-08)
 ===============
 ## OTHER NOTES
