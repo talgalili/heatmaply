@@ -60,11 +60,14 @@ ggplot_heatmap <- function(xx,
   col <- label_names[[2]]
   val <- label_names[[3]]
 
-  mdf[["text"]] <- paste0(
-    row, ": ", mdf[[1]], "<br>",
-    col, ": ", mdf[[2]], "<br>",
-    val, ": ", label_format_fun(mdf[[3]])
-  )
+  if(!suppress_default_hovertext)
+  {
+    mdf[["text"]] <- paste0(
+      row, ": ", mdf[[1]], "<br>",
+      col, ": ", mdf[[2]], "<br>",
+      val, ": ", label_format_fun(mdf[[3]])
+    )
+  }
 
   if (type == "heatmap") {
     geom <- "geom_tile"
@@ -77,10 +80,13 @@ ggplot_heatmap <- function(xx,
     geom <- "geom_point"
     geom_args <- list()
     if (!is.null(point_size_mat)) {
-      mdf[["text"]] <- paste(
-        mdf[["text"]], "<br>",
-        point_size_name, ": ", label_format_fun(mdf[[4]])
-      )
+      if(!suppress_default_hovertext)
+      {
+        mdf[["text"]] <- paste(
+          mdf[["text"]], "<br>",
+          point_size_name, ": ", label_format_fun(mdf[[4]])
+        )
+      }
       aes_mapping <- aes(
         color = .data[[val]],
         text = .data$text,
@@ -95,7 +101,13 @@ ggplot_heatmap <- function(xx,
     }
   }
   if (!is.null(custom_hovertext)) {
-    mdf[["text"]] <- paste0(mdf[["text"]], "<br>", custom_hovertext)
+    if(!suppress_default_hovertext)
+    {
+      mdf[["text"]] <- paste0(mdf[["text"]], "<br>", custom_hovertext)
+    } else
+    {
+      mdf[["text"]] <- reshape2::melt(as.matrix(custom_hovertext))[[3]]
+    }
   }
   geom_args[["mapping"]] <- aes_mapping
   

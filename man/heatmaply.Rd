@@ -474,6 +474,10 @@ backward compatibility with gplots::heatmap.2.}
 If plot_method is "plotly" then just this text is displayed; if plot_method
 if "ggplot" then it is appended to the existing text.}
 
+\item{suppress_default_hovertext}{Logical (FALSE) indicating whether to hide the 
+default hovertext for plot_method = "ggplot" of row, column, value, and Point 
+size.}
+
 \item{dend_hoverinfo}{Boolean value which controls whether mouseover text
 is shown for the row and column dendrograms.}
 
