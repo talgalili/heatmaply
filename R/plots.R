@@ -24,6 +24,7 @@ ggplot_heatmap <- function(xx,
                            point_size_name = "Point size",
                            label_format_fun = function(...) format(..., digits = 4),
                            custom_hovertext = NULL,
+                           suppress_default_hovertext = FALSE,
                            showticklabels = c(TRUE, TRUE),
                            ...) {
   theme_clear_grid_heatmap <- theme(
