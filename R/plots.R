@@ -357,12 +357,14 @@ plotly_dend <- function(dend,
     title = "",
     range = c(0, max(segs$y)),
     linecolor = "#ffffff",
+    showticklabels = FALSE,
     showgrid = FALSE
   )
   axis2 <- list(
     title = "",
     range = c(0, lab_max),
     linecolor = "#ffffff",
+    showticklabels = FALSE,
     showgrid = FALSE
   )
 
