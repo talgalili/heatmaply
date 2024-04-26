@@ -8,7 +8,8 @@ assignees: ''
 ---
 
 # Describe the bug
-A clear and concise description of what the bug is.
+A clear and concise description of what the bug is. If an error occurs, please include a **full** stack trace (eg, the output of
+`traceback()`, `rlang::last_error()` or similar).
 
 # To Reproduce
 
