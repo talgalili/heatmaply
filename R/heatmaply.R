@@ -427,12 +427,12 @@
 #'
 #'
 #' # Example of removing labels and thus making the plot faster
-#' heatmaply(iris, showticklabels = c(T, F), margins = c(80, 10))
+#' heatmaply(iris, showticklabels = c(TRUE, FALSE), margins = c(80, 10))
 #'
 #' # this is what allows for a much larger matrix to be printed:
 #' set.seed(2017 - 05 - 18)
 #' large_x <- matrix(rnorm(19), 1000, 100)
-#' heatmaply(large_x, dendrogram = F, showticklabels = F, margins = c(1, 1))
+#' heatmaply(large_x, dendrogram = FALSE, showticklabels = FALSE, margins = c(1, 1))
 #' }
 heatmaply <- function(x, ...) {
   UseMethod("heatmaply")
@@ -571,7 +571,7 @@ heatmaply.default <- function(x,
                               label_format_fun = function(...) format(..., digits = 4),
                               labRow = NULL, labCol = NULL,
                               custom_hovertext = NULL,
-                              suppress_default_hovertext = F,
+                              suppress_default_hovertext = FALSE,
                               col = NULL,
                               dend_hoverinfo = TRUE,
                               side_color_colorbar_len = 0.3,
@@ -643,8 +643,8 @@ heatmaply.default <- function(x,
   if (is.logical(dendrogram)) {
     # Using if and not ifelse to make sure the output is a "scalar".
     dendrogram <- if (dendrogram) "both" else "none"
-    # if (T) "both" else "none"
-    # if (F) "both" else "none"
+    # if (TRUE) "both" else "none"
+    # if (FALSE) "both" else "none"
   }
   dendrogram <- match.arg(dendrogram)
 
@@ -1213,7 +1213,7 @@ heatmaply.heatmapr <- function(x,
     title = main, # layout's title: /r/reference/#layout-title
     xaxis = list( # layout's xaxis is a named list. List of valid keys: /r/reference/#layout-xaxis
       title = xlab # xaxis's title: /r/reference/#layout-xaxis-title
-      # showgrid = T        # xaxis's showgrid: /r/reference/#layout-xaxis-showgrid
+      # showgrid = TRUE        # xaxis's showgrid: /r/reference/#layout-xaxis-showgrid
     ),
     yaxis = list( # layout's yaxis is a named list. List of valid keys: /r/reference/#layout-yaxis
       title = ylab # yaxis's title: /r/reference/#layout-yaxis-title
