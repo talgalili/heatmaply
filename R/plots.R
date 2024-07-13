@@ -101,10 +101,10 @@ ggplot_heatmap <- function(xx,
     }
   }
   if (!is.null(custom_hovertext)) {
-    if(suppress_default_hovertext) {
-      mdf[["text"]] <- reshape2::melt(as.matrix(custom_hovertext))[[3]]
-    } else {
+    if(!suppress_default_hovertext) {
       mdf[["text"]] <- paste0(mdf[["text"]], "<br>", custom_hovertext)
+    } else {
+      mdf[["text"]] <- reshape2::melt(as.matrix(custom_hovertext))[[3]]
     }
   }
   geom_args[["mapping"]] <- aes_mapping
