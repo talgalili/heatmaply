@@ -643,8 +643,8 @@ heatmaply.default <- function(x,
   if (is.logical(dendrogram)) {
     # Using if and not ifelse to make sure the output is a "scalar".
     dendrogram <- if (dendrogram) "both" else "none"
-    # if(T) "both" else "none"
-    # if(F) "both" else "none"
+    # if (T) "both" else "none"
+    # if (F) "both" else "none"
   }
   dendrogram <- match.arg(dendrogram)
 
@@ -1421,7 +1421,7 @@ heatmap_subplot_from_ggplotly <- function(p, px, py, pr, pc,
 
   # s <- subplot(plots,
   #   nrows = nrows,
-  #   widths = if(row_dend_left) rev(widths) else widths,
+  #   widths = if (row_dend_left) rev(widths) else widths,
   #   shareX = TRUE, shareY = TRUE,
   #   titleX = titleX, titleY = titleY,
   #   margin = subplot_margin,

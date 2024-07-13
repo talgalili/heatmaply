@@ -82,7 +82,7 @@ ggplot_heatmap <- function(xx,
     geom <- "geom_point"
     geom_args <- list()
     if (!is.null(point_size_mat)) {
-      if(!suppress_default_hovertext)
+      if (!suppress_default_hovertext)
       {
         mdf[["text"]] <- paste(
           mdf[["text"]], "<br>",
@@ -477,7 +477,7 @@ ggplot_side_color_plot <- function(df,
   )
 
   ## Don't need this hack any more?
-  # if(original_dim[2] > 1) {
+  # if (original_dim[2] > 1) {
   text_element <- element_text(angle = text_angle, hjust = 1, size = fontsize)
   # } else text_element <- element_blank()
 
