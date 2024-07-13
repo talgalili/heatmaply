@@ -8,7 +8,7 @@ Authors@R: c(
     person("Alan", "O'Callaghan", comment = "https://github.com/Alanocallaghan",role = "aut"),
     person("Jonathan", "Sidi", email = "yonis@metrumrg.com", comment = "https://github.com/yonicd",role = "ctb"),
     person("Jaehyun", "Joo", comment = "https://github.com/jaehyunjoo",role = "ctb"),
-    person("Yoav", "Benjamini", email = "ybenja@tau.ac.il",role = "ths")),
+    person("Yoav", "Benjamini", email = "ybenja@tau.ac.il",role = "ths"),
     person("Mathew", "Simenc", role = "ctb", comment = "https://gitlab.com/mcsimenc, https://github.com/mcsimenc"))
 Description: Create interactive cluster 'heatmaps' that can be saved as a stand-
     alone HTML file, embedded in 'R Markdown' documents or in a 'Shiny' app, and
