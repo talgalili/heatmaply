@@ -61,12 +61,14 @@ ggplot_heatmap <- function(xx,
   col <- label_names[[2]]
   val <- label_names[[3]]
 
-  if(!suppress_default_hovertext) {
+  if (!suppress_default_hovertext) {
     mdf[["text"]] <- paste0(
       row, ": ", mdf[[1]], "<br>",
       col, ": ", mdf[[2]], "<br>",
       val, ": ", label_format_fun(mdf[[3]])
     )
+  } else {
+    mdf[["text"]] <- ""
   }
 
   if (type == "heatmap") {
@@ -101,10 +103,10 @@ ggplot_heatmap <- function(xx,
     }
   }
   if (!is.null(custom_hovertext)) {
-    if(!suppress_default_hovertext) {
-      mdf[["text"]] <- paste0(mdf[["text"]], "<br>", custom_hovertext)
-    } else {
+    if (suppress_default_hovertext) {
       mdf[["text"]] <- reshape2::melt(as.matrix(custom_hovertext))[[3]]
+    } else {
+      mdf[["text"]] <- paste0(mdf[["text"]], "<br>", custom_hovertext)
     }
   }
   geom_args[["mapping"]] <- aes_mapping
