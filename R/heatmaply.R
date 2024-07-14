@@ -266,6 +266,10 @@
 #' @param custom_hovertext Custom hovertext matrix (the same dimensions as the input).
 #' If plot_method is "plotly" then just this text is displayed; if plot_method
 #' if "ggplot" then it is appended to the existing text.
+#'
+#' @param suppress_default_hovertext Logical value determinine whether to suppress
+#'  the default hovertext (row, column, value).
+#'
 #' @param label_format_fun Function to format hovertext (eg,
 #'    \code{function(...) round(..., digits=3)} or
 #'    \code{function(...) format(..., digits=3)}
