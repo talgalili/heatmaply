@@ -267,8 +267,9 @@
 #' If plot_method is "plotly" then just this text is displayed; if plot_method
 #' if "ggplot" then it is appended to the existing text.
 #'
-#' @param suppress_default_hovertext Logical value determinine whether to suppress
-#'  the default hovertext (row, column, value).
+#' @param suppress_default_hovertext Logical indicating whether to hide the 
+#' default hovertext for plot_method = "ggplot" of row, column, value, and Point 
+#' size.
 #'
 #' @param label_format_fun Function to format hovertext (eg,
 #'    \code{function(...) round(..., digits=3)} or

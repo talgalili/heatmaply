@@ -126,8 +126,11 @@ fix_not_all_unique <- function(x, ...) {
 #' "GW" (Gruvaeus and Wainer heuristic to optimize the Hamiltonian path length that is restricted by the dendrogram structure)
 #' @param point_size_mat A matrix of values which can be mapped to point size
 #' @param custom_hovertext Custom hovertext matrix (the same dimensions as the input).
-#' @param suppress_default_hovertext Logical value determinine whether to suppress
-#'  the default hovertext (row, column, value).
+#'
+#' @param suppress_default_hovertext Logical indicating whether to hide the 
+#' default hovertext for plot_method = "ggplot" of row, column, value, and Point 
+#' size.
+#'
 #' @param ... currently ignored
 #'
 #' @export

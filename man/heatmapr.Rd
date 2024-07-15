@@ -50,6 +50,7 @@ heatmapr(
   seriate = c("OLO", "mean", "none", "GW"),
   point_size_mat = NULL,
   custom_hovertext = NULL,
+  suppress_default_hovertext = FALSE,
   ...
 )
 }
@@ -171,6 +172,11 @@ Implemented options include:
 \item{point_size_mat}{A matrix of values which can be mapped to point size}
 
 \item{custom_hovertext}{Custom hovertext matrix (the same dimensions as the input).}
+
+\item{suppress_default_hovertext}{Logical (FALSE) indicating whether to hide the 
+default hovertext for plot_method = "ggplot" of row, column, value, and Point 
+size.}
+
 
 \item{...}{currently ignored}
 }
