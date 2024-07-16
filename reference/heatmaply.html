@@ -11,7 +11,7 @@ for correlation matrixes. Specifically, the limits are set from -1 to 1, and the
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -42,20 +42,20 @@ for correlation matrixes. Specifically, the limits are set from -1 to 1, and the
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/talgalili/heatmaply/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Cluster heatmap based on plotly</h1>
-    <small class="dont-index">Source: <a href="https://github.com/talgalili/heatmaply/blob/HEAD/R/heatmaply.R" class="external-link"><code>R/heatmaply.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/talgalili/heatmaply/blob/master/R/heatmaply.R" class="external-link"><code>R/heatmaply.R</code></a></small>
     <div class="hidden name"><code>heatmaply.Rd</code></div>
     </div>
 
@@ -78,7 +78,7 @@ for correlation matrixes. Specifically, the limits are set from -1 to 1, and the
 <span></span>
 <span><span class="fu">heatmaply_cor</span><span class="op">(</span><span class="va">x</span>, limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, colors <span class="op">=</span> <span class="va">cool_warm</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for default</span></span>
+<span><span class="co"># Default S3 method</span></span>
 <span><span class="fu">heatmaply</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  colors <span class="op">=</span> <span class="fu"><a href="https://sjmgarnier.github.io/viridisLite/reference/viridis.html" class="external-link">viridis</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">256</span>, alpha <span class="op">=</span> <span class="fl">1</span>, begin <span class="op">=</span> <span class="fl">0</span>, end <span class="op">=</span> <span class="fl">1</span>, option <span class="op">=</span> <span class="st">"viridis"</span><span class="op">)</span>,</span>
@@ -166,13 +166,14 @@ for correlation matrixes. Specifically, the limits are set from -1 to 1, and the
 <span>  labRow <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  labCol <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  custom_hovertext <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  suppress_default_hovertext <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  col <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  dend_hoverinfo <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  side_color_colorbar_len <span class="op">=</span> <span class="fl">0.3</span>,</span>
 <span>  plotly_source <span class="op">=</span> <span class="st">"A"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for heatmapr</span></span>
+<span><span class="co"># S3 method for class 'heatmapr'</span></span>
 <span><span class="fu">heatmaply</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  colors <span class="op">=</span> <span class="fu"><a href="https://sjmgarnier.github.io/viridisLite/reference/viridis.html" class="external-link">viridis</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">256</span>, alpha <span class="op">=</span> <span class="fl">1</span>, begin <span class="op">=</span> <span class="fl">0</span>, end <span class="op">=</span> <span class="fl">1</span>, option <span class="op">=</span> <span class="st">"viridis"</span><span class="op">)</span>,</span>
@@ -232,6 +233,7 @@ for correlation matrixes. Specifically, the limits are set from -1 to 1, and the
 <span>  point_size_name <span class="op">=</span> <span class="st">"Point size"</span>,</span>
 <span>  label_format_fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">...</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,</span>
 <span>  custom_hovertext <span class="op">=</span> <span class="va">x</span><span class="op">[[</span><span class="st">"matrix"</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="st">"custom_hovertext"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  suppress_default_hovertext <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  dend_hoverinfo <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  side_color_colorbar_len <span class="op">=</span> <span class="fl">0.3</span>,</span>
 <span>  plotly_source <span class="op">=</span> <span class="st">"A"</span>,</span>
@@ -242,23 +244,25 @@ for correlation matrixes. Specifically, the limits are set from -1 to 1, and the
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>x</dt>
+
+
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>can either be a heatmapr object, or a numeric matrix
 Defaults to <code>TRUE</code> unless <code>x</code> contains any <code>NA</code>s.</p></dd>
 
 
-<dt>...</dt>
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>other parameters passed to <a href="heatmapr.html">heatmapr</a> (currently, various
 parameters may be ignored.</p></dd>
 
 
-<dt>grid_gap</dt>
+<dt id="arg-grid-gap">grid_gap<a class="anchor" aria-label="anchor" href="#arg-grid-gap"></a></dt>
 <dd><p>this is a fast alternative to grid_color. The default is 0, but if a larger value
 is used (for example, 1), then the resulting heatmap will have a white grid which can
 help identify different cells. This is implemented using <a href="https://rdrr.io/pkg/plotly/man/style.html" class="external-link">style</a> (with xgap and ygap).</p></dd>
 
 
-<dt>colors, col</dt>
+<dt id="arg-colors-col">colors, col<a class="anchor" aria-label="anchor" href="#arg-colors-col"></a></dt>
 <dd><p>a vector of colors to use for heatmap color.
 The default uses
 <code><a href="https://sjmgarnier.github.io/viridisLite/reference/viridis.html" class="external-link">viridis</a>(n=256, alpha = 1, begin = 0, end = 1, option = "viridis")</code>
@@ -268,25 +272,25 @@ it will be used to create 256 colors from that function.
 (col is there to stay compatible with <a href="https://rdrr.io/pkg/gplots/man/heatmap.2.html" class="external-link">heatmap.2</a>)</p></dd>
 
 
-<dt>limits</dt>
+<dt id="arg-limits">limits<a class="anchor" aria-label="anchor" href="#arg-limits"></a></dt>
 <dd><p>a two dimensional numeric vector specifying the data range for the scale.</p></dd>
 
 
-<dt>na.value</dt>
+<dt id="arg-na-value">na.value<a class="anchor" aria-label="anchor" href="#arg-na-value"></a></dt>
 <dd><p>color to use for missing values (default is "grey50").</p></dd>
 
 
-<dt>row_text_angle</dt>
+<dt id="arg-row-text-angle">row_text_angle<a class="anchor" aria-label="anchor" href="#arg-row-text-angle"></a></dt>
 <dd><p>numeric (Default is 0), the angle of the text of the
 rows. (this is called srtRow in <a href="https://rdrr.io/pkg/gplots/man/heatmap.2.html" class="external-link">heatmap.2</a>)</p></dd>
 
 
-<dt>column_text_angle</dt>
+<dt id="arg-column-text-angle">column_text_angle<a class="anchor" aria-label="anchor" href="#arg-column-text-angle"></a></dt>
 <dd><p>numeric (Default is 45), the angle of the text of
 the columns. (this is called srtCol in <a href="https://rdrr.io/pkg/gplots/man/heatmap.2.html" class="external-link">heatmap.2</a>)</p></dd>
 
 
-<dt>subplot_margin</dt>
+<dt id="arg-subplot-margin">subplot_margin<a class="anchor" aria-label="anchor" href="#arg-subplot-margin"></a></dt>
 <dd><p>Currently not well implemented. It is passed to
 <a href="https://rdrr.io/pkg/plotly/man/subplot.html" class="external-link">subplot</a>. Default is 0. Either a single value or
  four values (all between 0 and 1). If four values are provided,
@@ -295,32 +299,32 @@ the columns. (this is called srtCol in <a href="https://rdrr.io/pkg/gplots/man/h
  If a single value is provided, it will be used as all four margins.</p></dd>
 
 
-<dt>cellnote</dt>
+<dt id="arg-cellnote">cellnote<a class="anchor" aria-label="anchor" href="#arg-cellnote"></a></dt>
 <dd><p>Values to be shown as annotations atop the heatmap cells.</p></dd>
 
 
-<dt>draw_cellnote</dt>
+<dt id="arg-draw-cellnote">draw_cellnote<a class="anchor" aria-label="anchor" href="#arg-draw-cellnote"></a></dt>
 <dd><p>Should the cellnote annotations be drawn? Defaults is FALSE,
 if cellnote is not supplied, TRUE if cellnote is supplied. If TRUE and
 cellnote is not supplied, x will be used for cellnote.</p></dd>
 
 
-<dt>cellnote_color</dt>
+<dt id="arg-cellnote-color">cellnote_color<a class="anchor" aria-label="anchor" href="#arg-cellnote-color"></a></dt>
 <dd><p>The color of the cellnote text to be used.</p></dd>
 
 
-<dt>cellnote_textposition</dt>
+<dt id="arg-cellnote-textposition">cellnote_textposition<a class="anchor" aria-label="anchor" href="#arg-cellnote-textposition"></a></dt>
 <dd><p>The text positioning/centering of the cellnote.
 Default is "middle right". Options are
 "top left", "top center", "top right", "middle left", "middle center",
 "middle right", "bottom left", "bottom center", "bottom right"</p></dd>
 
 
-<dt>cellnote_size</dt>
+<dt id="arg-cellnote-size">cellnote_size<a class="anchor" aria-label="anchor" href="#arg-cellnote-size"></a></dt>
 <dd><p>The font size (HTML/CSS) of the cellnote. Default is 12.</p></dd>
 
 
-<dt>Rowv</dt>
+<dt id="arg-rowv">Rowv<a class="anchor" aria-label="anchor" href="#arg-rowv"></a></dt>
 <dd><p>determines if and how the row dendrogram should be reordered.
 By default, it is TRUE, which implies dendrogram is computed and reordered
 based on row means. If NULL or FALSE, then no dendrogram is computed and
@@ -329,14 +333,14 @@ then it is used "as-is", ie without any reordering. If a vector of integers,
 then dendrogram is computed and reordered based on the order of the vector.</p></dd>
 
 
-<dt>Colv</dt>
+<dt id="arg-colv">Colv<a class="anchor" aria-label="anchor" href="#arg-colv"></a></dt>
 <dd><p>determines if and how the column dendrogram should be reordered.
 Has the options as the Rowv argument above and additionally when x is a
 square matrix, Colv = "Rowv" means that columns should be treated
 identically to the rows.</p></dd>
 
 
-<dt>distfun</dt>
+<dt id="arg-distfun">distfun<a class="anchor" aria-label="anchor" href="#arg-distfun"></a></dt>
 <dd><p>function used to compute the distance (dissimilarity)
 between both rows and columns. Defaults to dist.
 The options "pearson", "spearman" and "kendall" can be used to
@@ -344,12 +348,12 @@ use correlation-based clustering, which uses <code>as.dist(1 - cor(t(x)))</code>
 as the distance metric (using the specified correlation method).</p></dd>
 
 
-<dt>hclustfun</dt>
+<dt id="arg-hclustfun">hclustfun<a class="anchor" aria-label="anchor" href="#arg-hclustfun"></a></dt>
 <dd><p>function used to compute the hierarchical clustering
 when Rowv or Colv are not dendrograms. Defaults to hclust.</p></dd>
 
 
-<dt>dist_method</dt>
+<dt id="arg-dist-method">dist_method<a class="anchor" aria-label="anchor" href="#arg-dist-method"></a></dt>
 <dd><p>default is NULL (which results in "euclidean" to be used).
 Can accept alternative character strings indicating the
 method to be passed to distfun. By default distfun. is <a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a> hence
@@ -357,7 +361,7 @@ this can be one of "euclidean", "maximum", "manhattan", "canberra", "binary"
 or "minkowski".</p></dd>
 
 
-<dt>hclust_method</dt>
+<dt id="arg-hclust-method">hclust_method<a class="anchor" aria-label="anchor" href="#arg-hclust-method"></a></dt>
 <dd><p>default is NULL (which results in "complete" to be used).
 Can accept alternative character strings indicating the
 method to be passed to hclustfun By default hclustfun is <a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a> hence
@@ -368,23 +372,23 @@ Specifying hclust_method=NA causes heatmaply to use
 the data.</p></dd>
 
 
-<dt>distfun_row</dt>
+<dt id="arg-distfun-row">distfun_row<a class="anchor" aria-label="anchor" href="#arg-distfun-row"></a></dt>
 <dd><p>distfun for row dendrogram only.</p></dd>
 
 
-<dt>hclustfun_row</dt>
+<dt id="arg-hclustfun-row">hclustfun_row<a class="anchor" aria-label="anchor" href="#arg-hclustfun-row"></a></dt>
 <dd><p>hclustfun for col dendrogram only.</p></dd>
 
 
-<dt>distfun_col</dt>
+<dt id="arg-distfun-col">distfun_col<a class="anchor" aria-label="anchor" href="#arg-distfun-col"></a></dt>
 <dd><p>distfun for row dendrogram only.</p></dd>
 
 
-<dt>hclustfun_col</dt>
+<dt id="arg-hclustfun-col">hclustfun_col<a class="anchor" aria-label="anchor" href="#arg-hclustfun-col"></a></dt>
 <dd><p>hclustfun for col dendrogram only.</p></dd>
 
 
-<dt>dendrogram</dt>
+<dt id="arg-dendrogram">dendrogram<a class="anchor" aria-label="anchor" href="#arg-dendrogram"></a></dt>
 <dd><p>character string indicating whether to compute 'none',
 'row', 'column' or 'both' dendrograms. Defaults to 'both'.
 However, if Rowv (or Colv) is FALSE or NULL and dendrogram is 'both',
@@ -392,47 +396,47 @@ then a warning is issued and Rowv (or Colv) arguments are honoured.
 It also accepts TRUE/FALSE as synonyms for "both"/"none".</p></dd>
 
 
-<dt>show_dendrogram</dt>
+<dt id="arg-show-dendrogram">show_dendrogram<a class="anchor" aria-label="anchor" href="#arg-show-dendrogram"></a></dt>
 <dd><p>Logical vector of length two, controlling whether
 the row and/or column dendrograms are displayed. If a logical scalar is
 provided, it is repeated to become a logical vector of length two.</p></dd>
 
 
-<dt>reorderfun</dt>
+<dt id="arg-reorderfun">reorderfun<a class="anchor" aria-label="anchor" href="#arg-reorderfun"></a></dt>
 <dd><p>function(d, w) of dendrogram and weights for reordering the
 row and column dendrograms. The default uses statsreorder.dendrogram</p></dd>
 
 
-<dt>k_row</dt>
+<dt id="arg-k-row">k_row<a class="anchor" aria-label="anchor" href="#arg-k-row"></a></dt>
 <dd><p>an integer scalar with the desired number of groups by which to
 color the dendrogram's branches in the rows (uses <a href="http://talgalili.github.io/dendextend/reference/color_branches.html" class="external-link">color_branches</a>)
 If NA then <a href="http://talgalili.github.io/dendextend/reference/find_k.html" class="external-link">find_k</a> is used to deduce the optimal number of clusters.</p></dd>
 
 
-<dt>k_col</dt>
+<dt id="arg-k-col">k_col<a class="anchor" aria-label="anchor" href="#arg-k-col"></a></dt>
 <dd><p>an integer scalar with the desired number of groups by which to
 color the dendrogram's branches in the columns (uses <a href="http://talgalili.github.io/dendextend/reference/color_branches.html" class="external-link">color_branches</a>)
 If NA then <a href="http://talgalili.github.io/dendextend/reference/find_k.html" class="external-link">find_k</a> is used to deduce the optimal number of clusters.</p></dd>
 
 
-<dt>symm</dt>
+<dt id="arg-symm">symm<a class="anchor" aria-label="anchor" href="#arg-symm"></a></dt>
 <dd><p>logical indicating if x should be treated symmetrically; can only
 be true when x is a square matrix.</p></dd>
 
 
-<dt>revC</dt>
+<dt id="arg-revc">revC<a class="anchor" aria-label="anchor" href="#arg-revc"></a></dt>
 <dd><p>logical indicating if the column order should be reversed for plotting.
 Default (when missing) - is FALSE, unless symm is TRUE.
 This is useful for cor matrix.</p></dd>
 
 
-<dt>scale</dt>
+<dt id="arg-scale">scale<a class="anchor" aria-label="anchor" href="#arg-scale"></a></dt>
 <dd><p>character indicating if the values should be centered and scaled
 in either the row direction or the column direction, or none. The default is
 "none".</p></dd>
 
 
-<dt>na.rm</dt>
+<dt id="arg-na-rm">na.rm<a class="anchor" aria-label="anchor" href="#arg-na-rm"></a></dt>
 <dd><p>logical (default is TRUE) indicating whether NA's should be
 removed when scaling (i.e.: when using rowMeans/colMeans). Generally it
 should always be kept as TRUE, and is included here mainly to stay backward
@@ -441,13 +445,13 @@ of NA values in the matrix itself. For removing rows/columns with NAs you
 should pre-process your matrix using na.omit (or some form of imputation).</p></dd>
 
 
-<dt>row_dend_left</dt>
+<dt id="arg-row-dend-left">row_dend_left<a class="anchor" aria-label="anchor" href="#arg-row-dend-left"></a></dt>
 <dd><p>logical (default is FALSE). Should the row dendrogram be
 plotted on the left side of the heatmap. If false then it will be plotted on
 the right side.</p></dd>
 
 
-<dt>margins</dt>
+<dt id="arg-margins">margins<a class="anchor" aria-label="anchor" href="#arg-margins"></a></dt>
 <dd><p>numeric vector of length 4 (default is c(50,50,NA,0))
 containing the margins (see layout) for column, row and main
 title names, respectively. The top margin is NA by default. If main==""
@@ -457,7 +461,7 @@ The right margin is NA by default, meaning it will be zero if row_dend_left
 is FALSE, or 100 if row_dend_left is TRUE.</p></dd>
 
 
-<dt>scale_fill_gradient_fun</dt>
+<dt id="arg-scale-fill-gradient-fun">scale_fill_gradient_fun<a class="anchor" aria-label="anchor" href="#arg-scale-fill-gradient-fun"></a></dt>
 <dd><p>A function that creates a smooth gradient for the heatmap.
 The default uses <a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradientn</a> with the values of colors, limits, and
 na.value that are supplied by the user. The user can input a customized function, such as
@@ -465,7 +469,7 @@ scale_color_gradient() in order to get other results (although the virids defaul
 is quite recommended)</p></dd>
 
 
-<dt>grid_color</dt>
+<dt id="arg-grid-color">grid_color<a class="anchor" aria-label="anchor" href="#arg-grid-color"></a></dt>
 <dd><p>control the color of the heatmap grid. Default is NA.
 Value passed to <a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a>. Do not use this parameter on
 larger matrix sizes, as it can dramatically prolong the build time of the heatmap.
@@ -473,66 +477,66 @@ larger matrix sizes, as it can dramatically prolong the build time of the heatma
 In the meantime it is MUCH better to use the grid_gap argument.</p></dd>
 
 
-<dt>srtRow</dt>
+<dt id="arg-srtrow">srtRow<a class="anchor" aria-label="anchor" href="#arg-srtrow"></a></dt>
 <dd><p>if supplied, this overrides row_text_angle (this is to stay compatible with <a href="https://rdrr.io/pkg/gplots/man/heatmap.2.html" class="external-link">heatmap.2</a>)</p></dd>
 
 
-<dt>srtCol</dt>
+<dt id="arg-srtcol">srtCol<a class="anchor" aria-label="anchor" href="#arg-srtcol"></a></dt>
 <dd><p>if supplied, this overrides column_text_angle (this is to stay compatible with <a href="https://rdrr.io/pkg/gplots/man/heatmap.2.html" class="external-link">heatmap.2</a>)</p></dd>
 
 
-<dt>xlab</dt>
+<dt id="arg-xlab">xlab<a class="anchor" aria-label="anchor" href="#arg-xlab"></a></dt>
 <dd><p>A character title for the x axis.</p></dd>
 
 
-<dt>ylab</dt>
+<dt id="arg-ylab">ylab<a class="anchor" aria-label="anchor" href="#arg-ylab"></a></dt>
 <dd><p>A character title for the y axis.</p></dd>
 
 
-<dt>main</dt>
+<dt id="arg-main">main<a class="anchor" aria-label="anchor" href="#arg-main"></a></dt>
 <dd><p>A character title for the heatmap.</p></dd>
 
 
-<dt>titleX</dt>
+<dt id="arg-titlex">titleX<a class="anchor" aria-label="anchor" href="#arg-titlex"></a></dt>
 <dd><p>logical (TRUE). should x-axis titles be retained? (passed to <a href="https://rdrr.io/pkg/plotly/man/subplot.html" class="external-link">subplot</a>).</p></dd>
 
 
-<dt>titleY</dt>
+<dt id="arg-titley">titleY<a class="anchor" aria-label="anchor" href="#arg-titley"></a></dt>
 <dd><p>logical (TRUE). should y-axis titles be retained? (passed to <a href="https://rdrr.io/pkg/plotly/man/subplot.html" class="external-link">subplot</a>).</p></dd>
 
 
-<dt>hide_colorbar</dt>
+<dt id="arg-hide-colorbar">hide_colorbar<a class="anchor" aria-label="anchor" href="#arg-hide-colorbar"></a></dt>
 <dd><p>logical (FALSE). If TRUE, then the color bar (i.e.: the legend) is hidden.</p></dd>
 
 
-<dt>key.title</dt>
+<dt id="arg-key-title">key.title<a class="anchor" aria-label="anchor" href="#arg-key-title"></a></dt>
 <dd><p>(character) main title of the color key. If set to NULL (default) no title will be plotted.</p></dd>
 
 
-<dt>return_ppxpy</dt>
+<dt id="arg-return-ppxpy">return_ppxpy<a class="anchor" aria-label="anchor" href="#arg-return-ppxpy"></a></dt>
 <dd><p>logical (FALSE). If TRUE, then no plotting is done and the p, px and py objects are
 returned (before turning into plotly objects). This is a temporary option which might be removed in the
 future just to make it easy to create a ggplot heatmaps.</p></dd>
 
 
-<dt>row_side_colors, col_side_colors</dt>
+<dt id="arg-row-side-colors-col-side-colors">row_side_colors, col_side_colors<a class="anchor" aria-label="anchor" href="#arg-row-side-colors-col-side-colors"></a></dt>
 <dd><p>data.frame of factors to produce
 row/column side colors in the style of heatmap.2/heatmap.3.
 When a data.frame is provided, the column names are used as the label names for each of the newly added row_side_colors.
 When a vector is provided it is coerced into a data.frame and the name of the side color will be just row_side_colors.</p></dd>
 
 
-<dt>row_side_palette, col_side_palette</dt>
+<dt id="arg-row-side-palette-col-side-palette">row_side_palette, col_side_palette<a class="anchor" aria-label="anchor" href="#arg-row-side-palette-col-side-palette"></a></dt>
 <dd><p>Color palette functions to be
 used for row_side_colors and col_side_colors respectively.</p></dd>
 
 
-<dt>ColSideColors, RowSideColors</dt>
+<dt id="arg-colsidecolors-rowsidecolors">ColSideColors, RowSideColors<a class="anchor" aria-label="anchor" href="#arg-colsidecolors-rowsidecolors"></a></dt>
 <dd><p>passed to row_side_colors,col_side_colors in order
 to keep compatibility with <a href="https://rdrr.io/pkg/gplots/man/heatmap.2.html" class="external-link">heatmap.2</a></p></dd>
 
 
-<dt>seriate</dt>
+<dt id="arg-seriate">seriate<a class="anchor" aria-label="anchor" href="#arg-seriate"></a></dt>
 <dd><p>character indicating the method of matrix sorting (default: "OLO").
 Implemented options include:
 "OLO" (Optimal leaf ordering, optimizes the Hamiltonian path length that is
@@ -544,28 +548,28 @@ the matrix. This is the default used by <a href="https://rdrr.io/pkg/gplots/man/
 that is restricted by the dendrogram structure)</p></dd>
 
 
-<dt>heatmap_layers</dt>
+<dt id="arg-heatmap-layers">heatmap_layers<a class="anchor" aria-label="anchor" href="#arg-heatmap-layers"></a></dt>
 <dd><p>ggplot object(s) (eg, list(theme_bw())) to be added to
 the heatmap before conversion to a plotly object.</p></dd>
 
 
-<dt>side_color_layers</dt>
+<dt id="arg-side-color-layers">side_color_layers<a class="anchor" aria-label="anchor" href="#arg-side-color-layers"></a></dt>
 <dd><p>ggplot2 objects to be added to side color plots,
 similar to heatmap_layers.</p></dd>
 
 
-<dt>dendrogram_layers</dt>
+<dt id="arg-dendrogram-layers">dendrogram_layers<a class="anchor" aria-label="anchor" href="#arg-dendrogram-layers"></a></dt>
 <dd><p>ggplot2 objects to be added to dendrograms,
 similar to heatmap_layers and side_color_layers.</p></dd>
 
 
-<dt>branches_lwd</dt>
+<dt id="arg-branches-lwd">branches_lwd<a class="anchor" aria-label="anchor" href="#arg-branches-lwd"></a></dt>
 <dd><p>numeric (default is 0.6). The width of the dendrograms' branches.
 If NULL then it is ignored. If the "lwd" is already defined in Rowv/Colv then this
 parameter is ignored (it is checked using <a href="http://talgalili.github.io/dendextend/reference/has_component_in_attribute.html" class="external-link">has_edgePar</a>("lwd")).</p></dd>
 
 
-<dt>file</dt>
+<dt id="arg-file">file<a class="anchor" aria-label="anchor" href="#arg-file"></a></dt>
 <dd><p>name of the file(s) into which to save the heatmaply output.
 Should be a character vector of strings ending with ".html" for a dynamic output,
 or ".png", ".jpeg", ".pdf" for a static output.</p>
@@ -578,7 +582,7 @@ arguments you want based on the ones in <a href="http://wch.github.io/webshot/re
 <p>Another example: heatmaply(x, file = c("heatmaply_plot.html", "heatmaply_plot.png"))</p></dd>
 
 
-<dt>width, height</dt>
+<dt id="arg-width-height">width, height<a class="anchor" aria-label="anchor" href="#arg-width-height"></a></dt>
 <dd><p>The width and height of the output htmlwidget, or the
 output file if exporting to png/pdf/etc. Presumed to be in pixels, but
 if a plotly internal function decides it's in other units you may end up
@@ -586,55 +590,55 @@ with a huge file! Default is 800x500 when exporting to a file, and 100<!-- % wid
 as a htmlwidget.</p></dd>
 
 
-<dt>long_data</dt>
+<dt id="arg-long-data">long_data<a class="anchor" aria-label="anchor" href="#arg-long-data"></a></dt>
 <dd><p>Data in long format. Replaces x, so both should not be used.
 Colnames must be c("name", "variable", "value"). If you do not have a names
 column you can simply use a sequence of numbers from 1 to the number of "rows"
 in the data.</p></dd>
 
 
-<dt>plot_method</dt>
+<dt id="arg-plot-method">plot_method<a class="anchor" aria-label="anchor" href="#arg-plot-method"></a></dt>
 <dd><p>Use "ggplot" or "plotly" to choose which library produces heatmap
 and dendrogram plots</p></dd>
 
 
-<dt>label_names</dt>
+<dt id="arg-label-names">label_names<a class="anchor" aria-label="anchor" href="#arg-label-names"></a></dt>
 <dd><p>Names for labels of x, y and value/fill mouseover.</p></dd>
 
 
-<dt>fontsize_row, fontsize_col, cexRow, cexCol</dt>
+<dt id="arg-fontsize-row-fontsize-col-cexrow-cexcol">fontsize_row, fontsize_col, cexRow, cexCol<a class="anchor" aria-label="anchor" href="#arg-fontsize-row-fontsize-col-cexrow-cexcol"></a></dt>
 <dd><p>Font size for row and column labels.</p></dd>
 
 
-<dt>subplot_widths, subplot_heights</dt>
+<dt id="arg-subplot-widths-subplot-heights">subplot_widths, subplot_heights<a class="anchor" aria-label="anchor" href="#arg-subplot-widths-subplot-heights"></a></dt>
 <dd><p>The relative widths and heights of each
 subplot. The length of these vectors will vary depending on the number of
 plots involved.</p></dd>
 
 
-<dt>colorbar_len</dt>
+<dt id="arg-colorbar-len">colorbar_len<a class="anchor" aria-label="anchor" href="#arg-colorbar-len"></a></dt>
 <dd><p>The length of the colorbar/color key relative to the total
 plot height. Only used if plot_method = "plotly"</p></dd>
 
 
-<dt>colorbar_thickness</dt>
+<dt id="arg-colorbar-thickness">colorbar_thickness<a class="anchor" aria-label="anchor" href="#arg-colorbar-thickness"></a></dt>
 <dd><p>The thickness (width) of the colorbar/color key
 in pixels. Only used if plot_method = "plotly".</p></dd>
 
 
-<dt>colorbar_xanchor, colorbar_yanchor</dt>
+<dt id="arg-colorbar-xanchor-colorbar-yanchor">colorbar_xanchor, colorbar_yanchor<a class="anchor" aria-label="anchor" href="#arg-colorbar-xanchor-colorbar-yanchor"></a></dt>
 <dd><p>The x and y anchoring points of the
 colorbar/color legend. Can be "left", "middle" or "right" for colorbar_xanchor,
 and "top", "middle" or "bottom" for colorbar_yanchor.
 See <code><a href="https://rdrr.io/pkg/plotly/man/colorbar.html" class="external-link">colorbar</a></code> for more details.</p></dd>
 
 
-<dt>colorbar_xpos, colorbar_ypos</dt>
+<dt id="arg-colorbar-xpos-colorbar-ypos">colorbar_xpos, colorbar_ypos<a class="anchor" aria-label="anchor" href="#arg-colorbar-xpos-colorbar-ypos"></a></dt>
 <dd><p>The x and y co-ordinates (in proportion of the plot window)
 of the colorbar/color legend. See <code><a href="https://rdrr.io/pkg/plotly/man/colorbar.html" class="external-link">colorbar</a></code> for more details.</p></dd>
 
 
-<dt>showticklabels</dt>
+<dt id="arg-showticklabels">showticklabels<a class="anchor" aria-label="anchor" href="#arg-showticklabels"></a></dt>
 <dd><p>A logical vector of length two (default is TRUE).
 If FALSE, then the ticks are removed from the sides of the plot. The first location refers to
 the x axis and the second to the y axis. If only one value is supplied (TRUE/FALSE) then it is
@@ -644,71 +648,77 @@ This option should be used when working with medium to large matrix size as it
 makes the heatmap much faster (and the hover still works).</p></dd>
 
 
-<dt>dynamicTicks</dt>
+<dt id="arg-dynamicticks">dynamicTicks<a class="anchor" aria-label="anchor" href="#arg-dynamicticks"></a></dt>
 <dd><p>(default: FALSE). passed to <a href="https://rdrr.io/pkg/plotly/man/ggplotly.html" class="external-link">ggplotly</a>:
 should plotly.js dynamically generate axis tick labels?
 Dynamic ticks are useful for updating ticks in response to zoom/pan interactions; however,
 they can not always reproduce labels as they would appear in the static ggplot2 image.</p></dd>
 
 
-<dt>grid_size</dt>
+<dt id="arg-grid-size">grid_size<a class="anchor" aria-label="anchor" href="#arg-grid-size"></a></dt>
 <dd><p>When node_type is "scatter", this controls point size. When
 node_type is "heatmap", this controls the size of the grid between heatmap cells.</p></dd>
 
 
-<dt>node_type</dt>
+<dt id="arg-node-type">node_type<a class="anchor" aria-label="anchor" href="#arg-node-type"></a></dt>
 <dd><p>For plot_method = "ggplot", should the heatmap be rendered as
 a x-y scatter plot (node_type = "scatter") or a heatmap (node_type = "heatmap").
 Default is node_type = "heatmap".</p></dd>
 
 
-<dt>point_size_mat</dt>
+<dt id="arg-point-size-mat">point_size_mat<a class="anchor" aria-label="anchor" href="#arg-point-size-mat"></a></dt>
 <dd><p>Matrix to map to point size</p></dd>
 
 
-<dt>point_size_name</dt>
+<dt id="arg-point-size-name">point_size_name<a class="anchor" aria-label="anchor" href="#arg-point-size-name"></a></dt>
 <dd><p>Name of point size mapping (for hovertext/legend)</p></dd>
 
 
-<dt>label_format_fun</dt>
+<dt id="arg-label-format-fun">label_format_fun<a class="anchor" aria-label="anchor" href="#arg-label-format-fun"></a></dt>
 <dd><p>Function to format hovertext (eg,
 <code>function(...) round(..., digits=3)</code> or
 <code>function(...) format(..., digits=3)</code></p></dd>
 
 
-<dt>labRow, labCol</dt>
+<dt id="arg-labrow-labcol">labRow, labCol<a class="anchor" aria-label="anchor" href="#arg-labrow-labcol"></a></dt>
 <dd><p>character vectors with row and column labels to use;
 these default to rownames(x) or colnames(x), respectively.
 if set to NA, they change the value in showticklabels to be FALSE. This is mainly to keep
 backward compatibility with gplots::heatmap.2.</p></dd>
 
 
-<dt>custom_hovertext</dt>
+<dt id="arg-custom-hovertext">custom_hovertext<a class="anchor" aria-label="anchor" href="#arg-custom-hovertext"></a></dt>
 <dd><p>Custom hovertext matrix (the same dimensions as the input).
 If plot_method is "plotly" then just this text is displayed; if plot_method
 if "ggplot" then it is appended to the existing text.</p></dd>
 
 
-<dt>dend_hoverinfo</dt>
+<dt id="arg-suppress-default-hovertext">suppress_default_hovertext<a class="anchor" aria-label="anchor" href="#arg-suppress-default-hovertext"></a></dt>
+<dd><p>Logical indicating whether to hide the
+default hovertext for plot_method = "ggplot" of row, column, value, and Point
+size.</p></dd>
+
+
+<dt id="arg-dend-hoverinfo">dend_hoverinfo<a class="anchor" aria-label="anchor" href="#arg-dend-hoverinfo"></a></dt>
 <dd><p>Boolean value which controls whether mouseover text
 is shown for the row and column dendrograms.</p></dd>
 
 
-<dt>side_color_colorbar_len</dt>
+<dt id="arg-side-color-colorbar-len">side_color_colorbar_len<a class="anchor" aria-label="anchor" href="#arg-side-color-colorbar-len"></a></dt>
 <dd><p>As with colorbar_len, this controls the
 length of the colorbar/color key relative to the total plot height.
 This argument controls the colorbar_len of the side colour plots.
 Only used if plot_method = "plotly".</p></dd>
 
 
-<dt>plotly_source</dt>
+<dt id="arg-plotly-source">plotly_source<a class="anchor" aria-label="anchor" href="#arg-plotly-source"></a></dt>
 <dd><p>See <code>source</code> argument in <code><a href="https://rdrr.io/pkg/plotly/man/plot_ly.html" class="external-link">plot_ly</a></code></p></dd>
 
 </dl></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># mtcars</span></span></span>
 <span class="r-in"><span><span class="co"># x &lt;- heatmapr(mtcars)</span></span></span>
@@ -851,19 +861,19 @@ Only used if plot_method = "plotly".</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Example of removing labels and thus making the plot faster</span></span></span>
-<span class="r-in"><span><span class="fu">heatmaply</span><span class="op">(</span><span class="va">iris</span>, showticklabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">T</span>, <span class="cn">F</span><span class="op">)</span>, margins <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">heatmaply</span><span class="op">(</span><span class="va">iris</span>, showticklabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, margins <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># this is what allows for a much larger matrix to be printed:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2017</span> <span class="op">-</span> <span class="fl">05</span> <span class="op">-</span> <span class="fl">18</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">large_x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">19</span><span class="op">)</span>, <span class="fl">1000</span>, <span class="fl">100</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">heatmaply</span><span class="op">(</span><span class="va">large_x</span>, dendrogram <span class="op">=</span> <span class="cn">F</span>, showticklabels <span class="op">=</span> <span class="cn">F</span>, margins <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu">heatmaply</span><span class="op">(</span><span class="va">large_x</span>, dendrogram <span class="op">=</span> <span class="cn">FALSE</span>, showticklabels <span class="op">=</span> <span class="cn">FALSE</span>, margins <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">heatmaply_na</span><span class="op">(</span><span class="va">airquality</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">heatmaply_cor</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -878,15 +888,15 @@ Only used if plot_method = "plotly".</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 
