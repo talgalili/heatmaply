@@ -24,6 +24,7 @@ ggplot_heatmap <- function(xx,
                            point_size_name = "Point size",
                            label_format_fun = function(...) format(..., digits = 4),
                            custom_hovertext = NULL,
+                           suppress_default_hovertext = FALSE,
                            showticklabels = c(TRUE, TRUE),
                            ...) {
   theme_clear_grid_heatmap <- theme(
@@ -60,11 +61,15 @@ ggplot_heatmap <- function(xx,
   col <- label_names[[2]]
   val <- label_names[[3]]
 
-  mdf[["text"]] <- paste0(
-    row, ": ", mdf[[1]], "<br>",
-    col, ": ", mdf[[2]], "<br>",
-    val, ": ", label_format_fun(mdf[[3]])
-  )
+  if (!suppress_default_hovertext) {
+    mdf[["text"]] <- paste0(
+      row, ": ", mdf[[1]], "<br>",
+      col, ": ", mdf[[2]], "<br>",
+      val, ": ", label_format_fun(mdf[[3]])
+    )
+  } else {
+    mdf[["text"]] <- ""
+  }
 
   if (type == "heatmap") {
     geom <- "geom_tile"
@@ -77,10 +82,13 @@ ggplot_heatmap <- function(xx,
     geom <- "geom_point"
     geom_args <- list()
     if (!is.null(point_size_mat)) {
-      mdf[["text"]] <- paste(
-        mdf[["text"]], "<br>",
-        point_size_name, ": ", label_format_fun(mdf[[4]])
-      )
+      if (!suppress_default_hovertext)
+      {
+        mdf[["text"]] <- paste(
+          mdf[["text"]], "<br>",
+          point_size_name, ": ", label_format_fun(mdf[[4]])
+        )
+      }
       aes_mapping <- aes(
         color = .data[[val]],
         text = .data$text,
@@ -95,7 +103,11 @@ ggplot_heatmap <- function(xx,
     }
   }
   if (!is.null(custom_hovertext)) {
-    mdf[["text"]] <- paste0(mdf[["text"]], "<br>", custom_hovertext)
+    if (!suppress_default_hovertext) {
+      mdf[["text"]] <- paste0(mdf[["text"]], "<br>", custom_hovertext)
+    } else {
+      mdf[["text"]] <- reshape2::melt(as.matrix(custom_hovertext))[[3]]
+    }
   }
   geom_args[["mapping"]] <- aes_mapping
   
@@ -467,7 +479,7 @@ ggplot_side_color_plot <- function(df,
   )
 
   ## Don't need this hack any more?
-  # if(original_dim[2] > 1) {
+  # if (original_dim[2] > 1) {
   text_element <- element_text(angle = text_angle, hjust = 1, size = fontsize)
   # } else text_element <- element_blank()
 

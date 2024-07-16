@@ -101,6 +101,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   labRow = NULL,
   labCol = NULL,
   custom_hovertext = NULL,
+  suppress_default_hovertext = FALSE,
   col = NULL,
   dend_hoverinfo = TRUE,
   side_color_colorbar_len = 0.3,
@@ -166,6 +167,7 @@ heatmaply_cor(x, limits = c(-1, 1), colors = cool_warm, ...)
   point_size_name = "Point size",
   label_format_fun = function(...) format(..., digits = 4),
   custom_hovertext = x[["matrix"]][["custom_hovertext"]],
+  suppress_default_hovertext = FALSE,
   dend_hoverinfo = TRUE,
   side_color_colorbar_len = 0.3,
   plotly_source = "A",
@@ -474,6 +476,10 @@ backward compatibility with gplots::heatmap.2.}
 If plot_method is "plotly" then just this text is displayed; if plot_method
 if "ggplot" then it is appended to the existing text.}
 
+\item{suppress_default_hovertext}{Logical indicating whether to hide the 
+default hovertext for plot_method = "ggplot" of row, column, value, and Point 
+size.}
+
 \item{dend_hoverinfo}{Boolean value which controls whether mouseover text
 is shown for the row and column dendrograms.}
 
@@ -642,12 +648,12 @@ heatmaply(percentize(mtcars),
 
 
 # Example of removing labels and thus making the plot faster
-heatmaply(iris, showticklabels = c(T, F), margins = c(80, 10))
+heatmaply(iris, showticklabels = c(TRUE, FALSE), margins = c(80, 10))
 
 # this is what allows for a much larger matrix to be printed:
 set.seed(2017 - 05 - 18)
 large_x <- matrix(rnorm(19), 1000, 100)
-heatmaply(large_x, dendrogram = F, showticklabels = F, margins = c(1, 1))
+heatmaply(large_x, dendrogram = FALSE, showticklabels = FALSE, margins = c(1, 1))
 }
 \dontrun{
 heatmaply_na(airquality)

@@ -126,6 +126,7 @@ fix_not_all_unique <- function(x, ...) {
 #' "GW" (Gruvaeus and Wainer heuristic to optimize the Hamiltonian path length that is restricted by the dendrogram structure)
 #' @param point_size_mat A matrix of values which can be mapped to point size
 #' @param custom_hovertext Custom hovertext matrix (the same dimensions as the input).
+#'
 #' @param ... currently ignored
 #'
 #' @export
@@ -232,7 +233,7 @@ heatmapr <- function(x,
   nr <- nrow(x)
   nc <- ncol(x)
   ### TODO: debating if to include this or not:
-  #   if(nr <= 1 || nc <= 1)
+  #   if (nr <= 1 || nc <= 1)
   #     stop("`x' must have at least 2 rows and 2 columns")
 
 
@@ -398,7 +399,7 @@ heatmapr <- function(x,
   # ----------------
   # Due to the internal working of dendextend, in order to use it we first need
   # to populate the dendextend::dendextend_options() space:
-  # if(!missing(k_row) | !missing(k_col))  # Setting k_row and k_col to 1 by default
+  # if (!missing(k_row) | !missing(k_col))  # Setting k_row and k_col to 1 by default
   dendextend::assign_dendextend_options()
 
   if (is.dendrogram(Rowv)) {
@@ -446,7 +447,7 @@ heatmapr <- function(x,
   ## Final touches before exporting the object
   ## =======================
 
-  # if(!is.null(custom_hovertext) && !is.matrix(custom_hovertext)) {
+  # if (!is.null(custom_hovertext) && !is.matrix(custom_hovertext)) {
   if (is.data.frame(custom_hovertext)) {
     custom_hovertext <- as.matrix(custom_hovertext)
   }

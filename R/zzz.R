@@ -250,7 +250,7 @@ heatmaplyWelcomeMessage <- function() {
 # # http://stackoverflow.com/questions/10330425/how-do-i-export-a-git-log-to-a-text-file
 # # http://stackoverflow.com/questions/3523534/good-ways-to-manage-a-changelog-using-git
 # # http://www.commandlinefu.com/commands/view/12420/generate-a-change-log-with-git
-# shell("git log --decorate > ChangeLog", intern = T)
+# shell("git log --decorate > ChangeLog", intern = TRUE)
 
 # Modify it using: http://git-scm.com/book/en/Git-Basics-Viewing-the-Commit-History
 #         http://stackoverflow.com/questions/9007181/custom-log-format-omits-newline-at-end-of-output
@@ -305,6 +305,6 @@ heatmaplyWelcomeMessage <- function() {
 # file.copy("NEWS", "NEWS.md",overwrite = TRUE)
 # devtools::check_win_devel()
 # pkgdown::build_home()
-# pkgdown::build_site(run_dont_run = F)
+# pkgdown::build_site(run_dont_run = FALSE)
 # pkgdown::build_news()
 # release()
