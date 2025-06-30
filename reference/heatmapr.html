@@ -80,7 +80,7 @@ using plotly (but potentially also with other graphical devices).</p>
 <span>  k_row <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  k_col <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  symm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  revC <span class="op">=</span> <span class="va">symm</span> <span class="op">||</span> <span class="op">(</span><span class="fu"><a href="http://talgalili.github.io/dendextend/reference/is_some_class.html" class="external-link">is.dendrogram</a></span><span class="op">(</span><span class="va">Colv</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="http://talgalili.github.io/dendextend/reference/is_some_class.html" class="external-link">is.dendrogram</a></span><span class="op">(</span><span class="va">Rowv</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">Rowv</span>, <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">Colv</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  revC <span class="op">=</span> <span class="va">symm</span> <span class="op">||</span> <span class="op">(</span><span class="fu"><a href="https://talgalili.github.io/dendextend/reference/is_some_class.html" class="external-link">is.dendrogram</a></span><span class="op">(</span><span class="va">Colv</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://talgalili.github.io/dendextend/reference/is_some_class.html" class="external-link">is.dendrogram</a></span><span class="op">(</span><span class="va">Rowv</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">Rowv</span>, <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">Colv</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"row"</span>, <span class="st">"column"</span><span class="op">)</span>,</span>
 <span>  na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  labRow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
@@ -111,7 +111,7 @@ using plotly (but potentially also with other graphical devices).</p>
 
     <div id="source">
     <h2>Source</h2>
-    <p>The interface was designed based on <a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a>, <a href="https://rdrr.io/pkg/gplots/man/heatmap.2.html" class="external-link">heatmap.2</a>, and (the also d3heatmap).</p>
+    <p>The interface was designed based on <a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a>, <a href="https://talgalili.github.io/gplots/reference/heatmap.2.html" class="external-link">heatmap.2</a>, and (the also d3heatmap).</p>
     </div>
     <div id="arguments">
     <h2>Arguments</h2>
@@ -184,13 +184,13 @@ provided, it is repeated to become a logical vector of length two.</p></dd>
 
 
 <dt id="arg-k-row">k_row<a class="anchor" aria-label="anchor" href="#arg-k-row"></a></dt>
-<dd><p>an integer scalar with the desired number of groups by which to color the dendrogram's branches in the rows (uses <a href="http://talgalili.github.io/dendextend/reference/color_branches.html" class="external-link">color_branches</a>)
-If NA then <a href="http://talgalili.github.io/dendextend/reference/find_k.html" class="external-link">find_k</a> is used to deduce the optimal number of clusters.</p></dd>
+<dd><p>an integer scalar with the desired number of groups by which to color the dendrogram's branches in the rows (uses <a href="https://talgalili.github.io/dendextend/reference/color_branches.html" class="external-link">color_branches</a>)
+If NA then <a href="https://talgalili.github.io/dendextend/reference/find_k.html" class="external-link">find_k</a> is used to deduce the optimal number of clusters.</p></dd>
 
 
 <dt id="arg-k-col">k_col<a class="anchor" aria-label="anchor" href="#arg-k-col"></a></dt>
-<dd><p>an integer scalar with the desired number of groups by which to color the dendrogram's branches in the columns (uses <a href="http://talgalili.github.io/dendextend/reference/color_branches.html" class="external-link">color_branches</a>)
-If NA then <a href="http://talgalili.github.io/dendextend/reference/find_k.html" class="external-link">find_k</a> is used to deduce the optimal number of clusters.</p></dd>
+<dd><p>an integer scalar with the desired number of groups by which to color the dendrogram's branches in the columns (uses <a href="https://talgalili.github.io/dendextend/reference/color_branches.html" class="external-link">color_branches</a>)
+If NA then <a href="https://talgalili.github.io/dendextend/reference/find_k.html" class="external-link">find_k</a> is used to deduce the optimal number of clusters.</p></dd>
 
 
 <dt id="arg-symm">symm<a class="anchor" aria-label="anchor" href="#arg-symm"></a></dt>
@@ -304,7 +304,7 @@ as the column side colors it will produce.</p></dd>
 <dd><p>character indicating the method of matrix sorting (default: "OLO").
 Implemented options include:
 "OLO" (Optimal leaf ordering, optimizes the Hamiltonian path length that is restricted by the dendrogram structure - works in O(n^4) )
-"mean" (sorts the matrix based on the reorderfun using marginal means of the matrix. This is the default used by <a href="https://rdrr.io/pkg/gplots/man/heatmap.2.html" class="external-link">heatmap.2</a>),
+"mean" (sorts the matrix based on the reorderfun using marginal means of the matrix. This is the default used by <a href="https://talgalili.github.io/gplots/reference/heatmap.2.html" class="external-link">heatmap.2</a>),
 "none" (the default order produced by the dendrogram),
 "GW" (Gruvaeus and Wainer heuristic to optimize the Hamiltonian path length that is restricted by the dendrogram structure)</p></dd>
 
@@ -323,7 +323,7 @@ Implemented options include:
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a>, <a href="https://rdrr.io/pkg/gplots/man/heatmap.2.html" class="external-link">heatmap.2</a></p></div>
+    <div class="dont-index"><p><a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a>, <a href="https://talgalili.github.io/gplots/reference/heatmap.2.html" class="external-link">heatmap.2</a></p></div>
     </div>
 
     <div id="ref-examples">
@@ -348,7 +348,7 @@ Implemented options include:
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer></div>

@@ -269,7 +269,7 @@ The default uses
 It is passed to <a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradientn</a>.
 If colors is a color function (with the first argument being `n` = the number of colors),
 it will be used to create 256 colors from that function.
-(col is there to stay compatible with <a href="https://rdrr.io/pkg/gplots/man/heatmap.2.html" class="external-link">heatmap.2</a>)</p></dd>
+(col is there to stay compatible with <a href="https://talgalili.github.io/gplots/reference/heatmap.2.html" class="external-link">heatmap.2</a>)</p></dd>
 
 
 <dt id="arg-limits">limits<a class="anchor" aria-label="anchor" href="#arg-limits"></a></dt>
@@ -282,12 +282,12 @@ it will be used to create 256 colors from that function.
 
 <dt id="arg-row-text-angle">row_text_angle<a class="anchor" aria-label="anchor" href="#arg-row-text-angle"></a></dt>
 <dd><p>numeric (Default is 0), the angle of the text of the
-rows. (this is called srtRow in <a href="https://rdrr.io/pkg/gplots/man/heatmap.2.html" class="external-link">heatmap.2</a>)</p></dd>
+rows. (this is called srtRow in <a href="https://talgalili.github.io/gplots/reference/heatmap.2.html" class="external-link">heatmap.2</a>)</p></dd>
 
 
 <dt id="arg-column-text-angle">column_text_angle<a class="anchor" aria-label="anchor" href="#arg-column-text-angle"></a></dt>
 <dd><p>numeric (Default is 45), the angle of the text of
-the columns. (this is called srtCol in <a href="https://rdrr.io/pkg/gplots/man/heatmap.2.html" class="external-link">heatmap.2</a>)</p></dd>
+the columns. (this is called srtCol in <a href="https://talgalili.github.io/gplots/reference/heatmap.2.html" class="external-link">heatmap.2</a>)</p></dd>
 
 
 <dt id="arg-subplot-margin">subplot_margin<a class="anchor" aria-label="anchor" href="#arg-subplot-margin"></a></dt>
@@ -368,7 +368,7 @@ method to be passed to hclustfun By default hclustfun is <a href="https://rdrr.i
 this can be one of "ward.D", "ward.D2", "single", "complete", "average"
 (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).
 Specifying hclust_method=NA causes heatmaply to use
-<code><a href="http://talgalili.github.io/dendextend/reference/find_dend.html" class="external-link">find_dend</a></code> to find the "optimal" dendrogram for
+<code><a href="https://talgalili.github.io/dendextend/reference/find_dend.html" class="external-link">find_dend</a></code> to find the "optimal" dendrogram for
 the data.</p></dd>
 
 
@@ -409,14 +409,14 @@ row and column dendrograms. The default uses statsreorder.dendrogram</p></dd>
 
 <dt id="arg-k-row">k_row<a class="anchor" aria-label="anchor" href="#arg-k-row"></a></dt>
 <dd><p>an integer scalar with the desired number of groups by which to
-color the dendrogram's branches in the rows (uses <a href="http://talgalili.github.io/dendextend/reference/color_branches.html" class="external-link">color_branches</a>)
-If NA then <a href="http://talgalili.github.io/dendextend/reference/find_k.html" class="external-link">find_k</a> is used to deduce the optimal number of clusters.</p></dd>
+color the dendrogram's branches in the rows (uses <a href="https://talgalili.github.io/dendextend/reference/color_branches.html" class="external-link">color_branches</a>)
+If NA then <a href="https://talgalili.github.io/dendextend/reference/find_k.html" class="external-link">find_k</a> is used to deduce the optimal number of clusters.</p></dd>
 
 
 <dt id="arg-k-col">k_col<a class="anchor" aria-label="anchor" href="#arg-k-col"></a></dt>
 <dd><p>an integer scalar with the desired number of groups by which to
-color the dendrogram's branches in the columns (uses <a href="http://talgalili.github.io/dendextend/reference/color_branches.html" class="external-link">color_branches</a>)
-If NA then <a href="http://talgalili.github.io/dendextend/reference/find_k.html" class="external-link">find_k</a> is used to deduce the optimal number of clusters.</p></dd>
+color the dendrogram's branches in the columns (uses <a href="https://talgalili.github.io/dendextend/reference/color_branches.html" class="external-link">color_branches</a>)
+If NA then <a href="https://talgalili.github.io/dendextend/reference/find_k.html" class="external-link">find_k</a> is used to deduce the optimal number of clusters.</p></dd>
 
 
 <dt id="arg-symm">symm<a class="anchor" aria-label="anchor" href="#arg-symm"></a></dt>
@@ -478,11 +478,11 @@ In the meantime it is MUCH better to use the grid_gap argument.</p></dd>
 
 
 <dt id="arg-srtrow">srtRow<a class="anchor" aria-label="anchor" href="#arg-srtrow"></a></dt>
-<dd><p>if supplied, this overrides row_text_angle (this is to stay compatible with <a href="https://rdrr.io/pkg/gplots/man/heatmap.2.html" class="external-link">heatmap.2</a>)</p></dd>
+<dd><p>if supplied, this overrides row_text_angle (this is to stay compatible with <a href="https://talgalili.github.io/gplots/reference/heatmap.2.html" class="external-link">heatmap.2</a>)</p></dd>
 
 
 <dt id="arg-srtcol">srtCol<a class="anchor" aria-label="anchor" href="#arg-srtcol"></a></dt>
-<dd><p>if supplied, this overrides column_text_angle (this is to stay compatible with <a href="https://rdrr.io/pkg/gplots/man/heatmap.2.html" class="external-link">heatmap.2</a>)</p></dd>
+<dd><p>if supplied, this overrides column_text_angle (this is to stay compatible with <a href="https://talgalili.github.io/gplots/reference/heatmap.2.html" class="external-link">heatmap.2</a>)</p></dd>
 
 
 <dt id="arg-xlab">xlab<a class="anchor" aria-label="anchor" href="#arg-xlab"></a></dt>
@@ -533,7 +533,7 @@ used for row_side_colors and col_side_colors respectively.</p></dd>
 
 <dt id="arg-colsidecolors-rowsidecolors">ColSideColors, RowSideColors<a class="anchor" aria-label="anchor" href="#arg-colsidecolors-rowsidecolors"></a></dt>
 <dd><p>passed to row_side_colors,col_side_colors in order
-to keep compatibility with <a href="https://rdrr.io/pkg/gplots/man/heatmap.2.html" class="external-link">heatmap.2</a></p></dd>
+to keep compatibility with <a href="https://talgalili.github.io/gplots/reference/heatmap.2.html" class="external-link">heatmap.2</a></p></dd>
 
 
 <dt id="arg-seriate">seriate<a class="anchor" aria-label="anchor" href="#arg-seriate"></a></dt>
@@ -542,7 +542,7 @@ Implemented options include:
 "OLO" (Optimal leaf ordering, optimizes the Hamiltonian path length that is
 restricted by the dendrogram structure - works in O(n^4) )
 "mean" (sorts the matrix based on the reorderfun using marginal means of
-the matrix. This is the default used by <a href="https://rdrr.io/pkg/gplots/man/heatmap.2.html" class="external-link">heatmap.2</a>),
+the matrix. This is the default used by <a href="https://talgalili.github.io/gplots/reference/heatmap.2.html" class="external-link">heatmap.2</a>),
 "none" (the default order produced by the dendrogram),
 "GW" (Gruvaeus and Wainer heuristic to optimize the Hamiltonian path length
 that is restricted by the dendrogram structure)</p></dd>
@@ -566,7 +566,7 @@ similar to heatmap_layers and side_color_layers.</p></dd>
 <dt id="arg-branches-lwd">branches_lwd<a class="anchor" aria-label="anchor" href="#arg-branches-lwd"></a></dt>
 <dd><p>numeric (default is 0.6). The width of the dendrograms' branches.
 If NULL then it is ignored. If the "lwd" is already defined in Rowv/Colv then this
-parameter is ignored (it is checked using <a href="http://talgalili.github.io/dendextend/reference/has_component_in_attribute.html" class="external-link">has_edgePar</a>("lwd")).</p></dd>
+parameter is ignored (it is checked using <a href="https://talgalili.github.io/dendextend/reference/has_component_in_attribute.html" class="external-link">has_edgePar</a>("lwd")).</p></dd>
 
 
 <dt id="arg-file">file<a class="anchor" aria-label="anchor" href="#arg-file"></a></dt>
@@ -788,7 +788,7 @@ Only used if plot_method = "plotly".</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/talgalili/gplots" class="external-link">gplots</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sjmgarnier.github.io/viridis/" class="external-link">viridis</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/gplots/man/heatmap.2.html" class="external-link">heatmap.2</a></span><span class="op">(</span><span class="va">x</span>,</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://talgalili.github.io/gplots/reference/heatmap.2.html" class="external-link">heatmap.2</a></span><span class="op">(</span><span class="va">x</span>,</span></span>
 <span class="r-in"><span>  trace <span class="op">=</span> <span class="st">"none"</span>, col <span class="op">=</span> <span class="fu"><a href="https://sjmgarnier.github.io/viridisLite/reference/viridis.html" class="external-link">viridis</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  RowSideColors <span class="op">=</span> <span class="va">rc</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
@@ -817,24 +817,24 @@ Only used if plot_method = "plotly".</p></dd>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu">datasets</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/datasets/mtcars.html" class="external-link">mtcars</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># now let's spice up the dendrograms a bit:</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://talgalili.github.io/dendextend/" class="external-link">dendextend</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://talgalili.github.io/dendextend/" class="external-link">dendextend</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">row_dend</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/dendrogram.html" class="external-link">as.dendrogram</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="http://talgalili.github.io/dendextend/reference/set.html" class="external-link">set</a></span><span class="op">(</span><span class="st">"branches_k_color"</span>, k <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="http://talgalili.github.io/dendextend/reference/set.html" class="external-link">set</a></span><span class="op">(</span><span class="st">"branches_lwd"</span>, <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="http://talgalili.github.io/dendextend/reference/ladderize.html" class="external-link">ladderize</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://talgalili.github.io/dendextend/reference/set.html" class="external-link">set</a></span><span class="op">(</span><span class="st">"branches_k_color"</span>, k <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://talgalili.github.io/dendextend/reference/set.html" class="external-link">set</a></span><span class="op">(</span><span class="st">"branches_lwd"</span>, <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://talgalili.github.io/dendextend/reference/ladderize.html" class="external-link">ladderize</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co">#    rotate_DendSer(ser_weight = dist(x))</span></span></span>
 <span class="r-in"><span><span class="va">col_dend</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/dendrogram.html" class="external-link">as.dendrogram</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="http://talgalili.github.io/dendextend/reference/set.html" class="external-link">set</a></span><span class="op">(</span><span class="st">"branches_k_color"</span>, k <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="http://talgalili.github.io/dendextend/reference/set.html" class="external-link">set</a></span><span class="op">(</span><span class="st">"branches_lwd"</span>, <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="http://talgalili.github.io/dendextend/reference/ladderize.html" class="external-link">ladderize</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://talgalili.github.io/dendextend/reference/set.html" class="external-link">set</a></span><span class="op">(</span><span class="st">"branches_k_color"</span>, k <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://talgalili.github.io/dendextend/reference/set.html" class="external-link">set</a></span><span class="op">(</span><span class="st">"branches_lwd"</span>, <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://talgalili.github.io/dendextend/reference/ladderize.html" class="external-link">ladderize</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co">#    rotate_DendSer(ser_weight = dist(t(x)))</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">heatmaply</span><span class="op">(</span><span class="va">x</span>, Rowv <span class="op">=</span> <span class="va">row_dend</span>, Colv <span class="op">=</span> <span class="va">col_dend</span><span class="op">)</span></span></span>
@@ -888,7 +888,7 @@ Only used if plot_method = "plotly".</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer></div>
