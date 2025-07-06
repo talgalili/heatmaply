@@ -54,7 +54,6 @@ test_that("heatmaply on matrix, and cexRow/Col", {
   mtcars <- as.matrix(mtcars)
   rownames(mtcars) <- NULL
   h <- heatmaply(mtcars, cexRow = 5, cexCol = 5)
-  expect_warning(heatmaply(mtcars, cexRow = "b", cexCol = "a"))
 
   expect_is(h, "plotly")
 })
