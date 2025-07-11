@@ -1,3 +1,14 @@
+heatmaply 1.6.0 (2025-07-11)
+===============
+## NEW FEATURE
+- Hide row dendrogram axis ticks for plotly by @siddharthab in https://github.com/talgalili/heatmaply/pull/307
+- Add option suppress_default_hovertext for plot_method = "ggplot" by @mcsimenc in https://github.com/talgalili/heatmaply/pull/301
+
+## TESTS
+- Get tests to be compatible with ggplot 4.0.0.
+
+
+
 heatmaply 1.5.0 (2023-10-06)
 ===============
 ## NEW FEATURE
