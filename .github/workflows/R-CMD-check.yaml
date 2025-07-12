@@ -28,6 +28,7 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
       _R_CHECK_BUILD_VIGNETTES_: ${{ matrix.config.build-vignettes }}
+      R_BUILD_VIGNETTES: ${{ matrix.config.build-vignettes }}
 
     steps:
       - uses: actions/checkout@v2
@@ -38,12 +39,16 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
-          use-public-rspm: true
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
           needs: check
+
+      - name: Show vignette build settings (debug)
+        run: |
+          echo "R_BUILD_VIGNETTES: $R_BUILD_VIGNETTES"
+          echo "_R_CHECK_BUILD_VIGNETTES_: $_R_CHECK_BUILD_VIGNETTES_"
 
       - uses: r-lib/actions/check-r-package@v2
         with:
