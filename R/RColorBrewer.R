@@ -49,10 +49,10 @@
 #' @name RColorBrewer_colors
 #'
 #' @description
-#' Functions for getting the colors of RColorBrewer (i.e.: \link{brewer.pal}) without the limitation of only 9/11
+#' Functions for getting the colors of RColorBrewer (i.e.: \link[RColorBrewer]{brewer.pal}) without the limitation of only 9/11
 #' color values, based on \link{colorRampPalette}.
 #'
-#' For sequential palettes this is not essential since we have \link{viridis}. But for diverging palettes
+#' For sequential palettes this is not essential since we have \link[viridis]{viridis}. But for diverging palettes
 #' this is quit essential.
 #'
 #' The sequential palettes names are

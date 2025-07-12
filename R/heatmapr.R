@@ -85,7 +85,7 @@ fix_not_all_unique <- function(x, ...) {
 #' @param show_dendrogram Logical vector of length controlling whether the row
 #' and column dendrograms are displayed. If a logical scalar is
 #' provided, it is repeated to become a logical vector of length two.
-#' @param reorderfun function(d, w) of dendrogram and weights for reordering the row and column dendrograms. The default uses stats{reorder.dendrogram}
+#' @param reorderfun function(d, w) of dendrogram and weights for reordering the row and column dendrograms. The default uses \link[stats]{reorder.dendrogram}
 #'
 #' @param k_row an integer scalar with the desired number of groups by which to color the dendrogram's branches in the rows (uses \link[dendextend]{color_branches})
 #' If NA then \link[dendextend]{find_k} is used to deduce the optimal number of clusters.

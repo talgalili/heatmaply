@@ -1,4 +1,4 @@
-heatmaply 1.6.0 (2025-07-11)
+heatmaply 1.6.0 (2025-07-12)
 ===============
 ## NEW FEATURE
 - Hide row dendrogram axis ticks for plotly by @siddharthab in https://github.com/talgalili/heatmaply/pull/307

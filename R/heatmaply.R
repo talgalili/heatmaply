@@ -89,7 +89,7 @@
 #' the row and/or column dendrograms are displayed. If a logical scalar is
 #' provided, it is repeated to become a logical vector of length two.
 #' @param reorderfun function(d, w) of dendrogram and weights for reordering the
-#' row and column dendrograms. The default uses stats{reorder.dendrogram}
+#' row and column dendrograms. The default uses \link[stats]{reorder.dendrogram}
 #'
 #' @param k_row an integer scalar with the desired number of groups by which to
 #' color the dendrogram's branches in the rows (uses \link[dendextend]{color_branches})
@@ -132,7 +132,7 @@
 #' @param scale_fill_gradient_fun A function that creates a smooth gradient for the heatmap.
 #' The default uses \link[ggplot2]{scale_fill_gradientn} with the values of colors, limits, and
 #' na.value that are supplied by the user. The user can input a customized function, such as
-#' \link{scale_color_gradient}() in order to get other results (although the virids default
+#' \link[ggplot2]{scale_color_gradient}() in order to get other results (although the virids default
 #' is quite recommended)
 #'
 #' @param grid_color control the color of the heatmap grid. Default is NA.
@@ -267,8 +267,8 @@
 #' If plot_method is "plotly" then just this text is displayed; if plot_method
 #' if "ggplot" then it is appended to the existing text.
 #'
-#' @param suppress_default_hovertext Logical indicating whether to hide the 
-#' default hovertext for plot_method = "ggplot" of row, column, value, and Point 
+#' @param suppress_default_hovertext Logical indicating whether to hide the
+#' default hovertext for plot_method = "ggplot" of row, column, value, and Point
 #' size.
 #'
 #' @param label_format_fun Function to format hovertext (eg,
@@ -607,7 +607,7 @@ heatmaply.default <- function(x,
     r <- range(as.matrix(x), na.rm = TRUE)
     limits <- sort(limits)
 
-  
+
     ## Warn for broken heatmap colors
     if (limits[1] > r[1]) {
       limits[1] <- r[1]
@@ -1446,7 +1446,7 @@ calc_margin <- function(labels, fontsize) {
 #' @title Checks if an object is of class plotly or not.
 #' @export
 #' @description
-#' Helpful for the plot_method in link{heatmaply}.
+#' Helpful for the plot_method in \link{heatmaply}.
 #'
 #' @param x an object to check
 #'

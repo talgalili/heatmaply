@@ -13,5 +13,5 @@ is.plotly(x)
 TRUE if the object inherits "plotly" as a class.
 }
 \description{
-Helpful for the plot_method in link{heatmaply}.
+Helpful for the plot_method in \link{heatmaply}.
 }

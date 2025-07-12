@@ -281,7 +281,7 @@ the row and/or column dendrograms are displayed. If a logical scalar is
 provided, it is repeated to become a logical vector of length two.}
 
 \item{reorderfun}{function(d, w) of dendrogram and weights for reordering the
-row and column dendrograms. The default uses stats{reorder.dendrogram}}
+row and column dendrograms. The default uses \link[stats]{reorder.dendrogram}}
 
 \item{k_row}{an integer scalar with the desired number of groups by which to
 color the dendrogram's branches in the rows (uses \link[dendextend]{color_branches})
@@ -324,7 +324,7 @@ is FALSE, or 100 if row_dend_left is TRUE.}
 \item{scale_fill_gradient_fun}{A function that creates a smooth gradient for the heatmap.
 The default uses \link[ggplot2]{scale_fill_gradientn} with the values of colors, limits, and
 na.value that are supplied by the user. The user can input a customized function, such as
-\link{scale_color_gradient}() in order to get other results (although the virids default
+\link[ggplot2]{scale_color_gradient}() in order to get other results (although the virids default
 is quite recommended)}
 
 \item{grid_color}{control the color of the heatmap grid. Default is NA.
@@ -476,8 +476,8 @@ backward compatibility with gplots::heatmap.2.}
 If plot_method is "plotly" then just this text is displayed; if plot_method
 if "ggplot" then it is appended to the existing text.}
 
-\item{suppress_default_hovertext}{Logical indicating whether to hide the 
-default hovertext for plot_method = "ggplot" of row, column, value, and Point 
+\item{suppress_default_hovertext}{Logical indicating whether to hide the
+default hovertext for plot_method = "ggplot" of row, column, value, and Point
 size.}
 
 \item{dend_hoverinfo}{Boolean value which controls whether mouseover text
