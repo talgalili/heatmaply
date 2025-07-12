@@ -18,11 +18,11 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest,   r: 'release', build-vignettes: false}
-          - {os: windows-latest, r: 'release', build-vignettes: true}
-          - {os: ubuntu-latest,  r: 'devel',   build-vignettes: true, http-user-agent: 'release'}
-          - {os: ubuntu-latest,  r: 'release', build-vignettes: true}
-          - {os: ubuntu-latest,  r: 'oldrel-1', build-vignettes: true}
+          - {os: macOS-latest,   r: 'release'}
+          - {os: windows-latest, r: 'release'}
+          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-latest,   r: 'release'}
+          - {os: ubuntu-latest,   r: 'oldrel-1'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -37,19 +37,13 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
+          use-public-rspm: true
 
-      - name: Install dependencies (with or without vignettes)
-        uses: r-lib/actions/setup-r-dependencies@v2
+      - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
           needs: check
-          build: true
-          build-args: >-
-            ${{ matrix.config.build-vignettes == false && '--no-build-vignettes --no-manual' || '' }}
 
-      - name: Run R CMD check
-        uses: r-lib/actions/check-r-package@v2
+      - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
-          args: >-
-            ${{ matrix.config.build-vignettes == false && '--no-build-vignettes --no-manual' || '' }}
