@@ -18,17 +18,15 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest,   r: 'release', build-vignettes: 'false'}
-          - {os: windows-latest, r: 'release', build-vignettes: 'true'}
-          - {os: ubuntu-latest,  r: 'devel',   build-vignettes: 'true', http-user-agent: 'release'}
-          - {os: ubuntu-latest,  r: 'release', build-vignettes: 'true'}
-          - {os: ubuntu-latest,  r: 'oldrel-1', build-vignettes: 'true'}
+          - {os: macOS-latest,   r: 'release', build-vignettes: false}
+          - {os: windows-latest, r: 'release', build-vignettes: true}
+          - {os: ubuntu-latest,  r: 'devel',   build-vignettes: true, http-user-agent: 'release'}
+          - {os: ubuntu-latest,  r: 'release', build-vignettes: true}
+          - {os: ubuntu-latest,  r: 'oldrel-1', build-vignettes: true}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
-      _R_CHECK_BUILD_VIGNETTES_: ${{ matrix.config.build-vignettes }}
-      R_BUILD_VIGNETTES: ${{ matrix.config.build-vignettes }}
 
     steps:
       - uses: actions/checkout@v2
@@ -40,16 +38,18 @@ jobs:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
+      - name: Install dependencies (with or without vignettes)
+        uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
           needs: check
+          build: true
+          build-args: >-
+            ${{ matrix.config.build-vignettes == false && '--no-build-vignettes --no-manual' || '' }}
 
-      - name: Show vignette build settings (debug)
-        run: |
-          echo "R_BUILD_VIGNETTES: $R_BUILD_VIGNETTES"
-          echo "_R_CHECK_BUILD_VIGNETTES_: $_R_CHECK_BUILD_VIGNETTES_"
-
-      - uses: r-lib/actions/check-r-package@v2
+      - name: Run R CMD check
+        uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
+          args: >-
+            ${{ matrix.config.build-vignettes == false && '--no-build-vignettes --no-manual' || '' }}
